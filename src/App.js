@@ -4,6 +4,8 @@ import './App.css';
 
 import { Card, Row, Col, Slider, Checkbox, Menu, Layout } from 'antd';
 
+import Browser from './Browser';
+
 class App extends Component {
   render() {
     const gridStyle = {
@@ -34,14 +36,7 @@ class App extends Component {
 
             <Row gutter={16}>
               <Col span={18}>
-                <Card title='Nav (assembly; chrom; location)'/>
-                <Card title='G'/>
-                <Card title='G2V'/>
-                <Card title='V'/>
-                <Card title='V2LeadV'/>
-                <Card title='LeadV'/>
-                <Card title='LeadV2D'/>
-                <Card title='D'/>
+                <Browser />
               </Col>
               <Col span={6}><Card title='Detail (on click)'/></Col>
             </Row>
