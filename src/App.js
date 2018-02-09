@@ -2,18 +2,61 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+import { Card, Row, Col, Slider, Checkbox, Menu, Layout } from 'antd';
+
 class App extends Component {
   render() {
+    const gridStyle = {
+      width: '33%'
+    }
+    const g2vOptions = ['VEP', 'GTEx', 'PCHiC', 'DHS', 'Fantom5'];
+    let g2vChecked = ['VEP', 'GTEx', 'PCHiC', 'DHS', 'Fantom5'];
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+      <Layout>
+        <Layout.Header>
+          <h1 style={{color: 'white'}}>POSTGAP</h1>
+        </Layout.Header>
+        <Layout.Content style={{ background: '#ECECEC', padding: '30px' }}>
+          <Col gutter={6}>
+            <Row gutter={16}>
+              <Col span={6}><Card title='G2V Filter'>
+                <Checkbox.Group options={g2vOptions} value={g2vChecked} />
+              </Card></Col>
+              <Col span={6}><Card title='V2LeadV Filter'>
+                <h4>Linkage Disequilibrium (r<sup>2</sup>)</h4>
+                <Slider range min={0.7} max={1} marks={{0.7: 0.7, 0.8: 0.8, 0.9: 0.9, 1: 1}} step={0.001} defaultValue={[0.7, 1]} />
+              </Card></Col>
+              <Col span={6}><Card title='LeadV2D Filter'/></Col>
+            </Row>
+
+            {/* TODO: Add vertical space in better way */}
+            <Row gutter={16} style={{height: '16px'}} /> 
+
+            <Row gutter={16}>
+              <Col span={18}>
+                <Card title='Nav (assembly; chrom; location)'/>
+                <Card title='G'/>
+                <Card title='G2V'/>
+                <Card title='V'/>
+                <Card title='V2LeadV'/>
+                <Card title='LeadV'/>
+                <Card title='LeadV2D'/>
+                <Card title='D'/>
+              </Col>
+              <Col span={6}><Card title='Detail (on click)'/></Col>
+            </Row>
+
+            <Row gutter={16} style={{height: '16px'}} /> 
+
+            <Row gutter={16}>
+              <Col span={24}>
+                <Card title='Table'/>
+                </Col>
+            </Row>
+
+          </Col>
+        </Layout.Content>
+      </Layout>
     );
   }
 }
