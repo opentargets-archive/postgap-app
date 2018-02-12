@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-import { Card, Row, Col, Slider, Checkbox, Menu, Layout } from 'antd';
+import { Card, Row, Col, Slider, Checkbox, Menu, Layout, Icon } from 'antd';
 
 import Browser from './Browser';
+import GeneDetail from './details/GeneDetail';
+import VariantDetail from './details/VariantDetail';
+import GeneVariantDetail from './details/GeneVariantDetail';
 
 class App extends Component {
   render() {
@@ -38,7 +41,11 @@ class App extends Component {
               <Col span={18}>
                 <Browser />
               </Col>
-              <Col span={6}><Card title='Detail (on click)'/></Col>
+              <Col span={6}>
+                <GeneDetail />
+                <VariantDetail />
+                <GeneVariantDetail />
+              </Col>
             </Row>
 
             <Row gutter={16} style={{height: '16px'}} /> 
