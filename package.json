@@ -3,12 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@vx/responsive": "^0.0.158",
     "antd": "^3.2.0",
+    "d3": "^4.13.0",
+    "lodash": "^4.17.5",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
     "react-scripts": "1.1.0",
-    "redux": "^3.7.2"
+    "redux": "^3.7.2",
+    "reselect": "^3.0.1",
+    "victory": "^0.25.4",
+    "victory-chart": "^25.0.5",
+    "victory-core": "^21.0.3",
+    "victory-util": "^5.0.0"
   },
   "scripts": {
     "commit": "git-cz",
