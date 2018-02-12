@@ -21,6 +21,11 @@ function transformEvidenceString(r) {
     }
 }
 
+const SET_LOCATION = 'SET_LOCATION';
+export function setLocation(location) {
+    return { type: SET_LOCATION, location };
+}
+
 // TODO: Subdivide state and reducers and async load
 //       initialState url: https://mk-loci-dot-open-targets-eu-dev.appspot.com/v3/platform/public/evidence/filter?chromosome=1&begin=109167885&end=109612066&size=10&datasource=gwas_catalog&fields=unique_association_fields&fields=disease&fields=evidence&fields=variant&fields=target&fields=sourceID
 const initialState = {
@@ -35,6 +40,8 @@ const initialState = {
 function reducer (state=initialState, action) {
     // TODO: Handle other action types
     switch (action.type) {
+    case SET_LOCATION:
+        return { ...state, location: action.location };
     default:
         return state;
     }
