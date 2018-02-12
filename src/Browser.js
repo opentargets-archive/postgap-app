@@ -3,6 +3,7 @@ import { Card, Row, Col, Slider, Checkbox, Menu, Layout } from 'antd';
 import { connect } from 'react-redux';
 
 // import NavTrack from './tracks/NavTrack';
+import GeneTrack from './tracks/GeneTrack';
 import GeneVariantTrack from './tracks/GeneVariantTrack';
 import VariantTrack from './tracks/VariantTrack';
 import LeadVariantTrack from './tracks/LeadVariantTrack';
@@ -36,7 +37,9 @@ class Browser extends Component {
                     
                 </Card>
 
-                <Card title='G'/>
+                <Card bodyStyle={{padding: 0, height: '30px'}}>
+                    <GeneTrack start={start} end={end} zoomHandler={this.zoomHandler} />
+                </Card>
                 <Card bodyStyle={{padding: 0, height: '30px'}}>
                     <GeneVariantTrack start={start} end={end} zoomHandler={this.zoomHandler} />
                 </Card>

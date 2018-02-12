@@ -1,6 +1,7 @@
 import { createStore } from 'redux';
 
 import rawData from './raw.json';
+import rawEnsemblData from './rawEnsembl.json';
 
 function transformEvidenceString(r) {
     return {
@@ -21,6 +22,43 @@ function transformEvidenceString(r) {
     }
 }
 
+function transformEnsemblGene(d) {
+    const {
+        id, display_name, description,
+        start, end, strand, seq_region_name,
+        biotype, Transcript
+    } = d;
+    let canonicalTranscript = Transcript.filter(t => (t.is_canonical === 1))
+        .map(t => {
+            console.log(t)
+            const { id, start, end, Exon, Translation } = t;
+            const exons = Exon.map(ex => ({
+                id: ex.id,
+                start: ex.start,
+                end: ex.end,
+            }));
+            const translation = Translation ? {
+                translationStart: Translation.start,
+                translationEnd: Translation.end
+            } : {};
+            return {
+                id, start, end, exons,
+                ...translation
+            };
+        })
+    if (canonicalTranscript.length === 1) {
+        canonicalTranscript = canonicalTranscript[0];
+    } else {
+        canonicalTranscript = null; // no transcript
+    }
+    return {
+        id, description, start, end, strand, biotype,
+        name: display_name,
+        chromosome: seq_region_name,
+        canonicalTranscript
+    }
+}
+
 const SET_LOCATION = 'SET_LOCATION';
 export function setLocation(location) {
     return { type: SET_LOCATION, location };
@@ -35,6 +73,7 @@ const initialState = {
         end: 109612066,
     },
     rows: rawData.data.map(transformEvidenceString),
+    ensemblGenes: Object.values(rawEnsemblData).map(transformEnsemblGene),
 }
 
 function reducer (state=initialState, action) {
