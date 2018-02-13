@@ -5,19 +5,19 @@ import { connect } from 'react-redux';
 
 class BaseTrack extends React.Component {
     render() {
-        const { chromosome, location, zoomHandler } = this.props;
+        const { chromosome, location, zoomHandler, parentWidth, parentHeight } = this.props;
         const chrLength = 1000000000;
         const { start, end } = location;
         return (
         <VictoryChart
-            width={900}
-            height={30}
+            width={parentWidth}
+            height={parentHeight}
             padding={{left: 0, right: 0, top: 0, bottom: 0}}
             scale={{x: "linear"}} 
             domain={{x: [0, chrLength]}}             
             containerComponent={
                 <VictoryZoomContainer
-                // responsive={false}
+                responsive={false}
                 zoomDimension="x"
                 zoomDomain={{x: [start, end]}}
                 onZoomDomainChange={zoomHandler}
@@ -39,6 +39,6 @@ const mapStateToProps = state => {
     }
 }
 
-BaseTrack = connect(mapStateToProps)(BaseTrack);
+BaseTrack = connect(mapStateToProps)(withParentSize(BaseTrack));
 
 export default BaseTrack;

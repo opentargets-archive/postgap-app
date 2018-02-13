@@ -38,19 +38,19 @@ class Browser extends Component {
                 </Card>
 
                 <Card bodyStyle={{padding: 0, height: '30px'}}>
-                    <GeneTrack start={start} end={end} zoomHandler={this.zoomHandler} />
+                    <GeneTrack start={start} end={end} zoomHandler={this.zoomHandler} windowResizeDebounceTime={50} />
                 </Card>
                 <Card bodyStyle={{padding: 0, height: '30px'}}>
-                    <GeneVariantTrack start={start} end={end} zoomHandler={this.zoomHandler} />
+                    <GeneVariantTrack start={start} end={end} zoomHandler={this.zoomHandler} windowResizeDebounceTime={50} />
                 </Card>
                 <Card bodyStyle={{padding: 0, height: '30px'}}>
-                    <VariantTrack start={start} end={end} zoomHandler={this.zoomHandler} />
+                    <VariantTrack start={start} end={end} zoomHandler={this.zoomHandler} windowResizeDebounceTime={50} />
                 </Card>
                 <Card bodyStyle={{padding: 0, height: '30px'}}>
-                    <VariantLeadVariantTrack start={start} end={end} zoomHandler={this.zoomHandler} />
+                    <VariantLeadVariantTrack start={start} end={end} zoomHandler={this.zoomHandler} windowResizeDebounceTime={50} />
                 </Card>
                 <Card bodyStyle={{padding: 0, height: '30px'}}>
-                    <LeadVariantTrack start={start} end={end} zoomHandler={this.zoomHandler} />
+                    <LeadVariantTrack start={start} end={end} zoomHandler={this.zoomHandler} windowResizeDebounceTime={50} />
                 </Card>
                 <Card title='LeadV2D'/>
                 <Card title='D'/>
