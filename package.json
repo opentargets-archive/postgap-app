@@ -13,6 +13,7 @@
     "react-redux": "^5.0.6",
     "react-scripts": "1.1.0",
     "redux": "^3.7.2",
+    "redux-saga": "^0.16.0",
     "reselect": "^3.0.1",
     "victory": "^0.25.4",
     "victory-chart": "^25.0.5",
