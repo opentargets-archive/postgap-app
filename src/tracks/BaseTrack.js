@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import { VictoryLine, VictoryArea, VictoryLabel, VictoryZoomContainer, VictoryAxis, VictoryChart } from 'victory';
+import React from 'react';
+import { VictoryZoomContainer, VictoryAxis, VictoryChart } from 'victory';
 import { withParentSize } from '@vx/responsive';
 import { connect } from 'react-redux';
 
 class BaseTrack extends React.Component {
     render() {
-        const { chromosome, location, zoomHandler, parentWidth, parentHeight } = this.props;
+        const { location, zoomHandler, parentWidth, parentHeight } = this.props;
         const chrLength = 1000000000;
         const { start, end } = location;
         return (

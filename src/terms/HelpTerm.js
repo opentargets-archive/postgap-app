@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Popover, Badge, Icon } from 'antd';
+import React from 'react';
+import { Popover, Icon } from 'antd';
 
 const HelpTerm = ({term, content}) => {
     return <Popover content={content} trigger="hover">

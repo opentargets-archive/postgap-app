@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 const GeneFeature = ({ scale, data }) => {
     const { x, y } = scale;
@@ -11,6 +11,7 @@ const GeneFeature = ({ scale, data }) => {
     />
     const exons = data.canonicalTranscript.exons.map(d => (
         <rect
+            key={d.id}
             x={x(d.start)}
             y={y(1)}
             width={x(d.end) - x(d.start)}

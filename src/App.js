@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
-import { Card, Row, Col, Slider, Checkbox, Menu, Layout, Icon } from 'antd';
+import { Card, Row, Col, Slider, Checkbox, Layout } from 'antd';
 
 import Browser from './Browser';
 import GeneDetail from './details/GeneDetail';
@@ -11,9 +10,6 @@ import GeneVariantDetail from './details/GeneVariantDetail';
 
 class App extends Component {
   render() {
-    const gridStyle = {
-      width: '33%'
-    }
     const g2vOptions = ['VEP', 'GTEx', 'PCHiC', 'DHS', 'Fantom5'];
     let g2vChecked = ['VEP', 'GTEx', 'PCHiC', 'DHS', 'Fantom5'];
     return (

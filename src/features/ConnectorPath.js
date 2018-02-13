@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 const ConnectorPath = ({ topX, topY, bottomX, bottomY }) => {
     const controlY = (bottomY + topY) / 2;

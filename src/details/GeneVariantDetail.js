@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Table } from 'antd';
 import BaseDetail from './BaseDetail';
 import DictionaryHelpTerm from '../terms/DictionaryHelpTerm';
@@ -14,7 +14,6 @@ const d = {
     nearest: false,
     fantom5: 0,
     vep: 1,
-    nearest: 0.638171317463,
     dhs: 0
 }
 

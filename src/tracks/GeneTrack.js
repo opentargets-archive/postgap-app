@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import BaseTrack from './BaseTrack';
 import GeneFeature from '../features/GeneFeature';
 

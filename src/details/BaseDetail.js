@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
-import { Card, Row, Col, Slider, Checkbox, Menu, Layout, Icon } from 'antd';
-// const { Header } = Layout;
+import React from 'react';
+import { Card, Row, Col, Icon } from 'antd';
 
 const BaseDetail = (props) => {
     return <Card bodyStyle={{padding: 10}}>

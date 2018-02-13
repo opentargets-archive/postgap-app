@@ -1,8 +1,7 @@
-import React, { Component } from 'react';
-import { Card, Row, Col, Slider, Checkbox, Menu, Layout } from 'antd';
+import React from 'react';
+import { Card } from 'antd';
 import { connect } from 'react-redux';
 
-// import NavTrack from './tracks/NavTrack';
 import GeneTrack from './tracks/GeneTrack';
 import GeneVariantTrack from './tracks/GeneVariantTrack';
 import VariantTrack from './tracks/VariantTrack';
@@ -10,7 +9,7 @@ import LeadVariantTrack from './tracks/LeadVariantTrack';
 import { setLocation } from './store';
 import VariantLeadVariantTrack from './tracks/VariantLeadVariantTrack';
 
-class Browser extends Component {
+class Browser extends React.Component {
 
     constructor(props) {
         super(props);
