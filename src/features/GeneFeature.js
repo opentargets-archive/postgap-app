@@ -5,7 +5,6 @@ const GeneFeature = ({ scale, data, slotOffset, slotHeight }) => {
 
     const exonHeight = slotHeight * 0.4;
     const yExonTop = 0;
-    const yExonBottom = exonHeight;
     const ySpit = exonHeight / 2;
     const yText = slotHeight * 0.85;
 
