@@ -25,7 +25,7 @@ class Browser extends React.Component {
     }
 
     render() {
-        const { chromosome, location, parentWidth, genes, slots, variants } = this.props;
+        const { chromosome, location, parentWidth, genes, slots, variants, geneVariants } = this.props;
         const { start, end } = location;
         return (
             <div>
@@ -40,7 +40,7 @@ class Browser extends React.Component {
                     <GeneTrack genes={genes} slots={slots} start={start} end={end} zoomHandler={this.zoomHandler} windowResizeDebounceTime={50} />
                 </Card>
                 <Card bodyStyle={{padding: 0, height: '30px'}}>
-                    <GeneVariantTrack start={start} end={end} zoomHandler={this.zoomHandler} windowResizeDebounceTime={50} />
+                    <GeneVariantTrack geneVariants={geneVariants} start={start} end={end} zoomHandler={this.zoomHandler} windowResizeDebounceTime={50} />
                 </Card>
                 <Card bodyStyle={{padding: 0, height: '30px'}}>
                     <VariantTrack variants={variants} start={start} end={end} zoomHandler={this.zoomHandler} windowResizeDebounceTime={50} />
@@ -65,6 +65,7 @@ const mapStateToProps = state => {
         slots: selectors.getSlots(state),
         genes: selectors.getVisibleGenes(state),
         variants: selectors.getVisibleVariants(state),
+        geneVariants: selectors.getVisibleGeneVariants(state),
     }
 }
 

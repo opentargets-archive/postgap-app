@@ -22,6 +22,7 @@ function transformEvidenceString(r) {
         vep: r.evidence.gene2variant.metadata.funcgen.vep_score,
         otScore: r.evidence.gene2variant.metadata.funcgen.ot_g2v_score,
         geneName: r.target.target_name,
+        geneId: r.target.id,
     }
 }
 
@@ -33,7 +34,7 @@ function transformEnsemblGene(d) {
     } = d;
     let canonicalTranscript = Transcript.filter(t => (t.is_canonical === 1))
         .map(t => {
-            const { id, start, end, Exon, Translation } = t;
+            const { id, start, end, strand, Exon, Translation } = t;
             const exons = Exon.map(ex => ({
                 id: ex.id,
                 start: ex.start,
@@ -43,8 +44,9 @@ function transformEnsemblGene(d) {
                 translationStart: Translation.start,
                 translationEnd: Translation.end
             } : {};
+            const tss = (strand === 1) ? start : end; // tss depends on strand
             return {
-                id, start, end, exons,
+                id, start, end, strand, exons, tss,
                 ...translation
             };
         })
@@ -90,15 +92,42 @@ const getSlots = createSelector([getVisibleGenes, getLocation], (genes, location
     });
     return slots;
 });
-const getVariants = (state) => _.uniqBy(state.rows.map(d => ({ id: d.ldSnpId, pos: d.ldSnpPos })));
+const getVariants = (state) => _.uniqBy(state.rows.map(d => ({ id: d.ldSnpId, pos: d.ldSnpPos })), 'id');
 const getVisibleVariants = createSelector([getVariants, getLocation], (variants, location) => {
     return variants.filter(variant => ((variant.pos >= location.start) && (variant.pos <= location.end)));
+})
+const getGeneVariants = (state) => _.uniqBy(state.rows.map(d => {
+    const {
+        geneId, geneName, ldSnpId, ldSnpPos,
+        gtex, pchic, dhs, fantom5, vep, otScore
+    } = d;
+    return {
+        id: `${d.geneId}-${d.ldSnpId}`,
+        geneId, geneName, ldSnpId, ldSnpPos,
+        gtex, pchic, dhs, fantom5, vep, otScore
+    }
+}), 'id')
+const getVisibleGeneVariants = createSelector([getVisibleGenes, getVisibleVariants, getGeneVariants], (genes, variants, geneVariants) => {
+    const visibleGeneIds = genes.map(d => d.id);
+    const visibleSnpIds = variants.map(d => d.id);
+    
+    const visibleGenesTssLookup = {};
+    genes.forEach(d => { visibleGenesTssLookup[d.id] = d.canonicalTranscript.tss; })
+
+    return geneVariants.filter(geneVariant => (
+        (visibleGeneIds.indexOf(geneVariant.geneId) > 0) ||
+        (visibleSnpIds.indexOf(geneVariant.ldSnpId) > 0)
+    )).map(geneVariant => ({
+        ...geneVariant,
+        geneTss: visibleGenesTssLookup[geneVariant.geneId]
+    }));
 })
 export const selectors = {
     getGenes,
     getSlots,
     getVisibleGenes,
     getVisibleVariants,
+    getVisibleGeneVariants,
 }
 
 // TODO: Subdivide state and reducers and async load
