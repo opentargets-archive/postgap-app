@@ -1,6 +1,7 @@
 import React from 'react';
-import { Table } from 'antd';
+import { Table, Button } from 'antd';
 import { connect } from 'react-redux';
+import { CSVLink } from 'react-csv';
 
 import { selectors } from './store';
 
@@ -90,7 +91,15 @@ class BrowserTable extends React.Component {
     render () {
         const { rows } = this.props;
         return (
-            <Table dataSource={rows} columns={COLUMNS} size='small' bordered scroll={{ x: 800 }} />
+            <div>
+                <CSVLink data={rows} filename='postgap.csv' target='_blank'>
+                    <Button size='small' type='primary'>CSV</Button>
+                </CSVLink>
+                <CSVLink data={rows} filename='postgap.tsv' target='_blank' separator={'\t'}>
+                    <Button size='small' type='primary'>TSV</Button>
+                </CSVLink>
+                <Table dataSource={rows} columns={COLUMNS} size='small' bordered scroll={{ x: 800 }} />
+            </div>
         )
     }
 }
