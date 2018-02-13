@@ -88,6 +88,7 @@ export function setFilterLD(filter) {
 // selectors (reselect memoizes)
 const getRows = (state) => state.rows;
 const getGenes = (state) => state.ensemblGenes;
+const getEnsemblVariants = (state) => state.ensemblVariants;
 const getLocation = (state) => state.location;
 const getVisibleGenes = createSelector([getGenes, getLocation], (genes, location) => {
     return genes.filter(gene => {
@@ -140,6 +141,10 @@ const getVisibleGeneVariants = createSelector([getVisibleGenes, getVisibleVarian
         geneTss: visibleGenesTssLookup[geneVariant.geneId]
     }));
 })
+const getVisibleLeadVariants = createSelector([getEnsemblVariants, getLocation], (variants, location) => {
+    return variants.filter(variant => ((variant.pos >= location.start) && (variant.pos <= location.end)))
+        .map(variant => ({ id: variant.id, pos: variant.pos }));
+})
 const getDiseases = createSelector([getRows], (rows) => {
     return _.uniqBy(rows.map(d => ({id: d.efoId, name: d.efoName})), 'id');
 })
@@ -151,6 +156,7 @@ export const selectors = {
     getVisibleGenes,
     getVisibleVariants,
     getVisibleGeneVariants,
+    getVisibleLeadVariants,
     getDiseases,
 }
 
