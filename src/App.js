@@ -4,6 +4,7 @@ import './App.css';
 import { Card, Row, Col, Slider, Checkbox, Layout } from 'antd';
 
 import Browser from './Browser';
+import BrowserTable from './BrowserTable';
 import GeneDetail from './details/GeneDetail';
 import VariantDetail from './details/VariantDetail';
 import GeneVariantDetail from './details/GeneVariantDetail';
@@ -48,8 +49,10 @@ class App extends Component {
 
             <Row gutter={16}>
               <Col span={24}>
-                <Card title='Table'/>
-                </Col>
+                <Card bodyStyle={{padding: 10}}>
+                  <BrowserTable />
+                </Card>
+              </Col>
             </Row>
 
           </Col>

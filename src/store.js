@@ -68,7 +68,13 @@ export function setLocation(location) {
     return { type: SET_LOCATION, location };
 }
 
+const SET_FILTER_LD = 'SET_FILTER_LD';
+export function setFilterLD(filter) {
+    return { type: SET_FILTER_LD, filter };
+}
+
 // selectors (reselect memoizes)
+const getRows = (state) => state.rows;
 const getGenes = (state) => state.ensemblGenes;
 const getLocation = (state) => state.location;
 const getVisibleGenes = createSelector([getGenes, getLocation], (genes, location) => {
@@ -122,12 +128,18 @@ const getVisibleGeneVariants = createSelector([getVisibleGenes, getVisibleVarian
         geneTss: visibleGenesTssLookup[geneVariant.geneId]
     }));
 })
+const getDiseases = createSelector([getRows], (rows) => {
+    return _.uniqBy(rows.map(d => ({id: d.efoId, name: d.efoName})), 'id');
+})
+
 export const selectors = {
+    getRows,
     getGenes,
     getSlots,
     getVisibleGenes,
     getVisibleVariants,
     getVisibleGeneVariants,
+    getDiseases,
 }
 
 // TODO: Subdivide state and reducers and async load
@@ -140,6 +152,9 @@ const initialState = {
     },
     rows: rawData.data.map(transformEvidenceString),
     ensemblGenes: Object.values(rawEnsemblData).map(transformEnsemblGene),
+    filters: {
+        ld: null,
+    }
 }
 
 function reducer (state=initialState, action) {
@@ -147,6 +162,8 @@ function reducer (state=initialState, action) {
     switch (action.type) {
     case SET_LOCATION:
         return { ...state, location: action.location };
+    case SET_FILTER_LD:
+        return { ...state, filter: { ...state.filter, ld: action.filter } };
     default:
         return state;
     }
