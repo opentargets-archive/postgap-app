@@ -14,6 +14,7 @@ function transformEvidenceString(r) {
         gwasSnpId: r.evidence.variant2disease.lead_snp_rsid,
         r2: parseFloat(r.unique_association_fields.r2),
         ldSnpId: r.variant.id.split('/')[4],
+        ldSnpPos: r.variant.pos,
         gtex: r.evidence.gene2variant.metadata.funcgen.gtex_score,
         pchic: r.evidence.gene2variant.metadata.funcgen.pchic_score,
         dhs: r.evidence.gene2variant.metadata.funcgen.dhs_score,
@@ -89,10 +90,15 @@ const getSlots = createSelector([getVisibleGenes, getLocation], (genes, location
     });
     return slots;
 });
+const getVariants = (state) => _.uniqBy(state.rows.map(d => ({ id: d.ldSnpId, pos: d.ldSnpPos })));
+const getVisibleVariants = createSelector([getVariants, getLocation], (variants, location) => {
+    return variants.filter(variant => ((variant.pos >= location.start) && (variant.pos <= location.end)));
+})
 export const selectors = {
     getGenes,
     getSlots,
     getVisibleGenes,
+    getVisibleVariants,
 }
 
 // TODO: Subdivide state and reducers and async load
