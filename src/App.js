@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import { Card, Row, Col, Slider, Checkbox, Layout } from 'antd';
+import { Card, Row, Col, Slider, Checkbox, Layout, Affix } from 'antd';
 
 import Browser from './Browser';
 import BrowserTable from './BrowserTable';
@@ -15,9 +15,16 @@ class App extends Component {
     let g2vChecked = ['VEP', 'GTEx', 'PCHiC', 'DHS', 'Fantom5'];
     return (
       <Layout>
-        <Layout.Header>
-          <h1 style={{color: 'white'}}>POSTGAP</h1>
-        </Layout.Header>
+
+        <Affix>
+          <Layout.Header style={{ background: '#ECECEC', borderBottom: '2px solid green', paddingLeft: '30px' }}>
+            <h1 style={{color: '#555'}}>
+              <span style={{fontWeight: 'bold'}}>Open Targets </span>
+              <span style={{fontWeight: 100, color: 'blue'}}>POSTGAP</span>
+            </h1>
+          </Layout.Header>
+        </Affix>
+
         <Layout.Content style={{ background: '#ECECEC', padding: '30px' }}>
           <Col gutter={6}>
             <Row gutter={16}>
