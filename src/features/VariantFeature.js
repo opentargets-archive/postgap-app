@@ -7,7 +7,7 @@ const VariantFeature = ({ scale, data }) => {
         y1={y(0)} 
         x2={x(data.pos)} 
         y2={y(1)} 
-        style={{ stroke: 'red', strokeWidth: 2 }} />
+        style={{ stroke: 'blue', strokeWidth: 2 }} />
 }
 
 export default VariantFeature;
