@@ -1,4 +1,6 @@
 import { createStore } from 'redux';
+import { createSelector } from 'reselect';
+import _ from 'lodash';
 
 import rawData from './raw.json';
 import rawEnsemblData from './rawEnsembl.json';
@@ -30,7 +32,6 @@ function transformEnsemblGene(d) {
     } = d;
     let canonicalTranscript = Transcript.filter(t => (t.is_canonical === 1))
         .map(t => {
-            console.log(t)
             const { id, start, end, Exon, Translation } = t;
             const exons = Exon.map(ex => ({
                 id: ex.id,
@@ -62,6 +63,36 @@ function transformEnsemblGene(d) {
 const SET_LOCATION = 'SET_LOCATION';
 export function setLocation(location) {
     return { type: SET_LOCATION, location };
+}
+
+// selectors (reselect memoizes)
+const getGenes = (state) => state.ensemblGenes;
+const getLocation = (state) => state.location;
+const getVisibleGenes = createSelector([getGenes, getLocation], (genes, location) => {
+    return genes.filter(gene => {
+        return (gene.start < location.end) && (gene.end > location.start)
+    })
+})
+const getSlots = createSelector([getVisibleGenes, getLocation], (genes, location) => {
+    const sortedGenes = _.sortBy(genes, ['start']);
+    const slots = []
+    const minXOffset = (location.end - location.start) * 0.15 // 15% of browser window
+    sortedGenes.forEach(gene => {
+        const suitableSlots = slots.filter(slot => (gene.start > (slot.end + minXOffset)));
+        if (suitableSlots.length > 0) {
+            suitableSlots[0].genes.push(gene);
+            suitableSlots[0].end = gene.end;
+        } else {
+            const newSlot = { genes: [gene], end: gene.end };
+            slots.push(newSlot);
+        }
+    });
+    return slots;
+});
+export const selectors = {
+    getGenes,
+    getSlots,
+    getVisibleGenes,
 }
 
 // TODO: Subdivide state and reducers and async load

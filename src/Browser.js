@@ -2,11 +2,11 @@ import React from 'react';
 import { Card } from 'antd';
 import { connect } from 'react-redux';
 
-import GeneTrack from './tracks/GeneTrack';
+import GeneTrack, { GENE_SLOT_HEIGHT } from './tracks/GeneTrack';
 import GeneVariantTrack from './tracks/GeneVariantTrack';
 import VariantTrack from './tracks/VariantTrack';
 import LeadVariantTrack from './tracks/LeadVariantTrack';
-import { setLocation } from './store';
+import { setLocation, selectors } from './store';
 import VariantLeadVariantTrack from './tracks/VariantLeadVariantTrack';
 
 class Browser extends React.Component {
@@ -25,7 +25,7 @@ class Browser extends React.Component {
     }
 
     render() {
-        const { chromosome, location, parentWidth, genes } = this.props;
+        const { chromosome, location, parentWidth, genes, slots } = this.props;
         const { start, end } = location;
         return (
             <div>
@@ -36,8 +36,8 @@ class Browser extends React.Component {
                     
                 </Card>
 
-                <Card bodyStyle={{padding: 0, height: '100px'}}>
-                    <GeneTrack genes={genes} start={start} end={end} zoomHandler={this.zoomHandler} windowResizeDebounceTime={50} />
+                <Card bodyStyle={{padding: 0, height: `${GENE_SLOT_HEIGHT * slots.length}px`}}>
+                    <GeneTrack genes={genes} slots={slots} start={start} end={end} zoomHandler={this.zoomHandler} windowResizeDebounceTime={50} />
                 </Card>
                 <Card bodyStyle={{padding: 0, height: '30px'}}>
                     <GeneVariantTrack start={start} end={end} zoomHandler={this.zoomHandler} windowResizeDebounceTime={50} />
@@ -62,7 +62,8 @@ const mapStateToProps = state => {
     return {
         chromosome: state.chromosome,
         location: state.location,
-        genes: state.ensemblGenes,
+        slots: selectors.getSlots(state),
+        genes: selectors.getVisibleGenes(state),
     }
 }
 
