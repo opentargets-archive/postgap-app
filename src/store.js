@@ -4,6 +4,7 @@ import _ from 'lodash';
 
 import rawData from './raw.json';
 import rawEnsemblData from './rawEnsembl.json';
+import rawEnsemblVariantsData from './rawEnsemblVariants.json';
 
 function transformEvidenceString(r) {
     return {
@@ -60,6 +61,17 @@ function transformEnsemblGene(d) {
         name: display_name,
         chromosome: seq_region_name,
         canonicalTranscript
+    }
+}
+
+function transformEnsemblVariant(d) {
+    return {
+        id: d.name,
+        maf: d.MAF,
+        ancestralAllele: d.ancestral_allele,
+        minorAllele: d.minor_allele,
+        pos: d.mappings[0].start,
+        chrom: d.mappings[0].seq_region_name,
     }
 }
 
@@ -152,6 +164,7 @@ const initialState = {
     },
     rows: rawData.data.map(transformEvidenceString),
     ensemblGenes: Object.values(rawEnsemblData).map(transformEnsemblGene),
+    ensemblVariants: Object.values(rawEnsemblVariantsData).map(transformEnsemblVariant),
     filters: {
         ld: null,
     }

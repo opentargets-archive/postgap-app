@@ -1,0 +1,140 @@
+{
+    "rs646776": {
+        "source": "Variants (including SNPs and indels) imported from dbSNP",
+        "mappings": [
+            {
+                "location": "1:109275908-109275908",
+                "assembly_name": "GRCh38",
+                "end": 109275908,
+                "seq_region_name": "1",
+                "strand": 1,
+                "coord_system": "chromosome",
+                "allele_string": "C/T",
+                "start": 109275908
+            }
+        ],
+        "name": "rs646776",
+        "MAF": 0.238419,
+        "ambiguity": "Y",
+        "var_class": "SNP",
+        "synonyms": [
+            "NM_001408.2:c.*1859C>T",
+            "PA166153583",
+            "rs58595816",
+            "rs1624712",
+            "rs386602928"
+        ],
+        "evidence": [
+            "Frequency",
+            "HapMap",
+            "1000Genomes",
+            "Cited",
+            "Phenotype_or_Disease"
+        ],
+        "ancestral_allele": "T",
+        "minor_allele": "C",
+        "most_severe_consequence": "downstream_gene_variant"
+    },
+    "rs12740374": {
+        "source": "Variants (including SNPs and indels) imported from dbSNP",
+        "mappings": [
+            {
+                "location": "1:109274968-109274968",
+                "assembly_name": "GRCh38",
+                "end": 109274968,
+                "seq_region_name": "1",
+                "strand": 1,
+                "coord_system": "chromosome",
+                "allele_string": "G/T",
+                "start": 109274968
+            }
+        ],
+        "name": "rs12740374",
+        "MAF": 0.195487,
+        "clinical_significance": [
+            "association"
+        ],
+        "ambiguity": "K",
+        "var_class": "SNP",
+        "synonyms": [
+            "NM_001408.2:c.*919G>T",
+            "SCV000027697",
+            "RCV000007497"
+        ],
+        "evidence": [
+            "Frequency",
+            "HapMap",
+            "1000Genomes",
+            "Cited",
+            "Phenotype_or_Disease"
+        ],
+        "ancestral_allele": "G",
+        "minor_allele": "T",
+        "most_severe_consequence": "3_prime_UTR_variant"
+    },
+    "rs7528419": {
+        "source": "Variants (including SNPs and indels) imported from dbSNP",
+        "mappings": [
+            {
+                "location": "1:109274570-109274570",
+                "assembly_name": "GRCh38",
+                "end": 109274570,
+                "seq_region_name": "1",
+                "strand": 1,
+                "coord_system": "chromosome",
+                "allele_string": "A/G",
+                "start": 109274570
+            }
+        ],
+        "name": "rs7528419",
+        "MAF": 0.200879,
+        "ambiguity": "R",
+        "var_class": "SNP",
+        "synonyms": [
+            "NM_001408.2:c.*521A>G"
+        ],
+        "evidence": [
+            "Frequency",
+            "HapMap",
+            "1000Genomes",
+            "Cited",
+            "Phenotype_or_Disease"
+        ],
+        "ancestral_allele": "G",
+        "minor_allele": "G",
+        "most_severe_consequence": "3_prime_UTR_variant"
+    },
+    "rs660240": {
+        "source": "Variants (including SNPs and indels) imported from dbSNP",
+        "mappings": [
+            {
+                "location": "1:109275216-109275216",
+                "assembly_name": "GRCh38",
+                "end": 109275216,
+                "seq_region_name": "1",
+                "strand": 1,
+                "coord_system": "chromosome",
+                "allele_string": "T/C",
+                "start": 109275216
+            }
+        ],
+        "name": "rs660240",
+        "MAF": 0.230831,
+        "ambiguity": "Y",
+        "var_class": "SNP",
+        "synonyms": [
+            "NM_001408.2:c.*1167T>C",
+            "rs56706323"
+        ],
+        "evidence": [
+            "Frequency",
+            "HapMap",
+            "1000Genomes",
+            "Cited",
+            "Phenotype_or_Disease"
+        ],
+        "ancestral_allele": "T",
+        "minor_allele": "T",
+        "most_severe_consequence": "3_prime_UTR_variant"
+    }
+}
