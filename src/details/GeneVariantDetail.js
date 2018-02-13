@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { Table } from 'antd';
 import BaseDetail from './BaseDetail';
+import DictionaryHelpTerm from '../terms/DictionaryHelpTerm';
 
 const d = {
     id: 'ENSG00000143126-rs12740374',
@@ -17,23 +19,49 @@ const d = {
 }
 
 const GeneVariantDetail = (props) => {
-    return <BaseDetail type={'G2V'} title={`${d.geneName}:${d.variantId}`}>
-        <table>
-            <tbody>
-                <tr>
-                    <td>GTEx</td><td>{d.gtex.toPrecision(3)}</td>
-                </tr>
-                <tr>
-                    <td>PCHiC</td><td>{d.pchic.toPrecision(3)}</td>
-                </tr>
-                <tr>
-                    <td>DHS</td><td>{d.dhs.toPrecision(3)}</td>
-                </tr>
-                <tr>
-                    <td>Fantom5</td><td>{d.fantom5.toPrecision(3)}</td>
-                </tr>
-            </tbody>
-        </table>
+    const tableData = [
+        {
+            key: 'gtex',
+            label: 'GTEx',
+            value: d.gtex,
+        },
+        {
+            key: 'pchic',
+            label: 'PCHiC',
+            value: d.pchic,
+        },
+        {
+            key: 'dhs',
+            label: 'DHS',
+            value: d.dhs,
+        },
+        {
+            key: 'fantom5',
+            label: 'Fantom5',
+            value: d.fantom5,
+        }
+    ];
+    const tableColumns = [
+        {
+            key: 'label',
+            title: 'Label',
+            dataIndex: 'label',
+            render: (text) => <DictionaryHelpTerm term={text} />,
+        },
+        {
+            key: 'value',
+            title: 'Value',
+            dataIndex: 'value',
+        }
+    ]
+    return <BaseDetail type={'G2V'} title={`${d.geneName} - ${d.variantId}`}>
+        <Table
+            dataSource={tableData}
+            columns={tableColumns}
+            size='small'
+            pagination={false}
+            showHeader={false}
+        />
     </BaseDetail>
 }
 
