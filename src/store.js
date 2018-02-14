@@ -109,6 +109,11 @@ export function setHoverGene(gene) {
   return { type: SET_HOVER_GENE, gene };
 }
 
+const SET_HOVER_ENTITY = 'SET_HOVER_ENTITY'; // generalize?
+export function setHoverEntity({ entityType, entity }) {
+  return { type: SET_HOVER_ENTITY, entityType, entity };
+}
+
 // selectors (reselect memoizes)
 const getRows = state => state.rows;
 const getGenes = state => state.ensemblGenes;
@@ -321,7 +326,7 @@ const initialState = {
     transformEnsemblVariant
   ),
   filters: {
-    ld: null
+    ld: [0.7, 1]
   },
   hover: {
     gene: null
@@ -334,7 +339,7 @@ function reducer(state = initialState, action) {
     case SET_LOCATION:
       return { ...state, location: action.location };
     case SET_FILTER_LD:
-      return { ...state, filter: { ...state.filter, ld: action.filter } };
+      return { ...state, filters: { ...state.filters, ld: action.filter } };
     case SET_HOVER_GENE:
       return { ...state, hover: { ...state.hover, gene: action.gene } };
     default:

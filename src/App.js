@@ -8,6 +8,7 @@ import BrowserTable from './BrowserTable';
 import GeneDetail from './details/GeneDetail';
 import VariantDetail from './details/VariantDetail';
 import GeneVariantDetail from './details/GeneVariantDetail';
+import VariantLeadVariantFilter from './filters/VariantLeadVariantFilter';
 
 class App extends Component {
   render() {
@@ -15,12 +16,17 @@ class App extends Component {
     let g2vChecked = ['VEP', 'GTEx', 'PCHiC', 'DHS', 'Fantom5'];
     return (
       <Layout>
-
         <Affix>
-          <Layout.Header style={{ background: '#ECECEC', borderBottom: '2px solid green', paddingLeft: '30px' }}>
-            <h1 style={{color: '#555'}}>
-              <span style={{fontWeight: 'bold'}}>Open Targets </span>
-              <span style={{fontWeight: 100, color: 'blue'}}>POSTGAP</span>
+          <Layout.Header
+            style={{
+              background: '#ECECEC',
+              borderBottom: '2px solid green',
+              paddingLeft: '30px'
+            }}
+          >
+            <h1 style={{ color: '#555' }}>
+              <span style={{ fontWeight: 'bold' }}>Open Targets </span>
+              <span style={{ fontWeight: 100, color: 'blue' }}>POSTGAP</span>
             </h1>
           </Layout.Header>
         </Affix>
@@ -28,18 +34,21 @@ class App extends Component {
         <Layout.Content style={{ background: '#ECECEC', padding: '30px' }}>
           <Col gutter={6}>
             <Row gutter={16}>
-              <Col span={6}><Card title='G2V Filter'>
-                <Checkbox.Group options={g2vOptions} value={g2vChecked} />
-              </Card></Col>
-              <Col span={6}><Card title='V2LeadV Filter'>
-                <h4>Linkage Disequilibrium (r<sup>2</sup>)</h4>
-                <Slider range min={0.7} max={1} marks={{0.7: 0.7, 0.8: 0.8, 0.9: 0.9, 1: 1}} step={0.001} defaultValue={[0.7, 1]} />
-              </Card></Col>
-              <Col span={6}><Card title='LeadV2D Filter'/></Col>
+              <Col span={6}>
+                <Card title="G2V Filter">
+                  <Checkbox.Group options={g2vOptions} value={g2vChecked} />
+                </Card>
+              </Col>
+              <Col span={6}>
+                <VariantLeadVariantFilter />
+              </Col>
+              <Col span={6}>
+                <Card title="LeadV2D Filter" />
+              </Col>
             </Row>
 
             {/* TODO: Add vertical space in better way */}
-            <Row gutter={16} style={{height: '16px'}} /> 
+            <Row gutter={16} style={{ height: '16px' }} />
 
             <Row gutter={16}>
               <Col span={18}>
@@ -52,16 +61,15 @@ class App extends Component {
               </Col>
             </Row>
 
-            <Row gutter={16} style={{height: '16px'}} /> 
+            <Row gutter={16} style={{ height: '16px' }} />
 
             <Row gutter={16}>
               <Col span={24}>
-                <Card bodyStyle={{padding: 10}}>
+                <Card bodyStyle={{ padding: 10 }}>
                   <BrowserTable />
                 </Card>
               </Col>
             </Row>
-
           </Col>
         </Layout.Content>
       </Layout>
