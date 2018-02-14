@@ -13,7 +13,7 @@ class BaseTrack extends React.Component {
             width={parentWidth}
             height={parentHeight}
             padding={{left: 0, right: 0, top: 0, bottom: 0}}
-            scale={{x: "linear"}} 
+            scale={{x: 'linear'}} 
             domain={{x: [0, chrLength]}}             
             containerComponent={
                 <VictoryZoomContainer

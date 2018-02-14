@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card } from 'antd';
 import { connect } from 'react-redux';
-//  import { scalePoint } from 'd3-scale';
+ import { scalePoint } from 'd3-scale';
 
 import ScaleTrack from './tracks/ScaleTrack';
 import GeneTrack, { GENE_SLOT_HEIGHT } from './tracks/GeneTrack';
@@ -10,7 +10,7 @@ import VariantTrack from './tracks/VariantTrack';
 import LeadVariantTrack from './tracks/LeadVariantTrack';
 import { setLocation, selectors } from './store';
 import VariantLeadVariantTrack from './tracks/VariantLeadVariantTrack';
-// import DiseaseTrack from './tracks/DiseaseTrack';
+import DiseaseTrack from './tracks/DiseaseTrack';
 
 class Browser extends React.Component {
 
@@ -30,10 +30,7 @@ class Browser extends React.Component {
     render() {
         const { chromosome, location, parentWidth, genes, slots, variants, leadVariants, geneVariants, diseases } = this.props;
         const { start, end } = location;
-        // console.log(parentWidth)
-        // const diseaseScale = scalePoint().domain(diseases.map(d => d.id)).range([0, parentWidth]);
-        // console.log(diseaseScale.domain())
-        // console.log(diseaseScale.range())
+        const diseaseScale = scalePoint().domain(diseases.map(d => d.id));
         return (
             <div>
                 <Card bodyStyle={{padding: 10}}>
@@ -59,9 +56,9 @@ class Browser extends React.Component {
                 </Card>
                 {/* <Card title='LeadV2D'/> */}
                 {/* <Card title='D'/> */}
-                {/* <Card bodyStyle={{padding: 0, height: '30px'}}>
+                <Card bodyStyle={{padding: 0, height: '60px'}}>
                     <DiseaseTrack diseases={diseases} diseaseScale={diseaseScale} start={start} end={end} zoomHandler={this.zoomHandler} windowResizeDebounceTime={50} />
-                </Card> */}
+                </Card>
             </div>
         );
     }
