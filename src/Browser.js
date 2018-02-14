@@ -11,6 +11,7 @@ import LeadVariantTrack from './tracks/LeadVariantTrack';
 import { setLocation, selectors } from './store';
 import VariantLeadVariantTrack from './tracks/VariantLeadVariantTrack';
 import DiseaseTrack from './tracks/DiseaseTrack';
+import LeadVariantDiseaseTrack from './tracks/LeadVariantDiseaseTrack';
 
 class Browser extends React.Component {
 
@@ -28,7 +29,7 @@ class Browser extends React.Component {
     }
 
     render() {
-        const { chromosome, location, parentWidth, genes, slots, variants, leadVariants, geneVariants, diseases, variantLeadVariants } = this.props;
+        const { chromosome, location, parentWidth, genes, slots, variants, leadVariants, geneVariants, diseases, variantLeadVariants, leadVariantDiseases } = this.props;
         const { start, end } = location;
         const diseaseScale = scalePoint().domain(diseases.map(d => d.id));
         return (
@@ -54,8 +55,9 @@ class Browser extends React.Component {
                 <Card bodyStyle={{padding: 0, height: '30px'}}>
                     <LeadVariantTrack leadVariants={leadVariants} start={start} end={end} zoomHandler={this.zoomHandler} windowResizeDebounceTime={50} />
                 </Card>
-                {/* <Card title='LeadV2D'/> */}
-                {/* <Card title='D'/> */}
+                <Card bodyStyle={{padding: 0, height: '30px'}}>
+                    <LeadVariantDiseaseTrack leadVariantDiseases={leadVariantDiseases} diseaseScale={diseaseScale} start={start} end={end} zoomHandler={this.zoomHandler} windowResizeDebounceTime={50} />
+                </Card>
                 <Card bodyStyle={{padding: 0, height: '60px'}}>
                     <DiseaseTrack diseases={diseases} diseaseScale={diseaseScale} start={start} end={end} zoomHandler={this.zoomHandler} windowResizeDebounceTime={50} />
                 </Card>
@@ -75,6 +77,7 @@ const mapStateToProps = state => {
         diseases: selectors.getDiseases(state),
         leadVariants: selectors.getVisibleLeadVariants(state),
         variantLeadVariants: selectors.getVisibleVariantLeadVariants(state),
+        leadVariantDiseases: selectors.getVisibleLeadVariantDiseases(state),
     }
 }
 
