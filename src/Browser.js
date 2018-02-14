@@ -3,6 +3,7 @@ import { Card } from 'antd';
 import { connect } from 'react-redux';
 //  import { scalePoint } from 'd3-scale';
 
+import ScaleTrack from './tracks/ScaleTrack';
 import GeneTrack, { GENE_SLOT_HEIGHT } from './tracks/GeneTrack';
 import GeneVariantTrack from './tracks/GeneVariantTrack';
 import VariantTrack from './tracks/VariantTrack';
@@ -35,13 +36,12 @@ class Browser extends React.Component {
         // console.log(diseaseScale.range())
         return (
             <div>
-                <Card title={`Human ${chromosome}:${start}-${end}`}
-                    // style={{padding: 0, margin: 0}}
-                    // cover={<NavTrack zoomHandler={this.zoomHandler} />}
-                >
-                    
+                <Card bodyStyle={{padding: 10}}>
+                    <span>{`Human ${chromosome}:${start}-${end}`}</span>
                 </Card>
-
+                <Card bodyStyle={{padding: 0, height: '10px'}}>
+                    <ScaleTrack start={start} end={end} zoomHandler={this.zoomHandler} windowResizeDebounceTime={50} />
+                </Card>
                 <Card bodyStyle={{padding: 0, height: `${GENE_SLOT_HEIGHT * slots.length}px`}}>
                     <GeneTrack genes={genes} slots={slots} start={start} end={end} zoomHandler={this.zoomHandler} windowResizeDebounceTime={50} />
                 </Card>
