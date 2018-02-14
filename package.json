@@ -6,7 +6,10 @@
     "@vx/responsive": "^0.0.158",
     "antd": "^3.2.0",
     "d3": "^4.13.0",
+    "husky": "^0.14.3",
+    "lint-staged": "^6.1.0",
     "lodash": "^4.17.5",
+    "prettier": "^1.10.2",
     "react": "^16.2.0",
     "react-csv": "^1.0.12",
     "react-dom": "^16.2.0",
@@ -24,6 +27,7 @@
     "victory-util": "^5.0.0"
   },
   "scripts": {
+    "precommit": "lint-staged",
     "commit": "git-cz",
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -39,5 +43,11 @@
     "commitizen": {
       "path": "cz-conventional-changelog"
     }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,json,css}": [
+      "prettier --single-quote --write",
+      "git add"
+    ]
   }
 }
