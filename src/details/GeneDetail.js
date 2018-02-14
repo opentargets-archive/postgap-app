@@ -1,16 +1,26 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
 import BaseDetail from './BaseDetail';
 
-const d = {
-    id: 'ENSG00000143126',
-    name: 'CELSR2',
-    text: 'cadherin EGF LAG seven-pass G-type receptor 2',
-}
+let GeneDetail = ({ gene }) => {
+  if (gene) {
+    return (
+      <BaseDetail type={'Gene'} title={gene.name}>
+        {gene.description}
+      </BaseDetail>
+    );
+  } else {
+    return null;
+  }
+};
 
-const GeneDetail = (props) => {
-    return <BaseDetail type={'Gene'} title={d.name}>
-        {d.text}
-    </BaseDetail>
-}
+const mapStateToProps = state => {
+  return {
+    gene: state.hover.gene
+  };
+};
+
+GeneDetail = connect(mapStateToProps)(GeneDetail);
 
 export default GeneDetail;
