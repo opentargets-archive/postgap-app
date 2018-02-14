@@ -28,7 +28,7 @@ class Browser extends React.Component {
     }
 
     render() {
-        const { chromosome, location, parentWidth, genes, slots, variants, leadVariants, geneVariants, diseases } = this.props;
+        const { chromosome, location, parentWidth, genes, slots, variants, leadVariants, geneVariants, diseases, variantLeadVariants } = this.props;
         const { start, end } = location;
         const diseaseScale = scalePoint().domain(diseases.map(d => d.id));
         return (
@@ -49,7 +49,7 @@ class Browser extends React.Component {
                     <VariantTrack variants={variants} start={start} end={end} zoomHandler={this.zoomHandler} windowResizeDebounceTime={50} />
                 </Card>
                 <Card bodyStyle={{padding: 0, height: '30px'}}>
-                    <VariantLeadVariantTrack start={start} end={end} zoomHandler={this.zoomHandler} windowResizeDebounceTime={50} />
+                    <VariantLeadVariantTrack variantLeadVariants={variantLeadVariants} start={start} end={end} zoomHandler={this.zoomHandler} windowResizeDebounceTime={50} />
                 </Card>
                 <Card bodyStyle={{padding: 0, height: '30px'}}>
                     <LeadVariantTrack leadVariants={leadVariants} start={start} end={end} zoomHandler={this.zoomHandler} windowResizeDebounceTime={50} />
@@ -74,6 +74,7 @@ const mapStateToProps = state => {
         geneVariants: selectors.getVisibleGeneVariants(state),
         diseases: selectors.getDiseases(state),
         leadVariants: selectors.getVisibleLeadVariants(state),
+        variantLeadVariants: selectors.getVisibleVariantLeadVariants(state),
     }
 }
 

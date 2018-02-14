@@ -148,6 +148,30 @@ const getVisibleLeadVariants = createSelector([getEnsemblVariants, getLocation],
 const getDiseases = createSelector([getRows], (rows) => {
     return _.uniqBy(rows.map(d => ({id: d.efoId, name: d.efoName})), 'id');
 })
+const getVariantLeadVariants = (state) => _.uniqBy(state.rows.map(d => {
+    const {
+        ldSnpId, ldSnpPos, gwasSnpId, r2
+    } = d;
+    return {
+        id: `${d.ldSnpId}-${d.gwasSnpId}`,
+        ldSnpId, ldSnpPos, gwasSnpId, r2
+    }
+}), 'id')
+const getVisibleVariantLeadVariants = createSelector([getVisibleVariants, getVisibleLeadVariants, getVariantLeadVariants], (variants, leadVariants, variantLeadVariants) => {
+    const visibleVariantIds = variants.map(d => d.id);
+    const visibleLeadVariantIds = leadVariants.map(d => d.id);
+
+    const visibleLeadVariantsPosLookup = {};
+    leadVariants.forEach(d => { visibleLeadVariantsPosLookup[d.id] = d.pos; })
+
+    return variantLeadVariants.filter(variantLeadVariant => (
+        (visibleVariantIds.indexOf(variantLeadVariant.ldSnpId) > 0) ||
+        (visibleLeadVariantIds.indexOf(variantLeadVariant.gwasSnpId) > 0)
+    )).map(variantLeadVariant => ({
+        ...variantLeadVariant,
+        leadSnpPos: visibleLeadVariantsPosLookup[variantLeadVariant.gwasSnpId]
+    }))
+})
 
 export const selectors = {
     getRows,
@@ -158,6 +182,7 @@ export const selectors = {
     getVisibleGeneVariants,
     getVisibleLeadVariants,
     getDiseases,
+    getVisibleVariantLeadVariants,
 }
 
 // TODO: Subdivide state and reducers and async load
