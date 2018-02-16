@@ -1,12 +1,153 @@
 import { createSelector } from 'reselect';
 import _ from 'lodash';
 
+// helpers
+// TODO: will be needed for API call
+const GENE_FIELDS = ['geneName', 'geneId'];
+const VARIANT_FIELDS = ['ldSnpId', 'ldSnpPos'];
+const LEAD_VARIANT_FIELDS = ['gwasSnpId'];
+const DISEASE_FIELDS = ['efoName', 'efoId'];
+const GENE_VARIANT_FIELDS = [
+  ...GENE_FIELDS,
+  ...VARIANT_FIELDS,
+  'gtex',
+  'pchic',
+  'dhs',
+  'fantom5',
+  'vep',
+  'otScore'
+];
+const VARIANT_LEAD_VARIANT_FIELDS = [
+  ...VARIANT_FIELDS,
+  ...LEAD_VARIANT_FIELDS,
+  'r2'
+];
+const LEAD_VARIANT_DISEASE_FIELDS = [
+  ...LEAD_VARIANT_FIELDS,
+  ...DISEASE_FIELDS,
+  'gwasPValue',
+  'gwasSampleSize'
+];
+const rowsToUniqueGenes = rows =>
+  _.uniqBy(rows.map(d => _.pick(d, GENE_FIELDS)), 'geneId');
+const rowsToUniqueVariants = rows =>
+  _.uniqBy(rows.map(d => _.pick(d, VARIANT_FIELDS)), 'ldSnpId');
+const rowsToUniqueLeadVariants = rows =>
+  _.uniqBy(rows.map(d => _.pick(d, LEAD_VARIANT_FIELDS)), 'gwasSnpId');
+const rowsToUniqueDiseases = rows =>
+  _.uniqBy(rows.map(d => _.pick(d, DISEASE_FIELDS)), 'efoId');
+const rowsToUniqueGeneVariants = rows =>
+  _.uniqBy(
+    rows.map(d => {
+      return {
+        id: `${d.geneId}-${d.ldSnpId}`,
+        ..._.pick(d, GENE_VARIANT_FIELDS)
+      };
+    }),
+    'id'
+  );
+const rowsToUniqueVariantLeadVariants = rows =>
+  _.uniqBy(
+    rows.map(d => {
+      return {
+        id: `${d.ldSnpId}-${d.gwasSnpId}`,
+        ..._.pick(d, VARIANT_LEAD_VARIANT_FIELDS)
+      };
+    }),
+    'id'
+  );
+const rowsToUniqueLeadVariantDiseases = rows =>
+  _.uniqBy(
+    rows.map(d => {
+      return {
+        id: `${d.gwasSnpId}-${d.efoId}`,
+        ..._.pick(d, LEAD_VARIANT_DISEASE_FIELDS)
+      };
+    }),
+    'id'
+  );
+
+// direct
 const getRows = state => state.rows;
-const getGenes = state => state.ensemblGenes;
+const getEnsemblGenes = state => state.ensemblGenes;
 const getEnsemblVariants = state => state.ensemblVariants;
 const getLocation = state => state.location;
+const getFilterLD = state => state.filters.ld;
+
+// derived
+const getRowsGenes = createSelector([getRows], rows => rowsToUniqueGenes(rows));
+const getRowsVariants = createSelector([getRows], rows =>
+  rowsToUniqueVariants(rows)
+);
+const getRowsLeadVariants = createSelector([getRows], rows =>
+  rowsToUniqueLeadVariants(rows)
+);
+const getRowsDiseases = createSelector([getRows], rows =>
+  rowsToUniqueDiseases(rows)
+);
+const getRowsFiltered = createSelector(
+  [getRows, getFilterLD],
+  (rows, filterLD) => {
+    if (!filterLD) {
+      return rows;
+    }
+    const rfs = rows.filter(d => filterLD[0] <= d.r2 && d.r2 <= filterLD[1]);
+    return rfs;
+  }
+);
+const getEnsemblGenesLookup = createSelector([getEnsemblGenes], genes => {
+  const geneLookup = {};
+  genes.forEach(d => {
+    geneLookup[d.id] = d;
+  });
+  return geneLookup;
+});
+const getEnsemblVariantsLookup = createSelector(
+  [getEnsemblVariants],
+  variants => {
+    const variantLookup = {};
+    variants.forEach(d => {
+      variantLookup[d.id] = d;
+    });
+    return variantLookup;
+  }
+);
+const getGeneVariantsFiltered = createSelector(
+  [getEnsemblGenesLookup, getRowsFiltered],
+  (genesLookup, rows) => {
+    const geneVariants = rowsToUniqueGeneVariants(rows);
+    // merge
+    return geneVariants.map(d => ({
+      ...genesLookup[d.geneId],
+      ...d
+    }));
+  }
+);
+const getVariantLeadVariantsFiltered = createSelector(
+  [getEnsemblVariantsLookup, getRowsFiltered],
+  (variantsLookup, rows) => {
+    const variantLeadVariants = rowsToUniqueVariantLeadVariants(rows);
+    // merge
+    return variantLeadVariants.map(d => ({
+      leadSnpPos: variantsLookup[d.gwasSnpId].pos,
+      ...d
+    }));
+  }
+);
+const getLeadVariantDiseasesFiltered = createSelector(
+  [getEnsemblVariantsLookup, getRowsFiltered],
+  (variantsLookup, rows) => {
+    const leadVariantDiseases = rowsToUniqueLeadVariantDiseases(rows);
+    // merge
+    return leadVariantDiseases.map(d => ({
+      leadSnpPos: variantsLookup[d.gwasSnpId].pos,
+      ...d
+    }));
+  }
+);
+
 const getVisibleGenes = createSelector(
-  [getGenes, getLocation],
+  [getEnsemblGenes, getLocation],
   (genes, location) => {
     return genes.filter(gene => {
       return gene.start < location.end && gene.end > location.start;
@@ -187,13 +328,13 @@ const getVisibleLeadVariantDiseases = createSelector(
 
 export const selectors = {
   getRows,
-  getGenes,
+  //   getGenes: getEnsemblGenes,
   getSlots,
   getVisibleGenes,
   getVisibleVariants,
-  getVisibleGeneVariants,
+  getVisibleGeneVariants: getGeneVariantsFiltered,
   getVisibleLeadVariants,
   getDiseases,
-  getVisibleVariantLeadVariants,
-  getVisibleLeadVariantDiseases
+  getVisibleVariantLeadVariants: getVariantLeadVariantsFiltered,
+  getVisibleLeadVariantDiseases: getLeadVariantDiseasesFiltered
 };

@@ -18,7 +18,6 @@ let VariantLeadVariantFilter = ({ interval, setFilterLD }) => {
         step={0.001}
         defaultValue={interval}
         onChange={value => {
-          console.log(value);
           setFilterLD(value);
         }}
       />
