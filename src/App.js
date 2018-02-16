@@ -5,10 +5,9 @@ import { Card, Row, Col, Slider, Checkbox, Layout, Affix } from 'antd';
 
 import Browser from './Browser';
 import BrowserTable from './BrowserTable';
-import GeneDetail from './details/GeneDetail';
-import VariantDetail from './details/VariantDetail';
-import GeneVariantDetail from './details/GeneVariantDetail';
+
 import VariantLeadVariantFilter from './filters/VariantLeadVariantFilter';
+import DetailPanel from './DetailPanel';
 
 class App extends Component {
   render() {
@@ -55,9 +54,7 @@ class App extends Component {
                 <Browser />
               </Col>
               <Col span={6}>
-                <GeneDetail />
-                <VariantDetail />
-                <GeneVariantDetail />
+                <DetailPanel />
               </Col>
             </Row>
 
