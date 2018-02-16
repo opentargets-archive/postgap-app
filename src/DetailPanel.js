@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import GeneDetail from './details/GeneDetail';
 import VariantDetail from './details/VariantDetail';
 import GeneVariantDetail from './details/GeneVariantDetail';
-import { setClickedEntity, ENTITY_TYPE } from './store';
+import { setClickedEntity, ENTITY_TYPE } from './redux/store';
 
 let DetailPanel = ({ hover, clicked, setClickedGene }) => {
   return (

@@ -14,7 +14,7 @@ import {
   setClickedEntity,
   ENTITY_TYPE,
   selectors
-} from './store';
+} from './redux/store';
 import VariantLeadVariantTrack from './tracks/VariantLeadVariantTrack';
 import DiseaseTrack from './tracks/DiseaseTrack';
 import LeadVariantDiseaseTrack from './tracks/LeadVariantDiseaseTrack';

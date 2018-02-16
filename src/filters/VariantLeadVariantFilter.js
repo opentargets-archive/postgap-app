@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Card, Slider } from 'antd';
 
-import { setFilterLD } from '../store';
+import { setFilterLD } from '../redux/store';
 
 let VariantLeadVariantFilter = ({ interval, setFilterLD }) => {
   return (

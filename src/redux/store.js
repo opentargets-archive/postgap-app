@@ -2,97 +2,15 @@ import { createStore } from 'redux';
 import { createSelector } from 'reselect';
 import _ from 'lodash';
 
-import rawData from './raw.json';
-import rawEnsemblData from './rawEnsembl.json';
-import rawEnsemblVariantsData from './rawEnsemblVariants.json';
+import {
+  transformEnsemblGene,
+  transformEnsemblVariant
+} from './utils/transformEnsembl';
+import { transformEvidenceString } from './utils/transformOpenTargets';
 
-function transformEvidenceString(r) {
-  return {
-    efoId: r.disease.id,
-    efoName: r.disease.name,
-    gwasPValue: r.evidence.variant2disease.resource_score.value,
-    gwasSampleSize: r.evidence.variant2disease.gwas_sample_size,
-    gwasSnpId: r.evidence.variant2disease.lead_snp_rsid,
-    r2: parseFloat(r.unique_association_fields.r2),
-    ldSnpId: r.variant.id.split('/')[4],
-    ldSnpPos: r.variant.pos,
-    gtex: r.evidence.gene2variant.metadata.funcgen.gtex_score,
-    pchic: r.evidence.gene2variant.metadata.funcgen.pchic_score,
-    dhs: r.evidence.gene2variant.metadata.funcgen.dhs_score,
-    fantom5: r.evidence.gene2variant.metadata.funcgen.fantom5_score,
-    vep: r.evidence.gene2variant.metadata.funcgen.vep_score,
-    otScore: r.evidence.gene2variant.metadata.funcgen.ot_g2v_score,
-    geneName: r.target.target_name,
-    geneId: r.target.id
-  };
-}
-
-function transformEnsemblGene(d) {
-  const {
-    id,
-    display_name,
-    description,
-    start,
-    end,
-    strand,
-    seq_region_name,
-    biotype,
-    Transcript
-  } = d;
-  let canonicalTranscript = Transcript.filter(t => t.is_canonical === 1).map(
-    t => {
-      const { id, start, end, strand, Exon, Translation } = t;
-      const exons = Exon.map(ex => ({
-        id: ex.id,
-        start: ex.start,
-        end: ex.end
-      }));
-      const translation = Translation
-        ? {
-            translationStart: Translation.start,
-            translationEnd: Translation.end
-          }
-        : {};
-      const tss = strand === 1 ? start : end; // tss depends on strand
-      return {
-        id,
-        start,
-        end,
-        strand,
-        exons,
-        tss,
-        ...translation
-      };
-    }
-  );
-  if (canonicalTranscript.length === 1) {
-    canonicalTranscript = canonicalTranscript[0];
-  } else {
-    canonicalTranscript = null; // no transcript
-  }
-  return {
-    id,
-    description,
-    start,
-    end,
-    strand,
-    biotype,
-    name: display_name,
-    chromosome: seq_region_name,
-    canonicalTranscript
-  };
-}
-
-function transformEnsemblVariant(d) {
-  return {
-    id: d.name,
-    maf: d.MAF,
-    ancestralAllele: d.ancestral_allele,
-    minorAllele: d.minor_allele,
-    pos: d.mappings[0].start,
-    chrom: d.mappings[0].seq_region_name
-  };
-}
+import rawData from '../raw.json';
+import rawEnsemblData from '../rawEnsembl.json';
+import rawEnsemblVariantsData from '../rawEnsemblVariants.json';
 
 const SET_LOCATION = 'SET_LOCATION';
 export function setLocation(location) {
