@@ -112,6 +112,16 @@ const getEnsemblVariantsLookup = createSelector(
     return variantLookup;
   }
 );
+// const getGenesFiltered = createSelector([getRowsFiltered], rows => rowsToUniqueGenes(rows));
+// const getVariantsFiltered = createSelector([getRowsFiltered], rows =>
+//   rowsToUniqueVariants(rows)
+// );
+// const getLeadVariantsFiltered = createSelector([getRowsFiltered], rows =>
+//   rowsToUniqueLeadVariants(rows)
+// );
+const getDiseasesFiltered = createSelector([getRowsFiltered], rows =>
+  rowsToUniqueDiseases(rows)
+);
 const getGeneVariantsFiltered = createSelector(
   [getEnsemblGenesLookup, getRowsFiltered],
   (genesLookup, rows) => {
@@ -145,6 +155,8 @@ const getLeadVariantDiseasesFiltered = createSelector(
     }));
   }
 );
+
+// ABOVE TO KEEP; BELOW TO REFACTOR
 
 const getVisibleGenes = createSelector(
   [getEnsemblGenes, getLocation],
@@ -334,7 +346,7 @@ export const selectors = {
   getVisibleVariants,
   getVisibleGeneVariants: getGeneVariantsFiltered,
   getVisibleLeadVariants,
-  getDiseases,
+  getDiseases: getRowsDiseases,
   getVisibleVariantLeadVariants: getVariantLeadVariantsFiltered,
   getVisibleLeadVariantDiseases: getLeadVariantDiseasesFiltered
 };

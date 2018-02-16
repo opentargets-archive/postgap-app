@@ -50,7 +50,7 @@ class Browser extends React.Component {
       setClickedGene
     } = this.props;
     const { start, end } = location;
-    const diseaseScale = scalePoint().domain(diseases.map(d => d.id));
+    const diseaseScale = scalePoint().domain(diseases.map(d => d.efoId));
     return (
       <div>
         <Card bodyStyle={{ padding: 10 }}>

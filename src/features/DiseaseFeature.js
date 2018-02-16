@@ -13,20 +13,20 @@ const DiseaseFeature = ({ scale, data, diseaseScale, width }) => {
   return (
     <g>
       <circle
-        cx={diseaseScale(data.id)}
+        cx={diseaseScale(data.efoId)}
         cy={y(0.7)}
         r={4}
         style={{ stroke: 'blue', strokeWidth: 2, fill: 'lightgrey' }}
       />
       <Text
-        x={diseaseScale(data.id)}
+        x={diseaseScale(data.efoId)}
         y={y(0.7) + 10}
         width={150}
         textAnchor="middle"
         verticalAnchor="start"
         style={{ fontSize: '12px' }}
       >
-        {data.name}
+        {data.efoName}
       </Text>
     </g>
   );
