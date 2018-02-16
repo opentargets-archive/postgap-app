@@ -63,6 +63,17 @@ export const ENTITY_TYPE = {
   DISEASE: 'disease'
 };
 
+// TODO: Make SET_FILTER_LD more general
+export const FILTER_TYPE = {
+  // gene - variant
+
+  // variant - leadVariant
+  LD: 'ld',
+
+  // leadVariant - disease
+  GWAS_PVALUE: 'gwasPValue'
+};
+
 function reducer(state = initialState, action) {
   // TODO: Handle other action types
   switch (action.type) {
