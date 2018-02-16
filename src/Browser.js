@@ -8,7 +8,13 @@ import GeneTrack, { GENE_SLOT_HEIGHT } from './tracks/GeneTrack';
 import GeneVariantTrack from './tracks/GeneVariantTrack';
 import VariantTrack from './tracks/VariantTrack';
 import LeadVariantTrack from './tracks/LeadVariantTrack';
-import { setLocation, setHoverGene, setClickedGene, selectors } from './store';
+import {
+  setLocation,
+  setHoverEntity,
+  setClickedEntity,
+  ENTITY_TYPE,
+  selectors
+} from './store';
 import VariantLeadVariantTrack from './tracks/VariantLeadVariantTrack';
 import DiseaseTrack from './tracks/DiseaseTrack';
 import LeadVariantDiseaseTrack from './tracks/LeadVariantDiseaseTrack';
@@ -154,8 +160,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     setLocation: location => dispatch(setLocation(location)),
-    setHoverGene: gene => dispatch(setHoverGene(gene)),
-    setClickedGene: gene => dispatch(setClickedGene(gene))
+    setHoverGene: gene =>
+      dispatch(setHoverEntity({ entityType: ENTITY_TYPE.GENE, entity: gene })),
+    setClickedGene: gene =>
+      dispatch(setClickedEntity({ entityType: ENTITY_TYPE.GENE, entity: gene }))
   };
 };
 

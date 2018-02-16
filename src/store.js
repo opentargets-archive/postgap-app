@@ -104,19 +104,14 @@ export function setFilterLD(filter) {
   return { type: SET_FILTER_LD, filter };
 }
 
-const SET_HOVER_GENE = 'SET_HOVER_GENE';
-export function setHoverGene(gene) {
-  return { type: SET_HOVER_GENE, gene };
-}
-
-const SET_CLICKED_GENE = 'SET_CLICKED_GENE';
-export function setClickedGene(gene) {
-  return { type: SET_CLICKED_GENE, gene };
-}
-
 const SET_HOVER_ENTITY = 'SET_HOVER_ENTITY'; // generalize?
 export function setHoverEntity({ entityType, entity }) {
   return { type: SET_HOVER_ENTITY, entityType, entity };
+}
+
+const SET_CLICKED_ENTITY = 'SET_CLICKED_ENTITY'; // generalize?
+export function setClickedEntity({ entityType, entity }) {
+  return { type: SET_CLICKED_ENTITY, entityType, entity };
 }
 
 // selectors (reselect memoizes)
@@ -334,11 +329,24 @@ const initialState = {
     ld: [0.7, 1]
   },
   hover: {
-    gene: null
+    gene: null,
+    variant: null,
+    leadVariant: null,
+    disease: null
   },
   clicked: {
-    gene: null
+    gene: null,
+    variant: null,
+    leadVariant: null,
+    disease: null
   }
+};
+
+export const ENTITY_TYPE = {
+  GENE: 'gene',
+  VARIANT: 'variant',
+  LEAD_VARIANT: 'leadVariant',
+  DISEASE: 'disease'
 };
 
 function reducer(state = initialState, action) {
@@ -348,10 +356,16 @@ function reducer(state = initialState, action) {
       return { ...state, location: action.location };
     case SET_FILTER_LD:
       return { ...state, filters: { ...state.filters, ld: action.filter } };
-    case SET_HOVER_GENE:
-      return { ...state, hover: { ...state.hover, gene: action.gene } };
-    case SET_CLICKED_GENE:
-      return { ...state, clicked: { ...state.clicked, gene: action.gene } };
+    case SET_HOVER_ENTITY:
+      return {
+        ...state,
+        hover: { ...state.hover, [action.entityType]: action.entity }
+      };
+    case SET_CLICKED_ENTITY:
+      return {
+        ...state,
+        clicked: { ...state.clicked, [action.entityType]: action.entity }
+      };
     default:
       return state;
   }

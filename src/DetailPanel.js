@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import GeneDetail from './details/GeneDetail';
 import VariantDetail from './details/VariantDetail';
 import GeneVariantDetail from './details/GeneVariantDetail';
-import { setClickedGene } from './store';
+import { setClickedEntity, ENTITY_TYPE } from './store';
 
 let DetailPanel = ({ hover, clicked, setClickedGene }) => {
   return (
@@ -33,7 +33,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setClickedGene: gene => dispatch(setClickedGene(gene))
+    setClickedGene: gene =>
+      dispatch(setClickedEntity({ entityType: ENTITY_TYPE.GENE, entity: null }))
   };
 };
 
