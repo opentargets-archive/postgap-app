@@ -8,29 +8,23 @@ import {
 } from './utils/transformEnsembl';
 import { transformEvidenceString } from './utils/transformOpenTargets';
 
+import {
+  SET_LOCATION,
+  SET_FILTER_LD,
+  SET_HOVER_ENTITY,
+  SET_CLICKED_ENTITY
+} from './actions';
+
 import rawData from '../raw.json';
 import rawEnsemblData from '../rawEnsembl.json';
 import rawEnsemblVariantsData from '../rawEnsemblVariants.json';
 
-const SET_LOCATION = 'SET_LOCATION';
-export function setLocation(location) {
-  return { type: SET_LOCATION, location };
-}
-
-const SET_FILTER_LD = 'SET_FILTER_LD';
-export function setFilterLD(filter) {
-  return { type: SET_FILTER_LD, filter };
-}
-
-const SET_HOVER_ENTITY = 'SET_HOVER_ENTITY'; // generalize?
-export function setHoverEntity({ entityType, entity }) {
-  return { type: SET_HOVER_ENTITY, entityType, entity };
-}
-
-const SET_CLICKED_ENTITY = 'SET_CLICKED_ENTITY'; // generalize?
-export function setClickedEntity({ entityType, entity }) {
-  return { type: SET_CLICKED_ENTITY, entityType, entity };
-}
+export {
+  setLocation,
+  setFilterLD,
+  setHoverEntity,
+  setClickedEntity
+} from './actions';
 
 // selectors (reselect memoizes)
 const getRows = state => state.rows;
