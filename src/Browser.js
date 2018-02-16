@@ -8,7 +8,7 @@ import GeneTrack, { GENE_SLOT_HEIGHT } from './tracks/GeneTrack';
 import GeneVariantTrack from './tracks/GeneVariantTrack';
 import VariantTrack from './tracks/VariantTrack';
 import LeadVariantTrack from './tracks/LeadVariantTrack';
-import { setLocation, setHoverGene, selectors } from './store';
+import { setLocation, setHoverGene, setClickedGene, selectors } from './store';
 import VariantLeadVariantTrack from './tracks/VariantLeadVariantTrack';
 import DiseaseTrack from './tracks/DiseaseTrack';
 import LeadVariantDiseaseTrack from './tracks/LeadVariantDiseaseTrack';
@@ -40,7 +40,8 @@ class Browser extends React.Component {
       diseases,
       variantLeadVariants,
       leadVariantDiseases,
-      setHoverGene
+      setHoverGene,
+      setClickedGene
     } = this.props;
     const { start, end } = location;
     const diseaseScale = scalePoint().domain(diseases.map(d => d.id));
@@ -71,6 +72,7 @@ class Browser extends React.Component {
             zoomHandler={this.zoomHandler}
             windowResizeDebounceTime={50}
             setHoverGene={setHoverGene}
+            setClickedGene={setClickedGene}
           />
         </Card>
         <Card bodyStyle={{ padding: 0, height: '30px' }}>
@@ -152,7 +154,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     setLocation: location => dispatch(setLocation(location)),
-    setHoverGene: gene => dispatch(setHoverGene(gene))
+    setHoverGene: gene => dispatch(setHoverGene(gene)),
+    setClickedGene: gene => dispatch(setClickedGene(gene))
   };
 };
 

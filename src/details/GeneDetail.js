@@ -1,12 +1,11 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
 import BaseDetail from './BaseDetail';
 
-let GeneDetail = ({ gene }) => {
+const GeneDetail = ({ gene, closeHandler }) => {
   if (gene) {
     return (
-      <BaseDetail type={'Gene'} title={gene.name}>
+      <BaseDetail type={'Gene'} title={gene.name} closeHandler={closeHandler}>
         {gene.description}
       </BaseDetail>
     );
@@ -14,13 +13,5 @@ let GeneDetail = ({ gene }) => {
     return null;
   }
 };
-
-const mapStateToProps = state => {
-  return {
-    gene: state.hover.gene
-  };
-};
-
-GeneDetail = connect(mapStateToProps)(GeneDetail);
 
 export default GeneDetail;

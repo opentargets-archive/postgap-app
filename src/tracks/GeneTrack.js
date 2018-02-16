@@ -31,6 +31,7 @@ const GeneTrack = props => {
               slotOffset={GENE_SLOT_HEIGHT * i}
               slotHeight={GENE_SLOT_HEIGHT}
               setHoverGene={props.setHoverGene}
+              setClickedGene={props.setClickedGene}
             />
           );
         });

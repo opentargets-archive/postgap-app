@@ -1,6 +1,13 @@
 import React from 'react';
 
-const GeneFeature = ({ scale, data, slotOffset, slotHeight, setHoverGene }) => {
+const GeneFeature = ({
+  scale,
+  data,
+  slotOffset,
+  slotHeight,
+  setHoverGene,
+  setClickedGene
+}) => {
   const { x } = scale;
 
   const exonHeight = slotHeight * 0.4;
@@ -36,6 +43,9 @@ const GeneFeature = ({ scale, data, slotOffset, slotHeight, setHoverGene }) => {
       }}
       onMouseLeave={() => {
         setHoverGene(null);
+      }}
+      onClick={() => {
+        setClickedGene(data);
       }}
     >
       {data.strand === 1 ? `${data.name}>` : `<${data.name}`}

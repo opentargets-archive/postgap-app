@@ -109,6 +109,11 @@ export function setHoverGene(gene) {
   return { type: SET_HOVER_GENE, gene };
 }
 
+const SET_CLICKED_GENE = 'SET_CLICKED_GENE';
+export function setClickedGene(gene) {
+  return { type: SET_CLICKED_GENE, gene };
+}
+
 const SET_HOVER_ENTITY = 'SET_HOVER_ENTITY'; // generalize?
 export function setHoverEntity({ entityType, entity }) {
   return { type: SET_HOVER_ENTITY, entityType, entity };
@@ -330,6 +335,9 @@ const initialState = {
   },
   hover: {
     gene: null
+  },
+  clicked: {
+    gene: null
   }
 };
 
@@ -342,6 +350,8 @@ function reducer(state = initialState, action) {
       return { ...state, filters: { ...state.filters, ld: action.filter } };
     case SET_HOVER_GENE:
       return { ...state, hover: { ...state.hover, gene: action.gene } };
+    case SET_CLICKED_GENE:
+      return { ...state, clicked: { ...state.clicked, gene: action.gene } };
     default:
       return state;
   }
