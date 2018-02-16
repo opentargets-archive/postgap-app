@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import { Card, Row, Col, Slider, Checkbox, Layout, Affix } from 'antd';
+import { Card, Row, Col, Checkbox, Layout, Affix } from 'antd';
 
 import Browser from './Browser';
 import BrowserTable from './BrowserTable';
@@ -69,6 +69,7 @@ class App extends Component {
             </Row>
           </Col>
         </Layout.Content>
+        <Layout.Footer style={{ backgroundColor: 'black' }} />
       </Layout>
     );
   }
