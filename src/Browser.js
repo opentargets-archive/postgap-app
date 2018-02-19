@@ -8,13 +8,7 @@ import GeneTrack, { GENE_SLOT_HEIGHT } from './tracks/GeneTrack';
 import GeneVariantTrack from './tracks/GeneVariantTrack';
 import VariantTrack from './tracks/VariantTrack';
 import LeadVariantTrack from './tracks/LeadVariantTrack';
-import {
-  setLocation,
-  setHoverEntity,
-  setClickedEntity,
-  ENTITY_TYPE,
-  selectors
-} from './redux/store';
+import { setLocation, selectors } from './redux/store';
 import VariantLeadVariantTrack from './tracks/VariantLeadVariantTrack';
 import DiseaseTrack from './tracks/DiseaseTrack';
 import LeadVariantDiseaseTrack from './tracks/LeadVariantDiseaseTrack';
@@ -37,19 +31,12 @@ class Browser extends React.Component {
     const {
       chromosome,
       location,
-      parentWidth,
-      genes,
       slots,
-      variants,
       leadVariants,
       geneVariants,
       diseases,
       variantLeadVariants,
-      leadVariantDiseases,
-      setHoverGene,
-      setClickedGene,
-      setHoverVariant,
-      setClickedVariant
+      leadVariantDiseases
     } = this.props;
     const { start, end } = location;
     const diseaseScale = scalePoint().domain(diseases.map(d => d.efoId));
@@ -73,24 +60,13 @@ class Browser extends React.Component {
             height: `${GENE_SLOT_HEIGHT * slots.length}px`
           }}
         >
-          <GeneTrack
-            genes={genes}
-            slots={slots}
-            {...commonProps}
-            setHoverGene={setHoverGene}
-            setClickedGene={setClickedGene}
-          />
+          <GeneTrack {...commonProps} />
         </Card>
         <Card bodyStyle={{ padding: 0, height: '30px' }}>
           <GeneVariantTrack geneVariants={geneVariants} {...commonProps} />
         </Card>
         <Card bodyStyle={{ padding: 0, height: '30px' }}>
-          <VariantTrack
-            variants={variants}
-            {...commonProps}
-            setHoverVariant={setHoverVariant}
-            setClickedVariant={setClickedVariant}
-          />
+          <VariantTrack {...commonProps} />
         </Card>
         <Card bodyStyle={{ padding: 0, height: '30px' }}>
           <VariantLeadVariantTrack
@@ -125,8 +101,6 @@ const mapStateToProps = state => {
     chromosome: state.chromosome,
     location: state.location,
     slots: selectors.getSlots(state),
-    genes: selectors.getVisibleGenes(state),
-    variants: selectors.getVisibleVariants(state),
     geneVariants: selectors.getVisibleGeneVariants(state),
     diseases: selectors.getDiseases(state),
     leadVariants: selectors.getVisibleLeadVariants(state),
@@ -137,21 +111,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setLocation: location => dispatch(setLocation(location)),
-    setHoverGene: gene =>
-      dispatch(setHoverEntity({ entityType: ENTITY_TYPE.GENE, entity: gene })),
-    setClickedGene: gene =>
-      dispatch(
-        setClickedEntity({ entityType: ENTITY_TYPE.GENE, entity: gene })
-      ),
-    setHoverVariant: variant =>
-      dispatch(
-        setHoverEntity({ entityType: ENTITY_TYPE.VARIANT, entity: variant })
-      ),
-    setClickedVariant: variant =>
-      dispatch(
-        setClickedEntity({ entityType: ENTITY_TYPE.VARIANT, entity: variant })
-      )
+    setLocation: location => dispatch(setLocation(location))
   };
 };
 

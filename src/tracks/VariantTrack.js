@@ -1,8 +1,16 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
 import BaseTrack from './BaseTrack';
 import VariantFeature from '../features/VariantFeature';
+import {
+  setHoverEntity,
+  setClickedEntity,
+  ENTITY_TYPE,
+  selectors
+} from '../redux/store';
 
-const VariantTrack = props => {
+let VariantTrack = props => {
   return (
     <BaseTrack {...props}>
       {props.variants.map(d => (
@@ -16,5 +24,26 @@ const VariantTrack = props => {
     </BaseTrack>
   );
 };
+
+const mapStateToProps = state => {
+  return {
+    variants: selectors.getVisibleVariants(state)
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setHoverVariant: variant =>
+      dispatch(
+        setHoverEntity({ entityType: ENTITY_TYPE.VARIANT, entity: variant })
+      ),
+    setClickedVariant: variant =>
+      dispatch(
+        setClickedEntity({ entityType: ENTITY_TYPE.VARIANT, entity: variant })
+      )
+  };
+};
+
+VariantTrack = connect(mapStateToProps, mapDispatchToProps)(VariantTrack);
 
 export default VariantTrack;
