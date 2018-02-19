@@ -4,14 +4,24 @@ import { connect } from 'react-redux';
 import GeneDetail from './details/GeneDetail';
 import VariantDetail from './details/VariantDetail';
 import GeneVariantDetail from './details/GeneVariantDetail';
+import VariantLeadVariantDetail from './details/VariantLeadVariantDetail';
 import { setClickedEntity, ENTITY_TYPE } from './redux/store';
+
+const showHover = (hover, clicked) => {
+  const hoverEqualsClicked = hover && clicked && hover.id === clicked.id;
+  if (!clicked) {
+    return hover;
+  }
+  return hover && !hoverEqualsClicked;
+};
 
 let DetailPanel = ({
   hover,
   clicked,
   setClickedGene,
   setClickedVariant,
-  setClickedGeneVariant
+  setClickedGeneVariant,
+  setClickedVariantLeadVariant
 }) => {
   return (
     <React.Fragment>
@@ -23,7 +33,10 @@ let DetailPanel = ({
           }}
         />
       ) : null}
-      {hover.gene ? <GeneDetail gene={hover.gene} /> : null}
+      {showHover(hover.gene, clicked.gene) ? (
+        <GeneDetail gene={hover.gene} />
+      ) : null}
+
       {clicked.variant ? (
         <VariantDetail
           variant={clicked.variant}
@@ -32,7 +45,10 @@ let DetailPanel = ({
           }}
         />
       ) : null}
-      {hover.variant ? <VariantDetail variant={hover.variant} /> : null}
+      {showHover(hover.variant, clicked.variant) ? (
+        <VariantDetail variant={hover.variant} />
+      ) : null}
+
       {clicked.geneVariant ? (
         <GeneVariantDetail
           geneVariant={clicked.geneVariant}
@@ -41,8 +57,22 @@ let DetailPanel = ({
           }}
         />
       ) : null}
-      {hover.geneVariant ? (
+      {showHover(hover.geneVariant, clicked.geneVariant) ? (
         <GeneVariantDetail geneVariant={hover.geneVariant} />
+      ) : null}
+
+      {clicked.variantLeadVariant ? (
+        <VariantLeadVariantDetail
+          variantLeadVariant={clicked.variantLeadVariant}
+          closeHandler={() => {
+            setClickedVariantLeadVariant(null);
+          }}
+        />
+      ) : null}
+      {showHover(hover.variantLeadVariant, clicked.variantLeadVariant) ? (
+        <VariantLeadVariantDetail
+          variantLeadVariant={hover.variantLeadVariant}
+        />
       ) : null}
     </React.Fragment>
   );
@@ -57,17 +87,24 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setClickedGene: gene =>
+    setClickedGene: () =>
       dispatch(
         setClickedEntity({ entityType: ENTITY_TYPE.GENE, entity: null })
       ),
-    setClickedVariant: variant =>
+    setClickedVariant: () =>
       dispatch(
         setClickedEntity({ entityType: ENTITY_TYPE.VARIANT, entity: null })
       ),
-    setClickedGeneVariant: geneVariant =>
+    setClickedGeneVariant: () =>
       dispatch(
         setClickedEntity({ entityType: ENTITY_TYPE.GENE_VARIANT, entity: null })
+      ),
+    setClickedVariantLeadVariant: () =>
+      dispatch(
+        setClickedEntity({
+          entityType: ENTITY_TYPE.VARIANT_LEAD_VARIANT,
+          entity: null
+        })
       )
   };
 };
