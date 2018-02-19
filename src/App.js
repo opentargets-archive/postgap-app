@@ -46,9 +46,7 @@ class App extends Component {
                 <LeadVariantDiseaseFilter />
               </Col>
               <Col span={6}>
-                <Card bodyStyle={{ padding: 10 }}>
-                  <SummaryCounts />
-                </Card>
+                <SummaryCounts />
               </Col>
             </Row>
 

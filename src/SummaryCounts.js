@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Row, Col } from 'antd';
+import { Card, Row, Col } from 'antd';
 
 import { selectors } from './redux/store';
 
@@ -10,7 +10,15 @@ let SummaryCountsPanel = ({
   leadVariantDiseasesFilteredCount
 }) => {
   return (
-    <React.Fragment>
+    <Card bodyStyle={{ padding: 10 }}>
+      <Row>
+        <Col span={16}>
+          <span style={{ fontWeight: 100, fontStyle: 'italic' }}>
+            Filter Effect
+          </span>
+        </Col>
+      </Row>
+      <hr />
       <Row style={{ textAlign: 'center' }}>
         <Col span={8}>
           <h1 style={{ marginBottom: 0 }}>{`${geneVariantsFilteredCount}`}</h1>
@@ -29,7 +37,7 @@ let SummaryCountsPanel = ({
           <span style={{ fontSize: 12 }}>lead variant-diseases</span>
         </Col>
       </Row>
-    </React.Fragment>
+    </Card>
   );
 };
 
