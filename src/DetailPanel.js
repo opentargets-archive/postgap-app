@@ -6,7 +6,13 @@ import VariantDetail from './details/VariantDetail';
 import GeneVariantDetail from './details/GeneVariantDetail';
 import { setClickedEntity, ENTITY_TYPE } from './redux/store';
 
-let DetailPanel = ({ hover, clicked, setClickedGene, setClickedVariant }) => {
+let DetailPanel = ({
+  hover,
+  clicked,
+  setClickedGene,
+  setClickedVariant,
+  setClickedGeneVariant
+}) => {
   return (
     <React.Fragment>
       {clicked.gene ? (
@@ -27,7 +33,17 @@ let DetailPanel = ({ hover, clicked, setClickedGene, setClickedVariant }) => {
         />
       ) : null}
       {hover.variant ? <VariantDetail variant={hover.variant} /> : null}
-      <GeneVariantDetail />
+      {clicked.geneVariant ? (
+        <GeneVariantDetail
+          geneVariant={clicked.geneVariant}
+          closeHandler={() => {
+            setClickedGeneVariant(null);
+          }}
+        />
+      ) : null}
+      {hover.geneVariant ? (
+        <GeneVariantDetail geneVariant={hover.geneVariant} />
+      ) : null}
     </React.Fragment>
   );
 };
@@ -48,6 +64,10 @@ const mapDispatchToProps = dispatch => {
     setClickedVariant: variant =>
       dispatch(
         setClickedEntity({ entityType: ENTITY_TYPE.VARIANT, entity: null })
+      ),
+    setClickedGeneVariant: geneVariant =>
+      dispatch(
+        setClickedEntity({ entityType: ENTITY_TYPE.GENE_VARIANT, entity: null })
       )
   };
 };
