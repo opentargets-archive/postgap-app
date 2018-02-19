@@ -1,11 +1,6 @@
 import React from 'react';
 
-const VariantFeature = ({
-  scale,
-  data,
-  setHoverVariant,
-  setClickedVariant
-}) => {
+const VariantFeature = ({ scale, data, setHover, setClicked }) => {
   const { x, y } = scale;
   return (
     <line
@@ -15,13 +10,13 @@ const VariantFeature = ({
       y2={y(1)}
       style={{ stroke: 'blue', strokeWidth: 2 }}
       onMouseEnter={() => {
-        setHoverVariant(data);
+        setHover(data);
       }}
       onMouseLeave={() => {
-        setHoverVariant(null);
+        setHover(null);
       }}
       onClick={() => {
-        setClickedVariant(data);
+        setClicked(data);
       }}
     />
   );

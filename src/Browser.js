@@ -32,7 +32,6 @@ class Browser extends React.Component {
       chromosome,
       location,
       slots,
-      leadVariants,
       geneVariants,
       diseases,
       variantLeadVariants,
@@ -75,7 +74,7 @@ class Browser extends React.Component {
           />
         </Card>
         <Card bodyStyle={{ padding: 0, height: '30px' }}>
-          <LeadVariantTrack leadVariants={leadVariants} {...commonProps} />
+          <LeadVariantTrack {...commonProps} />
         </Card>
         <Card bodyStyle={{ padding: 0, height: '30px' }}>
           <LeadVariantDiseaseTrack
@@ -103,7 +102,6 @@ const mapStateToProps = state => {
     slots: selectors.getSlots(state),
     geneVariants: selectors.getVisibleGeneVariants(state),
     diseases: selectors.getDiseases(state),
-    leadVariants: selectors.getVisibleLeadVariants(state),
     variantLeadVariants: selectors.getVisibleVariantLeadVariants(state),
     leadVariantDiseases: selectors.getVisibleLeadVariantDiseases(state)
   };

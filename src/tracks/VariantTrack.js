@@ -10,17 +10,11 @@ import {
   selectors
 } from '../redux/store';
 
-let VariantTrack = props => {
+let VariantTrack = ({ variants, setHover, setClicked, ...rest }) => {
+  const handlers = { setHover, setClicked };
   return (
-    <BaseTrack {...props}>
-      {props.variants.map(d => (
-        <VariantFeature
-          key={d.id}
-          data={d}
-          setHoverVariant={props.setHoverVariant}
-          setClickedVariant={props.setClickedVariant}
-        />
-      ))}
+    <BaseTrack {...rest}>
+      {variants.map(d => <VariantFeature key={d.id} data={d} {...handlers} />)}
     </BaseTrack>
   );
 };
@@ -33,11 +27,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setHoverVariant: variant =>
+    setHover: variant =>
       dispatch(
         setHoverEntity({ entityType: ENTITY_TYPE.VARIANT, entity: variant })
       ),
-    setClickedVariant: variant =>
+    setClicked: variant =>
       dispatch(
         setClickedEntity({ entityType: ENTITY_TYPE.VARIANT, entity: variant })
       )
