@@ -8,6 +8,11 @@ export function setFilterLD(filter) {
   return { type: SET_FILTER_LD, filter };
 }
 
+export const SET_FILTER_GWAS_PVALUE = 'SET_FILTER_GWAS_PVALUE';
+export function setFilterGwasPValue(filter) {
+  return { type: SET_FILTER_GWAS_PVALUE, filter };
+}
+
 export const SET_HOVER_ENTITY = 'SET_HOVER_ENTITY';
 export function setHoverEntity({ entityType, entity }) {
   return { type: SET_HOVER_ENTITY, entityType, entity };

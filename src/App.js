@@ -9,6 +9,7 @@ import BrowserTable from './BrowserTable';
 import VariantLeadVariantFilter from './filters/VariantLeadVariantFilter';
 import DetailPanel from './DetailPanel';
 import SummaryCounts from './SummaryCounts';
+import LeadVariantDiseaseFilter from './filters/LeadVariantDiseaseFilter';
 
 class App extends Component {
   render() {
@@ -43,7 +44,7 @@ class App extends Component {
                 <VariantLeadVariantFilter />
               </Col>
               <Col span={6}>
-                <Card title="LeadV2D Filter" />
+                <LeadVariantDiseaseFilter />
               </Col>
               <Col span={6}>
                 <Card bodyStyle={{ padding: 10 }}>

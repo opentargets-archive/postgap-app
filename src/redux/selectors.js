@@ -73,6 +73,7 @@ const getEnsemblGenes = state => state.ensemblGenes;
 const getEnsemblVariants = state => state.ensemblVariants;
 const getLocation = state => state.location;
 const getFilterLD = state => state.filters.ld;
+const getFilterGwasPValue = state => state.filters.gwasPValue;
 
 // derived
 // TODO: Pattern for browser selectors should follow:
@@ -94,12 +95,18 @@ const getRowsDiseases = createSelector([getRows], rows =>
   rowsToUniqueDiseases(rows)
 );
 const getRowsFiltered = createSelector(
-  [getRows, getFilterLD],
-  (rows, filterLD) => {
+  [getRows, getFilterLD, getFilterGwasPValue],
+  (rows, filterLD, filterGwasPvalue) => {
     if (!filterLD) {
       return rows;
     }
-    const rfs = rows.filter(d => filterLD[0] <= d.r2 && d.r2 <= filterLD[1]);
+    const rfs = rows
+      .filter(d => filterLD[0] <= d.r2 && d.r2 <= filterLD[1])
+      .filter(d => {
+        const low = filterGwasPvalue[0] <= -Math.log10(d.gwasPValue);
+        const high = -Math.log10(d.gwasPValue) <= filterGwasPvalue[1];
+        return low && high;
+      });
     return rfs;
   }
 );
@@ -176,6 +183,14 @@ const getLeadVariantDiseasesFilteredCount = createSelector(
   [getLeadVariantDiseasesFiltered],
   leadVariantDiseasesFiltered => leadVariantDiseasesFiltered.length
 );
+
+const getMaxMinusLogGwasPValue = createSelector([getRows], rows => {
+  const rowWithMinValue = _.min(rows, d => d.gwasPValue);
+  if (rowWithMinValue) {
+    return -Math.log10(rowWithMinValue.gwasPValue); // TODO: 1 is for float conversion; check in better way
+  }
+  return 100; // TODO: Catch and disable slider
+});
 
 // ABOVE TO KEEP; BELOW TO REFACTOR
 
@@ -373,5 +388,7 @@ export const selectors = {
   // counts
   getGeneVariantsFilteredCount,
   getVariantLeadVariantsFilteredCount,
-  getLeadVariantDiseasesFilteredCount
+  getLeadVariantDiseasesFilteredCount,
+  // filters
+  getMaxMinusLogGwasPValue
 };

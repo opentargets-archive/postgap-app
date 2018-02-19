@@ -10,7 +10,8 @@ import {
   SET_LOCATION,
   SET_FILTER_LD,
   SET_HOVER_ENTITY,
-  SET_CLICKED_ENTITY
+  SET_CLICKED_ENTITY,
+  SET_FILTER_GWAS_PVALUE
 } from './actions';
 
 import rawData from '../raw.json';
@@ -20,6 +21,7 @@ import rawEnsemblVariantsData from '../rawEnsemblVariants.json';
 export {
   setLocation,
   setFilterLD,
+  setFilterGwasPValue,
   setHoverEntity,
   setClickedEntity
 } from './actions';
@@ -40,7 +42,8 @@ const initialState = {
     transformEnsemblVariant
   ),
   filters: {
-    ld: [0.7, 1]
+    ld: [0.7, 1],
+    gwasPValue: [0, 100]
   },
   hover: {
     gene: null,
@@ -90,6 +93,11 @@ function reducer(state = initialState, action) {
       return { ...state, location: action.location };
     case SET_FILTER_LD:
       return { ...state, filters: { ...state.filters, ld: action.filter } };
+    case SET_FILTER_GWAS_PVALUE:
+      return {
+        ...state,
+        filters: { ...state.filters, gwasPValue: action.filter }
+      };
     case SET_HOVER_ENTITY:
       return {
         ...state,
