@@ -46,13 +46,19 @@ const initialState = {
     gene: null,
     variant: null,
     leadVariant: null,
-    disease: null
+    disease: null,
+    geneVariant: null,
+    variantLeadVariant: null,
+    leadVariantDisease: null
   },
   clicked: {
     gene: null,
     variant: null,
     leadVariant: null,
-    disease: null
+    disease: null,
+    geneVariant: null,
+    variantLeadVariant: null,
+    leadVariantDisease: null
   }
 };
 
@@ -60,7 +66,10 @@ export const ENTITY_TYPE = {
   GENE: 'gene',
   VARIANT: 'variant',
   LEAD_VARIANT: 'leadVariant',
-  DISEASE: 'disease'
+  DISEASE: 'disease',
+  GENE_VARIANT: 'geneVariant',
+  VARIANT_LEAD_VARIANT: 'variantLeadVariant',
+  LEAD_VARIANT_DISEASE: 'leadVariantDisease'
 };
 
 // TODO: Make SET_FILTER_LD more general

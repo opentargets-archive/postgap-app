@@ -28,15 +28,7 @@ class Browser extends React.Component {
   }
 
   render() {
-    const {
-      chromosome,
-      location,
-      slots,
-      geneVariants,
-      diseases,
-      variantLeadVariants,
-      leadVariantDiseases
-    } = this.props;
+    const { chromosome, location, slots, diseases } = this.props;
     const { start, end } = location;
     const diseaseScale = scalePoint().domain(diseases.map(d => d.efoId));
     const commonProps = {
@@ -62,33 +54,25 @@ class Browser extends React.Component {
           <GeneTrack {...commonProps} />
         </Card>
         <Card bodyStyle={{ padding: 0, height: '30px' }}>
-          <GeneVariantTrack geneVariants={geneVariants} {...commonProps} />
+          <GeneVariantTrack {...commonProps} />
         </Card>
         <Card bodyStyle={{ padding: 0, height: '30px' }}>
           <VariantTrack {...commonProps} />
         </Card>
         <Card bodyStyle={{ padding: 0, height: '30px' }}>
-          <VariantLeadVariantTrack
-            variantLeadVariants={variantLeadVariants}
-            {...commonProps}
-          />
+          <VariantLeadVariantTrack {...commonProps} />
         </Card>
         <Card bodyStyle={{ padding: 0, height: '30px' }}>
           <LeadVariantTrack {...commonProps} />
         </Card>
         <Card bodyStyle={{ padding: 0, height: '30px' }}>
           <LeadVariantDiseaseTrack
-            leadVariantDiseases={leadVariantDiseases}
             diseaseScale={diseaseScale}
             {...commonProps}
           />
         </Card>
         <Card bodyStyle={{ padding: 0, height: '60px' }}>
-          <DiseaseTrack
-            diseases={diseases}
-            diseaseScale={diseaseScale}
-            {...commonProps}
-          />
+          <DiseaseTrack diseaseScale={diseaseScale} {...commonProps} />
         </Card>
       </div>
     );
@@ -100,10 +84,7 @@ const mapStateToProps = state => {
     chromosome: state.chromosome,
     location: state.location,
     slots: selectors.getSlots(state),
-    geneVariants: selectors.getVisibleGeneVariants(state),
-    diseases: selectors.getDiseases(state),
-    variantLeadVariants: selectors.getVisibleVariantLeadVariants(state),
-    leadVariantDiseases: selectors.getVisibleLeadVariantDiseases(state)
+    diseases: selectors.getDiseases(state)
   };
 };
 
