@@ -74,6 +74,7 @@ const getEnsemblVariants = state => state.ensemblVariants;
 const getLocation = state => state.location;
 const getFilterLD = state => state.filters.ld;
 const getFilterGwasPValue = state => state.filters.gwasPValue;
+const getFilterG2VMustHaves = state => state.filters.g2VMustHaves;
 
 // derived
 // TODO: Pattern for browser selectors should follow:
@@ -95,8 +96,8 @@ const getRowsDiseases = createSelector([getRows], rows =>
   rowsToUniqueDiseases(rows)
 );
 const getRowsFiltered = createSelector(
-  [getRows, getFilterLD, getFilterGwasPValue],
-  (rows, filterLD, filterGwasPvalue) => {
+  [getRows, getFilterLD, getFilterGwasPValue, getFilterG2VMustHaves],
+  (rows, filterLD, filterGwasPvalue, filterG2VMustHaves) => {
     if (!filterLD) {
       return rows;
     }
@@ -106,6 +107,9 @@ const getRowsFiltered = createSelector(
         const low = filterGwasPvalue[0] <= -Math.log10(d.gwasPValue);
         const high = -Math.log10(d.gwasPValue) <= filterGwasPvalue[1];
         return low && high;
+      })
+      .filter(d => {
+        return filterG2VMustHaves.every(field => d[field] > 0);
       });
     return rfs;
   }

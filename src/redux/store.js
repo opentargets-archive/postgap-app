@@ -9,9 +9,10 @@ import { transformEvidenceString } from './utils/transformOpenTargets';
 import {
   SET_LOCATION,
   SET_FILTER_LD,
+  SET_FILTER_GWAS_PVALUE,
+  SET_FILTER_G2V_MUST_HAVES,
   SET_HOVER_ENTITY,
-  SET_CLICKED_ENTITY,
-  SET_FILTER_GWAS_PVALUE
+  SET_CLICKED_ENTITY
 } from './actions';
 
 import rawData from '../raw.json';
@@ -22,6 +23,7 @@ export {
   setLocation,
   setFilterLD,
   setFilterGwasPValue,
+  setFilterG2VMustHaves,
   setHoverEntity,
   setClickedEntity
 } from './actions';
@@ -43,7 +45,8 @@ const initialState = {
   ),
   filters: {
     ld: [0.7, 1],
-    gwasPValue: [0, 100]
+    gwasPValue: [0, 100],
+    g2VMustHaves: []
   },
   hover: {
     gene: null,
@@ -97,6 +100,11 @@ function reducer(state = initialState, action) {
       return {
         ...state,
         filters: { ...state.filters, gwasPValue: action.filter }
+      };
+    case SET_FILTER_G2V_MUST_HAVES:
+      return {
+        ...state,
+        filters: { ...state.filters, g2VMustHaves: action.filter }
       };
     case SET_HOVER_ENTITY:
       return {

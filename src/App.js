@@ -10,6 +10,7 @@ import VariantLeadVariantFilter from './filters/VariantLeadVariantFilter';
 import DetailPanel from './DetailPanel';
 import SummaryCounts from './SummaryCounts';
 import LeadVariantDiseaseFilter from './filters/LeadVariantDiseaseFilter';
+import GeneVariantFilter from './filters/GeneVariantFilter';
 
 class App extends Component {
   render() {
@@ -36,9 +37,7 @@ class App extends Component {
           <Col gutter={6}>
             <Row gutter={16}>
               <Col span={6}>
-                <Card title="G2V Filter">
-                  <Checkbox.Group options={g2vOptions} value={g2vChecked} />
-                </Card>
+                <GeneVariantFilter />
               </Col>
               <Col span={6}>
                 <VariantLeadVariantFilter />

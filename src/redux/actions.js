@@ -13,6 +13,11 @@ export function setFilterGwasPValue(filter) {
   return { type: SET_FILTER_GWAS_PVALUE, filter };
 }
 
+export const SET_FILTER_G2V_MUST_HAVES = 'SET_FILTER_G2V_MUST_HAVES';
+export function setFilterG2VMustHaves(filter) {
+  return { type: SET_FILTER_G2V_MUST_HAVES, filter };
+}
+
 export const SET_HOVER_ENTITY = 'SET_HOVER_ENTITY';
 export function setHoverEntity({ entityType, entity }) {
   return { type: SET_HOVER_ENTITY, entityType, entity };
