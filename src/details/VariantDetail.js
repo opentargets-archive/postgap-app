@@ -1,16 +1,12 @@
 import React from 'react';
 import BaseDetail from './BaseDetail';
 
-const d = {
-    id: 'rs12740374',
-    pos: 109274968,
-    chromosome: 1,
-}
-
-const VariantDetail = (props) => {
-    return <BaseDetail type={'Variant'} title={d.id}>
-        {d.chromosome}:{d.pos}
+const VariantDetail = ({ variant, closeHandler }) => {
+  return (
+    <BaseDetail type={'Variant'} title={variant.id} closeHandler={closeHandler}>
+      {variant.chromosome}:{variant.pos}
     </BaseDetail>
-}
+  );
+};
 
 export default VariantDetail;

@@ -47,7 +47,9 @@ class Browser extends React.Component {
       variantLeadVariants,
       leadVariantDiseases,
       setHoverGene,
-      setClickedGene
+      setClickedGene,
+      setHoverVariant,
+      setClickedVariant
     } = this.props;
     const { start, end } = location;
     const diseaseScale = scalePoint().domain(diseases.map(d => d.efoId));
@@ -97,6 +99,8 @@ class Browser extends React.Component {
             end={end}
             zoomHandler={this.zoomHandler}
             windowResizeDebounceTime={50}
+            setHoverVariant={setHoverVariant}
+            setClickedVariant={setClickedVariant}
           />
         </Card>
         <Card bodyStyle={{ padding: 0, height: '30px' }}>
@@ -163,7 +167,17 @@ const mapDispatchToProps = dispatch => {
     setHoverGene: gene =>
       dispatch(setHoverEntity({ entityType: ENTITY_TYPE.GENE, entity: gene })),
     setClickedGene: gene =>
-      dispatch(setClickedEntity({ entityType: ENTITY_TYPE.GENE, entity: gene }))
+      dispatch(
+        setClickedEntity({ entityType: ENTITY_TYPE.GENE, entity: gene })
+      ),
+    setHoverVariant: variant =>
+      dispatch(
+        setHoverEntity({ entityType: ENTITY_TYPE.VARIANT, entity: variant })
+      ),
+    setClickedVariant: variant =>
+      dispatch(
+        setClickedEntity({ entityType: ENTITY_TYPE.VARIANT, entity: variant })
+      )
   };
 };
 
