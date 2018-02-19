@@ -131,13 +131,15 @@ const getEnsemblVariantsLookup = createSelector(
     return variantLookup;
   }
 );
-// const getGenesFiltered = createSelector([getRowsFiltered], rows => rowsToUniqueGenes(rows));
-// const getVariantsFiltered = createSelector([getRowsFiltered], rows =>
-//   rowsToUniqueVariants(rows)
-// );
-// const getLeadVariantsFiltered = createSelector([getRowsFiltered], rows =>
-//   rowsToUniqueLeadVariants(rows)
-// );
+const getGenesFiltered = createSelector([getRowsFiltered], rows =>
+  rowsToUniqueGenes(rows)
+);
+const getVariantsFiltered = createSelector([getRowsFiltered], rows =>
+  rowsToUniqueVariants(rows)
+);
+const getLeadVariantsFiltered = createSelector([getRowsFiltered], rows =>
+  rowsToUniqueLeadVariants(rows)
+);
 const getDiseasesFiltered = createSelector([getRowsFiltered], rows =>
   rowsToUniqueDiseases(rows)
 );
@@ -173,6 +175,23 @@ const getLeadVariantDiseasesFiltered = createSelector(
       ...d
     }));
   }
+);
+
+const getGenesFilteredCount = createSelector(
+  [getGenesFiltered],
+  genesFiltered => genesFiltered.length
+);
+const getVariantsFilteredCount = createSelector(
+  [getVariantsFiltered],
+  variantsFiltered => variantsFiltered.length
+);
+const getLeadVariantsFilteredCount = createSelector(
+  [getLeadVariantsFiltered],
+  leadVariantsFiltered => leadVariantsFiltered.length
+);
+const getDiseasesFilteredCount = createSelector(
+  [getDiseasesFiltered],
+  diseasesFiltered => diseasesFiltered.length
 );
 
 const getGeneVariantsFilteredCount = createSelector(
@@ -390,6 +409,10 @@ export const selectors = {
   getVisibleVariantLeadVariants: getVariantLeadVariantsFiltered,
   getVisibleLeadVariantDiseases: getLeadVariantDiseasesFiltered,
   // counts
+  getGenesFilteredCount,
+  getVariantsFilteredCount,
+  getLeadVariantsFilteredCount,
+  getDiseasesFilteredCount,
   getGeneVariantsFilteredCount,
   getVariantLeadVariantsFilteredCount,
   getLeadVariantDiseasesFilteredCount,
