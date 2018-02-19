@@ -7,7 +7,14 @@ const calculateDiseaseScaleRange = width => [
   width * (1 - PADDING)
 ];
 
-const DiseaseFeature = ({ scale, data, diseaseScale, width }) => {
+const DiseaseFeature = ({
+  scale,
+  data,
+  diseaseScale,
+  width,
+  setHover,
+  setClicked
+}) => {
   const { y } = scale;
   diseaseScale.range(calculateDiseaseScaleRange(width)); // TODO: refactor to set range in better location
   return (
@@ -17,6 +24,15 @@ const DiseaseFeature = ({ scale, data, diseaseScale, width }) => {
         cy={y(0.7)}
         r={4}
         style={{ stroke: 'blue', strokeWidth: 2, fill: 'lightgrey' }}
+        onMouseEnter={() => {
+          setHover(data);
+        }}
+        onMouseLeave={() => {
+          setHover(null);
+        }}
+        onClick={() => {
+          setClicked(data);
+        }}
       />
       <Text
         x={diseaseScale(data.efoId)}
