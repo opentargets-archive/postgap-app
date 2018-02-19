@@ -1,26 +1,36 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Card, Slider } from 'antd';
+import { Card, Row, Col, Slider } from 'antd';
 
 import { setFilterLD } from '../redux/store';
 
 let VariantLeadVariantFilter = ({ interval, setFilterLD }) => {
   return (
-    <Card title="V2LeadV Filter">
+    <Card bodyStyle={{ padding: 10 }}>
+      <Row>
+        <Col span={16}>
+          <span style={{ fontWeight: 100, fontStyle: 'italic' }}>
+            Variant - Lead Variant
+          </span>
+        </Col>
+      </Row>
+      <hr />
       <h4>
         Linkage Disequilibrium (r<sup>2</sup>)
       </h4>
-      <Slider
-        range
-        min={0.7}
-        max={1}
-        marks={{ 0.7: 0.7, 0.8: 0.8, 0.9: 0.9, 1: 1 }}
-        step={0.001}
-        defaultValue={interval}
-        onChange={value => {
-          setFilterLD(value);
-        }}
-      />
+      <div style={{ paddingLeft: 20, paddingRight: 20, paddingBottom: 20 }}>
+        <Slider
+          range
+          min={0.7}
+          max={1}
+          marks={{ 0.7: 0.7, 0.8: 0.8, 0.9: 0.9, 1: 1 }}
+          step={0.001}
+          defaultValue={interval}
+          onChange={value => {
+            setFilterLD(value);
+          }}
+        />
+      </div>
     </Card>
   );
 };
