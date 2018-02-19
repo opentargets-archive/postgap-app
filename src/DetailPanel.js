@@ -5,6 +5,7 @@ import GeneDetail from './details/GeneDetail';
 import VariantDetail from './details/VariantDetail';
 import GeneVariantDetail from './details/GeneVariantDetail';
 import VariantLeadVariantDetail from './details/VariantLeadVariantDetail';
+import LeadVariantDiseaseDetail from './details/LeadVariantDiseaseDetail';
 import { setClickedEntity, ENTITY_TYPE } from './redux/store';
 
 const showHover = (hover, clicked) => {
@@ -21,7 +22,8 @@ let DetailPanel = ({
   setClickedGene,
   setClickedVariant,
   setClickedGeneVariant,
-  setClickedVariantLeadVariant
+  setClickedVariantLeadVariant,
+  setClickedLeadVariantDisease
 }) => {
   return (
     <React.Fragment>
@@ -74,6 +76,20 @@ let DetailPanel = ({
           variantLeadVariant={hover.variantLeadVariant}
         />
       ) : null}
+
+      {clicked.leadVariantDisease ? (
+        <LeadVariantDiseaseDetail
+          leadVariantDisease={clicked.leadVariantDisease}
+          closeHandler={() => {
+            setClickedLeadVariantDisease(null);
+          }}
+        />
+      ) : null}
+      {showHover(hover.leadVariantDisease, clicked.leadVariantDisease) ? (
+        <LeadVariantDiseaseDetail
+          leadVariantDisease={hover.leadVariantDisease}
+        />
+      ) : null}
     </React.Fragment>
   );
 };
@@ -103,6 +119,13 @@ const mapDispatchToProps = dispatch => {
       dispatch(
         setClickedEntity({
           entityType: ENTITY_TYPE.VARIANT_LEAD_VARIANT,
+          entity: null
+        })
+      ),
+    setClickedLeadVariantDisease: () =>
+      dispatch(
+        setClickedEntity({
+          entityType: ENTITY_TYPE.LEAD_VARIANT_DISEASE,
           entity: null
         })
       )
