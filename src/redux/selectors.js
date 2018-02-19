@@ -164,6 +164,19 @@ const getLeadVariantDiseasesFiltered = createSelector(
   }
 );
 
+const getGeneVariantsFilteredCount = createSelector(
+  [getGeneVariantsFiltered],
+  geneVariantsFiltered => geneVariantsFiltered.length
+);
+const getVariantLeadVariantsFilteredCount = createSelector(
+  [getVariantLeadVariantsFiltered],
+  variantLeadVariantsFiltered => variantLeadVariantsFiltered.length
+);
+const getLeadVariantDiseasesFilteredCount = createSelector(
+  [getLeadVariantDiseasesFiltered],
+  leadVariantDiseasesFiltered => leadVariantDiseasesFiltered.length
+);
+
 // ABOVE TO KEEP; BELOW TO REFACTOR
 
 const getVisibleGenes = createSelector(
@@ -356,5 +369,9 @@ export const selectors = {
   getVisibleLeadVariants,
   getDiseases: getRowsDiseases,
   getVisibleVariantLeadVariants: getVariantLeadVariantsFiltered,
-  getVisibleLeadVariantDiseases: getLeadVariantDiseasesFiltered
+  getVisibleLeadVariantDiseases: getLeadVariantDiseasesFiltered,
+  // counts
+  getGeneVariantsFilteredCount,
+  getVariantLeadVariantsFilteredCount,
+  getLeadVariantDiseasesFilteredCount
 };

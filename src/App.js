@@ -8,6 +8,7 @@ import BrowserTable from './BrowserTable';
 
 import VariantLeadVariantFilter from './filters/VariantLeadVariantFilter';
 import DetailPanel from './DetailPanel';
+import SummaryCounts from './SummaryCounts';
 
 class App extends Component {
   render() {
@@ -43,6 +44,11 @@ class App extends Component {
               </Col>
               <Col span={6}>
                 <Card title="LeadV2D Filter" />
+              </Col>
+              <Col span={6}>
+                <Card bodyStyle={{ padding: 10 }}>
+                  <SummaryCounts />
+                </Card>
               </Col>
             </Row>
 
