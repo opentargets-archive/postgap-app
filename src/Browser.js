@@ -53,18 +53,19 @@ class Browser extends React.Component {
     } = this.props;
     const { start, end } = location;
     const diseaseScale = scalePoint().domain(diseases.map(d => d.efoId));
+    const commonProps = {
+      start,
+      end,
+      zoomHandler: this.zoomHandler,
+      windowResizeDebounceTime: 50
+    };
     return (
       <div>
         <Card bodyStyle={{ padding: 10 }}>
           <span>{`Human ${chromosome}:${start}-${end}`}</span>
         </Card>
         <Card bodyStyle={{ padding: 0, height: '10px' }}>
-          <ScaleTrack
-            start={start}
-            end={end}
-            zoomHandler={this.zoomHandler}
-            windowResizeDebounceTime={50}
-          />
+          <ScaleTrack {...commonProps} />
         </Card>
         <Card
           bodyStyle={{
@@ -75,30 +76,18 @@ class Browser extends React.Component {
           <GeneTrack
             genes={genes}
             slots={slots}
-            start={start}
-            end={end}
-            zoomHandler={this.zoomHandler}
-            windowResizeDebounceTime={50}
+            {...commonProps}
             setHoverGene={setHoverGene}
             setClickedGene={setClickedGene}
           />
         </Card>
         <Card bodyStyle={{ padding: 0, height: '30px' }}>
-          <GeneVariantTrack
-            geneVariants={geneVariants}
-            start={start}
-            end={end}
-            zoomHandler={this.zoomHandler}
-            windowResizeDebounceTime={50}
-          />
+          <GeneVariantTrack geneVariants={geneVariants} {...commonProps} />
         </Card>
         <Card bodyStyle={{ padding: 0, height: '30px' }}>
           <VariantTrack
             variants={variants}
-            start={start}
-            end={end}
-            zoomHandler={this.zoomHandler}
-            windowResizeDebounceTime={50}
+            {...commonProps}
             setHoverVariant={setHoverVariant}
             setClickedVariant={setClickedVariant}
           />
@@ -106,39 +95,24 @@ class Browser extends React.Component {
         <Card bodyStyle={{ padding: 0, height: '30px' }}>
           <VariantLeadVariantTrack
             variantLeadVariants={variantLeadVariants}
-            start={start}
-            end={end}
-            zoomHandler={this.zoomHandler}
-            windowResizeDebounceTime={50}
+            {...commonProps}
           />
         </Card>
         <Card bodyStyle={{ padding: 0, height: '30px' }}>
-          <LeadVariantTrack
-            leadVariants={leadVariants}
-            start={start}
-            end={end}
-            zoomHandler={this.zoomHandler}
-            windowResizeDebounceTime={50}
-          />
+          <LeadVariantTrack leadVariants={leadVariants} {...commonProps} />
         </Card>
         <Card bodyStyle={{ padding: 0, height: '30px' }}>
           <LeadVariantDiseaseTrack
             leadVariantDiseases={leadVariantDiseases}
             diseaseScale={diseaseScale}
-            start={start}
-            end={end}
-            zoomHandler={this.zoomHandler}
-            windowResizeDebounceTime={50}
+            {...commonProps}
           />
         </Card>
         <Card bodyStyle={{ padding: 0, height: '60px' }}>
           <DiseaseTrack
             diseases={diseases}
             diseaseScale={diseaseScale}
-            start={start}
-            end={end}
-            zoomHandler={this.zoomHandler}
-            windowResizeDebounceTime={50}
+            {...commonProps}
           />
         </Card>
       </div>
