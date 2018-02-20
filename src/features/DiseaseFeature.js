@@ -7,6 +7,7 @@ const calculateDiseaseScaleRange = width => [
   width * (1 - PADDING)
 ];
 
+// TODO: Fork and fix appended svg from react-svg-text
 const DiseaseFeature = ({
   scale,
   data,
@@ -18,10 +19,10 @@ const DiseaseFeature = ({
   const { y } = scale;
   diseaseScale.range(calculateDiseaseScaleRange(width)); // TODO: refactor to set range in better location
   return (
-    <g>
+    <g transform={`translate(${diseaseScale(data.efoId)},${y(0.7)})`}>
       <circle
-        cx={diseaseScale(data.efoId)}
-        cy={y(0.7)}
+        cx={0}
+        cy={0}
         r={4}
         style={{ stroke: 'blue', strokeWidth: 2, fill: 'lightgrey' }}
         onMouseEnter={() => {
@@ -34,16 +35,25 @@ const DiseaseFeature = ({
           setClicked(data);
         }}
       />
-      <Text
-        x={diseaseScale(data.efoId)}
-        y={y(0.7) + 10}
+      {/* <Text
+        x={0}
+        y={10}
         width={150}
         textAnchor="middle"
         verticalAnchor="start"
         style={{ fontSize: '12px' }}
       >
         {data.efoName}
-      </Text>
+      </Text> */}
+      <text
+        x={0}
+        y={20}
+        textAnchor="middle"
+        verticalAnchor="middle"
+        style={{ fontSize: '12px' }}
+      >
+        {data.efoName}
+      </text>
     </g>
   );
 };
