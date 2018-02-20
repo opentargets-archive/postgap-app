@@ -127,7 +127,7 @@ class BrowserTable extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    rows: selectors.getRows(state)
+    rows: selectors.getRowsFiltered(state)
   };
 };
 

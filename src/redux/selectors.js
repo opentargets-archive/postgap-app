@@ -409,6 +409,7 @@ const getVisibleLeadVariants = createSelector(
 
 export const selectors = {
   getRows,
+  getRowsFiltered,
   //   getGenes: getEnsemblGenes,
   getSlots,
   getVisibleGenes,
