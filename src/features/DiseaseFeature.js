@@ -45,13 +45,7 @@ const DiseaseFeature = ({
       >
         {data.efoName}
       </Text> */}
-      <text
-        x={0}
-        y={20}
-        textAnchor="middle"
-        verticalAnchor="middle"
-        style={{ fontSize: '12px' }}
-      >
+      <text x={0} y={20} textAnchor="middle" style={{ fontSize: '12px' }}>
         {data.efoName}
       </text>
     </g>
