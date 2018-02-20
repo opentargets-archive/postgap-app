@@ -75,6 +75,9 @@ const getLocation = state => state.location;
 const getFilterLD = state => state.filters.ld;
 const getFilterGwasPValue = state => state.filters.gwasPValue;
 const getFilterG2VMustHaves = state => state.filters.g2VMustHaves;
+const getLoadingRows = state => state.loading.rows;
+const getLoadingEnsemblGenes = state => state.loading.ensemblGenes;
+const getLoadingEnsemblVariants = state => state.loading.ensemblVariants;
 
 // derived
 // TODO: Pattern for browser selectors should follow:
@@ -214,6 +217,13 @@ const getMaxMinusLogGwasPValue = createSelector([getRows], rows => {
   }
   return 100; // TODO: Catch and disable slider
 });
+
+const getIsLoading = createSelector(
+  [getLoadingRows, getLoadingEnsemblGenes, getLoadingEnsemblVariants],
+  (rows, ensemblGenes, ensemblVariants) => {
+    return rows || ensemblGenes || ensemblVariants;
+  }
+);
 
 // ABOVE TO KEEP; BELOW TO REFACTOR
 
@@ -417,5 +427,7 @@ export const selectors = {
   getVariantLeadVariantsFilteredCount,
   getLeadVariantDiseasesFilteredCount,
   // filters
-  getMaxMinusLogGwasPValue
+  getMaxMinusLogGwasPValue,
+  // loading
+  getIsLoading
 };

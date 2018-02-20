@@ -65,6 +65,11 @@ const initialState = {
     geneVariant: null,
     variantLeadVariant: null,
     leadVariantDisease: null
+  },
+  loading: {
+    rows: true,
+    ensemblGenes: true,
+    ensemblVariants: true
   }
 };
 
