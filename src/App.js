@@ -11,6 +11,7 @@ import DetailPanel from './DetailPanel';
 import SummaryCounts from './SummaryCounts';
 import LeadVariantDiseaseFilter from './filters/LeadVariantDiseaseFilter';
 import GeneVariantFilter from './filters/GeneVariantFilter';
+import OpenTargetsLogo from './OpenTargetsLogo';
 
 class App extends Component {
   render() {
@@ -27,7 +28,8 @@ class App extends Component {
             }}
           >
             <h1 style={{ color: '#555' }}>
-              <span style={{ fontWeight: 'bold' }}>Open Targets </span>
+              {/* <OpenTargetsLogo width={24} height={24} fill='blue' /> */}
+              <span style={{ fontWeight: 'bold' }}> Open Targets </span>
               <span style={{ fontWeight: 100, color: 'blue' }}>POSTGAP</span>
             </h1>
           </Layout.Header>
