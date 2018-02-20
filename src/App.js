@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import { Card, Row, Col, Checkbox, Layout, Affix } from 'antd';
+import { Card, Row, Col, Layout, Affix } from 'antd';
 
 import Browser from './Browser';
 import BrowserTable from './BrowserTable';
@@ -15,8 +15,6 @@ import OpenTargetsLogo from './OpenTargetsLogo';
 
 class App extends Component {
   render() {
-    const g2vOptions = ['VEP', 'GTEx', 'PCHiC', 'DHS', 'Fantom5'];
-    let g2vChecked = ['VEP', 'GTEx', 'PCHiC', 'DHS', 'Fantom5'];
     return (
       <Layout>
         <Affix>
@@ -75,7 +73,20 @@ class App extends Component {
             </Row>
           </Col>
         </Layout.Content>
-        <Layout.Footer style={{ backgroundColor: 'black' }} />
+        <Layout.Footer
+          style={{
+            backgroundColor: 'green',
+            color: 'white',
+            height: '40px',
+            padding: '10px 30px'
+          }}
+        >
+          <Row type="flex" align="middle">
+            <Col span={24}>
+              <span>&copy; Open Targets 2018</span>
+            </Col>
+          </Row>
+        </Layout.Footer>
       </Layout>
     );
   }
