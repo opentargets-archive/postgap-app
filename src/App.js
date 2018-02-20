@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import { Card, Row, Col, Layout, Affix } from 'antd';
+import { Card, Row, Col, Layout, Affix, Button } from 'antd';
 
 import Browser from './Browser';
 import BrowserTable from './BrowserTable';
@@ -12,6 +12,7 @@ import SummaryCounts from './SummaryCounts';
 import LeadVariantDiseaseFilter from './filters/LeadVariantDiseaseFilter';
 import GeneVariantFilter from './filters/GeneVariantFilter';
 import OpenTargetsLogo from './OpenTargetsLogo';
+import Search from './Search';
 
 class App extends Component {
   render() {
@@ -31,6 +32,18 @@ class App extends Component {
               <span style={{ fontWeight: 100, color: 'blue' }}>POSTGAP</span>
             </h1>
           </Layout.Header>
+          <Row
+            gutter={16}
+            style={{
+              backgroundColor: '#555',
+              color: 'white',
+              padding: '5px 30px'
+            }}
+          >
+            <Col span={15}>
+              <Search />
+            </Col>
+          </Row>
         </Affix>
 
         <Layout.Content style={{ background: '#ECECEC', padding: '30px' }}>
@@ -50,7 +63,6 @@ class App extends Component {
               </Col>
             </Row>
 
-            {/* TODO: Add vertical space in better way */}
             <Row gutter={16} style={{ height: '16px' }} />
 
             <Row gutter={16}>
