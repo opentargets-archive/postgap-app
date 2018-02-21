@@ -28,7 +28,7 @@ let SummaryCountsPanel = ({
   leadVariantDiseasesFilteredCount
 }) => {
   return (
-    <Card bodyStyle={{ padding: 10 }}>
+    <Card bodyStyle={{ padding: 10 }} bordered={false}>
       <Row>
         <Col span={16}>
           <span style={{ fontWeight: 100, fontStyle: 'italic' }}>

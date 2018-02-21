@@ -6,7 +6,7 @@ import { setFilterGwasPValue, selectors } from '../redux/store';
 
 let LeadVariantDiseaseFilter = ({ interval, setFilterGwasPValue, max }) => {
   return (
-    <Card bodyStyle={{ padding: 10 }}>
+    <Card bodyStyle={{ padding: 10 }} bordered={false}>
       <Row>
         <Col span={16}>
           <span style={{ fontWeight: 100, fontStyle: 'italic' }}>

@@ -17,7 +17,7 @@ let GeneVariantFilter = ({ g2VMustHaves, setFilterG2VMustHaves }) => {
     setFilterG2VMustHaves(value);
   };
   return (
-    <Card bodyStyle={{ padding: 10 }}>
+    <Card bodyStyle={{ padding: 10 }} bordered={false}>
       <Row>
         <Col span={16}>
           <span style={{ fontWeight: 100, fontStyle: 'italic' }}>
