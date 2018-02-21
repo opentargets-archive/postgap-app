@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 
 import GeneDetail from './details/GeneDetail';
 import VariantDetail from './details/VariantDetail';
@@ -16,6 +17,12 @@ const showHover = (hover, clicked) => {
     return hover;
   }
   return hover && !hoverEqualsClicked;
+};
+
+const noClickOrHover = (hover, clicked) => {
+  const hasClicked = _.some(Object.values(clicked));
+  const hasHover = _.some(Object.values(hover));
+  return !(hasClicked || hasHover);
 };
 
 let DetailPanel = ({
@@ -122,6 +129,19 @@ let DetailPanel = ({
     <LeadVariantDiseaseDetail leadVariantDisease={hover.leadVariantDisease} />
   ) : null;
 
+  const placeholder = noClickOrHover(hover, clicked) ? (
+    <div
+      style={{
+        border: '2px dashed #aaa',
+        color: '#aaa',
+        textAlign: 'center',
+        height: '100%'
+      }}
+    >
+      No selection
+    </div>
+  ) : null;
+
   return (
     <React.Fragment>
       {geneHover}
@@ -144,6 +164,8 @@ let DetailPanel = ({
 
       {leadVariantDiseaseClicked}
       {leadVariantDiseaseHover}
+
+      {placeholder}
     </React.Fragment>
   );
 };
