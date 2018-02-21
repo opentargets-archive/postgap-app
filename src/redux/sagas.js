@@ -2,7 +2,13 @@ import { delay } from 'redux-saga';
 import { call, put, take, fork, cancel, select } from 'redux-saga/effects';
 import axios from 'axios';
 
-import { SET_LOCATION, setLoadingRows, setApiData } from './actions';
+import {
+  SET_LOCATION,
+  setLoadingRows,
+  setApiData,
+  setLoadingEnsemblGenes,
+  setLoadingEnsemblVariants
+} from './actions';
 import {
   selectors,
   rowsToUniqueGenes,
@@ -25,13 +31,13 @@ function* updateLocationSaga() {
 
 function* updateLocation(action) {
   yield call(delay, 500); // debounce
-  yield put(setLoadingRows(true)); // ui display
-
   try {
     const chromosome = yield select(selectors.getChromosome);
 
     // fetch rows for location from Open Targets API
+    yield put(setLoadingRows(true));
     const rowsRaw = yield call(otApi.fetchRows, chromosome, action.location);
+    yield put(setLoadingRows(false));
     const rows = rowsRaw.map(transformEvidenceString);
 
     // extract gene and lead variant ids (for which we need to call Ensembl)
@@ -41,16 +47,20 @@ function* updateLocation(action) {
     const leadVariantIds = leadVariants.map(d => d.gwasSnpId);
 
     // fetch transcript info for each gene from Ensembl
+    yield put(setLoadingEnsemblGenes(true));
     const ensemblGenesRaw = yield call(ensemblApi.fetchGenes, geneIds);
+    yield put(setLoadingEnsemblGenes(false));
     const ensemblGenes = Object.values(ensemblGenesRaw).map(
       transformEnsemblGene
     );
 
     // fetch position info for each lead variant from Ensembl
+    yield put(setLoadingEnsemblVariants(true));
     const ensemblVariantsRaw = yield call(
       ensemblApi.fetchVariants,
       leadVariantIds
     );
+    yield put(setLoadingEnsemblVariants(false));
     const ensemblVariants = Object.values(ensemblVariantsRaw).map(
       transformEnsemblVariant
     );
@@ -59,7 +69,6 @@ function* updateLocation(action) {
     // important: this happens as one transaction for all data
     //            so UI change is consistent (and selectors work)
     yield put(setApiData({ rows, ensemblGenes, ensemblVariants }));
-    yield put(setLoadingRows(false));
   } catch (e) {
     // yield put({type: API_ERROR, message: e.message})
     console.log(e);

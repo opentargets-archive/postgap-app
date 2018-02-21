@@ -33,6 +33,16 @@ export function setLoadingRows(loading) {
   return { type: SET_LOADING_ROWS, loading };
 }
 
+export const SET_LOADING_ENSEMBL_GENES = 'SET_LOADING_ENSEMBL_GENES';
+export function setLoadingEnsemblGenes(loading) {
+  return { type: SET_LOADING_ENSEMBL_GENES, loading };
+}
+
+export const SET_LOADING_ENSEMBL_VARIANTS = 'SET_LOADING_ENSEMBL_VARIANTS';
+export function setLoadingEnsemblVariants(loading) {
+  return { type: SET_LOADING_ENSEMBL_VARIANTS, loading };
+}
+
 export const SET_API_DATA = 'SET_API_DATA';
 export function setApiData(data) {
   return { type: SET_API_DATA, data };

@@ -18,7 +18,9 @@ import {
   SET_HOVER_ENTITY,
   SET_CLICKED_ENTITY,
   SET_LOADING_ROWS,
-  SET_API_DATA
+  SET_API_DATA,
+  SET_LOADING_ENSEMBL_GENES,
+  SET_LOADING_ENSEMBL_VARIANTS
 } from './actions';
 
 import rawData from '../raw.json';
@@ -131,6 +133,16 @@ function reducer(state = initialState, action) {
       return {
         ...state,
         loading: { ...state.loading, rows: action.loading }
+      };
+    case SET_LOADING_ENSEMBL_GENES:
+      return {
+        ...state,
+        loading: { ...state.loading, ensemblGenes: action.loading }
+      };
+    case SET_LOADING_ENSEMBL_VARIANTS:
+      return {
+        ...state,
+        loading: { ...state.loading, ensemblVariants: action.loading }
       };
     case SET_API_DATA:
       const { rows, ensemblGenes, ensemblVariants } = action.data;

@@ -14,6 +14,7 @@ import GeneVariantFilter from './filters/GeneVariantFilter';
 import OpenTargetsLogo from './OpenTargetsLogo';
 import Search from './Search';
 import pkg from '../package.json';
+import Spinner from './Spinner';
 
 class App extends Component {
   constructor() {
@@ -53,6 +54,9 @@ class App extends Component {
           >
             <Col span={15}>
               <Search />
+            </Col>
+            <Col span={9}>
+              <Spinner />
             </Col>
           </Row>
         </Affix>
