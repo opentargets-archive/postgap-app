@@ -27,3 +27,13 @@ export const SET_CLICKED_ENTITY = 'SET_CLICKED_ENTITY';
 export function setClickedEntity({ entityType, entity }) {
   return { type: SET_CLICKED_ENTITY, entityType, entity };
 }
+
+export const SET_LOADING_ROWS = 'SET_LOADING_ROWS';
+export function setLoadingRows(loading) {
+  return { type: SET_LOADING_ROWS, loading };
+}
+
+export const SET_API_DATA = 'SET_API_DATA';
+export function setApiData(data) {
+  return { type: SET_API_DATA, data };
+}

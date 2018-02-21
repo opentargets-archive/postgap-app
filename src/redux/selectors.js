@@ -28,11 +28,11 @@ const LEAD_VARIANT_DISEASE_FIELDS = [
   'gwasPValue',
   'gwasSampleSize'
 ];
-const rowsToUniqueGenes = rows =>
+export const rowsToUniqueGenes = rows =>
   _.uniqBy(rows.map(d => _.pick(d, GENE_FIELDS)), 'geneId');
 const rowsToUniqueVariants = rows =>
   _.uniqBy(rows.map(d => _.pick(d, VARIANT_FIELDS)), 'ldSnpId');
-const rowsToUniqueLeadVariants = rows =>
+export const rowsToUniqueLeadVariants = rows =>
   _.uniqBy(rows.map(d => _.pick(d, LEAD_VARIANT_FIELDS)), 'gwasSnpId');
 const rowsToUniqueDiseases = rows =>
   _.uniqBy(rows.map(d => _.pick(d, DISEASE_FIELDS)), 'efoId');
@@ -78,6 +78,7 @@ const getFilterG2VMustHaves = state => state.filters.g2VMustHaves;
 const getLoadingRows = state => state.loading.rows;
 const getLoadingEnsemblGenes = state => state.loading.ensemblGenes;
 const getLoadingEnsemblVariants = state => state.loading.ensemblVariants;
+const getChromosome = state => state.chromosome;
 
 // derived
 // TODO: Pattern for browser selectors should follow:
@@ -106,11 +107,12 @@ const getRowsFiltered = createSelector(
     }
     const rfs = rows
       .filter(d => filterLD[0] <= d.r2 && d.r2 <= filterLD[1])
-      .filter(d => {
-        const low = filterGwasPvalue[0] <= -Math.log10(d.gwasPValue);
-        const high = -Math.log10(d.gwasPValue) <= filterGwasPvalue[1];
-        return low && high;
-      })
+      // TODO: Fix and reenable p-value filter
+      // .filter(d => {
+      //   const low = filterGwasPvalue[0] <= -Math.log10(d.gwasPValue);
+      //   const high = -Math.log10(d.gwasPValue) <= filterGwasPvalue[1];
+      //   return low && high;
+      // })
       .filter(d => {
         return filterG2VMustHaves.every(field => d[field] > 0);
       });
@@ -408,6 +410,7 @@ const getVisibleLeadVariants = createSelector(
 // );
 
 export const selectors = {
+  getChromosome,
   getRows,
   getRowsFiltered,
   //   getGenes: getEnsemblGenes,

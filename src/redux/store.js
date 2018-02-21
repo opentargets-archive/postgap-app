@@ -1,4 +1,8 @@
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import createSagaMiddleware from 'redux-saga';
+import { composeWithDevTools } from 'redux-devtools-extension';
+
+import mySaga from './sagas';
 
 import {
   transformEnsemblGene,
@@ -12,7 +16,9 @@ import {
   SET_FILTER_GWAS_PVALUE,
   SET_FILTER_G2V_MUST_HAVES,
   SET_HOVER_ENTITY,
-  SET_CLICKED_ENTITY
+  SET_CLICKED_ENTITY,
+  SET_LOADING_ROWS,
+  SET_API_DATA
 } from './actions';
 
 import rawData from '../raw.json';
@@ -67,9 +73,9 @@ const initialState = {
     leadVariantDisease: null
   },
   loading: {
-    rows: true,
-    ensemblGenes: true,
-    ensemblVariants: true
+    rows: false,
+    ensemblGenes: false,
+    ensemblVariants: false
   }
 };
 
@@ -121,14 +127,31 @@ function reducer(state = initialState, action) {
         ...state,
         clicked: { ...state.clicked, [action.entityType]: action.entity }
       };
+    case SET_LOADING_ROWS:
+      return {
+        ...state,
+        loading: { ...state.loading, rows: action.loading }
+      };
+    case SET_API_DATA:
+      const { rows, ensemblGenes, ensemblVariants } = action.data;
+      return {
+        ...state,
+        rows,
+        ensemblGenes,
+        ensemblVariants
+      };
     default:
       return state;
   }
 }
 
+const sagaMiddleware = createSagaMiddleware();
+
 const store = createStore(
   reducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  composeWithDevTools(applyMiddleware(sagaMiddleware))
 );
+
+sagaMiddleware.run(mySaga);
 
 export default store;
