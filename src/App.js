@@ -13,6 +13,7 @@ import LeadVariantDiseaseFilter from './filters/LeadVariantDiseaseFilter';
 import GeneVariantFilter from './filters/GeneVariantFilter';
 import OpenTargetsLogo from './OpenTargetsLogo';
 import Search from './Search';
+import pkg from '../package.json';
 
 class App extends Component {
   constructor() {
@@ -128,7 +129,7 @@ class App extends Component {
         >
           <Row type="flex" align="middle">
             <Col span={24}>
-              <span>&copy; Open Targets 2018</span>
+              <span>Version {pkg.version} &copy; Open Targets 2018</span>
             </Col>
           </Row>
         </Layout.Footer>
