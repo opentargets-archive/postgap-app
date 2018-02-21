@@ -53,19 +53,19 @@ class Browser extends React.Component {
         >
           <GeneTrack {...commonProps} />
         </Card>
-        <Card bodyStyle={{ padding: 0, height: '30px' }}>
+        <Card bodyStyle={{ padding: 0, height: '80px' }}>
           <GeneVariantTrack {...commonProps} />
         </Card>
-        <Card bodyStyle={{ padding: 0, height: '30px' }}>
+        <Card bodyStyle={{ padding: 0, height: '15px' }}>
           <VariantTrack {...commonProps} />
         </Card>
-        <Card bodyStyle={{ padding: 0, height: '30px' }}>
+        <Card bodyStyle={{ padding: 0, height: '80px' }}>
           <VariantLeadVariantTrack {...commonProps} />
         </Card>
-        <Card bodyStyle={{ padding: 0, height: '30px' }}>
+        <Card bodyStyle={{ padding: 0, height: '15px' }}>
           <LeadVariantTrack {...commonProps} />
         </Card>
-        <Card bodyStyle={{ padding: 0, height: '30px' }}>
+        <Card bodyStyle={{ padding: 0, height: '80px' }}>
           <LeadVariantDiseaseTrack
             diseaseScale={diseaseScale}
             {...commonProps}
