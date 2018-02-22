@@ -15,6 +15,14 @@ const renderVariantField = value => (
     {value}
   </a>
 );
+const renderGeneField = (value, row) => (
+  <a
+    href={`http://www.ensembl.org/Homo_sapiens/Gene/Summary?g=${row.geneId}`}
+    target={'_blank'}
+  >
+    {value}
+  </a>
+);
 const renderNonZeroField = value =>
   value > 0 ? (
     value.toPrecision(3)
@@ -43,6 +51,7 @@ const COLUMNS = [
         dataIndex: 'geneName',
         key: 'geneName',
         fixed: 'left',
+        render: renderGeneField,
         width: 100,
         sorter: comparatorStringField('geneName')
       },
