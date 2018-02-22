@@ -21,6 +21,18 @@ const renderNonZeroField = value =>
   ) : (
     <span style={{ fontStyle: 'italic', color: '#CCC' }}>No data</span>
   );
+const comparatorStringField = field => (a, b) => {
+  if (a[field] < b[field]) {
+    return -1;
+  }
+  if (a[field] > b[field]) {
+    return 1;
+  }
+  return 0;
+};
+const compareNumericField = field => (a, b) => {
+  return a[field] - b[field];
+};
 
 const COLUMNS = [
   {
@@ -31,7 +43,8 @@ const COLUMNS = [
         dataIndex: 'geneName',
         key: 'geneName',
         fixed: 'left',
-        width: 100
+        width: 100,
+        sorter: comparatorStringField('geneName')
       },
       {
         title: 'Variant',
@@ -39,7 +52,8 @@ const COLUMNS = [
         key: 'ldSnpId',
         fixed: 'left',
         render: renderVariantField,
-        width: 100
+        width: 100,
+        sorter: comparatorStringField('ldSnpId')
       },
       {
         title: 'Lead Variant',
@@ -47,14 +61,16 @@ const COLUMNS = [
         key: 'gwasSnpId',
         fixed: 'left',
         render: renderVariantField,
-        width: 120
+        width: 120,
+        sorter: comparatorStringField('gwasSnpId')
       },
       {
         title: 'Disease',
         dataIndex: 'efoName',
         key: 'efoName',
         fixed: 'left',
-        width: 220
+        width: 220,
+        sorter: comparatorStringField('efoName')
       }
     ]
   },
@@ -66,36 +82,40 @@ const COLUMNS = [
         dataIndex: 'vep',
         key: 'vep',
         render: renderNonZeroField,
-        width: 100
+        width: 100,
+        sorter: compareNumericField('vep')
       },
       {
         title: 'GTEx',
         dataIndex: 'gtex',
         key: 'gtex',
         render: renderNonZeroField,
-        width: 100
-        // sorter: true,
+        width: 100,
+        sorter: compareNumericField('gtex')
       },
       {
         title: 'PCHiC',
         dataIndex: 'pchic',
         key: 'pchic',
         render: renderNonZeroField,
-        width: 100
+        width: 100,
+        sorter: compareNumericField('pchic')
       },
       {
         title: 'DHS',
         dataIndex: 'dhs',
         key: 'dhs',
         render: renderNonZeroField,
-        width: 100
+        width: 100,
+        sorter: compareNumericField('dhs')
       },
       {
         title: 'Fantom5',
         dataIndex: 'fantom5',
         key: 'fantom5',
         render: renderNonZeroField,
-        width: 100
+        width: 100,
+        sorter: compareNumericField('fantom5')
       }
     ]
   },
@@ -107,7 +127,8 @@ const COLUMNS = [
         dataIndex: 'r2',
         key: 'r2',
         render: renderNonZeroField,
-        width: 100
+        width: 100,
+        sorter: compareNumericField('r2')
       }
     ]
   },
@@ -119,14 +140,16 @@ const COLUMNS = [
         dataIndex: 'gwasPValue',
         key: 'gwasPValue',
         render: renderNonZeroField,
-        width: 100
+        width: 100,
+        sorter: compareNumericField('gwasPValue')
       },
       {
         title: 'Study Size',
         dataIndex: 'gwasSampleSize',
         key: 'gwasSampleSize',
         render: renderIntField,
-        width: 100
+        width: 100,
+        sorter: compareNumericField('gwasSampleSize')
       }
     ]
   }
