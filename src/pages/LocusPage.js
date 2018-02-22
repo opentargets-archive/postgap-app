@@ -1,10 +1,11 @@
 import React from 'react';
-
+import { connect } from 'react-redux';
 import { Card, Row, Col, Button } from 'antd';
+import queryString from 'query-string';
 
 import Browser from '../Browser';
 import BrowserTable from '../BrowserTable';
-
+import { setLocation } from '../redux/store';
 import VariantLeadVariantFilter from '../filters/VariantLeadVariantFilter';
 import DetailPanel from '../DetailPanel';
 import SummaryCounts from '../SummaryCounts';
@@ -12,10 +13,17 @@ import LeadVariantDiseaseFilter from '../filters/LeadVariantDiseaseFilter';
 import GeneVariantFilter from '../filters/GeneVariantFilter';
 
 class LocusPage extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = { filtersVisible: true };
     this.toggleFilters = this.toggleFilters.bind(this);
+  }
+
+  componentDidMount() {
+    const { match, location, setLocation } = this.props;
+    const query = queryString.parse(location.search);
+    const { start, end, chromosome } = query;
+    setLocation({ start, end, chromosome });
   }
 
   toggleFilters() {
@@ -87,5 +95,13 @@ class LocusPage extends React.Component {
     );
   }
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setLocation: location => dispatch(setLocation(location))
+  };
+};
+
+LocusPage = connect(null, mapDispatchToProps)(LocusPage);
 
 export default LocusPage;

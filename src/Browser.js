@@ -21,20 +21,22 @@ class Browser extends React.Component {
   }
 
   zoomHandler(domain) {
+    const { chromosome } = this.props.location;
     let start = Math.round(domain.x[0]);
     let end = Math.round(domain.x[1]);
     if (start < 0) start = 0;
     // if (end > this.state.chrLength) end = this.state.chrLength;
-    this.props.setLocation({ start, end });
+    this.props.setLocation({ start, end, chromosome });
   }
 
   render() {
-    const { chromosome, location, slots, diseases } = this.props;
-    const { start, end } = location;
+    const { location, slots, diseases } = this.props;
+    const { start, end, chromosome } = location;
     const diseaseScale = scalePoint().domain(diseases.map(d => d.efoId));
     const commonProps = {
       start,
       end,
+      chromosome,
       zoomHandler: this.zoomHandler,
       windowResizeDebounceTime: 50
     };

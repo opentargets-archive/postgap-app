@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom';
 import queryString from 'query-string';
 
 import { ensemblApi } from '../redux/sagas';
+import { transformEnsemblGene } from '../redux/utils/transformEnsembl';
 
 class GenePage extends React.Component {
   constructor(props) {
@@ -14,7 +15,8 @@ class GenePage extends React.Component {
   componentDidMount() {
     const { geneId } = this.props.match.params;
     ensemblApi.fetchGenes([geneId]).then(data => {
-      const { chromosome, start, end } = data[geneId];
+      const gene = transformEnsemblGene(data[geneId]);
+      const { chromosome, start, end } = gene;
       this.setState({
         hasLoadedEnsemblGene: true,
         chromosome,

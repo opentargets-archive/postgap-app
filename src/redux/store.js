@@ -41,8 +41,8 @@ export { selectors } from './selectors';
 // TODO: Subdivide state and reducers and async load
 //       initialState url: https://mk-loci-dot-open-targets-eu-dev.appspot.com/v3/platform/public/evidence/filter?chromosome=1&begin=109167885&end=109612066&size=10&datasource=gwas_catalog&fields=unique_association_fields&fields=disease&fields=evidence&fields=variant&fields=target&fields=sourceID
 const initialState = {
-  chromosome: 1,
   location: {
+    chromosome: 1,
     start: 109167885,
     end: 109612066
   },

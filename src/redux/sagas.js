@@ -1,5 +1,5 @@
 import { delay } from 'redux-saga';
-import { call, put, take, fork, cancel, select } from 'redux-saga/effects';
+import { call, put, take, fork, cancel } from 'redux-saga/effects';
 import axios from 'axios';
 
 import {
@@ -9,11 +9,7 @@ import {
   setLoadingEnsemblGenes,
   setLoadingEnsemblVariants
 } from './actions';
-import {
-  selectors,
-  rowsToUniqueGenes,
-  rowsToUniqueLeadVariants
-} from './selectors';
+import { rowsToUniqueGenes, rowsToUniqueLeadVariants } from './selectors';
 import {
   transformEnsemblGene,
   transformEnsemblVariant
@@ -32,11 +28,9 @@ function* updateLocationSaga() {
 function* updateLocation(action) {
   yield call(delay, 500); // debounce
   try {
-    const chromosome = yield select(selectors.getChromosome);
-
     // fetch rows for location from Open Targets API
     yield put(setLoadingRows(true));
-    const rowsRaw = yield call(otApi.fetchRows, chromosome, action.location);
+    const rowsRaw = yield call(otApi.fetchRows, action.location);
     yield put(setLoadingRows(false));
     const rows = rowsRaw.map(transformEvidenceString);
 
@@ -87,8 +81,8 @@ const ENSEMBL_API_VARIATION = 'variation/homo_sapiens';
 const ENSEMBL_API_LOOKUP = 'lookup/id';
 
 export const otApi = {
-  fetchRows(chromosome, location) {
-    const { start, end } = location;
+  fetchRows(location) {
+    const { start, end, chromosome } = location;
     const endpoint = OT_API_INTERVAL({ chromosome, start, end });
     const url = `${OT_API_BASE}${OT_API_FILTER}${endpoint}`;
     return axios.get(url).then(response => response.data.data);
