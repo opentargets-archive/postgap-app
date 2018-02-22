@@ -1,37 +1,27 @@
 import React from 'react';
 import { Select, Spin } from 'antd';
-import debounce from 'lodash.debounce';
+import { debounce } from 'lodash';
+
+import { otApi } from './redux/sagas';
 const Option = Select.Option;
 
 class Search extends React.Component {
   constructor(props) {
     super(props);
     this.lastFetchId = 0;
-    this.fetchUser = debounce(this.fetchUser, 800);
+    this.fetchSearchResults = debounce(this.fetchSearchResults, 800);
   }
   state = {
     data: [],
     value: [],
     fetching: false
   };
-  fetchUser = value => {
-    console.log('fetching user', value);
+  fetchSearchResults = value => {
     this.lastFetchId += 1;
-    const fetchId = this.lastFetchId;
     this.setState({ data: [], fetching: true });
-    fetch('https://randomuser.me/api/?results=5')
-      .then(response => response.json())
-      .then(body => {
-        if (fetchId !== this.lastFetchId) {
-          // for fetch callback order
-          return;
-        }
-        const data = body.results.map(user => ({
-          text: `${user.name.first} ${user.name.last}`,
-          value: user.login.username
-        }));
-        this.setState({ data, fetching: false });
-      });
+    otApi.fetchSearch(value).then(data => {
+      this.setState({ data, fetching: false });
+    });
   };
   handleChange = value => {
     this.setState({
@@ -50,11 +40,26 @@ class Search extends React.Component {
         placeholder="Search for a gene, disease or variant..."
         notFoundContent={fetching ? <Spin size="small" /> : null}
         filterOption={false}
-        onSearch={this.fetchUser}
+        onSearch={this.fetchSearchResults}
         onChange={this.handleChange}
         style={{ width: '100%' }}
       >
-        {data.map(d => <Option key={d.value}>{d.text}</Option>)}
+        {data.map(d => (
+          <Option key={d.id}>
+            <span
+              style={{
+                fontStyle: 'italic',
+                fontWeight: 100,
+                fontSize: '0.7em'
+              }}
+            >
+              {d.type}{' '}
+            </span>
+            <span style={{ color: d.type === 'target' ? 'blue' : 'green' }}>
+              {d.name}
+            </span>
+          </Option>
+        ))}
       </Select>
     );
   }

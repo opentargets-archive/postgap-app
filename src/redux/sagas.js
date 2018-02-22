@@ -80,22 +80,57 @@ const OT_API_BASE =
 const OT_API_FILTER = 'public/evidence/filter';
 const OT_API_INTERVAL = ({ chromosome, start, end }) =>
   `?chromosome=${chromosome}&begin=${start}&end=${end}&size=10&datasource=gwas_catalog&fields=unique_association_fields&fields=disease&fields=evidence&fields=variant&fields=target&fields=sourceID`;
+const OT_API_SEARCH = ({ query }) => `private/quicksearch?q=${query}&size=3`;
 
 const ENSEMBL_API_BASE = 'https://rest.ensembl.org/';
 const ENSEMBL_API_VARIATION = 'variation/homo_sapiens';
 const ENSEMBL_API_LOOKUP = 'lookup/id';
 
-const otApi = {
+export const otApi = {
   fetchRows(chromosome, location) {
     const { start, end } = location;
     const endpoint = OT_API_INTERVAL({ chromosome, start, end });
     const url = `${OT_API_BASE}${OT_API_FILTER}${endpoint}`;
     return axios.get(url).then(response => response.data.data);
     // TODO: Handle calls over paginator and check error handling!
+  },
+  fetchSearch(query) {
+    const url = `${OT_API_BASE}${OT_API_SEARCH({ query })}`;
+    return axios.get(url).then(response => {
+      const data = [];
+      if (response.data && response.data.data) {
+        if (response.data.data.besthit) {
+          data.push({
+            id: response.data.data.besthit.data.id,
+            name: response.data.data.besthit.data.name,
+            type: response.data.data.besthit.data.type
+          });
+        }
+        if (response.data.data.target) {
+          response.data.data.target.forEach(d => {
+            data.push({
+              id: d.data.id,
+              name: d.data.name,
+              type: d.data.type
+            });
+          });
+        }
+        if (response.data.data.disease) {
+          response.data.data.disease.forEach(d => {
+            data.push({
+              id: d.data.id,
+              name: d.data.name,
+              type: d.data.type
+            });
+          });
+        }
+      }
+      return data;
+    });
   }
 };
 
-const ensemblApi = {
+export const ensemblApi = {
   fetchVariants(variantIds) {
     const url = `${ENSEMBL_API_BASE}${ENSEMBL_API_VARIATION}`;
     const body = {
