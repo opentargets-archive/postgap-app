@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Card, Row, Col } from 'antd';
 
 import { selectors } from './redux/store';
+import { commaSeparate } from './stringFormatters';
 
 const Curve = () => (
   <div style={{ padding: '0 20%' }}>
@@ -39,46 +40,48 @@ let SummaryCountsPanel = ({
       <hr />
       <Row style={{ textAlign: 'center' }}>
         <Col span={6}>
-          <h1
-            style={{ marginBottom: 0, lineHeight: 1 }}
-          >{`${genesFilteredCount}`}</h1>
+          <h1 style={{ marginBottom: 0, lineHeight: 1 }}>{`${commaSeparate(
+            genesFilteredCount
+          )}`}</h1>
           <span style={{ fontSize: 12 }}>Gene</span>
         </Col>
         <Col span={6}>
-          <h1
-            style={{ marginBottom: 0, lineHeight: 1 }}
-          >{`${variantsFilteredCount}`}</h1>
+          <h1 style={{ marginBottom: 0, lineHeight: 1 }}>{`${commaSeparate(
+            variantsFilteredCount
+          )}`}</h1>
           <span style={{ fontSize: 12 }}>Variant</span>
         </Col>
         <Col span={6}>
-          <h1
-            style={{ marginBottom: 0, lineHeight: 1 }}
-          >{`${leadVariantsFilteredCount}`}</h1>
+          <h1 style={{ marginBottom: 0, lineHeight: 1 }}>{`${commaSeparate(
+            leadVariantsFilteredCount
+          )}`}</h1>
           <span style={{ fontSize: 12 }}>Lead Variant</span>
         </Col>
         <Col span={6}>
-          <h1
-            style={{ marginBottom: 0, lineHeight: 1 }}
-          >{`${diseasesFilteredCount}`}</h1>
+          <h1 style={{ marginBottom: 0, lineHeight: 1 }}>{`${commaSeparate(
+            diseasesFilteredCount
+          )}`}</h1>
           <span style={{ fontSize: 12 }}>Disease</span>
         </Col>
       </Row>
       <Row style={{ textAlign: 'center' }}>
         <Col offset={3} span={6}>
           <Curve />
-          <h1 style={{ marginBottom: 0 }}>{`${geneVariantsFilteredCount}`}</h1>
+          <h1 style={{ marginBottom: 0 }}>{`${commaSeparate(
+            geneVariantsFilteredCount
+          )}`}</h1>
         </Col>
         <Col span={6}>
           <Curve />
-          <h1
-            style={{ marginBottom: 0 }}
-          >{`${variantLeadVariantsFilteredCount}`}</h1>
+          <h1 style={{ marginBottom: 0 }}>{`${commaSeparate(
+            variantLeadVariantsFilteredCount
+          )}`}</h1>
         </Col>
         <Col span={6}>
           <Curve />
-          <h1
-            style={{ marginBottom: 0 }}
-          >{`${leadVariantDiseasesFilteredCount}`}</h1>
+          <h1 style={{ marginBottom: 0 }}>{`${commaSeparate(
+            leadVariantDiseasesFilteredCount
+          )}`}</h1>
         </Col>
       </Row>
     </Card>

@@ -12,6 +12,7 @@ import { setLocation, selectors } from './redux/store';
 import VariantLeadVariantTrack from './tracks/VariantLeadVariantTrack';
 import DiseaseTrack from './tracks/DiseaseTrack';
 import LeadVariantDiseaseTrack from './tracks/LeadVariantDiseaseTrack';
+import { commaSeparate } from './stringFormatters';
 
 class Browser extends React.Component {
   constructor(props) {
@@ -40,7 +41,9 @@ class Browser extends React.Component {
     return (
       <div>
         <Card bodyStyle={{ padding: 10 }}>
-          <span>{`Human ${chromosome}:${start}-${end}`}</span>
+          <span>{`Human ${chromosome}:${commaSeparate(start)}-${commaSeparate(
+            end
+          )}`}</span>
         </Card>
         <Card bodyStyle={{ padding: 0, height: '10px' }}>
           <ScaleTrack {...commonProps} />

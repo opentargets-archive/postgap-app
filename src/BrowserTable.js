@@ -4,6 +4,23 @@ import { connect } from 'react-redux';
 import { CSVLink } from 'react-csv';
 
 import { selectors } from './redux/store';
+import { commaSeparate } from './stringFormatters';
+
+const renderIntField = value => commaSeparate(value);
+const renderVariantField = value => (
+  <a
+    href={`http://www.ensembl.org/Homo_sapiens/Variation/Explore?v=${value}`}
+    target={'_blank'}
+  >
+    {value}
+  </a>
+);
+const renderNonZeroField = value =>
+  value > 0 ? (
+    value.toPrecision(3)
+  ) : (
+    <span style={{ fontStyle: 'italic' }}>No data</span>
+  );
 
 const COLUMNS = [
   {
@@ -19,13 +36,15 @@ const COLUMNS = [
         title: 'Variant',
         dataIndex: 'ldSnpId',
         key: 'ldSnpId',
-        fixed: 'left'
+        fixed: 'left',
+        render: renderVariantField
       },
       {
         title: 'Lead Variant',
         dataIndex: 'gwasSnpId',
         key: 'gwasSnpId',
-        fixed: 'left'
+        fixed: 'left',
+        render: renderVariantField
       },
       {
         title: 'Disease',
@@ -41,28 +60,33 @@ const COLUMNS = [
       {
         title: 'VEP',
         dataIndex: 'vep',
-        key: 'vep'
+        key: 'vep',
+        render: renderNonZeroField
       },
       {
         title: 'GTEx',
         dataIndex: 'gtex',
-        key: 'gtex'
+        key: 'gtex',
+        render: renderNonZeroField
         // sorter: true,
       },
       {
         title: 'PCHiC',
         dataIndex: 'pchic',
-        key: 'pchic'
+        key: 'pchic',
+        render: renderNonZeroField
       },
       {
         title: 'DHS',
         dataIndex: 'dhs',
-        key: 'dhs'
+        key: 'dhs',
+        render: renderNonZeroField
       },
       {
         title: 'Fantom5',
         dataIndex: 'fantom5',
-        key: 'fantom5'
+        key: 'fantom5',
+        render: renderNonZeroField
       }
     ]
   },
@@ -72,7 +96,8 @@ const COLUMNS = [
       {
         title: 'LD (r2)',
         dataIndex: 'r2',
-        key: 'r2'
+        key: 'r2',
+        render: renderNonZeroField
       }
     ]
   },
@@ -82,12 +107,14 @@ const COLUMNS = [
       {
         title: 'p-value',
         dataIndex: 'gwasPValue',
-        key: 'gwasPValue'
+        key: 'gwasPValue',
+        render: renderNonZeroField
       },
       {
         title: 'Study Size',
         dataIndex: 'gwasSampleSize',
-        key: 'gwasSampleSize'
+        key: 'gwasSampleSize',
+        render: renderIntField
       }
     ]
   }
