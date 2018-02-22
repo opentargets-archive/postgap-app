@@ -21,7 +21,12 @@ class App extends React.Component {
             <Route path="/*" component={Banner} />
           </Switch>
 
-          <Layout.Content style={{ background: '#ECECEC', padding: '30px' }}>
+          <Layout.Content
+            style={{
+              background: '#ECECEC',
+              minHeight: 'calc(100vh - 106px - 40px)'
+            }}
+          >
             <Route exact path="/" component={HomePage} />
             <Route path="/disease/:efoId" component={DiseasePage} />
             <Route path="/gene/:geneId" component={GenePage} />

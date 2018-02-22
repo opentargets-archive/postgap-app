@@ -44,7 +44,7 @@ class GenePage extends React.Component {
         />
       );
     } else {
-      return 'Loading...';
+      return <div style={{ padding: '30px' }}>'Loading...'</div>;
     }
   }
 }
