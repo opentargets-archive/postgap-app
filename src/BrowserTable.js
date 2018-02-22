@@ -19,7 +19,7 @@ const renderNonZeroField = value =>
   value > 0 ? (
     value.toPrecision(3)
   ) : (
-    <span style={{ fontStyle: 'italic' }}>No data</span>
+    <span style={{ fontStyle: 'italic', color: '#CCC' }}>No data</span>
   );
 
 const COLUMNS = [
@@ -30,27 +30,31 @@ const COLUMNS = [
         title: 'Gene',
         dataIndex: 'geneName',
         key: 'geneName',
-        fixed: 'left'
+        fixed: 'left',
+        width: 100
       },
       {
         title: 'Variant',
         dataIndex: 'ldSnpId',
         key: 'ldSnpId',
         fixed: 'left',
-        render: renderVariantField
+        render: renderVariantField,
+        width: 100
       },
       {
         title: 'Lead Variant',
         dataIndex: 'gwasSnpId',
         key: 'gwasSnpId',
         fixed: 'left',
-        render: renderVariantField
+        render: renderVariantField,
+        width: 120
       },
       {
         title: 'Disease',
         dataIndex: 'efoName',
         key: 'efoName',
-        fixed: 'left'
+        fixed: 'left',
+        width: 220
       }
     ]
   },
@@ -61,32 +65,37 @@ const COLUMNS = [
         title: 'VEP',
         dataIndex: 'vep',
         key: 'vep',
-        render: renderNonZeroField
+        render: renderNonZeroField,
+        width: 100
       },
       {
         title: 'GTEx',
         dataIndex: 'gtex',
         key: 'gtex',
-        render: renderNonZeroField
+        render: renderNonZeroField,
+        width: 100
         // sorter: true,
       },
       {
         title: 'PCHiC',
         dataIndex: 'pchic',
         key: 'pchic',
-        render: renderNonZeroField
+        render: renderNonZeroField,
+        width: 100
       },
       {
         title: 'DHS',
         dataIndex: 'dhs',
         key: 'dhs',
-        render: renderNonZeroField
+        render: renderNonZeroField,
+        width: 100
       },
       {
         title: 'Fantom5',
         dataIndex: 'fantom5',
         key: 'fantom5',
-        render: renderNonZeroField
+        render: renderNonZeroField,
+        width: 100
       }
     ]
   },
@@ -97,7 +106,8 @@ const COLUMNS = [
         title: 'LD (r2)',
         dataIndex: 'r2',
         key: 'r2',
-        render: renderNonZeroField
+        render: renderNonZeroField,
+        width: 100
       }
     ]
   },
@@ -108,13 +118,15 @@ const COLUMNS = [
         title: 'p-value',
         dataIndex: 'gwasPValue',
         key: 'gwasPValue',
-        render: renderNonZeroField
+        render: renderNonZeroField,
+        width: 100
       },
       {
         title: 'Study Size',
         dataIndex: 'gwasSampleSize',
         key: 'gwasSampleSize',
-        render: renderIntField
+        render: renderIntField,
+        width: 100
       }
     ]
   }
@@ -154,7 +166,7 @@ class BrowserTable extends React.Component {
           columns={COLUMNS}
           size="small"
           bordered
-          scroll={{ x: 800 }}
+          scroll={{ x: 1500 }}
         />
       </Col>
     );
