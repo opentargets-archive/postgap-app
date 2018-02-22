@@ -2,7 +2,7 @@ import { createStore, applyMiddleware } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-import mySaga from './sagas';
+import sagas from './sagas';
 
 import {
   transformEnsemblGene,
@@ -20,7 +20,10 @@ import {
   SET_LOADING_ROWS,
   SET_API_DATA,
   SET_LOADING_ENSEMBL_GENES,
-  SET_LOADING_ENSEMBL_VARIANTS
+  SET_LOADING_ENSEMBL_VARIANTS,
+  SET_DISEASE_PAGE,
+  SET_LOADING_DISEASE_TABLE_ROWS,
+  SET_DISEASE_TABLE_ROWS
 } from './actions';
 
 import rawData from '../raw.json';
@@ -33,7 +36,8 @@ export {
   setFilterGwasPValue,
   setFilterG2VMustHaves,
   setHoverEntity,
-  setClickedEntity
+  setClickedEntity,
+  setDiseasePage
 } from './actions';
 
 export { selectors } from './selectors';
@@ -41,6 +45,7 @@ export { selectors } from './selectors';
 // TODO: Subdivide state and reducers and async load
 //       initialState url: https://mk-loci-dot-open-targets-eu-dev.appspot.com/v3/platform/public/evidence/filter?chromosome=1&begin=109167885&end=109612066&size=10&datasource=gwas_catalog&fields=unique_association_fields&fields=disease&fields=evidence&fields=variant&fields=target&fields=sourceID
 const initialState = {
+  // locus page
   location: {
     chromosome: 1,
     start: 109167885,
@@ -78,6 +83,12 @@ const initialState = {
     rows: false,
     ensemblGenes: false,
     ensemblVariants: false
+  },
+  // disease page
+  diseasePage: {
+    loading: false,
+    efoId: null,
+    rows: []
   }
 };
 
@@ -105,6 +116,7 @@ export const FILTER_TYPE = {
 function reducer(state = initialState, action) {
   // TODO: Handle other action types
   switch (action.type) {
+    // locus page
     case SET_LOCATION:
       return { ...state, location: action.location };
     case SET_FILTER_LD:
@@ -152,6 +164,22 @@ function reducer(state = initialState, action) {
         ensemblGenes,
         ensemblVariants
       };
+    // disease page
+    case SET_DISEASE_PAGE:
+      return {
+        ...state,
+        diseasePage: { ...state.diseasePage, efoId: action.efoId }
+      };
+    case SET_LOADING_DISEASE_TABLE_ROWS:
+      return {
+        ...state,
+        diseasePage: { ...state.diseasePage, loading: action.loading }
+      };
+    case SET_DISEASE_TABLE_ROWS:
+      return {
+        ...state,
+        diseasePage: { ...state.diseasePage, rows: action.rows }
+      };
     default:
       return state;
   }
@@ -164,6 +192,6 @@ const store = createStore(
   composeWithDevTools(applyMiddleware(sagaMiddleware))
 );
 
-sagaMiddleware.run(mySaga);
+sagaMiddleware.run(sagas);
 
 export default store;

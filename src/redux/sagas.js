@@ -4,10 +4,13 @@ import axios from 'axios';
 
 import {
   SET_LOCATION,
+  SET_DISEASE_PAGE,
   setLoadingRows,
   setApiData,
   setLoadingEnsemblGenes,
-  setLoadingEnsemblVariants
+  setLoadingEnsemblVariants,
+  setLoadingDiseaseTableRows,
+  setDiseaseTableRows
 } from './actions';
 import { rowsToUniqueGenes, rowsToUniqueLeadVariants } from './selectors';
 import {
@@ -16,7 +19,7 @@ import {
 } from './utils/transformEnsembl';
 import { transformEvidenceString } from './utils/transformOpenTargets';
 
-function* updateLocationSaga() {
+export function* updateLocationSaga() {
   let task;
   while (true) {
     const action = yield take(SET_LOCATION);
@@ -69,11 +72,41 @@ function* updateLocation(action) {
   }
 }
 
+export function* updateDiseaseTableSaga() {
+  let task;
+  while (true) {
+    const action = yield take(SET_DISEASE_PAGE);
+    if (task) yield cancel(task);
+    task = yield fork(updateDiseaseTable, action);
+  }
+}
+
+function* updateDiseaseTable(action) {
+  yield call(delay, 500); // debounce
+  try {
+    // fetch rows for location from Open Targets API
+    yield put(setLoadingDiseaseTableRows(true));
+    const rowsRaw = yield call(otApi.fetchRowsByEfoId, action.efoId);
+    yield put(setLoadingDiseaseTableRows(false));
+    const rows = rowsRaw.map(transformEvidenceString);
+
+    // update store
+    // important: this happens as one transaction for all data
+    //            so UI change is consistent (and selectors work)
+    yield put(setDiseaseTableRows(rows));
+  } catch (e) {
+    // yield put({type: API_ERROR, message: e.message})
+    console.log(e);
+  }
+}
+
 const OT_API_BASE =
   'https://mk-loci-dot-open-targets-eu-dev.appspot.com/v3/platform/';
 const OT_API_FILTER = 'public/evidence/filter';
 const OT_API_INTERVAL = ({ chromosome, start, end }) =>
   `?chromosome=${chromosome}&begin=${start}&end=${end}&size=10&datasource=gwas_catalog&fields=unique_association_fields&fields=disease&fields=evidence&fields=variant&fields=target&fields=sourceID`;
+const OT_API_DISEASE = ({ efoId }) =>
+  `?disease=${efoId}&size=10&datasource=gwas_catalog&fields=unique_association_fields&fields=disease&fields=evidence&fields=variant&fields=target&fields=sourceID`;
 const OT_API_SEARCH = ({ query }) => `private/quicksearch?q=${query}&size=3`;
 
 const ENSEMBL_API_BASE = 'https://rest.ensembl.org/';
@@ -84,6 +117,12 @@ export const otApi = {
   fetchRows(location) {
     const { start, end, chromosome } = location;
     const endpoint = OT_API_INTERVAL({ chromosome, start, end });
+    const url = `${OT_API_BASE}${OT_API_FILTER}${endpoint}`;
+    return axios.get(url).then(response => response.data.data);
+    // TODO: Handle calls over paginator and check error handling!
+  },
+  fetchRowsByEfoId(efoId) {
+    const endpoint = OT_API_DISEASE({ efoId });
     const url = `${OT_API_BASE}${OT_API_FILTER}${endpoint}`;
     return axios.get(url).then(response => response.data.data);
     // TODO: Handle calls over paginator and check error handling!
@@ -142,4 +181,6 @@ export const ensemblApi = {
   }
 };
 
-export default updateLocationSaga;
+export default function* root() {
+  yield [fork(updateLocationSaga), fork(updateDiseaseTableSaga)];
+}

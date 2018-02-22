@@ -47,3 +47,18 @@ export const SET_API_DATA = 'SET_API_DATA';
 export function setApiData(data) {
   return { type: SET_API_DATA, data };
 }
+
+export const SET_DISEASE_PAGE = 'SET_DISEASE_PAGE';
+export function setDiseasePage(efoId) {
+  return { type: SET_DISEASE_PAGE, efoId };
+}
+
+export const SET_LOADING_DISEASE_TABLE_ROWS = 'SET_LOADING_DISEASE_TABLE_ROWS';
+export function setLoadingDiseaseTableRows(loading) {
+  return { type: SET_LOADING_DISEASE_TABLE_ROWS, loading };
+}
+
+export const SET_DISEASE_TABLE_ROWS = 'SET_DISEASE_TABLE_ROWS';
+export function setDiseaseTableRows(rows) {
+  return { type: SET_DISEASE_TABLE_ROWS, rows };
+}
