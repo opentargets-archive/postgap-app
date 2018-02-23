@@ -12,7 +12,7 @@ const Banner = () => {
         style={{
           background: '#ECECEC',
           borderBottom: '2px solid green',
-          paddingLeft: '30px'
+          paddingLeft: '30px',
         }}
       >
         <Link to={{ pathname: '/' }}>
@@ -27,7 +27,7 @@ const Banner = () => {
         style={{
           backgroundColor: '#555',
           color: 'white',
-          padding: '5px 30px'
+          padding: '5px 30px',
         }}
       >
         <Col span={15}>
