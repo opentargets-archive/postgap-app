@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Row, Col, Layout, Affix } from 'antd';
 
 import Search from './Search';
@@ -14,10 +15,12 @@ const Banner = () => {
           paddingLeft: '30px'
         }}
       >
-        <h1 style={{ color: '#555' }}>
-          <span style={{ fontWeight: 'bold' }}> Open Targets </span>
-          <span style={{ fontWeight: 100, color: 'blue' }}>POSTGAP</span>
-        </h1>
+        <Link to={{ pathname: '/' }}>
+          <h1 style={{ color: '#555' }}>
+            <span style={{ fontWeight: 'bold' }}> Open Targets </span>
+            <span style={{ fontWeight: 100, color: 'blue' }}>POSTGAP</span>
+          </h1>
+        </Link>
       </Layout.Header>
       <Row
         gutter={16}
