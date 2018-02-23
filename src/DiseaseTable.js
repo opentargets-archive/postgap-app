@@ -1,4 +1,3 @@
-import React from 'react';
 import { connect } from 'react-redux';
 
 import EvidenceTable from './EvidenceTable';
@@ -6,7 +5,7 @@ import EvidenceTable from './EvidenceTable';
 const mapStateToProps = state => {
   return {
     rows: state.diseasePage.rows,
-    loading: state.diseasePage.loading
+    loading: state.diseasePage.loading,
   };
 };
 
