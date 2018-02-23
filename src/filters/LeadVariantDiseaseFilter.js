@@ -24,9 +24,9 @@ let LeadVariantDiseaseFilter = ({ interval, setFilterGwasPValue, max }) => {
           min={0}
           max={max ? max : 100}
           marks={{
-            0: 0,
+            0: '0',
             8: 'Genome-wide significance',
-            [max]: max.toPrecision(3)
+            [max]: max.toPrecision(3),
           }}
           step={0.1}
           defaultValue={interval}
@@ -42,13 +42,13 @@ let LeadVariantDiseaseFilter = ({ interval, setFilterGwasPValue, max }) => {
 const mapStateToProps = state => {
   return {
     interval: state.filters.gwasPValue,
-    max: selectors.getMaxMinusLogGwasPValue(state)
+    max: selectors.getMaxMinusLogGwasPValue(state),
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    setFilterGwasPValue: interval => dispatch(setFilterGwasPValue(interval))
+    setFilterGwasPValue: interval => dispatch(setFilterGwasPValue(interval)),
   };
 };
 

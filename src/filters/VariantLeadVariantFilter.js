@@ -24,7 +24,7 @@ let VariantLeadVariantFilter = ({ interval, setFilterLD }) => {
           min={0.7}
           max={1}
           marks={{ 0.7: 0.7, 0.8: 0.8, 0.9: 0.9, 1: 1 }}
-          step={0.001}
+          step={0.01}
           defaultValue={interval}
           onChange={value => {
             setFilterLD(value);
@@ -37,13 +37,13 @@ let VariantLeadVariantFilter = ({ interval, setFilterLD }) => {
 
 const mapStateToProps = state => {
   return {
-    interval: state.filters.ld
+    interval: state.filters.ld,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    setFilterLD: interval => dispatch(setFilterLD(interval))
+    setFilterLD: interval => dispatch(setFilterLD(interval)),
   };
 };
 

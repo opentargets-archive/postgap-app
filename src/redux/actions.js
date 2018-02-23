@@ -13,6 +13,11 @@ export function setFilterGwasPValue(filter) {
   return { type: SET_FILTER_GWAS_PVALUE, filter };
 }
 
+export const SET_FILTER_G2V_SCORE = 'SET_FILTER_G2V_SCORE';
+export function setFilterG2VScore(filter) {
+  return { type: SET_FILTER_G2V_SCORE, filter };
+}
+
 export const SET_FILTER_G2V_MUST_HAVES = 'SET_FILTER_G2V_MUST_HAVES';
 export function setFilterG2VMustHaves(filter) {
   return { type: SET_FILTER_G2V_MUST_HAVES, filter };

@@ -15,18 +15,18 @@ const GENE_VARIANT_FIELDS = [
   'dhs',
   'fantom5',
   'vep',
-  'otScore'
+  'otScore',
 ];
 const VARIANT_LEAD_VARIANT_FIELDS = [
   ...VARIANT_FIELDS,
   ...LEAD_VARIANT_FIELDS,
-  'r2'
+  'r2',
 ];
 const LEAD_VARIANT_DISEASE_FIELDS = [
   ...LEAD_VARIANT_FIELDS,
   ...DISEASE_FIELDS,
   'gwasPValue',
-  'gwasSampleSize'
+  'gwasSampleSize',
 ];
 export const rowsToUniqueGenes = rows =>
   _.uniqBy(rows.map(d => _.pick(d, GENE_FIELDS)), 'geneId');
@@ -41,7 +41,7 @@ const rowsToUniqueGeneVariants = rows =>
     rows.map(d => {
       return {
         id: `${d.geneId}-${d.ldSnpId}`,
-        ..._.pick(d, GENE_VARIANT_FIELDS)
+        ..._.pick(d, GENE_VARIANT_FIELDS),
       };
     }),
     'id'
@@ -51,7 +51,7 @@ const rowsToUniqueVariantLeadVariants = rows =>
     rows.map(d => {
       return {
         id: `${d.ldSnpId}-${d.gwasSnpId}`,
-        ..._.pick(d, VARIANT_LEAD_VARIANT_FIELDS)
+        ..._.pick(d, VARIANT_LEAD_VARIANT_FIELDS),
       };
     }),
     'id'
@@ -61,7 +61,7 @@ const rowsToUniqueLeadVariantDiseases = rows =>
     rows.map(d => {
       return {
         id: `${d.gwasSnpId}-${d.efoId}`,
-        ..._.pick(d, LEAD_VARIANT_DISEASE_FIELDS)
+        ..._.pick(d, LEAD_VARIANT_DISEASE_FIELDS),
       };
     }),
     'id'
@@ -75,6 +75,7 @@ const getLocation = state => state.location;
 const getFilterLD = state => state.filters.ld;
 const getFilterGwasPValue = state => state.filters.gwasPValue;
 const getFilterG2VMustHaves = state => state.filters.g2VMustHaves;
+const getFilterG2VScore = state => state.filters.g2VScore;
 const getLoadingRows = state => state.loading.rows;
 const getLoadingEnsemblGenes = state => state.loading.ensemblGenes;
 const getLoadingEnsemblVariants = state => state.loading.ensemblVariants;
@@ -100,8 +101,14 @@ const getRowsDiseases = createSelector([getRows], rows =>
   rowsToUniqueDiseases(rows)
 );
 const getRowsFiltered = createSelector(
-  [getRows, getFilterLD, getFilterGwasPValue, getFilterG2VMustHaves],
-  (rows, filterLD, filterGwasPvalue, filterG2VMustHaves) => {
+  [
+    getRows,
+    getFilterLD,
+    getFilterGwasPValue,
+    getFilterG2VScore,
+    getFilterG2VMustHaves,
+  ],
+  (rows, filterLD, filterGwasPvalue, filterG2VScore, filterG2VMustHaves) => {
     if (!filterLD) {
       return rows;
     }
@@ -113,6 +120,9 @@ const getRowsFiltered = createSelector(
       //   const high = -Math.log10(d.gwasPValue) <= filterGwasPvalue[1];
       //   return low && high;
       // })
+      .filter(
+        d => filterG2VScore[0] <= d.otScore && d.otScore <= filterG2VScore[1]
+      )
       .filter(d => {
         return filterG2VMustHaves.every(field => d[field] > 0);
       });
@@ -155,7 +165,7 @@ const getGeneVariantsFiltered = createSelector(
     // merge
     return geneVariants.map(d => ({
       ...genesLookup[d.geneId],
-      ...d
+      ...d,
     }));
   }
 );
@@ -166,7 +176,7 @@ const getVariantLeadVariantsFiltered = createSelector(
     // merge
     return variantLeadVariants.map(d => ({
       leadSnpPos: variantsLookup[d.gwasSnpId].pos,
-      ...d
+      ...d,
     }));
   }
 );
@@ -177,7 +187,7 @@ const getLeadVariantDiseasesFiltered = createSelector(
     // merge
     return leadVariantDiseases.map(d => ({
       leadSnpPos: variantsLookup[d.gwasSnpId].pos,
-      ...d
+      ...d,
     }));
   }
 );
@@ -432,6 +442,7 @@ export const selectors = {
   getLeadVariantDiseasesFilteredCount,
   // filters
   getMaxMinusLogGwasPValue,
+  getFilterG2VScore,
   // loading
-  getIsLoading
+  getIsLoading,
 };
