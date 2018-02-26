@@ -2,6 +2,7 @@ import React from 'react';
 import { Table } from 'antd';
 import BaseDetail from './BaseDetail';
 import DictionaryHelpTerm from '../terms/DictionaryHelpTerm';
+import { LinksGene, LinksVariant } from '../links';
 
 const GeneVariantDetail = ({ geneVariant, closeHandler }) => {
   const d = geneVariant;
@@ -9,41 +10,51 @@ const GeneVariantDetail = ({ geneVariant, closeHandler }) => {
     {
       key: 'gtex',
       label: 'GTEx',
-      value: d.gtex
+      value: d.gtex,
     },
     {
       key: 'pchic',
       label: 'PCHiC',
-      value: d.pchic
+      value: d.pchic,
     },
     {
       key: 'dhs',
       label: 'DHS',
-      value: d.dhs
+      value: d.dhs,
     },
     {
       key: 'fantom5',
       label: 'Fantom5',
-      value: d.fantom5
-    }
+      value: d.fantom5,
+    },
   ];
   const tableColumns = [
     {
       key: 'label',
       title: 'Label',
       dataIndex: 'label',
-      render: text => <DictionaryHelpTerm term={text} />
+      render: text => <DictionaryHelpTerm term={text} />,
     },
     {
       key: 'value',
       title: 'Value',
-      dataIndex: 'value'
-    }
+      dataIndex: 'value',
+    },
   ];
   return (
     <BaseDetail
-      type={''}
-      title={`${d.geneName} - ${d.ldSnpId}`}
+      type={'Gene - Variant'}
+      title={
+        <React.Fragment>
+          <LinksGene geneId={geneVariant.geneId}>
+            {geneVariant.geneName}
+          </LinksGene>
+          {' - '}
+          <LinksVariant variantId={geneVariant.ldSnpId}>
+            {geneVariant.ldSnpId}
+          </LinksVariant>
+        </React.Fragment>
+      }
       closeHandler={closeHandler}
     >
       <Table

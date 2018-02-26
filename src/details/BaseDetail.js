@@ -6,7 +6,12 @@ const BaseDetail = ({ type, title, children, closeHandler }) => {
     <Card bodyStyle={{ padding: 10 }}>
       <Row>
         <Col span={16}>
-          <span style={{ fontWeight: 100, fontStyle: 'italic' }}>{type} </span>
+          <span
+            style={{ fontWeight: 100, fontStyle: 'italic', fontSize: '10px' }}
+          >
+            {type}{' '}
+          </span>
+          <br />
           <span>{title}</span>
         </Col>
         {closeHandler ? (
