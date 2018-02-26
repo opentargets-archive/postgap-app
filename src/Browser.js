@@ -22,10 +22,11 @@ class Browser extends React.Component {
 
   zoomHandler(domain) {
     const { chromosome } = this.props.location;
+    const { chromosomeLength } = this.props;
     let start = Math.round(domain.x[0]);
     let end = Math.round(domain.x[1]);
     if (start < 0) start = 0;
-    // if (end > this.state.chrLength) end = this.state.chrLength;
+    if (end > chromosomeLength) end = chromosomeLength;
     this.props.setLocation({ start, end, chromosome });
   }
 
@@ -38,7 +39,7 @@ class Browser extends React.Component {
       end,
       chromosome,
       zoomHandler: this.zoomHandler,
-      windowResizeDebounceTime: 50
+      windowResizeDebounceTime: 50,
     };
     return (
       <div>
@@ -53,7 +54,7 @@ class Browser extends React.Component {
         <Card
           bodyStyle={{
             padding: 0,
-            height: `${GENE_SLOT_HEIGHT * slots.length}px`
+            height: `${GENE_SLOT_HEIGHT * slots.length}px`,
           }}
         >
           <GeneTrack {...commonProps} />
@@ -86,16 +87,17 @@ class Browser extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    chromosome: state.chromosome,
-    location: state.location,
+    chromosome: selectors.getChromosome(state),
+    location: selectors.getLocation(state),
     slots: selectors.getSlots(state),
-    diseases: selectors.getDiseases(state)
+    diseases: selectors.getDiseases(state),
+    chromosomeLength: selectors.getChromosomeLength(state),
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    setLocation: location => dispatch(setLocation(location))
+    setLocation: location => dispatch(setLocation(location)),
   };
 };
 

@@ -79,7 +79,8 @@ const getFilterG2VScore = state => state.filters.g2VScore;
 const getLoadingRows = state => state.loading.rows;
 const getLoadingEnsemblGenes = state => state.loading.ensemblGenes;
 const getLoadingEnsemblVariants = state => state.loading.ensemblVariants;
-const getChromosome = state => state.chromosome;
+const getChromosome = state => state.location.chromosome;
+const getChromosomeLengths = state => state.chromosomeLengths;
 
 // derived
 // TODO: Pattern for browser selectors should follow:
@@ -234,6 +235,13 @@ const getIsLoading = createSelector(
   [getLoadingRows, getLoadingEnsemblGenes, getLoadingEnsemblVariants],
   (rows, ensemblGenes, ensemblVariants) => {
     return rows || ensemblGenes || ensemblVariants;
+  }
+);
+
+const getChromosomeLength = createSelector(
+  [getChromosome, getChromosomeLengths],
+  (chr, chrLengths) => {
+    return chrLengths[chr];
   }
 );
 
@@ -420,7 +428,9 @@ const getVisibleLeadVariants = createSelector(
 // );
 
 export const selectors = {
+  getLocation,
   getChromosome,
+  getChromosomeLength,
   getRows,
   getRowsFiltered,
   //   getGenes: getEnsemblGenes,
