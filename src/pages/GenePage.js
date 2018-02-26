@@ -3,13 +3,16 @@ import { Redirect } from 'react-router-dom';
 import queryString from 'query-string';
 
 import { ensemblApi } from '../redux/sagas';
+import { chromosomeLengths } from '../redux/chromosomeLengths';
 import { transformEnsemblGene } from '../redux/utils/transformEnsembl';
+
+const HALF_INTERVAL = 1000000;
 
 class GenePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      hasLoadedEnsemblGene: false
+      hasLoadedEnsemblGene: false,
     };
   }
   componentDidMount() {
@@ -21,7 +24,7 @@ class GenePage extends React.Component {
         hasLoadedEnsemblGene: true,
         chromosome,
         start,
-        end
+        end,
       });
     });
   }
@@ -29,17 +32,23 @@ class GenePage extends React.Component {
     if (this.state.hasLoadedEnsemblGene) {
       const { geneId } = this.props.match.params;
       const { chromosome, start, end } = this.state;
+      const chromosomeLength = chromosomeLengths[chromosome];
+      const windowStart = start > HALF_INTERVAL ? start - HALF_INTERVAL : 0;
+      const windowEnd =
+        end + HALF_INTERVAL <= chromosomeLength
+          ? end + HALF_INTERVAL
+          : chromosomeLength;
       const params = {
         selected: [geneId],
         chromosome,
-        start,
-        end
+        start: windowStart,
+        end: windowEnd,
       };
       return (
         <Redirect
           to={{
             pathname: '/locus',
-            search: `?${queryString.stringify(params)}`
+            search: `?${queryString.stringify(params)}`,
           }}
         />
       );
