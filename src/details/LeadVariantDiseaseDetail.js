@@ -3,6 +3,7 @@ import { Table } from 'antd';
 import BaseDetail from './BaseDetail';
 import DictionaryHelpTerm from '../terms/DictionaryHelpTerm';
 import { LinksLeadVariant, LinksDisease } from '../links';
+import { commaSeparate } from '../stringFormatters';
 
 const LeadVariantDiseaseDetail = ({ leadVariantDisease, closeHandler }) => {
   const d = leadVariantDisease;
@@ -11,6 +12,11 @@ const LeadVariantDiseaseDetail = ({ leadVariantDisease, closeHandler }) => {
       key: 'gwasPValue',
       label: 'p-value',
       value: d.gwasPValue,
+    },
+    {
+      key: 'gwasSampleSize',
+      label: 'Sample Size',
+      value: commaSeparate(d.gwasSampleSize),
     },
   ];
   const tableColumns = [

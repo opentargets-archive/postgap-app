@@ -15,6 +15,7 @@ const DICTIONARY = {
     '(1 - false discovery rate) for linked sites (miRNAs and their promoters) containing variant and target (source: Fantom5).',
   r2: 'The linkage disequilibrium between the lead variant and the variant.',
   gwaspvalue: 'The reported p-value from GWAS catalog.',
+  gwassamplesize: 'The reported sample size from GWAS catalog.',
 };
 
 export default DICTIONARY;
