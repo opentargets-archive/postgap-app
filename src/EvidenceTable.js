@@ -2,7 +2,7 @@ import React from 'react';
 import { Table, Button, Col, Row } from 'antd';
 import { CSVLink } from 'react-csv';
 
-import { commaSeparate } from './stringFormatters';
+import { commaSeparate, renderNonZeroField } from './stringFormatters';
 import {
   LinksGene,
   LinksVariant,
@@ -24,12 +24,7 @@ const renderGeneField = (value, row) => (
 const renderDiseaseField = (value, row) => (
   <LinksDisease efoId={row.efoId}>{value}</LinksDisease>
 );
-const renderNonZeroField = value =>
-  value > 0 ? (
-    value.toPrecision(3)
-  ) : (
-    <span style={{ fontStyle: 'italic', color: '#CCC' }}>No data</span>
-  );
+
 const comparatorStringField = field => (a, b) => {
   if (a[field] < b[field]) {
     return -1;
