@@ -9,6 +9,16 @@ const GeneVariantDetail = ({ geneVariant, closeHandler }) => {
   const d = geneVariant;
   const tableData = [
     {
+      key: 'otScore',
+      label: 'G2V Score',
+      value: d.otScore,
+    },
+    {
+      key: 'vep',
+      label: 'VEP',
+      value: d.vep,
+    },
+    {
       key: 'gtex',
       label: 'GTEx',
       value: d.gtex,

@@ -1,6 +1,10 @@
 // Note: keys should be lower case
 
 const DICTIONARY = {
+  otscore:
+    'The Open Targets G2V score is an aggregate score based upon VEP, GTEx, PCHiC, DHS, Fantom5 and Nearest fields.',
+  vep:
+    'The Variant Effect Predictor consequence expressed on a scale from 0 to 4.',
   gtex:
     'The max(1 - p-value) across all tissues for the eQTL between the target and variant (source: GTEx).',
   pchic:
