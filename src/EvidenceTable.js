@@ -9,6 +9,7 @@ import {
   LinksLeadVariant,
   LinksDisease,
 } from './links';
+import DictionaryHelpTerm from './terms/DictionaryHelpTerm';
 
 const renderIntField = value => commaSeparate(value);
 const renderVariantField = value => (
@@ -84,7 +85,7 @@ const COLUMNS = [
     title: 'Gene - Variant',
     children: [
       {
-        title: 'VEP',
+        title: <DictionaryHelpTerm term={'vep'} label={'VEP'} />,
         dataIndex: 'vep',
         key: 'vep',
         render: renderNonZeroField,
@@ -92,7 +93,7 @@ const COLUMNS = [
         sorter: compareNumericField('vep'),
       },
       {
-        title: 'GTEx',
+        title: <DictionaryHelpTerm term={'gtex'} label={'GTEx'} />,
         dataIndex: 'gtex',
         key: 'gtex',
         render: renderNonZeroField,
@@ -100,7 +101,7 @@ const COLUMNS = [
         sorter: compareNumericField('gtex'),
       },
       {
-        title: 'PCHiC',
+        title: <DictionaryHelpTerm term={'pchic'} label={'PCHiC'} />,
         dataIndex: 'pchic',
         key: 'pchic',
         render: renderNonZeroField,
@@ -108,7 +109,7 @@ const COLUMNS = [
         sorter: compareNumericField('pchic'),
       },
       {
-        title: 'DHS',
+        title: <DictionaryHelpTerm term={'dhs'} label={'DHS'} />,
         dataIndex: 'dhs',
         key: 'dhs',
         render: renderNonZeroField,
@@ -116,7 +117,7 @@ const COLUMNS = [
         sorter: compareNumericField('dhs'),
       },
       {
-        title: 'Fantom5',
+        title: <DictionaryHelpTerm term={'fantom5'} label={'Fantom5'} />,
         dataIndex: 'fantom5',
         key: 'fantom5',
         render: renderNonZeroField,
@@ -129,7 +130,16 @@ const COLUMNS = [
     title: 'Variant - Lead Variant',
     children: [
       {
-        title: 'LD (r2)',
+        title: (
+          <DictionaryHelpTerm
+            term={'r2'}
+            label={
+              <span>
+                LD (r<sup>2</sup>)
+              </span>
+            }
+          />
+        ),
         dataIndex: 'r2',
         key: 'r2',
         render: renderNonZeroField,
@@ -142,7 +152,7 @@ const COLUMNS = [
     title: 'Lead Variant - Disease',
     children: [
       {
-        title: 'p-value',
+        title: <DictionaryHelpTerm term={'gwaspvalue'} label={'p-value'} />,
         dataIndex: 'gwasPValue',
         key: 'gwasPValue',
         render: renderNonZeroField,
@@ -150,7 +160,18 @@ const COLUMNS = [
         sorter: compareNumericField('gwasPValue'),
       },
       {
-        title: 'Study Size',
+        title: (
+          <DictionaryHelpTerm
+            term={'gwassamplesize'}
+            label={
+              <React.Fragment>
+                <span>Sample</span>
+                <br />
+                <span>Size</span>
+              </React.Fragment>
+            }
+          />
+        ),
         dataIndex: 'gwasSampleSize',
         key: 'gwasSampleSize',
         render: renderIntField,
