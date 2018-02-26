@@ -3,23 +3,26 @@ import { Table, Button, Col, Row } from 'antd';
 import { CSVLink } from 'react-csv';
 
 import { commaSeparate } from './stringFormatters';
+import {
+  LinksGene,
+  LinksVariant,
+  LinksLeadVariant,
+  LinksDisease,
+} from './links';
 
 const renderIntField = value => commaSeparate(value);
 const renderVariantField = value => (
-  <a
-    href={`http://www.ensembl.org/Homo_sapiens/Variation/Explore?v=${value}`}
-    target={'_blank'}
-  >
-    {value}
-  </a>
+  <LinksVariant variantId={value}>{value}</LinksVariant>
+);
+
+const renderLeadVariantField = value => (
+  <LinksLeadVariant leadVariantId={value}>{value}</LinksLeadVariant>
 );
 const renderGeneField = (value, row) => (
-  <a
-    href={`http://www.ensembl.org/Homo_sapiens/Gene/Summary?g=${row.geneId}`}
-    target={'_blank'}
-  >
-    {value}
-  </a>
+  <LinksGene geneId={row.geneId}>{value}</LinksGene>
+);
+const renderDiseaseField = (value, row) => (
+  <LinksDisease efoId={row.efoId}>{value}</LinksDisease>
 );
 const renderNonZeroField = value =>
   value > 0 ? (
@@ -51,7 +54,7 @@ const COLUMNS = [
         fixed: 'left',
         render: renderGeneField,
         width: 100,
-        sorter: comparatorStringField('geneName')
+        sorter: comparatorStringField('geneName'),
       },
       {
         title: 'Variant',
@@ -60,26 +63,27 @@ const COLUMNS = [
         fixed: 'left',
         render: renderVariantField,
         width: 100,
-        sorter: comparatorStringField('ldSnpId')
+        sorter: comparatorStringField('ldSnpId'),
       },
       {
         title: 'Lead Variant',
         dataIndex: 'gwasSnpId',
         key: 'gwasSnpId',
         fixed: 'left',
-        render: renderVariantField,
+        render: renderLeadVariantField,
         width: 120,
-        sorter: comparatorStringField('gwasSnpId')
+        sorter: comparatorStringField('gwasSnpId'),
       },
       {
         title: 'Disease',
         dataIndex: 'efoName',
         key: 'efoName',
         fixed: 'left',
+        render: renderDiseaseField,
         width: 220,
-        sorter: comparatorStringField('efoName')
-      }
-    ]
+        sorter: comparatorStringField('efoName'),
+      },
+    ],
   },
   {
     title: 'Gene - Variant',
@@ -90,7 +94,7 @@ const COLUMNS = [
         key: 'vep',
         render: renderNonZeroField,
         width: 100,
-        sorter: compareNumericField('vep')
+        sorter: compareNumericField('vep'),
       },
       {
         title: 'GTEx',
@@ -98,7 +102,7 @@ const COLUMNS = [
         key: 'gtex',
         render: renderNonZeroField,
         width: 100,
-        sorter: compareNumericField('gtex')
+        sorter: compareNumericField('gtex'),
       },
       {
         title: 'PCHiC',
@@ -106,7 +110,7 @@ const COLUMNS = [
         key: 'pchic',
         render: renderNonZeroField,
         width: 100,
-        sorter: compareNumericField('pchic')
+        sorter: compareNumericField('pchic'),
       },
       {
         title: 'DHS',
@@ -114,7 +118,7 @@ const COLUMNS = [
         key: 'dhs',
         render: renderNonZeroField,
         width: 100,
-        sorter: compareNumericField('dhs')
+        sorter: compareNumericField('dhs'),
       },
       {
         title: 'Fantom5',
@@ -122,9 +126,9 @@ const COLUMNS = [
         key: 'fantom5',
         render: renderNonZeroField,
         width: 100,
-        sorter: compareNumericField('fantom5')
-      }
-    ]
+        sorter: compareNumericField('fantom5'),
+      },
+    ],
   },
   {
     title: 'Variant - Lead Variant',
@@ -135,9 +139,9 @@ const COLUMNS = [
         key: 'r2',
         render: renderNonZeroField,
         width: 100,
-        sorter: compareNumericField('r2')
-      }
-    ]
+        sorter: compareNumericField('r2'),
+      },
+    ],
   },
   {
     title: 'Lead Variant - Disease',
@@ -148,7 +152,7 @@ const COLUMNS = [
         key: 'gwasPValue',
         render: renderNonZeroField,
         width: 100,
-        sorter: compareNumericField('gwasPValue')
+        sorter: compareNumericField('gwasPValue'),
       },
       {
         title: 'Study Size',
@@ -156,10 +160,10 @@ const COLUMNS = [
         key: 'gwasSampleSize',
         render: renderIntField,
         width: 100,
-        sorter: compareNumericField('gwasSampleSize')
-      }
-    ]
-  }
+        sorter: compareNumericField('gwasSampleSize'),
+      },
+    ],
+  },
 ];
 
 class EvidenceTable extends React.Component {
