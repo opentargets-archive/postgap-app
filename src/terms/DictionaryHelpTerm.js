@@ -1,12 +1,9 @@
 import React from 'react';
-import HelpTerm from "./HelpTerm";
+import HelpTerm from './HelpTerm';
 import DICTIONARY from './dictionary';
 
-const DictionaryHelpTerm = ({ term }) => {
-    return <HelpTerm 
-        term={term}
-        content={DICTIONARY[term.toLowerCase()]}
-    />;
-}
+const DictionaryHelpTerm = ({ term, label }) => {
+  return <HelpTerm label={label} content={DICTIONARY[term.toLowerCase()]} />;
+};
 
 export default DictionaryHelpTerm;

@@ -3,6 +3,7 @@ import { Table } from 'antd';
 import BaseDetail from './BaseDetail';
 import DictionaryHelpTerm from '../terms/DictionaryHelpTerm';
 import { LinksGene, LinksVariant } from '../links';
+import { renderNonZeroField } from '../stringFormatters';
 
 const GeneVariantDetail = ({ geneVariant, closeHandler }) => {
   const d = geneVariant;
@@ -33,12 +34,15 @@ const GeneVariantDetail = ({ geneVariant, closeHandler }) => {
       key: 'label',
       title: 'Label',
       dataIndex: 'label',
-      render: text => <DictionaryHelpTerm term={text} />,
+      render: (text, row) => (
+        <DictionaryHelpTerm term={row.key} label={row.label} />
+      ),
     },
     {
       key: 'value',
       title: 'Value',
       dataIndex: 'value',
+      render: renderNonZeroField,
     },
   ];
   return (

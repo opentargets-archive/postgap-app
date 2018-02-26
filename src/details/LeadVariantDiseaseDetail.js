@@ -18,7 +18,9 @@ const LeadVariantDiseaseDetail = ({ leadVariantDisease, closeHandler }) => {
       key: 'label',
       title: 'Label',
       dataIndex: 'label',
-      render: text => <DictionaryHelpTerm term={text} />,
+      render: (text, row) => (
+        <DictionaryHelpTerm term={row.key} label={row.label} />
+      ),
     },
     {
       key: 'value',
