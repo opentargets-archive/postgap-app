@@ -4,7 +4,7 @@ import Text from 'react-svg-text';
 const PADDING = 0.2; // 20%
 const calculateDiseaseScaleRange = width => [
   width * PADDING,
-  width * (1 - PADDING)
+  width * (1 - PADDING),
 ];
 
 // TODO: Fork and fix appended svg from react-svg-text
@@ -14,7 +14,7 @@ const DiseaseFeature = ({
   diseaseScale,
   width,
   setHover,
-  setClicked
+  setClicked,
 }) => {
   const { y } = scale;
   diseaseScale.range(calculateDiseaseScaleRange(width)); // TODO: refactor to set range in better location
@@ -35,7 +35,7 @@ const DiseaseFeature = ({
           setClicked(data);
         }}
       />
-      {/* <Text
+      <Text
         x={0}
         y={10}
         width={150}
@@ -44,10 +44,10 @@ const DiseaseFeature = ({
         style={{ fontSize: '12px' }}
       >
         {data.efoName}
-      </Text> */}
-      <text x={0} y={20} textAnchor="middle" style={{ fontSize: '12px' }}>
+      </Text>
+      {/* <text x={0} y={20} textAnchor="middle" style={{ fontSize: '12px' }}>
         {data.efoName}
-      </text>
+      </text> */}
     </g>
   );
 };
