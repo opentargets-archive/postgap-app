@@ -13,6 +13,7 @@ import {
 let LeadVariantDiseaseTrack = ({
   leadVariantDiseases,
   leadVariantDiseasesInteractive,
+  isInteractive,
   setHover,
   setClicked,
   ...rest
@@ -27,6 +28,7 @@ let LeadVariantDiseaseTrack = ({
           {...handlers}
           diseaseScale={rest.diseaseScale}
           highlight={d.interactive}
+          dimNonHighlighted={isInteractive}
         />
       ))}
     </BaseTrack>
@@ -39,6 +41,7 @@ const mapStateToProps = state => {
     leadVariantDiseasesInteractive: selectors.getLeadVariantDiseasesInteractive(
       state
     ),
+    isInteractive: selectors.getIsInteractive(state),
   };
 };
 

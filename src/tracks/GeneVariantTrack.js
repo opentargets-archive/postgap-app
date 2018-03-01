@@ -27,6 +27,7 @@ let GeneVariantTrack = ({
           data={d}
           {...handlers}
           highlight={d.interactive}
+          dimNonHighlighted={isInteractive}
         />
       ))}
     </BaseTrack>

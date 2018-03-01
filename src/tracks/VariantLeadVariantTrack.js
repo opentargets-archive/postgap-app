@@ -13,6 +13,7 @@ import {
 let VariantLeadVariantTrack = ({
   variantLeadVariants,
   variantLeadVariantsInteractive,
+  isInteractive,
   setHover,
   setClicked,
   ...rest
@@ -27,6 +28,7 @@ let VariantLeadVariantTrack = ({
             data={d}
             {...handlers}
             highlight={d.interactive}
+            dimNonHighlighted={isInteractive}
           />
         );
       })}
@@ -40,6 +42,7 @@ const mapStateToProps = state => {
     variantLeadVariantsInteractive: selectors.getVariantLeadVariantsInteractive(
       state
     ),
+    isInteractive: selectors.getIsInteractive(state),
   };
 };
 

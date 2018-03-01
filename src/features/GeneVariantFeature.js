@@ -7,6 +7,7 @@ const GeneVariantFeature = ({
   setHover,
   setClicked,
   highlight,
+  dimNonHighlighted,
 }) => {
   const { x, y } = scale;
   return (
@@ -26,6 +27,7 @@ const GeneVariantFeature = ({
           setClicked(data);
         }}
         highlight={highlight}
+        dimNonHighlighted={dimNonHighlighted}
       />
     </g>
   );

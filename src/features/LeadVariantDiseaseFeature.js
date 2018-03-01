@@ -15,6 +15,7 @@ const VariantLeadVariantFeature = ({
   setHover,
   setClicked,
   highlight,
+  dimNonHighlighted,
 }) => {
   const { x, y } = scale;
   diseaseScale.range(calculateDiseaseScaleRange(width)); // TODO: refactor to set range in better location
@@ -36,6 +37,7 @@ const VariantLeadVariantFeature = ({
           setClicked(data);
         }}
         highlight={highlight}
+        dimNonHighlighted={dimNonHighlighted}
       />
     </g>
   );
