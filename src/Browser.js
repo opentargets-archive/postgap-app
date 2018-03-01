@@ -23,8 +23,16 @@ class Browser extends React.Component {
   zoomHandler(domain) {
     const { chromosome } = this.props.location;
     const { chromosomeLength } = this.props;
+    const MAX_WINDOW_WIDTH = 2500000;
     let start = Math.round(domain.x[0]);
     let end = Math.round(domain.x[1]);
+    if (end - start > MAX_WINDOW_WIDTH) {
+      // cannot zoom out more than 2.5MB window
+      // TODO: use mouse percentage rather than midpoint to trim excess
+      const excess = Math.round((end - start - MAX_WINDOW_WIDTH) / 2);
+      start += excess;
+      end -= excess;
+    }
     if (start < 0) start = 0;
     if (end > chromosomeLength) end = chromosomeLength;
     this.props.setLocation({ start, end, chromosome });
