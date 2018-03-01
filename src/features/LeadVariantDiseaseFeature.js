@@ -1,7 +1,7 @@
 import React from 'react';
 import ConnectorPath from './ConnectorPath';
 
-const PADDING = 0.2; // 20%
+const PADDING = 0.1; // 10%
 const calculateDiseaseScaleRange = width => [
   width * PADDING,
   width * (1 - PADDING),

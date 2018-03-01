@@ -42,6 +42,7 @@ class Browser extends React.Component {
     const { location, slots, diseases } = this.props;
     const { start, end, chromosome } = location;
     const diseaseScale = scalePoint().domain(diseases.map(d => d.efoId));
+    const diseaseSlotsCount = Math.ceil(diseases.length / 5);
     const commonProps = {
       start,
       end,
@@ -85,7 +86,7 @@ class Browser extends React.Component {
             {...commonProps}
           />
         </Card>
-        <Card bodyStyle={{ padding: 0, height: '60px' }}>
+        <Card bodyStyle={{ padding: 0, height: `${60 * diseaseSlotsCount}px` }}>
           <DiseaseTrack diseaseScale={diseaseScale} {...commonProps} />
         </Card>
       </div>

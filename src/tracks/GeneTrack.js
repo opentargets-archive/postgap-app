@@ -27,6 +27,8 @@ let GeneTrack = props => {
               slotOffset={GENE_SLOT_HEIGHT * i}
               slotHeight={GENE_SLOT_HEIGHT}
               trackHeight={height}
+              highlight={gene.interactive}
+              dimNonHighlighted={isInteractive}
             />
           );
         });

@@ -1,7 +1,7 @@
 import React from 'react';
 import Text from 'react-svg-text';
 
-const PADDING = 0.2; // 20%
+const PADDING = 0.1; // 10%
 const calculateDiseaseScaleRange = width => [
   width * PADDING,
   width * (1 - PADDING),
@@ -12,22 +12,22 @@ const DiseaseFeature = ({
   scale,
   data,
   diseaseScale,
+  slotOffset,
   width,
   setHover,
   setClicked,
   highlight,
   dimNonHighlighted,
 }) => {
-  const { y } = scale;
   diseaseScale.range(calculateDiseaseScaleRange(width)); // TODO: refactor to set range in better location
   const diseaseColor = highlight
     ? 'red'
     : dimNonHighlighted ? 'lightgrey' : 'blue';
   return (
-    <g transform={`translate(${diseaseScale(data.efoId)},${y(0.7)})`}>
+    <g transform={`translate(${diseaseScale(data.efoId)},${slotOffset})`}>
       <circle
         cx={0}
-        cy={0}
+        cy={10}
         r={4}
         style={{ stroke: diseaseColor, strokeWidth: 2, fill: 'white' }}
         onMouseEnter={() => {
@@ -42,7 +42,7 @@ const DiseaseFeature = ({
       />
       <Text
         x={0}
-        y={10}
+        y={20}
         width={150}
         textAnchor="middle"
         verticalAnchor="start"
