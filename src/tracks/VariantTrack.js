@@ -7,21 +7,36 @@ import {
   setHoverEntity,
   setClickedEntity,
   ENTITY_TYPE,
-  selectors
+  selectors,
 } from '../redux/store';
 
-let VariantTrack = ({ variants, setHover, setClicked, ...rest }) => {
+let VariantTrack = ({
+  variants,
+  isInteractive,
+  setHover,
+  setClicked,
+  ...rest
+}) => {
   const handlers = { setHover, setClicked };
   return (
     <BaseTrack {...rest}>
-      {variants.map(d => <VariantFeature key={d.id} data={d} {...handlers} />)}
+      {variants.map(d => (
+        <VariantFeature
+          key={d.id}
+          data={d}
+          {...handlers}
+          highlight={d.interactive}
+          dimNonHighlighted={isInteractive}
+        />
+      ))}
     </BaseTrack>
   );
 };
 
 const mapStateToProps = state => {
   return {
-    variants: selectors.getVisibleVariants(state)
+    variants: selectors.getVisibleVariants(state),
+    isInteractive: selectors.getIsInteractive(state),
   };
 };
 
@@ -34,7 +49,7 @@ const mapDispatchToProps = dispatch => {
     setClicked: variant =>
       dispatch(
         setClickedEntity({ entityType: ENTITY_TYPE.VARIANT, entity: variant })
-      )
+      ),
   };
 };
 

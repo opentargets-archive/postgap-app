@@ -8,13 +8,14 @@ import {
   setHoverEntity,
   setClickedEntity,
   ENTITY_TYPE,
-  selectors
+  selectors,
 } from '../redux/store';
 
 export const GENE_SLOT_HEIGHT = 30;
 
 let GeneTrack = props => {
   const height = GENE_SLOT_HEIGHT * props.slots.length;
+  const { isInteractive } = props;
   return (
     <BaseTrack {...props} parentHeight={height}>
       {props.slots.map((slot, i) => {
@@ -40,6 +41,8 @@ let GeneTrack = props => {
               slotHeight={GENE_SLOT_HEIGHT}
               setHoverGene={props.setHoverGene}
               setClickedGene={props.setClickedGene}
+              highlight={gene.interactive}
+              dimNonHighlighted={isInteractive}
             />
           );
         });
@@ -51,7 +54,8 @@ let GeneTrack = props => {
 const mapStateToProps = state => {
   return {
     slots: selectors.getSlots(state),
-    genes: selectors.getVisibleGenes(state)
+    genes: selectors.getVisibleGenes(state),
+    isInteractive: selectors.getIsInteractive(state),
   };
 };
 
@@ -60,7 +64,9 @@ const mapDispatchToProps = dispatch => {
     setHoverGene: gene =>
       dispatch(setHoverEntity({ entityType: ENTITY_TYPE.GENE, entity: gene })),
     setClickedGene: gene =>
-      dispatch(setClickedEntity({ entityType: ENTITY_TYPE.GENE, entity: gene }))
+      dispatch(
+        setClickedEntity({ entityType: ENTITY_TYPE.GENE, entity: gene })
+      ),
   };
 };
 

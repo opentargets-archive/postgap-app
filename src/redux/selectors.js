@@ -334,6 +334,23 @@ const getRowsInteractive = createSelector(
   }
 );
 
+const getRowsInteractiveUnfiltered = createSelector(
+  [getRows, getHover, getClicked],
+  (rows, hover, clicked) => {
+    // get rows with interactive state
+    // such that any hovered entity is present OR
+    // any clicked entity is present indicates interactive
+    const isHover = isHoverRow(hover);
+    const isClicked = isClickedRow(clicked);
+    const rowsInteractive = rows.map(d => {
+      const h = isHover(d);
+      const c = isClicked(d);
+      return { ...d, hover: h, clicked: c, interactive: h || c };
+    });
+    return rowsInteractive;
+  }
+);
+
 const getIsInteractive = createSelector(
   [getHover, getClicked],
   (hover, clicked) => {
@@ -359,9 +376,7 @@ const getIsInteractive = createSelector(
 const getGeneVariantsInteractive = createSelector(
   [getEnsemblGenesLookup, getRowsInteractive],
   (genesLookup, rows) => {
-    console.log('rowsInteractive', rows);
     const geneVariants = rowsToUniqueGeneVariants(rows);
-    console.log('gvs', geneVariants);
     // merge
     return _.sortBy(
       geneVariants.map(d => ({
@@ -403,18 +418,25 @@ const getLeadVariantDiseasesInteractive = createSelector(
   }
 );
 
-// ABOVE TO KEEP; BELOW TO REFACTOR
-
-const getVisibleGenes = createSelector(
-  [getEnsemblGenes, getLocation],
-  (genes, location) => {
-    return genes.filter(gene => {
-      return gene.start < location.end && gene.end > location.start;
-    });
+const getGenesInteractive = createSelector(
+  [getRowsInteractiveUnfiltered, getEnsemblGenesLookup, getLocation],
+  (rows, genesLookup, location) => {
+    return _.sortBy(
+      rowsToUniqueGenes(rows)
+        .map(d => ({
+          ...genesLookup[d.geneId],
+          ...d,
+        }))
+        .filter(d => {
+          return d.start < location.end && d.end > location.start;
+        }),
+      'interactive'
+    ).reverse();
   }
 );
-const getSlots = createSelector(
-  [getVisibleGenes, getLocation],
+
+const getSlotsInteractive = createSelector(
+  [getGenesInteractive, getLocation],
   (genes, location) => {
     const sortedGenes = _.sortBy(genes, ['start']);
     const slots = [];
@@ -434,156 +456,34 @@ const getSlots = createSelector(
     return slots;
   }
 );
-const getVariants = state =>
-  _.uniqBy(state.rows.map(d => ({ id: d.ldSnpId, pos: d.ldSnpPos })), 'id');
-const getVisibleVariants = createSelector(
-  [getVariants, getLocation],
-  (variants, location) => {
-    return variants.filter(
-      variant => variant.pos >= location.start && variant.pos <= location.end
-    );
+
+const getVariantsInteractive = createSelector(
+  [getRowsInteractiveUnfiltered, getLocation],
+  (rows, location) => {
+    return _.sortBy(
+      rowsToUniqueVariants(rows)
+        .map(d => ({ ...d, id: d.ldSnpId, pos: d.ldSnpPos }))
+        .filter(d => d.pos >= location.start && d.pos <= location.end),
+      'interactive'
+    ).reverse();
   }
 );
-// const getGeneVariants = state =>
-//   _.uniqBy(
-//     state.rows.map(d => {
-//       const {
-//         geneId,
-//         geneName,
-//         ldSnpId,
-//         ldSnpPos,
-//         gtex,
-//         pchic,
-//         dhs,
-//         fantom5,
-//         vep,
-//         otScore
-//       } = d;
-//       return {
-//         id: `${d.geneId}-${d.ldSnpId}`,
-//         geneId,
-//         geneName,
-//         ldSnpId,
-//         ldSnpPos,
-//         gtex,
-//         pchic,
-//         dhs,
-//         fantom5,
-//         vep,
-//         otScore
-//       };
-//     }),
-//     'id'
-//   );
-// const getVisibleGeneVariants = createSelector(
-//   [getVisibleGenes, getVisibleVariants, getGeneVariants],
-//   (genes, variants, geneVariants) => {
-//     const visibleGeneIds = genes.map(d => d.id);
-//     const visibleSnpIds = variants.map(d => d.id);
 
-//     const visibleGenesTssLookup = {};
-//     genes.forEach(d => {
-//       visibleGenesTssLookup[d.id] = d.canonicalTranscript.tss;
-//     });
-
-//     return geneVariants
-//       .filter(
-//         geneVariant =>
-//           visibleGeneIds.indexOf(geneVariant.geneId) > 0 ||
-//           visibleSnpIds.indexOf(geneVariant.ldSnpId) > 0
-//       )
-//       .map(geneVariant => ({
-//         ...geneVariant,
-//         geneTss: visibleGenesTssLookup[geneVariant.geneId]
-//       }));
-//   }
-// );
-const getVisibleLeadVariants = createSelector(
-  [getEnsemblVariants, getLocation],
-  (variants, location) => {
-    return variants
-      .filter(
-        variant => variant.pos >= location.start && variant.pos <= location.end
-      )
-      .map(variant => ({ id: variant.id, pos: variant.pos }));
+const getLeadVariantsInteractive = createSelector(
+  [getRowsInteractiveUnfiltered, getEnsemblVariantsLookup, getLocation],
+  (rows, variantsLookup, location) => {
+    return _.sortBy(
+      rowsToUniqueLeadVariants(rows)
+        .map(d => ({
+          ...d,
+          id: d.gwasSnpId,
+          pos: variantsLookup[d.gwasSnpId].pos,
+        }))
+        .filter(d => d.pos >= location.start && d.pos <= location.end),
+      'interactive'
+    ).reverse();
   }
 );
-// const getDiseases = createSelector([getRows], rows => {
-//   return _.uniqBy(rows.map(d => ({ id: d.efoId, name: d.efoName })), 'id');
-// });
-// const getVariantLeadVariants = state =>
-//   _.uniqBy(
-//     state.rows.map(d => {
-//       const { ldSnpId, ldSnpPos, gwasSnpId, r2 } = d;
-//       return {
-//         id: `${d.ldSnpId}-${d.gwasSnpId}`,
-//         ldSnpId,
-//         ldSnpPos,
-//         gwasSnpId,
-//         r2
-//       };
-//     }),
-//     'id'
-//   );
-// const getVisibleVariantLeadVariants = createSelector(
-//   [getVisibleVariants, getVisibleLeadVariants, getVariantLeadVariants],
-//   (variants, leadVariants, variantLeadVariants) => {
-//     const visibleVariantIds = variants.map(d => d.id);
-//     const visibleLeadVariantIds = leadVariants.map(d => d.id);
-
-//     const visibleLeadVariantsPosLookup = {};
-//     leadVariants.forEach(d => {
-//       visibleLeadVariantsPosLookup[d.id] = d.pos;
-//     });
-
-//     return variantLeadVariants
-//       .filter(
-//         variantLeadVariant =>
-//           visibleVariantIds.indexOf(variantLeadVariant.ldSnpId) > 0 ||
-//           visibleLeadVariantIds.indexOf(variantLeadVariant.gwasSnpId) > 0
-//       )
-//       .map(variantLeadVariant => ({
-//         ...variantLeadVariant,
-//         leadSnpPos: visibleLeadVariantsPosLookup[variantLeadVariant.gwasSnpId]
-//       }));
-//   }
-// );
-// const getLeadVariantDiseases = state =>
-//   _.uniqBy(
-//     state.rows.map(d => {
-//       const { gwasSnpId, efoId, efoName, gwasPValue, gwasSampleSize } = d;
-//       return {
-//         id: `${d.gwasSnpId}-${d.efoId}`,
-//         gwasSnpId,
-//         efoId,
-//         efoName,
-//         gwasPValue,
-//         gwasSampleSize
-//       };
-//     }),
-//     'id'
-//   );
-// const getVisibleLeadVariantDiseases = createSelector(
-//   [getVisibleLeadVariants, getLeadVariantDiseases],
-//   (leadVariants, leadVariantDiseases) => {
-//     const visibleLeadVariantIds = leadVariants.map(d => d.id); // TODO: refactor into separate selector
-
-//     const visibleLeadVariantsPosLookup = {}; // TODO: refactor into separate selector
-//     leadVariants.forEach(d => {
-//       visibleLeadVariantsPosLookup[d.id] = d.pos;
-//     });
-
-//     return leadVariantDiseases
-//       .filter(
-//         leadVariantDisease =>
-//           visibleLeadVariantIds.indexOf(leadVariantDisease.gwasSnpId) > 0
-//       )
-//       .map(leadVariantDisease => ({
-//         ...leadVariantDisease,
-//         leadSnpPos: visibleLeadVariantsPosLookup[leadVariantDisease.gwasSnpId]
-//       }));
-//   }
-// );
 
 export const selectors = {
   getLocation,
@@ -592,11 +492,11 @@ export const selectors = {
   getRows,
   getRowsFiltered,
   //   getGenes: getEnsemblGenes,
-  getSlots,
-  getVisibleGenes,
-  getVisibleVariants,
+  getSlots: getSlotsInteractive,
+  getVisibleGenes: getGenesInteractive,
+  getVisibleVariants: getVariantsInteractive,
   getVisibleGeneVariants: getGeneVariantsFiltered,
-  getVisibleLeadVariants,
+  getVisibleLeadVariants: getLeadVariantsInteractive,
   getDiseases: getRowsDiseases,
   getVisibleVariantLeadVariants: getVariantLeadVariantsFiltered,
   getVisibleLeadVariantDiseases: getLeadVariantDiseasesFiltered,

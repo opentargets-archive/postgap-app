@@ -6,7 +6,9 @@ const GeneFeature = ({
   slotOffset,
   slotHeight,
   setHoverGene,
-  setClickedGene
+  setClickedGene,
+  highlight,
+  dimNonHighlighted,
 }) => {
   const { x } = scale;
 
@@ -14,6 +16,9 @@ const GeneFeature = ({
   const yExonTop = 0;
   const ySpit = exonHeight / 2;
   const yText = slotHeight * 0.85;
+  const geneColor = highlight
+    ? 'red'
+    : dimNonHighlighted ? 'lightgrey' : 'blue';
 
   const spit = (
     <line
@@ -21,7 +26,7 @@ const GeneFeature = ({
       y1={ySpit}
       x2={x(data.canonicalTranscript.end)}
       y2={ySpit}
-      style={{ stroke: 'blue', strokeWidth: 1 }}
+      style={{ stroke: geneColor, strokeWidth: 1 }}
     />
   );
   const exons = data.canonicalTranscript.exons.map(d => (
@@ -31,7 +36,7 @@ const GeneFeature = ({
       y={yExonTop}
       width={x(d.end) - x(d.start)}
       height={exonHeight}
-      style={{ stroke: 'blue', strokeWidth: 1, fill: 'white' }}
+      style={{ stroke: geneColor, strokeWidth: 1, fill: 'white' }}
     />
   ));
   const label = (

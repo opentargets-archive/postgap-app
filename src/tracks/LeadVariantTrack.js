@@ -7,15 +7,27 @@ import {
   setHoverEntity,
   setClickedEntity,
   ENTITY_TYPE,
-  selectors
+  selectors,
 } from '../redux/store';
 
-let LeadVariantTrack = ({ leadVariants, setHover, setClicked, ...rest }) => {
+let LeadVariantTrack = ({
+  leadVariants,
+  isInteractive,
+  setHover,
+  setClicked,
+  ...rest
+}) => {
   const handlers = { setHover, setClicked };
   return (
     <BaseTrack {...rest}>
       {leadVariants.map(d => (
-        <VariantFeature key={d.id} data={d} {...handlers} />
+        <VariantFeature
+          key={d.id}
+          data={d}
+          {...handlers}
+          highlight={d.interactive}
+          dimNonHighlighted={isInteractive}
+        />
       ))}
     </BaseTrack>
   );
@@ -23,7 +35,8 @@ let LeadVariantTrack = ({ leadVariants, setHover, setClicked, ...rest }) => {
 
 const mapStateToProps = state => {
   return {
-    leadVariants: selectors.getVisibleLeadVariants(state)
+    leadVariants: selectors.getVisibleLeadVariants(state),
+    isInteractive: selectors.getIsInteractive(state),
   };
 };
 
@@ -33,16 +46,16 @@ const mapDispatchToProps = dispatch => {
       dispatch(
         setHoverEntity({
           entityType: ENTITY_TYPE.LEAD_VARIANT,
-          entity: variant
+          entity: variant,
         })
       ),
     setClicked: variant =>
       dispatch(
         setClickedEntity({
           entityType: ENTITY_TYPE.LEAD_VARIANT,
-          entity: variant
+          entity: variant,
         })
-      )
+      ),
   };
 };
 
