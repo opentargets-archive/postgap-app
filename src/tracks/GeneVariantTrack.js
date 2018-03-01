@@ -7,15 +7,27 @@ import {
   setHoverEntity,
   setClickedEntity,
   ENTITY_TYPE,
-  selectors
+  selectors,
 } from '../redux/store';
 
-let GeneVariantTrack = ({ geneVariants, setHover, setClicked, ...rest }) => {
+let GeneVariantTrack = ({
+  geneVariants,
+  geneVariantsInteractive,
+  isInteractive,
+  setHover,
+  setClicked,
+  ...rest
+}) => {
   const handlers = { setHover, setClicked };
   return (
     <BaseTrack {...rest}>
-      {geneVariants.map(d => (
-        <GeneVariantFeature key={d.id} data={d} {...handlers} />
+      {geneVariantsInteractive.map(d => (
+        <GeneVariantFeature
+          key={d.id}
+          data={d}
+          {...handlers}
+          highlight={d.interactive}
+        />
       ))}
     </BaseTrack>
   );
@@ -23,7 +35,9 @@ let GeneVariantTrack = ({ geneVariants, setHover, setClicked, ...rest }) => {
 
 const mapStateToProps = state => {
   return {
-    geneVariants: selectors.getVisibleGeneVariants(state)
+    geneVariants: selectors.getVisibleGeneVariants(state),
+    geneVariantsInteractive: selectors.getGeneVariantsInteractive(state),
+    isInteractive: selectors.getIsInteractive(state),
   };
 };
 
@@ -36,7 +50,7 @@ const mapDispatchToProps = dispatch => {
     setClicked: entity =>
       dispatch(
         setClickedEntity({ entityType: ENTITY_TYPE.GENE_VARIANT, entity })
-      )
+      ),
   };
 };
 

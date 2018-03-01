@@ -28,42 +28,76 @@ const LEAD_VARIANT_DISEASE_FIELDS = [
   'gwasPValue',
   'gwasSampleSize',
 ];
+const INTERACTION_FIELDS = ['hover', 'clicked', 'interactive'];
 export const rowsToUniqueGenes = rows =>
-  _.uniqBy(rows.map(d => _.pick(d, GENE_FIELDS)), 'geneId');
+  _.uniqBy(
+    _.sortBy(
+      rows.map(d => _.pick(d, [...GENE_FIELDS, ...INTERACTION_FIELDS])),
+      'interactive'
+    ),
+    'geneId'
+  );
 const rowsToUniqueVariants = rows =>
-  _.uniqBy(rows.map(d => _.pick(d, VARIANT_FIELDS)), 'ldSnpId');
+  _.uniqBy(
+    _.sortBy(
+      rows.map(d => _.pick(d, [...VARIANT_FIELDS, ...INTERACTION_FIELDS])),
+      'interactive'
+    ),
+    'ldSnpId'
+  );
 export const rowsToUniqueLeadVariants = rows =>
-  _.uniqBy(rows.map(d => _.pick(d, LEAD_VARIANT_FIELDS)), 'gwasSnpId');
+  _.uniqBy(
+    _.sortBy(
+      rows.map(d => _.pick(d, [...LEAD_VARIANT_FIELDS, ...INTERACTION_FIELDS])),
+      'interactive'
+    ),
+    'gwasSnpId'
+  );
 const rowsToUniqueDiseases = rows =>
-  _.uniqBy(rows.map(d => _.pick(d, DISEASE_FIELDS)), 'efoId');
+  _.uniqBy(
+    _.sortBy(
+      rows.map(d => _.pick(d, [...DISEASE_FIELDS, ...INTERACTION_FIELDS])),
+      'interactive'
+    ),
+    'efoId'
+  );
 const rowsToUniqueGeneVariants = rows =>
   _.uniqBy(
-    rows.map(d => {
-      return {
-        id: `${d.geneId}-${d.ldSnpId}`,
-        ..._.pick(d, GENE_VARIANT_FIELDS),
-      };
-    }),
+    _.sortBy(
+      rows.map(d => {
+        return {
+          id: `${d.geneId}-${d.ldSnpId}`,
+          ..._.pick(d, [...GENE_VARIANT_FIELDS, ...INTERACTION_FIELDS]),
+        };
+      }),
+      'interactive'
+    ),
     'id'
   );
 const rowsToUniqueVariantLeadVariants = rows =>
   _.uniqBy(
-    rows.map(d => {
-      return {
-        id: `${d.ldSnpId}-${d.gwasSnpId}`,
-        ..._.pick(d, VARIANT_LEAD_VARIANT_FIELDS),
-      };
-    }),
+    _.sortBy(
+      rows.map(d => {
+        return {
+          id: `${d.ldSnpId}-${d.gwasSnpId}`,
+          ..._.pick(d, [...VARIANT_LEAD_VARIANT_FIELDS, ...INTERACTION_FIELDS]),
+        };
+      }),
+      'interactive'
+    ),
     'id'
   );
 const rowsToUniqueLeadVariantDiseases = rows =>
   _.uniqBy(
-    rows.map(d => {
-      return {
-        id: `${d.gwasSnpId}-${d.efoId}`,
-        ..._.pick(d, LEAD_VARIANT_DISEASE_FIELDS),
-      };
-    }),
+    _.sortBy(
+      rows.map(d => {
+        return {
+          id: `${d.gwasSnpId}-${d.efoId}`,
+          ..._.pick(d, [...LEAD_VARIANT_DISEASE_FIELDS, ...INTERACTION_FIELDS]),
+        };
+      }),
+      'interactive'
+    ),
     'id'
   );
 
@@ -81,6 +115,8 @@ const getLoadingEnsemblGenes = state => state.loading.ensemblGenes;
 const getLoadingEnsemblVariants = state => state.loading.ensemblVariants;
 const getChromosome = state => state.location.chromosome;
 const getChromosomeLengths = state => state.chromosomeLengths;
+const getHover = state => state.hover;
+const getClicked = state => state.clicked;
 
 // derived
 // TODO: Pattern for browser selectors should follow:
@@ -242,6 +278,128 @@ const getChromosomeLength = createSelector(
   [getChromosome, getChromosomeLengths],
   (chr, chrLengths) => {
     return chrLengths[chr];
+  }
+);
+
+const isHoverRow = hover => d => {
+  return (
+    (hover.gene && d.geneId === hover.gene.id) ||
+    (hover.variant && d.ldSnpId === hover.variant.id) ||
+    (hover.leadVariant && d.gwasSnpId === hover.leadVariant.id) ||
+    (hover.disease && d.efoId === hover.disease.efoId) ||
+    (hover.geneVariant &&
+      d.geneId === hover.geneVariant.geneId &&
+      d.ldSnpId === hover.geneVariant.ldSnpId) ||
+    (hover.variantLeadVariant &&
+      d.ldSnpId === hover.variantLeadVariant.ldSnpId &&
+      d.gwasSnpId === hover.variantLeadVariant.gwasSnpId) ||
+    (hover.leadVariantDisease &&
+      d.gwasSnpId === hover.leadVariantDisease.gwasSnpId &&
+      d.efoId === hover.leadVariantDisease.efoId)
+  );
+};
+
+const isClickedRow = clicked => d => {
+  return (
+    (clicked.gene && d.geneId === clicked.gene.id) ||
+    (clicked.variant && d.ldSnpId === clicked.variant.id) ||
+    (clicked.leadVariant && d.gwasSnpId === clicked.leadVariant.id) ||
+    (clicked.disease && d.efoId === clicked.disease.efoId) ||
+    (clicked.geneVariant &&
+      d.geneId === clicked.geneVariant.geneId &&
+      d.ldSnpId === clicked.geneVariant.ldSnpId) ||
+    (clicked.variantLeadVariant &&
+      d.ldSnpId === clicked.variantLeadVariant.ldSnpId &&
+      d.gwasSnpId === clicked.variantLeadVariant.gwasSnpId) ||
+    (clicked.leadVariantDisease &&
+      d.gwasSnpId === clicked.leadVariantDisease.gwasSnpId &&
+      d.efoId === clicked.leadVariantDisease.efoId)
+  );
+};
+
+const getRowsInteractive = createSelector(
+  [getRowsFiltered, getHover, getClicked],
+  (rows, hover, clicked) => {
+    // get rows with interactive state
+    // such that any hovered entity is present OR
+    // any clicked entity is present indicates interactive
+    const isHover = isHoverRow(hover);
+    const isClicked = isClickedRow(clicked);
+    const rowsInteractive = rows.map(d => {
+      const h = isHover(d);
+      const c = isClicked(d);
+      return { ...d, hover: h, clicked: c, interactive: h || c };
+    });
+    return rowsInteractive;
+  }
+);
+
+const getIsInteractive = createSelector(
+  [getHover, getClicked],
+  (hover, clicked) => {
+    return (
+      hover.gene ||
+      hover.variant ||
+      hover.leadVariant ||
+      hover.disease ||
+      hover.geneVariant ||
+      hover.variantLeadVariant ||
+      hover.leadVariantDisease ||
+      (clicked.gene ||
+        clicked.variant ||
+        clicked.leadVariant ||
+        clicked.disease ||
+        clicked.geneVariant ||
+        clicked.variantLeadVariant ||
+        clicked.leadVariantDisease)
+    );
+  }
+);
+
+const getGeneVariantsInteractive = createSelector(
+  [getEnsemblGenesLookup, getRowsInteractive],
+  (genesLookup, rows) => {
+    console.log('rowsInteractive', rows);
+    const geneVariants = rowsToUniqueGeneVariants(rows);
+    console.log('gvs', geneVariants);
+    // merge
+    return _.sortBy(
+      geneVariants.map(d => ({
+        ...genesLookup[d.geneId],
+        ...d,
+      })),
+      'interactive'
+    ).reverse();
+  }
+);
+
+const getVariantLeadVariantsInteractive = createSelector(
+  [getEnsemblVariantsLookup, getRowsInteractive],
+  (variantsLookup, rows) => {
+    const variantLeadVariants = rowsToUniqueVariantLeadVariants(rows);
+    // merge
+    return _.sortBy(
+      variantLeadVariants.map(d => ({
+        leadSnpPos: variantsLookup[d.gwasSnpId].pos,
+        ...d,
+      })),
+      'interactive'
+    ).reverse();
+  }
+);
+
+const getLeadVariantDiseasesInteractive = createSelector(
+  [getEnsemblVariantsLookup, getRowsInteractive],
+  (variantsLookup, rows) => {
+    const leadVariantDiseases = rowsToUniqueLeadVariantDiseases(rows);
+    // merge
+    return _.sortBy(
+      leadVariantDiseases.map(d => ({
+        leadSnpPos: variantsLookup[d.gwasSnpId].pos,
+        ...d,
+      })),
+      'interactive'
+    ).reverse();
   }
 );
 
@@ -455,4 +613,9 @@ export const selectors = {
   getFilterG2VScore,
   // loading
   getIsLoading,
+  // interactive
+  getGeneVariantsInteractive,
+  getVariantLeadVariantsInteractive,
+  getLeadVariantDiseasesInteractive,
+  getIsInteractive,
 };

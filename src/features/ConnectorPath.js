@@ -7,7 +7,8 @@ const ConnectorPath = ({
   bottomY,
   onClick,
   onMouseEnter,
-  onMouseLeave
+  onMouseLeave,
+  highlight,
 }) => {
   const controlY = (bottomY + topY) / 2;
   const d = `M${topX},${topY} C${topX},${controlY}, ${bottomX},${controlY} ${bottomX},${bottomY}`;
@@ -15,7 +16,11 @@ const ConnectorPath = ({
   return (
     <path
       d={d}
-      style={{ stroke: 'grey', strokeWidth: 1, fill: 'none' }}
+      style={{
+        stroke: highlight ? 'red' : 'grey',
+        strokeWidth: 1,
+        fill: 'none',
+      }}
       {...handlers}
     />
   );
