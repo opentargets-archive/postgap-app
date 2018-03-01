@@ -10,12 +10,12 @@ import {
   setLoadingEnsemblGenes,
   setLoadingEnsemblVariants,
   setLoadingDiseaseTableRows,
-  setDiseaseTableRows
+  setDiseaseTableRows,
 } from './actions';
 import { rowsToUniqueGenes, rowsToUniqueLeadVariants } from './selectors';
 import {
   transformEnsemblGene,
-  transformEnsemblVariant
+  transformEnsemblVariant,
 } from './utils/transformEnsembl';
 import { transformEvidenceString } from './utils/transformOpenTargets';
 
@@ -104,27 +104,39 @@ const OT_API_BASE =
   'https://mk-loci-dot-open-targets-eu-dev.appspot.com/v3/platform/';
 const OT_API_FILTER = 'public/evidence/filter';
 const OT_API_INTERVAL = ({ chromosome, start, end }) =>
-  `?chromosome=${chromosome}&begin=${start}&end=${end}&size=10&datasource=gwas_catalog&fields=unique_association_fields&fields=disease&fields=evidence&fields=variant&fields=target&fields=sourceID`;
+  `?chromosome=${chromosome}&begin=${start}&end=${end}&size=10000&datasource=gwas_catalog&fields=unique_association_fields&fields=disease&fields=evidence&fields=variant&fields=target&fields=sourceID`;
 const OT_API_DISEASE = ({ efoId }) =>
-  `?disease=${efoId}&size=10&datasource=gwas_catalog&fields=unique_association_fields&fields=disease&fields=evidence&fields=variant&fields=target&fields=sourceID`;
+  `?disease=${efoId}&size=10000&datasource=gwas_catalog&fields=unique_association_fields&fields=disease&fields=evidence&fields=variant&fields=target&fields=sourceID`;
 const OT_API_SEARCH = ({ query }) => `private/quicksearch?q=${query}&size=3`;
 
 const ENSEMBL_API_BASE = 'https://rest.ensembl.org/';
 const ENSEMBL_API_VARIATION = 'variation/homo_sapiens';
 const ENSEMBL_API_LOOKUP = 'lookup/id';
 
+const checkPaginator = response => {
+  if (response.data.next && response.data.query.size === 10000)
+    console.warn(`Over 10,000 records (total: ${response.data.total}`);
+  return response;
+};
+
 export const otApi = {
   fetchRows(location) {
     const { start, end, chromosome } = location;
     const endpoint = OT_API_INTERVAL({ chromosome, start, end });
     const url = `${OT_API_BASE}${OT_API_FILTER}${endpoint}`;
-    return axios.get(url).then(response => response.data.data);
+    return axios
+      .get(url)
+      .then(checkPaginator)
+      .then(response => response.data.data);
     // TODO: Handle calls over paginator and check error handling!
   },
   fetchRowsByEfoId(efoId) {
     const endpoint = OT_API_DISEASE({ efoId });
     const url = `${OT_API_BASE}${OT_API_FILTER}${endpoint}`;
-    return axios.get(url).then(response => response.data.data);
+    return axios
+      .get(url)
+      .then(checkPaginator)
+      .then(response => response.data.data);
     // TODO: Handle calls over paginator and check error handling!
   },
   fetchSearch(query) {
@@ -136,7 +148,7 @@ export const otApi = {
           data.push({
             id: response.data.data.besthit.data.id,
             name: response.data.data.besthit.data.name,
-            type: response.data.data.besthit.data.type
+            type: response.data.data.besthit.data.type,
           });
         }
         if (response.data.data.target) {
@@ -144,7 +156,7 @@ export const otApi = {
             data.push({
               id: d.data.id,
               name: d.data.name,
-              type: d.data.type
+              type: d.data.type,
             });
           });
         }
@@ -153,21 +165,21 @@ export const otApi = {
             data.push({
               id: d.data.id,
               name: d.data.name,
-              type: d.data.type
+              type: d.data.type,
             });
           });
         }
       }
       return data;
     });
-  }
+  },
 };
 
 export const ensemblApi = {
   fetchVariants(variantIds) {
     const url = `${ENSEMBL_API_BASE}${ENSEMBL_API_VARIATION}`;
     const body = {
-      ids: variantIds
+      ids: variantIds,
     };
     return axios.post(url, body).then(response => response.data);
   },
@@ -175,10 +187,10 @@ export const ensemblApi = {
     const url = `${ENSEMBL_API_BASE}${ENSEMBL_API_LOOKUP}`;
     const body = {
       ids: geneIds,
-      expand: true
+      expand: true,
     };
     return axios.post(url, body).then(response => response.data);
-  }
+  },
 };
 
 export default function* root() {
