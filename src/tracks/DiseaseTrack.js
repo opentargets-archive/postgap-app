@@ -7,10 +7,16 @@ import {
   setHoverEntity,
   setClickedEntity,
   ENTITY_TYPE,
-  selectors
+  selectors,
 } from '../redux/store';
 
-let DiseaseTrack = ({ diseases, setHover, setClicked, ...rest }) => {
+let DiseaseTrack = ({
+  diseases,
+  isInteractive,
+  setHover,
+  setClicked,
+  ...rest
+}) => {
   const handlers = { setHover, setClicked };
   return (
     <BaseTrack {...rest}>
@@ -20,6 +26,8 @@ let DiseaseTrack = ({ diseases, setHover, setClicked, ...rest }) => {
           data={d}
           diseaseScale={rest.diseaseScale}
           {...handlers}
+          highlight={d.interactive}
+          dimNonHighlighted={isInteractive}
         />
       ))}
     </BaseTrack>
@@ -28,7 +36,8 @@ let DiseaseTrack = ({ diseases, setHover, setClicked, ...rest }) => {
 
 const mapStateToProps = state => {
   return {
-    diseases: selectors.getDiseases(state)
+    diseases: selectors.getDiseases(state),
+    isInteractive: selectors.getIsInteractive(state),
   };
 };
 
@@ -41,7 +50,7 @@ const mapDispatchToProps = dispatch => {
     setClicked: disease =>
       dispatch(
         setClickedEntity({ entityType: ENTITY_TYPE.DISEASE, entity: disease })
-      )
+      ),
   };
 };
 

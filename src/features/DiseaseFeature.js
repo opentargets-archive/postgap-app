@@ -15,16 +15,21 @@ const DiseaseFeature = ({
   width,
   setHover,
   setClicked,
+  highlight,
+  dimNonHighlighted,
 }) => {
   const { y } = scale;
   diseaseScale.range(calculateDiseaseScaleRange(width)); // TODO: refactor to set range in better location
+  const diseaseColor = highlight
+    ? 'red'
+    : dimNonHighlighted ? 'lightgrey' : 'blue';
   return (
     <g transform={`translate(${diseaseScale(data.efoId)},${y(0.7)})`}>
       <circle
         cx={0}
         cy={0}
         r={4}
-        style={{ stroke: 'blue', strokeWidth: 2, fill: 'lightgrey' }}
+        style={{ stroke: diseaseColor, strokeWidth: 2, fill: 'white' }}
         onMouseEnter={() => {
           setHover(data);
         }}

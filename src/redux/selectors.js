@@ -55,10 +55,7 @@ export const rowsToUniqueLeadVariants = rows =>
   );
 const rowsToUniqueDiseases = rows =>
   _.uniqBy(
-    _.sortBy(
-      rows.map(d => _.pick(d, [...DISEASE_FIELDS, ...INTERACTION_FIELDS])),
-      'interactive'
-    ),
+    rows.map(d => _.pick(d, [...DISEASE_FIELDS, ...INTERACTION_FIELDS])),
     'efoId'
   );
 const rowsToUniqueGeneVariants = rows =>
@@ -485,6 +482,11 @@ const getLeadVariantsInteractive = createSelector(
   }
 );
 
+const getDiseasesInteractive = createSelector(
+  [getRowsInteractiveUnfiltered],
+  rows => rowsToUniqueDiseases(rows)
+);
+
 export const selectors = {
   getLocation,
   getChromosome,
@@ -497,7 +499,7 @@ export const selectors = {
   getVisibleVariants: getVariantsInteractive,
   getVisibleGeneVariants: getGeneVariantsFiltered,
   getVisibleLeadVariants: getLeadVariantsInteractive,
-  getDiseases: getRowsDiseases,
+  getDiseases: getDiseasesInteractive, // getRowsDiseases,
   getVisibleVariantLeadVariants: getVariantLeadVariantsFiltered,
   getVisibleLeadVariantDiseases: getLeadVariantDiseasesFiltered,
   // counts
