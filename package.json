@@ -7,10 +7,12 @@
     "antd": "^3.2.0",
     "axios": "^0.18.0",
     "d3": "^4.13.0",
+    "enzyme": "^3.3.0",
     "husky": "^0.14.3",
     "lint-staged": "^6.1.0",
     "lodash": "^4.17.5",
     "prettier": "^1.10.2",
+    "prop-types": "^15.6.1",
     "query-string": "^5.1.0",
     "react": "^16.2.0",
     "react-csv": "^1.0.12",
@@ -43,6 +45,7 @@
   },
   "devDependencies": {
     "cz-conventional-changelog": "^2.1.0",
+    "enzyme-adapter-react-16": "^1.1.1",
     "redux-devtools-extension": "^2.13.2"
   },
   "config": {
