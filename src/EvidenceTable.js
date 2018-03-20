@@ -85,6 +85,14 @@ const COLUMNS = [
     title: 'Gene - Variant',
     children: [
       {
+        title: <DictionaryHelpTerm term={'otscore'} label={'G2V Score'} />,
+        dataIndex: 'otScore',
+        key: 'otScore',
+        render: renderNonZeroField,
+        width: 120,
+        sorter: compareNumericField('otScore'),
+      },
+      {
         title: <DictionaryHelpTerm term={'vep'} label={'VEP'} />,
         dataIndex: 'vep',
         key: 'vep',
@@ -216,7 +224,7 @@ class EvidenceTable extends React.Component {
           columns={COLUMNS}
           size="small"
           bordered
-          scroll={{ x: 1500 }}
+          scroll={{ x: 1700 }}
         />
       </Col>
     );
