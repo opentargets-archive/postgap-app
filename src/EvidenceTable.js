@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Button, Col, Row } from 'antd';
+import { Table, Button, Col, Row, Icon } from 'antd';
 import { CSVLink } from 'react-csv';
 
 import { commaSeparate, renderNonZeroField } from './stringFormatters';
@@ -24,6 +24,11 @@ const renderGeneField = (value, row) => (
 );
 const renderDiseaseField = (value, row) => (
   <LinksDisease efoId={row.efoId}>{value}</LinksDisease>
+);
+const renderPubmedUrlField = (value, row) => (
+  <a href={value} target={'_blank'}>
+    <Icon type="link" />
+  </a>
 );
 
 const comparatorStringField = field => (a, b) => {
@@ -185,6 +190,13 @@ const COLUMNS = [
         render: renderIntField,
         width: 100,
         sorter: compareNumericField('gwasSampleSize'),
+      },
+      {
+        title: 'Literature',
+        dataIndex: 'gwasPubmedUrl',
+        key: 'gwasPubmedUrl',
+        render: renderPubmedUrlField,
+        width: 100,
       },
     ],
   },

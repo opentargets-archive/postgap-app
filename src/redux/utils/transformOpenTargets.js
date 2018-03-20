@@ -2,6 +2,7 @@ export function transformEvidenceString(r) {
   return {
     efoId: r.disease.id,
     efoName: r.disease.name,
+    gwasPubmedUrl: r.unique_association_fields.pubmed_refs,
     gwasPValue: r.evidence.variant2disease.resource_score.value,
     gwasSampleSize: r.evidence.variant2disease.gwas_sample_size,
     gwasSnpId: r.evidence.variant2disease.lead_snp_rsid,
