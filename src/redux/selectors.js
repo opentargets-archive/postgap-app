@@ -4,7 +4,7 @@ import _ from 'lodash';
 // helpers
 // TODO: will be needed for API call
 const GENE_FIELDS = ['geneDescription', 'geneName', 'geneId'];
-const VARIANT_FIELDS = ['ldSnpId', 'ldSnpPos'];
+const VARIANT_FIELDS = ['ldSnpId', 'ldSnpPos', 'ldSnpChrom'];
 const LEAD_VARIANT_FIELDS = ['gwasSnpId'];
 const DISEASE_FIELDS = ['efoName', 'efoId'];
 const GENE_VARIANT_FIELDS = [
@@ -459,7 +459,12 @@ const getVariantsInteractive = createSelector(
   (rows, location) => {
     return _.sortBy(
       rowsToUniqueVariants(rows)
-        .map(d => ({ ...d, id: d.ldSnpId, pos: d.ldSnpPos }))
+        .map(d => ({
+          ...d,
+          id: d.ldSnpId,
+          pos: d.ldSnpPos,
+          chromosome: d.ldSnpChrom,
+        }))
         .filter(d => d.pos >= location.start && d.pos <= location.end),
       'interactive'
     ).reverse();

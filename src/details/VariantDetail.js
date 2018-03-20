@@ -1,15 +1,44 @@
 import React from 'react';
+import { Table } from 'antd';
+
 import BaseDetail from './BaseDetail';
 import { LinksVariant } from '../links';
+import { commaSeparate } from '../stringFormatters';
 
 const VariantDetail = ({ variant, closeHandler }) => {
+  const d = variant;
+  const tableData = [
+    {
+      key: 'location',
+      label: 'Location',
+      value: `${d.chromosome}:${commaSeparate(d.pos)}`,
+    },
+  ];
+  const tableColumns = [
+    {
+      key: 'label',
+      title: 'Label',
+      dataIndex: 'label',
+    },
+    {
+      key: 'value',
+      title: 'Value',
+      dataIndex: 'value',
+    },
+  ];
   return (
     <BaseDetail
       type={'Variant'}
       title={<LinksVariant variantId={variant.id}>{variant.id}</LinksVariant>}
       closeHandler={closeHandler}
     >
-      {variant.chromosome}:{variant.pos}
+      <Table
+        dataSource={tableData}
+        columns={tableColumns}
+        size="small"
+        pagination={false}
+        showHeader={false}
+      />
     </BaseDetail>
   );
 };

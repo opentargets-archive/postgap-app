@@ -8,6 +8,7 @@ export function transformEvidenceString(r) {
     r2: parseFloat(r.unique_association_fields.r2),
     ldSnpId: r.variant.id.split('/')[4],
     ldSnpPos: r.variant.pos,
+    ldSnpChrom: r.variant.chrom,
     gtex: r.evidence.gene2variant.metadata.funcgen.gtex_score,
     pchic: r.evidence.gene2variant.metadata.funcgen.pchic_score,
     dhs: r.evidence.gene2variant.metadata.funcgen.dhs_score,
