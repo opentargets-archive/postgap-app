@@ -479,6 +479,7 @@ const getLeadVariantsInteractive = createSelector(
         .map(d => ({
           ...d,
           id: d.gwasSnpId,
+          chromosome: variantsLookup[d.gwasSnpId].chrom,
           pos: variantsLookup[d.gwasSnpId].pos,
         }))
         .filter(d => d.pos >= location.start && d.pos <= location.end),
