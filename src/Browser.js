@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card } from 'antd';
+import { Card, Row, Col } from 'antd';
 import { connect } from 'react-redux';
 import { scalePoint } from 'd3-scale';
 
@@ -13,6 +13,7 @@ import VariantLeadVariantTrack from './tracks/VariantLeadVariantTrack';
 import DiseaseTrack from './tracks/DiseaseTrack';
 import LeadVariantDiseaseTrack from './tracks/LeadVariantDiseaseTrack';
 import { commaSeparate } from './stringFormatters';
+import DictionaryHelpTerm from './terms/DictionaryHelpTerm';
 
 class Browser extends React.Component {
   constructor(props) {
@@ -43,6 +44,7 @@ class Browser extends React.Component {
     const { start, end, chromosome } = location;
     const diseaseScale = scalePoint().domain(diseases.map(d => d.efoId));
     const diseaseSlotsCount = Math.ceil(diseases.length / 5);
+    const labelColSize = 4;
     const commonProps = {
       start,
       end,
@@ -52,43 +54,145 @@ class Browser extends React.Component {
     };
     return (
       <div>
-        <Card bodyStyle={{ padding: 10 }}>
-          <span>{`Human ${chromosome}:${commaSeparate(start)}-${commaSeparate(
-            end
-          )}`}</span>
-        </Card>
-        <Card bodyStyle={{ padding: 0, height: '10px' }}>
-          <ScaleTrack {...commonProps} />
-        </Card>
-        <Card
-          bodyStyle={{
-            padding: 0,
-            height: `${GENE_SLOT_HEIGHT * slots.length}px`,
-          }}
-        >
-          <GeneTrack {...commonProps} />
-        </Card>
-        <Card bodyStyle={{ padding: 0, height: '80px' }}>
-          <GeneVariantTrack {...commonProps} />
-        </Card>
-        <Card bodyStyle={{ padding: 0, height: '15px' }}>
-          <VariantTrack {...commonProps} />
-        </Card>
-        <Card bodyStyle={{ padding: 0, height: '80px' }}>
-          <VariantLeadVariantTrack {...commonProps} />
-        </Card>
-        <Card bodyStyle={{ padding: 0, height: '15px' }}>
-          <LeadVariantTrack {...commonProps} />
-        </Card>
-        <Card bodyStyle={{ padding: 0, height: '80px' }}>
-          <LeadVariantDiseaseTrack
-            diseaseScale={diseaseScale}
-            {...commonProps}
-          />
-        </Card>
-        <Card bodyStyle={{ padding: 0, height: `${60 * diseaseSlotsCount}px` }}>
-          <DiseaseTrack diseaseScale={diseaseScale} {...commonProps} />
-        </Card>
+        <Row>
+          <Col offset={labelColSize} span={24 - labelColSize}>
+            <Card bodyStyle={{ padding: 10 }}>
+              <span>{`Human ${chromosome}:${commaSeparate(
+                start
+              )}-${commaSeparate(end)}`}</span>
+            </Card>
+          </Col>
+        </Row>
+        <Row>
+          <Col offset={labelColSize} span={24 - labelColSize}>
+            <Card bodyStyle={{ padding: 0, height: '10px' }}>
+              <ScaleTrack {...commonProps} />
+            </Card>
+          </Col>
+        </Row>
+        <Row>
+          <Col span={labelColSize}>
+            <DictionaryHelpTerm
+              term={'genes'}
+              label={
+                <span
+                  style={{
+                    fontWeight: 100,
+                    fontStyle: 'italic',
+                    textAlign: 'right',
+                  }}
+                >
+                  Genes
+                </span>
+              }
+            />
+          </Col>
+          <Col span={24 - labelColSize}>
+            <Card
+              bodyStyle={{
+                padding: 0,
+                height: `${GENE_SLOT_HEIGHT * slots.length}px`,
+              }}
+            >
+              <GeneTrack {...commonProps} />
+            </Card>
+          </Col>
+        </Row>
+        <Row>
+          <Col offset={labelColSize} span={24 - labelColSize}>
+            <Card bodyStyle={{ padding: 0, height: '80px' }}>
+              <GeneVariantTrack {...commonProps} />
+            </Card>
+          </Col>
+        </Row>
+        <Row>
+          <Col span={labelColSize}>
+            <DictionaryHelpTerm
+              term={'variants'}
+              label={
+                <span
+                  style={{
+                    fontWeight: 100,
+                    fontStyle: 'italic',
+                    textAlign: 'right',
+                  }}
+                >
+                  Variants
+                </span>
+              }
+            />
+          </Col>
+          <Col span={24 - labelColSize}>
+            <Card bodyStyle={{ padding: 0, height: '20px' }}>
+              <VariantTrack {...commonProps} />
+            </Card>
+          </Col>
+        </Row>
+        <Row>
+          <Col offset={labelColSize} span={24 - labelColSize}>
+            <Card bodyStyle={{ padding: 0, height: '80px' }}>
+              <VariantLeadVariantTrack {...commonProps} />
+            </Card>
+          </Col>
+        </Row>
+        <Row>
+          <Col span={labelColSize}>
+            <DictionaryHelpTerm
+              term={'leadvariants'}
+              label={
+                <span
+                  style={{
+                    fontWeight: 100,
+                    fontStyle: 'italic',
+                    textAlign: 'right',
+                  }}
+                >
+                  Lead Variants
+                </span>
+              }
+            />
+          </Col>
+          <Col span={24 - labelColSize}>
+            <Card bodyStyle={{ padding: 0, height: '20px' }}>
+              <LeadVariantTrack {...commonProps} />
+            </Card>
+          </Col>
+        </Row>
+        <Row>
+          <Col offset={labelColSize} span={24 - labelColSize}>
+            <Card bodyStyle={{ padding: 0, height: '80px' }}>
+              <LeadVariantDiseaseTrack
+                diseaseScale={diseaseScale}
+                {...commonProps}
+              />
+            </Card>
+          </Col>
+        </Row>
+        <Row>
+          <Col span={labelColSize}>
+            <DictionaryHelpTerm
+              term={'diseases'}
+              label={
+                <span
+                  style={{
+                    fontWeight: 100,
+                    fontStyle: 'italic',
+                    textAlign: 'right',
+                  }}
+                >
+                  Diseases
+                </span>
+              }
+            />
+          </Col>
+          <Col span={24 - labelColSize}>
+            <Card
+              bodyStyle={{ padding: 0, height: `${60 * diseaseSlotsCount}px` }}
+            >
+              <DiseaseTrack diseaseScale={diseaseScale} {...commonProps} />
+            </Card>
+          </Col>
+        </Row>
       </div>
     );
   }

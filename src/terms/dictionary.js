@@ -16,6 +16,12 @@ const DICTIONARY = {
   r2: 'The linkage disequilibrium between the lead variant and the variant.',
   gwaspvalue: 'The reported p-value from GWAS catalog.',
   gwassamplesize: 'The reported sample size from GWAS catalog.',
+  variants: 'Single nucleotide polymorphisms.',
+  leadvariants:
+    'Single nucleotide polymorphisms identified as being associated with a disease through a GWAS.',
+  genes: 'Genes from Ensembl.',
+  diseases:
+    'Diseases identified as being associated with a lead variant through a GWAS.',
 };
 
 export default DICTIONARY;
