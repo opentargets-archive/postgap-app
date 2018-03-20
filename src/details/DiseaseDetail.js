@@ -12,7 +12,7 @@ const DiseaseDetail = ({ disease, closeHandler }) => {
       }
       closeHandler={closeHandler}
     >
-      What should go here?
+      {/* What should go here? */}
     </BaseDetail>
   );
 };
