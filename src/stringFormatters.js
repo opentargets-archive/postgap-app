@@ -11,3 +11,5 @@ export const renderNonZeroField = value =>
   ) : (
     <span style={{ fontStyle: 'italic', color: '#CCC' }}>No data</span>
   );
+
+export const underscoresToSpaces = str => str.replace('_', ' ');

@@ -14,7 +14,8 @@ export function transformEvidenceString(r) {
     fantom5: r.evidence.gene2variant.metadata.funcgen.fantom5_score,
     vep: r.evidence.gene2variant.metadata.funcgen.vep_score,
     otScore: r.evidence.gene2variant.metadata.funcgen.ot_g2v_score,
+    geneDescription: r.target.gene_info.name,
     geneName: r.target.target_name,
-    geneId: r.target.id
+    geneId: r.target.id,
   };
 }

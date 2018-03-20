@@ -3,7 +3,7 @@ import _ from 'lodash';
 
 // helpers
 // TODO: will be needed for API call
-const GENE_FIELDS = ['geneName', 'geneId'];
+const GENE_FIELDS = ['geneDescription', 'geneName', 'geneId'];
 const VARIANT_FIELDS = ['ldSnpId', 'ldSnpPos'];
 const LEAD_VARIANT_FIELDS = ['gwasSnpId'];
 const DISEASE_FIELDS = ['efoName', 'efoId'];
