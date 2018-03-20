@@ -114,6 +114,7 @@ const getChromosome = state => state.location.chromosome;
 const getChromosomeLengths = state => state.chromosomeLengths;
 const getHover = state => state.hover;
 const getClicked = state => state.clicked;
+const getMaxMinusLogGwasPValue = state => state.filters.gwasMaxPValue;
 
 // derived
 // TODO: Pattern for browser selectors should follow:
@@ -148,12 +149,11 @@ const getRowsFiltered = createSelector(
     }
     const rfs = rows
       .filter(d => filterLD[0] <= d.r2 && d.r2 <= filterLD[1])
-      // TODO: Fix and reenable p-value filter
-      // .filter(d => {
-      //   const low = filterGwasPvalue[0] <= -Math.log10(d.gwasPValue);
-      //   const high = -Math.log10(d.gwasPValue) <= filterGwasPvalue[1];
-      //   return low && high;
-      // })
+      .filter(d => {
+        const low = filterGwasPvalue[0] <= -Math.log10(d.gwasPValue);
+        const high = -Math.log10(d.gwasPValue) <= filterGwasPvalue[1];
+        return low && high;
+      })
       .filter(
         d => filterG2VScore[0] <= d.otScore && d.otScore <= filterG2VScore[1]
       )
@@ -255,14 +255,6 @@ const getLeadVariantDiseasesFilteredCount = createSelector(
   [getLeadVariantDiseasesFiltered],
   leadVariantDiseasesFiltered => leadVariantDiseasesFiltered.length
 );
-
-const getMaxMinusLogGwasPValue = createSelector([getRows], rows => {
-  const rowWithMinValue = _.min(rows, d => d.gwasPValue);
-  if (rowWithMinValue) {
-    return -Math.log10(rowWithMinValue.gwasPValue); // TODO: 1 is for float conversion; check in better way
-  }
-  return 100; // TODO: Catch and disable slider
-});
 
 const getIsLoading = createSelector(
   [getLoadingRows, getLoadingEnsemblGenes, getLoadingEnsemblVariants],

@@ -1,6 +1,7 @@
 import { delay } from 'redux-saga';
 import { call, put, take, fork, cancel } from 'redux-saga/effects';
 import axios from 'axios';
+import _ from 'lodash';
 
 import {
   SET_LOCATION,
@@ -62,10 +63,19 @@ function* updateLocation(action) {
       transformEnsemblVariant
     );
 
+    // compute max -log(pval) for filters
+    const rowWithMinValue = _.min(rows, d => d.gwasPValue);
+    let gwasMaxPValue = 100;
+    if (rowWithMinValue) {
+      gwasMaxPValue = -Math.log10(rowWithMinValue.gwasPValue).toFixed(1);
+    }
+
     // update store
     // important: this happens as one transaction for all data
     //            so UI change is consistent (and selectors work)
-    yield put(setApiData({ rows, ensemblGenes, ensemblVariants }));
+    yield put(
+      setApiData({ rows, ensemblGenes, ensemblVariants, gwasMaxPValue })
+    );
   } catch (e) {
     // yield put({type: API_ERROR, message: e.message})
     console.log(e);

@@ -63,6 +63,7 @@ const initialState = {
   filters: {
     ld: [0.7, 1],
     gwasPValue: [0, 100],
+    gwasMaxPValue: 100,
     g2VMustHaves: [],
     g2VScore: [0, 1],
   },
@@ -167,9 +168,25 @@ function reducer(state = initialState, action) {
         loading: { ...state.loading, ensemblVariants: action.loading },
       };
     case SET_API_DATA:
-      const { rows, ensemblGenes, ensemblVariants } = action.data;
+      const {
+        rows,
+        ensemblGenes,
+        ensemblVariants,
+        gwasMaxPValue,
+      } = action.data;
+      // gwas p-value filter max updates; conditionally need to update filter interval
+      const oldGwasPValue = state.filters.gwasPValue;
+      const gwasPValue = [
+        oldGwasPValue[0] <= gwasMaxPValue ? oldGwasPValue[0] : 0,
+        oldGwasPValue[1] <= gwasMaxPValue ? oldGwasPValue[1] : gwasMaxPValue,
+      ];
       return {
         ...state,
+        filters: {
+          ...state.filters,
+          gwasMaxPValue: gwasMaxPValue,
+          gwasPValue,
+        },
         rows,
         ensemblGenes,
         ensemblVariants,
