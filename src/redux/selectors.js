@@ -55,7 +55,10 @@ export const rowsToUniqueLeadVariants = rows =>
   );
 const rowsToUniqueDiseases = rows =>
   _.uniqBy(
-    rows.map(d => _.pick(d, [...DISEASE_FIELDS, ...INTERACTION_FIELDS])),
+    _.sortBy(
+      rows.map(d => _.pick(d, [...DISEASE_FIELDS, ...INTERACTION_FIELDS])),
+      'interactive'
+    ),
     'efoId'
   );
 const rowsToUniqueGeneVariants = rows =>
