@@ -24,7 +24,7 @@ const DiseaseFeature = ({
     ? 'red'
     : dimNonHighlighted ? 'lightgrey' : 'blue';
   return (
-    <g transform={`translate(${diseaseScale(data.efoId)},${slotOffset})`}>
+    <g transform={`translate(${diseaseScale(data.efoName)},${slotOffset})`}>
       <circle
         cx={0}
         cy={10}

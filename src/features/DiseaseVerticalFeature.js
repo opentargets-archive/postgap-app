@@ -15,9 +15,9 @@ const DiseaseVerticalFeature = ({
     : dimNonHighlighted ? 'lightgrey' : 'grey';
   return (
     <line
-      x1={diseaseScale(data.efoId)}
+      x1={diseaseScale(data.efoName)}
       y1={slotOffset + 10}
-      x2={diseaseScale(data.efoId)}
+      x2={diseaseScale(data.efoName)}
       y2={0}
       style={{ stroke: diseaseColor, strokeWidth: 1 }}
     />

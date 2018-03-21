@@ -25,7 +25,7 @@ const VariantLeadVariantFeature = ({
       <ConnectorPath
         topX={x(data.leadSnpPos)}
         topY={y(1)}
-        bottomX={diseaseScale(data.efoId)}
+        bottomX={diseaseScale(data.efoName)}
         bottomY={y(0)}
         onMouseEnter={() => {
           setHover(data);

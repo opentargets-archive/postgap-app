@@ -42,7 +42,9 @@ class Browser extends React.Component {
   render() {
     const { location, slots, diseases } = this.props;
     const { start, end, chromosome } = location;
-    const diseaseScale = scalePoint().domain(diseases.map(d => d.efoId));
+    const diseaseScale = scalePoint().domain(
+      diseases.map(d => d.efoName).sort()
+    );
     const diseaseSlotsCount = Math.ceil(diseases.length / 5);
     const labelColSize = 4;
     const commonProps = {
