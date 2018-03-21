@@ -4,7 +4,10 @@ import { connect } from 'react-redux';
 import { scalePoint } from 'd3-scale';
 
 import ScaleTrack from './tracks/ScaleTrack';
-import GeneTrack, { GENE_SLOT_HEIGHT } from './tracks/GeneTrack';
+import GeneTrack, {
+  GENE_SLOT_HEIGHT,
+  GENE_TRACK_PADDING,
+} from './tracks/GeneTrack';
 import GeneVariantTrack from './tracks/GeneVariantTrack';
 import VariantTrack from './tracks/VariantTrack';
 import LeadVariantTrack from './tracks/LeadVariantTrack';
@@ -93,7 +96,8 @@ class Browser extends React.Component {
             <Card
               bodyStyle={{
                 padding: 0,
-                height: `${GENE_SLOT_HEIGHT * slots.length}px`,
+                height: `${GENE_SLOT_HEIGHT * slots.length +
+                  GENE_TRACK_PADDING * 2}px`,
               }}
             >
               <GeneTrack {...commonProps} />

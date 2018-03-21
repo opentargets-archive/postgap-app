@@ -11,10 +11,11 @@ import {
   selectors,
 } from '../redux/store';
 
-export const GENE_SLOT_HEIGHT = 30;
+export const GENE_SLOT_HEIGHT = 35;
+export const GENE_TRACK_PADDING = 15;
 
 let GeneTrack = props => {
-  const height = GENE_SLOT_HEIGHT * props.slots.length;
+  const height = GENE_SLOT_HEIGHT * props.slots.length + 2 * GENE_TRACK_PADDING;
   const { isInteractive } = props;
   return (
     <BaseTrack {...props} parentHeight={height}>
@@ -25,7 +26,7 @@ let GeneTrack = props => {
               <GeneVerticalFeature
                 key={gene.id}
                 data={gene}
-                slotOffset={GENE_SLOT_HEIGHT * i}
+                slotOffset={GENE_SLOT_HEIGHT * i + GENE_TRACK_PADDING}
                 slotHeight={GENE_SLOT_HEIGHT}
                 trackHeight={height}
                 highlight={gene.interactive}
@@ -43,7 +44,7 @@ let GeneTrack = props => {
             <GeneFeature
               key={gene.id}
               data={gene}
-              slotOffset={GENE_SLOT_HEIGHT * i}
+              slotOffset={GENE_SLOT_HEIGHT * i + GENE_TRACK_PADDING}
               slotHeight={GENE_SLOT_HEIGHT}
               setHoverGene={props.setHoverGene}
               setClickedGene={props.setClickedGene}
