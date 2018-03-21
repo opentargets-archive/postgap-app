@@ -128,16 +128,6 @@ const getMaxMinusLogGwasPValue = state => state.filters.gwasMaxPValue;
 // * <entity>sAll --> <entity>sAllCount
 // * <entity>sFiltered --> <entity>sAllFilteredCount
 
-const getRowsGenes = createSelector([getRows], rows => rowsToUniqueGenes(rows));
-const getRowsVariants = createSelector([getRows], rows =>
-  rowsToUniqueVariants(rows)
-);
-const getRowsLeadVariants = createSelector([getRows], rows =>
-  rowsToUniqueLeadVariants(rows)
-);
-const getRowsDiseases = createSelector([getRows], rows =>
-  rowsToUniqueDiseases(rows)
-);
 const getRowsFiltered = createSelector(
   [
     getRows,
@@ -187,6 +177,9 @@ const getEnsemblVariantsLookup = createSelector(
 const getGenesFiltered = createSelector([getRowsFiltered], rows =>
   rowsToUniqueGenes(rows)
 );
+const getGeneIdsFiltered = createSelector([getGenesFiltered], genes =>
+  genes.map(d => d.geneId)
+);
 const getVariantsFiltered = createSelector([getRowsFiltered], rows =>
   rowsToUniqueVariants(rows)
 );
@@ -195,6 +188,9 @@ const getLeadVariantsFiltered = createSelector([getRowsFiltered], rows =>
 );
 const getDiseasesFiltered = createSelector([getRowsFiltered], rows =>
   rowsToUniqueDiseases(rows)
+);
+const getDiseaseIdsFiltered = createSelector([getDiseasesFiltered], diseases =>
+  diseases.map(d => d.efoId)
 );
 const getGeneVariantsFiltered = createSelector(
   [getEnsemblGenesLookup, getRowsFiltered],
@@ -486,7 +482,9 @@ const getLeadVariantsInteractive = createSelector(
 
 const getDiseasesInteractive = createSelector(
   [getRowsInteractiveUnfiltered],
-  rows => rowsToUniqueDiseases(rows)
+  rows => {
+    return _.sortBy(rowsToUniqueDiseases(rows), 'interactive').reverse();
+  }
 );
 
 export const selectors = {
@@ -495,13 +493,16 @@ export const selectors = {
   getChromosomeLength,
   getRows,
   getRowsFiltered,
-  // getGenes: getEnsemblGenes,
+  // entitie ids (filtered)
+  getGeneIdsFiltered,
+  getDiseaseIdsFiltered,
+  // entities (interactive)
   getSlotsInteractive,
   getGenesInteractive,
   getVariantsInteractive,
   getLeadVariantsInteractive,
   getDiseasesInteractive,
-  // counts
+  // entity and connector counts (filtered)
   getGenesFilteredCount,
   getVariantsFilteredCount,
   getLeadVariantsFilteredCount,
@@ -509,12 +510,12 @@ export const selectors = {
   getGeneVariantsFilteredCount,
   getVariantLeadVariantsFilteredCount,
   getLeadVariantDiseasesFilteredCount,
-  // filters
+  // filter-related
   getMaxMinusLogGwasPValue,
   getFilterG2VScore,
   // loading
   getIsLoading,
-  // interactive
+  // connectors (interactive)
   getGeneVariantsInteractive,
   getVariantLeadVariantsInteractive,
   getLeadVariantDiseasesInteractive,

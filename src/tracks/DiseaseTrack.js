@@ -16,6 +16,7 @@ export const DISEASE_SLOT_HEIGHT = 60;
 
 let DiseaseTrack = ({
   diseases,
+  diseaseIdsFiltered,
   isInteractive,
   setHover,
   setClicked,
@@ -31,23 +32,28 @@ let DiseaseTrack = ({
     .scaleOrdinal()
     .domain(diseases.map(d => d.efoName).sort())
     .range(verticalRange);
-
   return (
     <BaseTrack {...rest} parentHeight={height}>
-      {diseases.map((d, i) => (
-        <DiseaseVerticalFeature
-          key={d.efoId}
-          data={d}
-          diseaseScale={rest.diseaseScale}
-          slotHeight={DISEASE_SLOT_HEIGHT}
-          slotOffset={verticalScale(d.efoName)}
-          {...handlers}
-          highlight={d.interactive}
-          dimNonHighlighted={isInteractive}
-        />
-      ))}
+      {diseases.map(d => {
+        if (diseaseIdsFiltered.indexOf(d.efoId) >= 0) {
+          return (
+            <DiseaseVerticalFeature
+              key={d.efoId}
+              data={d}
+              diseaseScale={rest.diseaseScale}
+              slotHeight={DISEASE_SLOT_HEIGHT}
+              slotOffset={verticalScale(d.efoName)}
+              {...handlers}
+              highlight={d.interactive}
+              dimNonHighlighted={isInteractive}
+            />
+          );
+        } else {
+          return null;
+        }
+      })}
 
-      {diseases.map((d, i) => (
+      {diseases.map(d => (
         <DiseaseFeature
           key={d.efoId}
           data={d}
@@ -66,6 +72,7 @@ let DiseaseTrack = ({
 const mapStateToProps = state => {
   return {
     diseases: selectors.getDiseasesInteractive(state),
+    diseaseIdsFiltered: selectors.getDiseaseIdsFiltered(state),
     isInteractive: selectors.getIsInteractive(state),
   };
 };

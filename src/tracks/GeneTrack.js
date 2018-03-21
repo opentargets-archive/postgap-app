@@ -20,17 +20,21 @@ let GeneTrack = props => {
     <BaseTrack {...props} parentHeight={height}>
       {props.slots.map((slot, i) => {
         return slot.genes.map(gene => {
-          return (
-            <GeneVerticalFeature
-              key={gene.id}
-              data={gene}
-              slotOffset={GENE_SLOT_HEIGHT * i}
-              slotHeight={GENE_SLOT_HEIGHT}
-              trackHeight={height}
-              highlight={gene.interactive}
-              dimNonHighlighted={isInteractive}
-            />
-          );
+          if (props.geneIdsFiltered.indexOf(gene.id) >= 0) {
+            return (
+              <GeneVerticalFeature
+                key={gene.id}
+                data={gene}
+                slotOffset={GENE_SLOT_HEIGHT * i}
+                slotHeight={GENE_SLOT_HEIGHT}
+                trackHeight={height}
+                highlight={gene.interactive}
+                dimNonHighlighted={isInteractive}
+              />
+            );
+          } else {
+            return null;
+          }
         });
       })}
       {props.slots.map((slot, i) => {
@@ -57,6 +61,7 @@ const mapStateToProps = state => {
   return {
     slots: selectors.getSlotsInteractive(state),
     genes: selectors.getGenesInteractive(state),
+    geneIdsFiltered: selectors.getGeneIdsFiltered(state),
     isInteractive: selectors.getIsInteractive(state),
   };
 };
