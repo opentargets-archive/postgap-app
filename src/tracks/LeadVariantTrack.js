@@ -35,7 +35,7 @@ let LeadVariantTrack = ({
 
 const mapStateToProps = state => {
   return {
-    leadVariants: selectors.getVisibleLeadVariants(state),
+    leadVariants: selectors.getLeadVariantsInteractive(state),
     isInteractive: selectors.getIsInteractive(state),
   };
 };

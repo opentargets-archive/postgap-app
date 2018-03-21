@@ -55,8 +55,8 @@ let GeneTrack = props => {
 
 const mapStateToProps = state => {
   return {
-    slots: selectors.getSlots(state),
-    genes: selectors.getVisibleGenes(state),
+    slots: selectors.getSlotsInteractive(state),
+    genes: selectors.getGenesInteractive(state),
     isInteractive: selectors.getIsInteractive(state),
   };
 };

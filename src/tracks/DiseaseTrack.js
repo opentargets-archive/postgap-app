@@ -65,7 +65,7 @@ let DiseaseTrack = ({
 
 const mapStateToProps = state => {
   return {
-    diseases: selectors.getDiseases(state),
+    diseases: selectors.getDiseasesInteractive(state),
     isInteractive: selectors.getIsInteractive(state),
   };
 };

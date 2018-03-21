@@ -204,8 +204,8 @@ const mapStateToProps = state => {
   return {
     chromosome: selectors.getChromosome(state),
     location: selectors.getLocation(state),
-    slots: selectors.getSlots(state),
-    diseases: selectors.getDiseases(state),
+    slots: selectors.getSlotsInteractive(state),
+    diseases: selectors.getDiseasesInteractive(state),
     chromosomeLength: selectors.getChromosomeLength(state),
   };
 };

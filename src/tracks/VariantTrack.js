@@ -35,7 +35,7 @@ let VariantTrack = ({
 
 const mapStateToProps = state => {
   return {
-    variants: selectors.getVisibleVariants(state),
+    variants: selectors.getVariantsInteractive(state),
     isInteractive: selectors.getIsInteractive(state),
   };
 };

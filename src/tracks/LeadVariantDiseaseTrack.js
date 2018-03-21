@@ -11,7 +11,6 @@ import {
 } from '../redux/store';
 
 let LeadVariantDiseaseTrack = ({
-  leadVariantDiseases,
   leadVariantDiseasesInteractive,
   isInteractive,
   setHover,
@@ -37,7 +36,6 @@ let LeadVariantDiseaseTrack = ({
 
 const mapStateToProps = state => {
   return {
-    leadVariantDiseases: selectors.getVisibleLeadVariantDiseases(state),
     leadVariantDiseasesInteractive: selectors.getLeadVariantDiseasesInteractive(
       state
     ),

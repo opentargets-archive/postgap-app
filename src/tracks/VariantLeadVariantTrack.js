@@ -11,7 +11,6 @@ import {
 } from '../redux/store';
 
 let VariantLeadVariantTrack = ({
-  variantLeadVariants,
   variantLeadVariantsInteractive,
   isInteractive,
   setHover,
@@ -38,7 +37,6 @@ let VariantLeadVariantTrack = ({
 
 const mapStateToProps = state => {
   return {
-    variantLeadVariants: selectors.getVisibleVariantLeadVariants(state),
     variantLeadVariantsInteractive: selectors.getVariantLeadVariantsInteractive(
       state
     ),

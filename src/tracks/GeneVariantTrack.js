@@ -11,7 +11,6 @@ import {
 } from '../redux/store';
 
 let GeneVariantTrack = ({
-  geneVariants,
   geneVariantsInteractive,
   isInteractive,
   setHover,
@@ -36,7 +35,6 @@ let GeneVariantTrack = ({
 
 const mapStateToProps = state => {
   return {
-    geneVariants: selectors.getVisibleGeneVariants(state),
     geneVariantsInteractive: selectors.getGeneVariantsInteractive(state),
     isInteractive: selectors.getIsInteractive(state),
   };
