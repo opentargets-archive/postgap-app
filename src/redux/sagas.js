@@ -2,6 +2,7 @@ import { delay } from 'redux-saga';
 import { call, put, take, fork, cancel } from 'redux-saga/effects';
 import axios from 'axios';
 import _ from 'lodash';
+import * as d3 from 'd3';
 
 import {
   SET_LOCATION,
@@ -64,10 +65,9 @@ function* updateLocation(action) {
     );
 
     // compute max -log(pval) for filters
-    const rowWithMinValue = _.min(rows, d => d.gwasPValue);
     let gwasMaxPValue = 100;
-    if (rowWithMinValue) {
-      gwasMaxPValue = -Math.log10(rowWithMinValue.gwasPValue).toFixed(1);
+    if (rows.length) {
+      gwasMaxPValue = -Math.log10(d3.min(rows, d => d.gwasPValue)).toFixed(1);
     }
 
     // update store

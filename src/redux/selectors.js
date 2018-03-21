@@ -150,8 +150,9 @@ const getRowsFiltered = createSelector(
     const rfs = rows
       .filter(d => filterLD[0] <= d.r2 && d.r2 <= filterLD[1])
       .filter(d => {
-        const low = filterGwasPvalue[0] <= -Math.log10(d.gwasPValue);
-        const high = -Math.log10(d.gwasPValue) <= filterGwasPvalue[1];
+        const low = filterGwasPvalue[0] <= -Math.log10(d.gwasPValue).toFixed(1);
+        const high =
+          -Math.log10(d.gwasPValue).toFixed(1) <= filterGwasPvalue[1];
         return low && high;
       })
       .filter(
