@@ -7841,9 +7841,9 @@ react-codemirror2@^3.0.7:
   version "3.0.7"
   resolved "https://registry.yarnpkg.com/react-codemirror2/-/react-codemirror2-3.0.7.tgz#d5d9888158263ae56da766539d7803486566ab9f"
 
-react-csv@^1.0.12:
-  version "1.0.12"
-  resolved "https://registry.yarnpkg.com/react-csv/-/react-csv-1.0.12.tgz#636087c6d5635463dd90d6a1c7c038811696169d"
+react-csv@1.0.14:
+  version "1.0.14"
+  resolved "https://registry.yarnpkg.com/react-csv/-/react-csv-1.0.14.tgz#7c9e444fc4c3ca1e1cf73a81129b1ec032838a71"
 
 react-dev-utils@^4.2.1:
   version "4.2.1"
