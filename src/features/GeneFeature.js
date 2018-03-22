@@ -34,6 +34,9 @@ class GeneFeature extends React.Component {
     const backgroundColor = highlight
       ? '#eee'
       : dimNonHighlighted ? 'white' : '#eee';
+    const textColor = highlight
+      ? 'black'
+      : dimNonHighlighted ? 'lightgrey' : 'black';
     const spitWidth =
       x(data.canonicalTranscript.end) - x(data.canonicalTranscript.start);
     const backgroundWidth = Math.max(textWidth, spitWidth);
@@ -70,7 +73,7 @@ class GeneFeature extends React.Component {
         }}
         x={x(data.canonicalTranscript.start)}
         y={yText}
-        style={{ fontSize: '12px', pointerEvents: 'none' }}
+        style={{ fill: textColor, fontSize: '12px', pointerEvents: 'none' }}
       >
         {data.strand === 1 ? `${data.name}>` : `<${data.name}`}
       </text>
