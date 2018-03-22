@@ -7,7 +7,7 @@ const calculateDiseaseScaleRange = width => [
   width * (1 - PADDING),
 ];
 
-const VariantLeadVariantFeature = ({
+const LeadVariantDiseaseFeature = ({
   scale,
   data,
   width,
@@ -43,4 +43,4 @@ const VariantLeadVariantFeature = ({
   );
 };
 
-export default VariantLeadVariantFeature;
+export default LeadVariantDiseaseFeature;
