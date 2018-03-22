@@ -20,7 +20,7 @@ class LocusPage extends React.Component {
   }
 
   componentDidMount() {
-    const { match, location, setLocation, setClickedEntityId } = this.props;
+    const { location, setLocation, setClickedEntityId } = this.props;
     const query = queryString.parse(location.search);
     const { start, end, chromosome, geneId, variantId } = query;
     setLocation({ start, end, chromosome });
