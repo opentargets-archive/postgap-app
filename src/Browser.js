@@ -1,6 +1,8 @@
 import React from 'react';
 import { Card, Row, Col } from 'antd';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import queryString from 'query-string';
 import { scalePoint } from 'd3-scale';
 
 import ScaleTrack from './tracks/ScaleTrack';
@@ -40,6 +42,7 @@ class Browser extends React.Component {
     if (start < 0) start = 0;
     if (end > chromosomeLength) end = chromosomeLength;
     this.props.setLocation({ start, end, chromosome });
+    setLocationInUrl({ start, end, chromosome }, this.props.history);
   }
 
   render() {
@@ -204,6 +207,18 @@ class Browser extends React.Component {
   }
 }
 
+const setLocationInUrl = (location, history) => {
+  const oldQueryParams = queryString.parse(history.location.search);
+  const newQueryParams = queryString.stringify({
+    ...oldQueryParams,
+    ...location,
+  });
+  history.replace({
+    ...history.location,
+    search: newQueryParams,
+  });
+};
+
 const mapStateToProps = state => {
   return {
     chromosome: selectors.getChromosome(state),
@@ -220,6 +235,6 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-Browser = connect(mapStateToProps, mapDispatchToProps)(Browser);
+Browser = withRouter(connect(mapStateToProps, mapDispatchToProps)(Browser));
 
 export default Browser;
