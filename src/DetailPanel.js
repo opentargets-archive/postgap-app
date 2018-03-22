@@ -9,7 +9,7 @@ import DiseaseDetail from './details/DiseaseDetail';
 import GeneVariantDetail from './details/GeneVariantDetail';
 import VariantLeadVariantDetail from './details/VariantLeadVariantDetail';
 import LeadVariantDiseaseDetail from './details/LeadVariantDiseaseDetail';
-import { setClickedEntity, ENTITY_TYPE } from './redux/store';
+import { selectors, setClickedEntityId, ENTITY_TYPE } from './redux/store';
 
 const showHover = (hover, clicked) => {
   const hoverEqualsClicked = hover && clicked && hover.id === clicked.id;
@@ -34,7 +34,7 @@ let DetailPanel = ({
   setClickedDisease,
   setClickedGeneVariant,
   setClickedVariantLeadVariant,
-  setClickedLeadVariantDisease
+  setClickedLeadVariantDisease,
 }) => {
   const geneHover = showHover(hover.gene, clicked.gene) ? (
     <GeneDetail gene={hover.gene} />
@@ -135,7 +135,7 @@ let DetailPanel = ({
         border: '2px dashed #aaa',
         color: '#aaa',
         textAlign: 'center',
-        height: '100%'
+        height: '100%',
       }}
     >
       No selection
@@ -172,8 +172,8 @@ let DetailPanel = ({
 
 const mapStateToProps = state => {
   return {
-    hover: state.hover,
-    clicked: state.clicked
+    hover: selectors.getHoverEntities(state),
+    clicked: selectors.getClickedEntities(state),
   };
 };
 
@@ -181,38 +181,44 @@ const mapDispatchToProps = dispatch => {
   return {
     setClickedGene: () =>
       dispatch(
-        setClickedEntity({ entityType: ENTITY_TYPE.GENE, entity: null })
+        setClickedEntityId({ entityType: ENTITY_TYPE.GENE, entityId: null })
       ),
     setClickedVariant: () =>
       dispatch(
-        setClickedEntity({ entityType: ENTITY_TYPE.VARIANT, entity: null })
+        setClickedEntityId({ entityType: ENTITY_TYPE.VARIANT, entityId: null })
       ),
     setClickedLeadVariant: () =>
       dispatch(
-        setClickedEntity({ entityType: ENTITY_TYPE.LEAD_VARIANT, entity: null })
+        setClickedEntityId({
+          entityType: ENTITY_TYPE.LEAD_VARIANT,
+          entityId: null,
+        })
       ),
     setClickedDisease: () =>
       dispatch(
-        setClickedEntity({ entityType: ENTITY_TYPE.DISEASE, entity: null })
+        setClickedEntityId({ entityType: ENTITY_TYPE.DISEASE, entityId: null })
       ),
     setClickedGeneVariant: () =>
       dispatch(
-        setClickedEntity({ entityType: ENTITY_TYPE.GENE_VARIANT, entity: null })
+        setClickedEntityId({
+          entityType: ENTITY_TYPE.GENE_VARIANT,
+          entityId: null,
+        })
       ),
     setClickedVariantLeadVariant: () =>
       dispatch(
-        setClickedEntity({
+        setClickedEntityId({
           entityType: ENTITY_TYPE.VARIANT_LEAD_VARIANT,
-          entity: null
+          entityId: null,
         })
       ),
     setClickedLeadVariantDisease: () =>
       dispatch(
-        setClickedEntity({
+        setClickedEntityId({
           entityType: ENTITY_TYPE.LEAD_VARIANT_DISEASE,
-          entity: null
+          entityId: null,
         })
-      )
+      ),
   };
 };
 

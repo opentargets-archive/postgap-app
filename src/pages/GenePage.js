@@ -39,7 +39,7 @@ class GenePage extends React.Component {
           ? end + HALF_INTERVAL
           : chromosomeLength;
       const params = {
-        selected: [geneId],
+        geneId,
         chromosome,
         start: windowStart,
         end: windowEnd,

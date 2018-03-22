@@ -3,8 +3,8 @@ import React from 'react';
 const VariantFeature = ({
   scale,
   data,
-  setHover,
-  setClicked,
+  setHoverId,
+  setClickedId,
   highlight,
   dimNonHighlighted,
 }) => {
@@ -21,13 +21,13 @@ const VariantFeature = ({
         y2={y(1)}
         style={{ stroke: variantColor, strokeWidth: 2 }}
         onMouseEnter={() => {
-          setHover(data);
+          setHoverId(data.id);
         }}
         onMouseLeave={() => {
-          setHover(null);
+          setHoverId(null);
         }}
         onClick={() => {
-          setClicked(data);
+          setClickedId(data.id);
         }}
       />
     </g>

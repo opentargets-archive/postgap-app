@@ -15,8 +15,8 @@ class GeneFeature extends React.Component {
       data,
       slotOffset,
       slotHeight,
-      setHoverGene,
-      setClickedGene,
+      setHoverGeneId,
+      setClickedGeneId,
       highlight,
       dimNonHighlighted,
     } = this.props;
@@ -88,13 +88,13 @@ class GeneFeature extends React.Component {
         rx={2}
         ry={2}
         onMouseEnter={() => {
-          setHoverGene(data);
+          setHoverGeneId(data.id);
         }}
         onMouseLeave={() => {
-          setHoverGene(null);
+          setHoverGeneId(null);
         }}
         onClick={() => {
-          setClickedGene(data);
+          setClickedGeneId(data.id);
         }}
       />
     ) : null;

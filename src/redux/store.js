@@ -16,8 +16,9 @@ import {
   SET_FILTER_GWAS_PVALUE,
   SET_FILTER_G2V_MUST_HAVES,
   SET_FILTER_G2V_SCORE,
-  SET_HOVER_ENTITY,
-  SET_CLICKED_ENTITY,
+  SET_HOVER_ENTITY_ID,
+  SET_CLICKED_ENTITY_ID,
+  SET_SELECTED_ENTITY_ID,
   SET_LOADING_ROWS,
   SET_API_DATA,
   SET_LOADING_ENSEMBL_GENES,
@@ -38,8 +39,9 @@ export {
   setFilterGwasPValue,
   setFilterG2VScore,
   setFilterG2VMustHaves,
-  setHoverEntity,
-  setClickedEntity,
+  setHoverEntityId,
+  setClickedEntityId,
+  setSelectedEntityId,
   setDiseasePage,
 } from './actions';
 
@@ -68,22 +70,22 @@ const initialState = {
     g2VScore: [0, 1],
   },
   hover: {
-    gene: null,
-    variant: null,
-    leadVariant: null,
-    disease: null,
-    geneVariant: null,
-    variantLeadVariant: null,
-    leadVariantDisease: null,
+    geneId: null,
+    variantId: null,
+    leadVariantId: null,
+    diseaseId: null,
+    geneVariantId: null,
+    variantLeadVariantId: null,
+    leadVariantDiseaseId: null,
   },
   clicked: {
-    gene: null,
-    variant: null,
-    leadVariant: null,
-    disease: null,
-    geneVariant: null,
-    variantLeadVariant: null,
-    leadVariantDisease: null,
+    geneId: null,
+    variantId: null,
+    leadVariantId: null,
+    diseaseId: null,
+    geneVariantId: null,
+    variantLeadVariantId: null,
+    leadVariantDiseaseId: null,
   },
   loading: {
     rows: false,
@@ -99,13 +101,13 @@ const initialState = {
 };
 
 export const ENTITY_TYPE = {
-  GENE: 'gene',
-  VARIANT: 'variant',
-  LEAD_VARIANT: 'leadVariant',
-  DISEASE: 'disease',
-  GENE_VARIANT: 'geneVariant',
-  VARIANT_LEAD_VARIANT: 'variantLeadVariant',
-  LEAD_VARIANT_DISEASE: 'leadVariantDisease',
+  GENE: 'geneId',
+  VARIANT: 'variantId',
+  LEAD_VARIANT: 'leadVariantId',
+  DISEASE: 'diseaseId',
+  GENE_VARIANT: 'geneVariantId',
+  VARIANT_LEAD_VARIANT: 'variantLeadVariantId',
+  LEAD_VARIANT_DISEASE: 'leadVariantDiseaseId',
 };
 
 // TODO: Make SET_FILTER_LD more general
@@ -142,15 +144,20 @@ function reducer(state = initialState, action) {
         ...state,
         filters: { ...state.filters, g2VMustHaves: action.filter },
       };
-    case SET_HOVER_ENTITY:
+    case SET_HOVER_ENTITY_ID:
       return {
         ...state,
-        hover: { ...state.hover, [action.entityType]: action.entity },
+        hover: { ...state.hover, [action.entityType]: action.entityId },
       };
-    case SET_CLICKED_ENTITY:
+    case SET_CLICKED_ENTITY_ID:
       return {
         ...state,
-        clicked: { ...state.clicked, [action.entityType]: action.entity },
+        clicked: { ...state.clicked, [action.entityType]: action.entityId },
+      };
+    case SET_SELECTED_ENTITY_ID:
+      return {
+        ...state,
+        selected: { ...state.selected, [action.entityType]: action.entityId },
       };
     case SET_LOADING_ROWS:
       return {

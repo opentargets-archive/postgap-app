@@ -270,39 +270,21 @@ const getChromosomeLength = createSelector(
   }
 );
 
-const isHoverRow = hover => d => {
+const isInteractiveRow = interaction => d => {
   return (
-    (hover.gene && d.geneId === hover.gene.id) ||
-    (hover.variant && d.ldSnpId === hover.variant.id) ||
-    (hover.leadVariant && d.gwasSnpId === hover.leadVariant.id) ||
-    (hover.disease && d.efoId === hover.disease.efoId) ||
-    (hover.geneVariant &&
-      d.geneId === hover.geneVariant.geneId &&
-      d.ldSnpId === hover.geneVariant.ldSnpId) ||
-    (hover.variantLeadVariant &&
-      d.ldSnpId === hover.variantLeadVariant.ldSnpId &&
-      d.gwasSnpId === hover.variantLeadVariant.gwasSnpId) ||
-    (hover.leadVariantDisease &&
-      d.gwasSnpId === hover.leadVariantDisease.gwasSnpId &&
-      d.efoId === hover.leadVariantDisease.efoId)
-  );
-};
-
-const isClickedRow = clicked => d => {
-  return (
-    (clicked.gene && d.geneId === clicked.gene.id) ||
-    (clicked.variant && d.ldSnpId === clicked.variant.id) ||
-    (clicked.leadVariant && d.gwasSnpId === clicked.leadVariant.id) ||
-    (clicked.disease && d.efoId === clicked.disease.efoId) ||
-    (clicked.geneVariant &&
-      d.geneId === clicked.geneVariant.geneId &&
-      d.ldSnpId === clicked.geneVariant.ldSnpId) ||
-    (clicked.variantLeadVariant &&
-      d.ldSnpId === clicked.variantLeadVariant.ldSnpId &&
-      d.gwasSnpId === clicked.variantLeadVariant.gwasSnpId) ||
-    (clicked.leadVariantDisease &&
-      d.gwasSnpId === clicked.leadVariantDisease.gwasSnpId &&
-      d.efoId === clicked.leadVariantDisease.efoId)
+    (interaction.geneId && d.geneId === interaction.geneId) ||
+    (interaction.variantId && d.ldSnpId === interaction.variantId) ||
+    (interaction.leadVariantId && d.gwasSnpId === interaction.leadVariantId) ||
+    (interaction.diseaseId && d.efoId === interaction.diseaseId) ||
+    (interaction.geneVariantId &&
+      d.geneId === interaction.geneVariantId.split('-')[0] &&
+      d.ldSnpId === interaction.geneVariantId.split('-')[1]) ||
+    (interaction.variantLeadVariantId &&
+      d.ldSnpId === interaction.variantLeadVariantId.split('-')[0] &&
+      d.gwasSnpId === interaction.variantLeadVariantId.split('-')[1]) ||
+    (interaction.leadVariantDiseaseId &&
+      d.gwasSnpId === interaction.leadVariantDiseaseId.split('-')[0] &&
+      d.efoId === interaction.leadVariantDiseaseId.split('-')[1])
   );
 };
 
@@ -312,8 +294,8 @@ const getRowsInteractive = createSelector(
     // get rows with interactive state
     // such that any hovered entity is present OR
     // any clicked entity is present indicates interactive
-    const isHover = isHoverRow(hover);
-    const isClicked = isClickedRow(clicked);
+    const isHover = isInteractiveRow(hover);
+    const isClicked = isInteractiveRow(clicked);
     const rowsInteractive = rows.map(d => {
       const h = isHover(d);
       const c = isClicked(d);
@@ -329,8 +311,8 @@ const getRowsInteractiveUnfiltered = createSelector(
     // get rows with interactive state
     // such that any hovered entity is present OR
     // any clicked entity is present indicates interactive
-    const isHover = isHoverRow(hover);
-    const isClicked = isClickedRow(clicked);
+    const isHover = isInteractiveRow(hover);
+    const isClicked = isInteractiveRow(clicked);
     const rowsInteractive = rows.map(d => {
       const h = isHover(d);
       const c = isClicked(d);
@@ -344,20 +326,20 @@ const getIsInteractive = createSelector(
   [getHover, getClicked],
   (hover, clicked) => {
     return (
-      hover.gene ||
-      hover.variant ||
-      hover.leadVariant ||
-      hover.disease ||
-      hover.geneVariant ||
-      hover.variantLeadVariant ||
-      hover.leadVariantDisease ||
-      (clicked.gene ||
-        clicked.variant ||
-        clicked.leadVariant ||
-        clicked.disease ||
-        clicked.geneVariant ||
-        clicked.variantLeadVariant ||
-        clicked.leadVariantDisease)
+      hover.geneId ||
+      hover.variantId ||
+      hover.leadVariantId ||
+      hover.diseaseId ||
+      hover.geneVariantId ||
+      hover.variantLeadVariantId ||
+      hover.leadVariantDiseaseId ||
+      (clicked.geneId ||
+        clicked.variantId ||
+        clicked.leadVariantId ||
+        clicked.diseaseId ||
+        clicked.geneVariantId ||
+        clicked.variantLeadVariantId ||
+        clicked.leadVariantDiseaseId)
     );
   }
 );
@@ -487,6 +469,126 @@ const getDiseasesInteractive = createSelector(
   }
 );
 
+const getHoverGene = createSelector(
+  [getHover, getGenesInteractive],
+  (hover, genes) => genes.find(d => d.id === hover.geneId)
+);
+const getHoverVariant = createSelector(
+  [getHover, getVariantsInteractive],
+  (hover, variants) => variants.find(d => d.id === hover.variantId)
+);
+const getHoverLeadVariant = createSelector(
+  [getHover, getLeadVariantsInteractive],
+  (hover, leadVariants) => leadVariants.find(d => d.id === hover.leadVariantId)
+);
+const getHoverDisease = createSelector(
+  [getHover, getDiseasesInteractive],
+  (hover, diseases) => diseases.find(d => d.efoId === hover.diseaseId)
+);
+const getHoverGeneVariant = createSelector(
+  [getHover, getGeneVariantsInteractive],
+  (hover, geneVariants) => geneVariants.find(d => d.id === hover.geneVariantId)
+);
+const getHoverVariantLeadVariant = createSelector(
+  [getHover, getVariantLeadVariantsInteractive],
+  (hover, variantLeadVariants) =>
+    variantLeadVariants.find(d => d.id === hover.variantLeadVariantId)
+);
+const getHoverLeadVariantDisease = createSelector(
+  [getHover, getLeadVariantDiseasesInteractive],
+  (hover, leadVariantDiseases) =>
+    leadVariantDiseases.find(d => d.id === hover.leadVariantDiseaseId)
+);
+const getHoverEntities = createSelector(
+  [
+    getHoverGene,
+    getHoverVariant,
+    getHoverLeadVariant,
+    getHoverDisease,
+    getHoverGeneVariant,
+    getHoverVariantLeadVariant,
+    getHoverLeadVariantDisease,
+  ],
+  (
+    gene,
+    variant,
+    leadVariant,
+    disease,
+    geneVariant,
+    variantLeadVariant,
+    leadVariantDisease
+  ) => ({
+    gene,
+    variant,
+    leadVariant,
+    disease,
+    geneVariant,
+    variantLeadVariant,
+    leadVariantDisease,
+  })
+);
+
+const getClickedGene = createSelector(
+  [getClicked, getGenesInteractive],
+  (clicked, genes) => genes.find(d => d.id === clicked.geneId)
+);
+const getClickedVariant = createSelector(
+  [getClicked, getVariantsInteractive],
+  (clicked, variants) => variants.find(d => d.id === clicked.variantId)
+);
+const getClickedLeadVariant = createSelector(
+  [getClicked, getLeadVariantsInteractive],
+  (clicked, leadVariants) =>
+    leadVariants.find(d => d.id === clicked.leadVariantId)
+);
+const getClickedDisease = createSelector(
+  [getClicked, getDiseasesInteractive],
+  (clicked, diseases) => diseases.find(d => d.efoId === clicked.diseaseId)
+);
+const getClickedGeneVariant = createSelector(
+  [getClicked, getGeneVariantsInteractive],
+  (clicked, geneVariants) =>
+    geneVariants.find(d => d.id === clicked.geneVariantId)
+);
+const getClickedVariantLeadVariant = createSelector(
+  [getClicked, getVariantLeadVariantsInteractive],
+  (clicked, variantLeadVariants) =>
+    variantLeadVariants.find(d => d.id === clicked.variantLeadVariantId)
+);
+const getClickedLeadVariantDisease = createSelector(
+  [getClicked, getLeadVariantDiseasesInteractive],
+  (clicked, leadVariantDiseases) =>
+    leadVariantDiseases.find(d => d.id === clicked.leadVariantDiseaseId)
+);
+const getClickedEntities = createSelector(
+  [
+    getClickedGene,
+    getClickedVariant,
+    getClickedLeadVariant,
+    getClickedDisease,
+    getClickedGeneVariant,
+    getClickedVariantLeadVariant,
+    getClickedLeadVariantDisease,
+  ],
+  (
+    gene,
+    variant,
+    leadVariant,
+    disease,
+    geneVariant,
+    variantLeadVariant,
+    leadVariantDisease
+  ) => ({
+    gene,
+    variant,
+    leadVariant,
+    disease,
+    geneVariant,
+    variantLeadVariant,
+    leadVariantDisease,
+  })
+);
+
 export const selectors = {
   getLocation,
   getChromosome,
@@ -520,4 +622,7 @@ export const selectors = {
   getVariantLeadVariantsInteractive,
   getLeadVariantDiseasesInteractive,
   getIsInteractive,
+  // hover/clicked
+  getHoverEntities,
+  getClickedEntities,
 };

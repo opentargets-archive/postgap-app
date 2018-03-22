@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import BaseTrack from './BaseTrack';
 import LeadVariantDiseaseFeature from '../features/LeadVariantDiseaseFeature';
 import {
-  setHoverEntity,
-  setClickedEntity,
+  setHoverEntityId,
+  setClickedEntityId,
   ENTITY_TYPE,
   selectors,
 } from '../redux/store';
@@ -13,11 +13,11 @@ import {
 let LeadVariantDiseaseTrack = ({
   leadVariantDiseasesInteractive,
   isInteractive,
-  setHover,
-  setClicked,
+  setHoverId,
+  setClickedId,
   ...rest
 }) => {
-  const handlers = { setHover, setClicked };
+  const handlers = { setHoverId, setClickedId };
   return (
     <BaseTrack {...rest}>
       {leadVariantDiseasesInteractive.map(d => (
@@ -45,15 +45,18 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setHover: entity =>
+    setHoverId: entityId =>
       dispatch(
-        setHoverEntity({ entityType: ENTITY_TYPE.LEAD_VARIANT_DISEASE, entity })
-      ),
-    setClicked: entity =>
-      dispatch(
-        setClickedEntity({
+        setHoverEntityId({
           entityType: ENTITY_TYPE.LEAD_VARIANT_DISEASE,
-          entity,
+          entityId,
+        })
+      ),
+    setClickedId: entityId =>
+      dispatch(
+        setClickedEntityId({
+          entityType: ENTITY_TYPE.LEAD_VARIANT_DISEASE,
+          entityId,
         })
       ),
   };

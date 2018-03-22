@@ -4,8 +4,8 @@ import ConnectorPath from './ConnectorPath';
 const VariantLeadVariantFeature = ({
   scale,
   data,
-  setHover,
-  setClicked,
+  setHoverId,
+  setClickedId,
   highlight,
   dimNonHighlighted,
 }) => {
@@ -18,13 +18,13 @@ const VariantLeadVariantFeature = ({
         bottomX={x(data.leadSnpPos)}
         bottomY={y(0)}
         onMouseEnter={() => {
-          setHover(data);
+          setHoverId(data.id);
         }}
         onMouseLeave={() => {
-          setHover(null);
+          setHoverId(null);
         }}
         onClick={() => {
-          setClicked(data);
+          setClickedId(data.id);
         }}
         highlight={highlight}
         dimNonHighlighted={dimNonHighlighted}

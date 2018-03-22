@@ -5,8 +5,8 @@ import BaseTrack from './BaseTrack';
 import GeneFeature from '../features/GeneFeature';
 import GeneVerticalFeature from '../features/GeneVerticalFeature';
 import {
-  setHoverEntity,
-  setClickedEntity,
+  setHoverEntityId,
+  setClickedEntityId,
   ENTITY_TYPE,
   selectors,
 } from '../redux/store';
@@ -46,8 +46,8 @@ let GeneTrack = props => {
               data={gene}
               slotOffset={GENE_SLOT_HEIGHT * i + GENE_TRACK_PADDING}
               slotHeight={GENE_SLOT_HEIGHT}
-              setHoverGene={props.setHoverGene}
-              setClickedGene={props.setClickedGene}
+              setHoverGeneId={props.setHoverGeneId}
+              setClickedGeneId={props.setClickedGeneId}
               highlight={gene.interactive}
               dimNonHighlighted={isInteractive}
             />
@@ -69,11 +69,13 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setHoverGene: gene =>
-      dispatch(setHoverEntity({ entityType: ENTITY_TYPE.GENE, entity: gene })),
-    setClickedGene: gene =>
+    setHoverGeneId: geneId =>
       dispatch(
-        setClickedEntity({ entityType: ENTITY_TYPE.GENE, entity: gene })
+        setHoverEntityId({ entityType: ENTITY_TYPE.GENE, entityId: geneId })
+      ),
+    setClickedGeneId: geneId =>
+      dispatch(
+        setClickedEntityId({ entityType: ENTITY_TYPE.GENE, entityId: geneId })
       ),
   };
 };

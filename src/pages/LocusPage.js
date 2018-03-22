@@ -5,7 +5,7 @@ import queryString from 'query-string';
 
 import Browser from '../Browser';
 import BrowserTable from '../BrowserTable';
-import { setLocation } from '../redux/store';
+import { setLocation, setClickedEntityId, ENTITY_TYPE } from '../redux/store';
 import VariantLeadVariantFilter from '../filters/VariantLeadVariantFilter';
 import DetailPanel from '../DetailPanel';
 import SummaryCounts from '../SummaryCounts';
@@ -20,10 +20,13 @@ class LocusPage extends React.Component {
   }
 
   componentDidMount() {
-    const { match, location, setLocation } = this.props;
+    const { match, location, setLocation, setClickedEntityId } = this.props;
     const query = queryString.parse(location.search);
-    const { start, end, chromosome } = query;
+    const { start, end, chromosome, geneId } = query;
     setLocation({ start, end, chromosome });
+    if (geneId) {
+      setClickedEntityId(ENTITY_TYPE.GENE, geneId);
+    }
   }
 
   toggleFilters() {
@@ -100,7 +103,9 @@ class LocusPage extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setLocation: location => dispatch(setLocation(location))
+    setLocation: location => dispatch(setLocation(location)),
+    setClickedEntityId: (entityType, entityId) =>
+      dispatch(setClickedEntityId({ entityType, entityId })),
   };
 };
 

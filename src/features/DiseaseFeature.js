@@ -38,8 +38,8 @@ class DiseaseFeature extends React.Component {
       diseaseScale,
       slotOffset,
       width,
-      setHover,
-      setClicked,
+      setHoverId,
+      setClickedId,
       highlight,
       dimNonHighlighted,
     } = this.props;
@@ -103,13 +103,13 @@ class DiseaseFeature extends React.Component {
         rx={2}
         ry={2}
         onMouseEnter={() => {
-          setHover(data);
+          setHoverId(data.efoId);
         }}
         onMouseLeave={() => {
-          setHover(null);
+          setHoverId(null);
         }}
         onClick={() => {
-          setClicked(data);
+          setClickedId(data.efoId);
         }}
       />
     ) : null;

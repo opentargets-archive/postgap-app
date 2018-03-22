@@ -7,8 +7,8 @@ import BaseTrack from './BaseTrack';
 import DiseaseFeature from '../features/DiseaseFeature';
 import DiseaseVerticalFeature from '../features/DiseaseVerticalFeature';
 import {
-  setHoverEntity,
-  setClickedEntity,
+  setHoverEntityId,
+  setClickedEntityId,
   ENTITY_TYPE,
   selectors,
 } from '../redux/store';
@@ -18,11 +18,11 @@ let DiseaseTrack = ({
   diseases,
   diseaseIdsFiltered,
   isInteractive,
-  setHover,
-  setClicked,
+  setHoverId,
+  setClickedId,
   ...rest
 }) => {
-  const handlers = { setHover, setClicked };
+  const handlers = { setHoverId, setClickedId };
   const quotient = Math.ceil(diseases.length / 5);
   const height = DISEASE_SLOT_HEIGHT * quotient;
   const verticalRange = _.range(0, diseases.length).map(
@@ -79,13 +79,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setHover: disease =>
+    setHoverId: entityId =>
+      dispatch(setHoverEntityId({ entityType: ENTITY_TYPE.DISEASE, entityId })),
+    setClickedId: entityId =>
       dispatch(
-        setHoverEntity({ entityType: ENTITY_TYPE.DISEASE, entity: disease })
-      ),
-    setClicked: disease =>
-      dispatch(
-        setClickedEntity({ entityType: ENTITY_TYPE.DISEASE, entity: disease })
+        setClickedEntityId({ entityType: ENTITY_TYPE.DISEASE, entityId })
       ),
   };
 };

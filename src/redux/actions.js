@@ -23,14 +23,19 @@ export function setFilterG2VMustHaves(filter) {
   return { type: SET_FILTER_G2V_MUST_HAVES, filter };
 }
 
-export const SET_HOVER_ENTITY = 'SET_HOVER_ENTITY';
-export function setHoverEntity({ entityType, entity }) {
-  return { type: SET_HOVER_ENTITY, entityType, entity };
+export const SET_HOVER_ENTITY_ID = 'SET_HOVER_ENTITY_ID';
+export function setHoverEntityId({ entityType, entityId }) {
+  return { type: SET_HOVER_ENTITY_ID, entityType, entityId };
 }
 
-export const SET_CLICKED_ENTITY = 'SET_CLICKED_ENTITY';
-export function setClickedEntity({ entityType, entity }) {
-  return { type: SET_CLICKED_ENTITY, entityType, entity };
+export const SET_CLICKED_ENTITY_ID = 'SET_CLICKED_ENTITY_ID';
+export function setClickedEntityId({ entityType, entityId }) {
+  return { type: SET_CLICKED_ENTITY_ID, entityType, entityId };
+}
+
+export const SET_SELECTED_ENTITY_ID = 'SET_SELECTED_ENTITY_ID';
+export function setSelectedEntityId({ entityType, entityId }) {
+  return { type: SET_SELECTED_ENTITY_ID, entityType, entityId };
 }
 
 export const SET_LOADING_ROWS = 'SET_LOADING_ROWS';

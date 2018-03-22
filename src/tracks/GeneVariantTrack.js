@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import BaseTrack from './BaseTrack';
 import GeneVariantFeature from '../features/GeneVariantFeature';
 import {
-  setHoverEntity,
-  setClickedEntity,
+  setHoverEntityId,
+  setClickedEntityId,
   ENTITY_TYPE,
   selectors,
 } from '../redux/store';
@@ -13,11 +13,11 @@ import {
 let GeneVariantTrack = ({
   geneVariantsInteractive,
   isInteractive,
-  setHover,
-  setClicked,
+  setHoverId,
+  setClickedId,
   ...rest
 }) => {
-  const handlers = { setHover, setClicked };
+  const handlers = { setHoverId, setClickedId };
   return (
     <BaseTrack {...rest}>
       {geneVariantsInteractive.map(d => (
@@ -42,13 +42,13 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setHover: entity =>
+    setHoverId: entityId =>
       dispatch(
-        setHoverEntity({ entityType: ENTITY_TYPE.GENE_VARIANT, entity })
+        setHoverEntityId({ entityType: ENTITY_TYPE.GENE_VARIANT, entityId })
       ),
-    setClicked: entity =>
+    setClickedId: entityId =>
       dispatch(
-        setClickedEntity({ entityType: ENTITY_TYPE.GENE_VARIANT, entity })
+        setClickedEntityId({ entityType: ENTITY_TYPE.GENE_VARIANT, entityId })
       ),
   };
 };

@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import BaseTrack from './BaseTrack';
 import VariantFeature from '../features/VariantFeature';
 import {
-  setHoverEntity,
-  setClickedEntity,
+  setHoverEntityId,
+  setClickedEntityId,
   ENTITY_TYPE,
   selectors,
 } from '../redux/store';
@@ -13,11 +13,11 @@ import {
 let VariantTrack = ({
   variants,
   isInteractive,
-  setHover,
-  setClicked,
+  setHoverId,
+  setClickedId,
   ...rest
 }) => {
-  const handlers = { setHover, setClicked };
+  const handlers = { setHoverId, setClickedId };
   return (
     <BaseTrack {...rest}>
       {variants.map(d => (
@@ -42,13 +42,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setHover: variant =>
+    setHoverId: entityId =>
+      dispatch(setHoverEntityId({ entityType: ENTITY_TYPE.VARIANT, entityId })),
+    setClickedId: entityId =>
       dispatch(
-        setHoverEntity({ entityType: ENTITY_TYPE.VARIANT, entity: variant })
-      ),
-    setClicked: variant =>
-      dispatch(
-        setClickedEntity({ entityType: ENTITY_TYPE.VARIANT, entity: variant })
+        setClickedEntityId({ entityType: ENTITY_TYPE.VARIANT, entityId })
       ),
   };
 };
