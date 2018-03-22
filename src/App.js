@@ -6,6 +6,7 @@ import './App.css';
 import HomePage from './pages/HomePage';
 import DiseasePage from './pages/DiseasePage';
 import GenePage from './pages/GenePage';
+import VariantPage from './pages/VariantPage';
 import LocusPage from './pages/LocusPage';
 
 import Banner from './Banner';
@@ -24,12 +25,13 @@ class App extends React.Component {
           <Layout.Content
             style={{
               background: '#ECECEC',
-              minHeight: 'calc(100vh - 106px - 40px)'
+              minHeight: 'calc(100vh - 106px - 40px)',
             }}
           >
             <Route exact path="/" component={HomePage} />
             <Route path="/disease/:efoId" component={DiseasePage} />
             <Route path="/gene/:geneId" component={GenePage} />
+            <Route path="/variant/:variantId" component={VariantPage} />
             <Route path="/locus" component={LocusPage} />
           </Layout.Content>
           <Layout.Footer
@@ -37,7 +39,7 @@ class App extends React.Component {
               backgroundColor: 'green',
               color: 'white',
               height: '40px',
-              padding: '10px 30px'
+              padding: '10px 30px',
             }}
           >
             <Row type="flex" align="middle">

@@ -201,6 +201,23 @@ export const ensemblApi = {
     };
     return axios.post(url, body).then(response => response.data);
   },
+  fetchSearch(query) {
+    const url = `${ENSEMBL_API_BASE}${ENSEMBL_API_VARIATION}`;
+    const body = {
+      ids: [query],
+    };
+    return axios.post(url, body).then(response => {
+      const data = [];
+      if (response.data && response.data[query]) {
+        data.push({
+          id: query,
+          name: query,
+          type: 'variant',
+        });
+      }
+      return data;
+    });
+  },
 };
 
 export default function* root() {

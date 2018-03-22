@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { Select, Spin } from 'antd';
 import { debounce } from 'lodash';
 
-import { otApi } from './redux/sagas';
+import { otApi, ensemblApi } from './redux/sagas';
 
 const Option = Select.Option;
 
@@ -16,14 +16,18 @@ class SearchHome extends React.Component {
   state = {
     data: [],
     value: [],
-    fetching: false
+    fetching: false,
   };
   fetchSearchResults = value => {
     // only query if at least three characters have been typed
     if (value.length > 2) {
       this.lastFetchId += 1;
       this.setState({ data: [], options: [], fetching: true });
-      otApi.fetchSearch(value).then(data => {
+      Promise.all([
+        otApi.fetchSearch(value),
+        ensemblApi.fetchSearch(value),
+      ]).then(([otData, ensemblData]) => {
+        const data = [...ensemblData, ...otData];
         this.setState({ data, options: data, fetching: false });
       });
     }
@@ -32,7 +36,7 @@ class SearchHome extends React.Component {
     this.setState({
       value,
       data: [],
-      fetching: false
+      fetching: false,
     });
 
     // value is an array of the selected items, but contains only key, label pairs
@@ -45,12 +49,17 @@ class SearchHome extends React.Component {
       switch (item.type) {
         case 'target':
           this.props.history.push({
-            pathname: `/gene/${item.id}`
+            pathname: `/gene/${item.id}`,
           });
           break;
         case 'disease':
           this.props.history.push({
-            pathname: `/disease/${item.id}`
+            pathname: `/disease/${item.id}`,
+          });
+          break;
+        case 'variant':
+          this.props.history.push({
+            pathname: `/variant/${item.id}`,
           });
           break;
         default:
@@ -78,7 +87,7 @@ class SearchHome extends React.Component {
               style={{
                 fontStyle: 'italic',
                 fontWeight: 100,
-                fontSize: '0.7em'
+                fontSize: '0.7em',
               }}
             >
               {d.type}{' '}

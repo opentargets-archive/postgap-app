@@ -22,10 +22,13 @@ class LocusPage extends React.Component {
   componentDidMount() {
     const { match, location, setLocation, setClickedEntityId } = this.props;
     const query = queryString.parse(location.search);
-    const { start, end, chromosome, geneId } = query;
+    const { start, end, chromosome, geneId, variantId } = query;
     setLocation({ start, end, chromosome });
     if (geneId) {
       setClickedEntityId(ENTITY_TYPE.GENE, geneId);
+    }
+    if (variantId) {
+      setClickedEntityId(ENTITY_TYPE.VARIANT, variantId);
     }
   }
 
