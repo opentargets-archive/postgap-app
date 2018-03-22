@@ -34,7 +34,7 @@ class SearchHome extends React.Component {
   };
   handleChange = value => {
     this.setState({
-      value,
+      value: [],
       data: [],
       fetching: false,
     });

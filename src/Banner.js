@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Row, Col, Layout, Affix } from 'antd';
 
-import Search from './Search';
+import SearchHome from './SearchHome';
 import Spinner from './Spinner';
 
 const Banner = () => {
@@ -31,7 +31,7 @@ const Banner = () => {
         }}
       >
         <Col span={15}>
-          <Search />
+          <SearchHome />
         </Col>
         <Col span={9}>
           <Spinner />
