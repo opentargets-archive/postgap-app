@@ -3,7 +3,7 @@ import { Table } from 'antd';
 
 import BaseDetail from './BaseDetail';
 import { LinksGene } from '../links';
-import { commaSeparate, underscoresToSpaces } from '../stringFormatters';
+import { underscoresToSpaces } from '../stringFormatters';
 
 const GeneDetail = ({ gene, closeHandler }) => {
   if (gene) {

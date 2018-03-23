@@ -12,8 +12,6 @@ class DiseasePage extends React.Component {
     setDiseasePage(efoId);
   }
   render() {
-    const { efoId } = this.props.match.params;
-    const { rows, loading } = this.props;
     return (
       <div style={{ padding: '30px' }}>
         <Row gutter={16}>
@@ -31,13 +29,13 @@ class DiseasePage extends React.Component {
 const mapStateToProps = state => {
   return {
     rows: state.diseasePage.rows,
-    loading: state.diseasePage.loading
+    loading: state.diseasePage.loading,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    setDiseasePage: efoId => dispatch(setDiseasePage(efoId))
+    setDiseasePage: efoId => dispatch(setDiseasePage(efoId)),
   };
 };
 
