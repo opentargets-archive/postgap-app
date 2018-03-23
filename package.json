@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@vx/responsive": "^0.0.158",
-    "antd": "^3.2.0",
+    "antd": "3.3.1",
     "axios": "^0.18.0",
     "d3": "^4.13.0",
     "enzyme": "^3.3.0",
