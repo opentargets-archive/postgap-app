@@ -204,7 +204,19 @@ const COLUMNS = [
 
 class EvidenceTable extends React.Component {
   render() {
-    const { rows } = this.props;
+    const { rows, loading } = this.props;
+    const loadingConfig = {
+      size: 'large',
+      indicator: (
+        <Icon
+          type="loading"
+          style={{ fontSize: 20, color: 'blue', padding: 10 }}
+        />
+      ),
+      spinning: true,
+    };
+    let loadingProp = {};
+    if (loading) loadingProp = { loading: loadingConfig };
     return (
       <Col>
         <Row align="right" style={{ paddingBottom: '5px' }}>
@@ -242,6 +254,7 @@ class EvidenceTable extends React.Component {
               d.gwasPubmedUrl
             }`
           }
+          {...loadingProp}
         />
       </Col>
     );

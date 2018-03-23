@@ -16,25 +16,27 @@ class BaseTrack extends React.Component {
     } = this.props;
     const { start, end } = location;
     return (
-      <VictoryChart
-        width={parentWidth}
-        height={parentHeight}
-        padding={{ left: 0, right: 0, top: 0, bottom: 0 }}
-        scale={{ x: 'linear' }}
-        domain={{ x: [0, chromosomeLength] }}
-        containerComponent={
-          <VictoryZoomContainer
-            responsive={false}
-            zoomDimension="x"
-            zoomDomain={{ x: [start, end] }}
-            onZoomDomainChange={zoomHandler}
-            minimumZoom={{ x: 1 }}
-          />
-        }
-      >
-        <VictoryAxis style={{ stroke: null, fill: null }} />
-        {this.props.children}
-      </VictoryChart>
+      <div style={{ position: 'absolute', width: '100%', height: '100%' }}>
+        <VictoryChart
+          width={parentWidth}
+          height={parentHeight}
+          padding={{ left: 0, right: 0, top: 0, bottom: 0 }}
+          scale={{ x: 'linear' }}
+          domain={{ x: [0, chromosomeLength] }}
+          containerComponent={
+            <VictoryZoomContainer
+              responsive={false}
+              zoomDimension="x"
+              zoomDomain={{ x: [start, end] }}
+              onZoomDomainChange={zoomHandler}
+              minimumZoom={{ x: 1 }}
+            />
+          }
+        >
+          <VictoryAxis style={{ stroke: null, fill: null }} />
+          {this.props.children}
+        </VictoryChart>
+      </div>
     );
   }
 }

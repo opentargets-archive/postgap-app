@@ -19,19 +19,21 @@ let VariantLeadVariantTrack = ({
 }) => {
   const handlers = { setHoverId, setClickedId };
   return (
-    <BaseTrack {...rest}>
-      {variantLeadVariantsInteractive.map(d => {
-        return (
-          <VariantLeadVariantFeature
-            key={d.id}
-            data={d}
-            {...handlers}
-            highlight={d.interactive}
-            dimNonHighlighted={isInteractive}
-          />
-        );
-      })}
-    </BaseTrack>
+    <div style={{ position: 'absolute', width: '100%', height: '100%' }}>
+      <BaseTrack {...rest}>
+        {variantLeadVariantsInteractive.map(d => {
+          return (
+            <VariantLeadVariantFeature
+              key={d.id}
+              data={d}
+              {...handlers}
+              highlight={d.interactive}
+              dimNonHighlighted={isInteractive}
+            />
+          );
+        })}
+      </BaseTrack>
+    </div>
   );
 };
 

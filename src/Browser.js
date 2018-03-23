@@ -19,6 +19,7 @@ import DiseaseTrack from './tracks/DiseaseTrack';
 import LeadVariantDiseaseTrack from './tracks/LeadVariantDiseaseTrack';
 import { commaSeparate } from './stringFormatters';
 import DictionaryHelpTerm from './terms/DictionaryHelpTerm';
+import Spinner from './Spinner';
 
 class Browser extends React.Component {
   constructor(props) {
@@ -101,16 +102,21 @@ class Browser extends React.Component {
                 padding: 0,
                 height: `${GENE_SLOT_HEIGHT * slots.length +
                   GENE_TRACK_PADDING * 2}px`,
+                position: 'relative',
               }}
             >
               <GeneTrack {...commonProps} />
+              <Spinner showIcon={true} />
             </Card>
           </Col>
         </Row>
         <Row>
           <Col offset={labelColSize} span={24 - labelColSize}>
-            <Card bodyStyle={{ padding: 0, height: '80px' }}>
+            <Card
+              bodyStyle={{ padding: 0, height: '80px', position: 'relative' }}
+            >
               <GeneVariantTrack {...commonProps} />
+              <Spinner />
             </Card>
           </Col>
         </Row>
@@ -132,15 +138,21 @@ class Browser extends React.Component {
             />
           </Col>
           <Col span={24 - labelColSize}>
-            <Card bodyStyle={{ padding: 0, height: '20px' }}>
+            <Card
+              bodyStyle={{ padding: 0, height: '20px', position: 'relative' }}
+            >
               <VariantTrack {...commonProps} />
+              <Spinner />
             </Card>
           </Col>
         </Row>
         <Row>
           <Col offset={labelColSize} span={24 - labelColSize}>
-            <Card bodyStyle={{ padding: 0, height: '80px' }}>
+            <Card
+              bodyStyle={{ padding: 0, height: '80px', position: 'relative' }}
+            >
               <VariantLeadVariantTrack {...commonProps} />
+              <Spinner />
             </Card>
           </Col>
         </Row>
@@ -162,18 +174,24 @@ class Browser extends React.Component {
             />
           </Col>
           <Col span={24 - labelColSize}>
-            <Card bodyStyle={{ padding: 0, height: '20px' }}>
+            <Card
+              bodyStyle={{ padding: 0, height: '20px', position: 'relative' }}
+            >
               <LeadVariantTrack {...commonProps} />
+              <Spinner />
             </Card>
           </Col>
         </Row>
         <Row>
           <Col offset={labelColSize} span={24 - labelColSize}>
-            <Card bodyStyle={{ padding: 0, height: '80px' }}>
+            <Card
+              bodyStyle={{ padding: 0, height: '80px', position: 'relative' }}
+            >
               <LeadVariantDiseaseTrack
                 diseaseScale={diseaseScale}
                 {...commonProps}
               />
+              <Spinner />
             </Card>
           </Col>
         </Row>
@@ -196,9 +214,14 @@ class Browser extends React.Component {
           </Col>
           <Col span={24 - labelColSize}>
             <Card
-              bodyStyle={{ padding: 0, height: `${60 * diseaseSlotsCount}px` }}
+              bodyStyle={{
+                padding: 0,
+                height: `${60 * diseaseSlotsCount}px`,
+                position: 'relative',
+              }}
             >
               <DiseaseTrack diseaseScale={diseaseScale} {...commonProps} />
+              <Spinner />
             </Card>
           </Col>
         </Row>

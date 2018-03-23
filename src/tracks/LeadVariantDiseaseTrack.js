@@ -19,18 +19,20 @@ let LeadVariantDiseaseTrack = ({
 }) => {
   const handlers = { setHoverId, setClickedId };
   return (
-    <BaseTrack {...rest}>
-      {leadVariantDiseasesInteractive.map(d => (
-        <LeadVariantDiseaseFeature
-          key={d.id}
-          data={d}
-          {...handlers}
-          diseaseScale={rest.diseaseScale}
-          highlight={d.interactive}
-          dimNonHighlighted={isInteractive}
-        />
-      ))}
-    </BaseTrack>
+    <div style={{ position: 'absolute', width: '100%', height: '100%' }}>
+      <BaseTrack {...rest}>
+        {leadVariantDiseasesInteractive.map(d => (
+          <LeadVariantDiseaseFeature
+            key={d.id}
+            data={d}
+            {...handlers}
+            diseaseScale={rest.diseaseScale}
+            highlight={d.interactive}
+            dimNonHighlighted={isInteractive}
+          />
+        ))}
+      </BaseTrack>
+    </div>
   );
 };
 

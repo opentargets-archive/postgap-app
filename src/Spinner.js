@@ -4,13 +4,22 @@ import { Spin, Icon } from 'antd';
 
 import { selectors } from './redux/store';
 
-let Spinner = ({ loading }) => {
+let Spinner = ({ loading, showIcon }) => {
   const loadingIcon = (
-    <Icon type="loading" style={{ fontSize: 30, color: 'white' }} spin />
+    <Icon
+      type="loading"
+      style={{
+        fontSize: 20,
+        color: 'blue',
+        padding: 10,
+        opacity: showIcon ? 1 : 0,
+      }}
+      spin
+    />
   );
   if (loading) {
     return (
-      <Spin indicator={loadingIcon} size="large" style={{ float: 'right' }} />
+      <Spin indicator={loadingIcon} size="large" spinning={true} delay={300} />
     );
   }
   return null;
@@ -18,7 +27,7 @@ let Spinner = ({ loading }) => {
 
 const mapStateToProps = state => {
   return {
-    loading: selectors.getIsLoading(state)
+    loading: selectors.getIsLoading(state),
   };
 };
 

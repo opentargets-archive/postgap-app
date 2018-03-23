@@ -33,39 +33,41 @@ let DiseaseTrack = ({
     .domain(diseases.map(d => d.efoName).sort())
     .range(verticalRange);
   return (
-    <BaseTrack {...rest} parentHeight={height}>
-      {diseases.map(d => {
-        if (diseaseIdsFiltered.indexOf(d.efoId) >= 0) {
-          return (
-            <DiseaseVerticalFeature
-              key={d.efoId}
-              data={d}
-              diseaseScale={rest.diseaseScale}
-              slotHeight={DISEASE_SLOT_HEIGHT}
-              slotOffset={verticalScale(d.efoName)}
-              {...handlers}
-              highlight={d.interactive}
-              dimNonHighlighted={isInteractive}
-            />
-          );
-        } else {
-          return null;
-        }
-      })}
+    <div style={{ position: 'absolute', width: '100%', height: '100%' }}>
+      <BaseTrack {...rest} parentHeight={height}>
+        {diseases.map(d => {
+          if (diseaseIdsFiltered.indexOf(d.efoId) >= 0) {
+            return (
+              <DiseaseVerticalFeature
+                key={d.efoId}
+                data={d}
+                diseaseScale={rest.diseaseScale}
+                slotHeight={DISEASE_SLOT_HEIGHT}
+                slotOffset={verticalScale(d.efoName)}
+                {...handlers}
+                highlight={d.interactive}
+                dimNonHighlighted={isInteractive}
+              />
+            );
+          } else {
+            return null;
+          }
+        })}
 
-      {diseases.map(d => (
-        <DiseaseFeature
-          key={d.efoId}
-          data={d}
-          diseaseScale={rest.diseaseScale}
-          slotHeight={DISEASE_SLOT_HEIGHT}
-          slotOffset={verticalScale(d.efoName)}
-          {...handlers}
-          highlight={d.interactive}
-          dimNonHighlighted={isInteractive}
-        />
-      ))}
-    </BaseTrack>
+        {diseases.map(d => (
+          <DiseaseFeature
+            key={d.efoId}
+            data={d}
+            diseaseScale={rest.diseaseScale}
+            slotHeight={DISEASE_SLOT_HEIGHT}
+            slotOffset={verticalScale(d.efoName)}
+            {...handlers}
+            highlight={d.interactive}
+            dimNonHighlighted={isInteractive}
+          />
+        ))}
+      </BaseTrack>
+    </div>
   );
 };
 

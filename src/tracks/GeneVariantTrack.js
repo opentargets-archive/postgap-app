@@ -19,17 +19,19 @@ let GeneVariantTrack = ({
 }) => {
   const handlers = { setHoverId, setClickedId };
   return (
-    <BaseTrack {...rest}>
-      {geneVariantsInteractive.map(d => (
-        <GeneVariantFeature
-          key={d.id}
-          data={d}
-          {...handlers}
-          highlight={d.interactive}
-          dimNonHighlighted={isInteractive}
-        />
-      ))}
-    </BaseTrack>
+    <div style={{ position: 'absolute', width: '100%', height: '100%' }}>
+      <BaseTrack {...rest}>
+        {geneVariantsInteractive.map(d => (
+          <GeneVariantFeature
+            key={d.id}
+            data={d}
+            {...handlers}
+            highlight={d.interactive}
+            dimNonHighlighted={isInteractive}
+          />
+        ))}
+      </BaseTrack>
+    </div>
   );
 };
 

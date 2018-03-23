@@ -6,6 +6,7 @@ import { selectors } from './redux/store';
 const mapStateToProps = state => {
   return {
     rows: selectors.getRowsFiltered(state),
+    loading: selectors.getIsLoading(state),
   };
 };
 

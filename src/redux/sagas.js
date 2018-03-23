@@ -30,7 +30,7 @@ export function* updateLocationSaga() {
 }
 
 function* updateLocation(action) {
-  yield call(delay, 500); // debounce
+  yield call(delay, 1500); // debounce
   try {
     // fetch rows for location from Open Targets API
     yield put(setLoadingRows(true));

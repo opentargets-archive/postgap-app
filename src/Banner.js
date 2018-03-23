@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { Row, Col, Layout, Affix } from 'antd';
 
 import SearchHome from './SearchHome';
-import Spinner from './Spinner';
 
 const Banner = () => {
   return (
@@ -32,9 +31,6 @@ const Banner = () => {
       >
         <Col span={15}>
           <SearchHome />
-        </Col>
-        <Col span={9}>
-          <Spinner />
         </Col>
       </Row>
     </Affix>
