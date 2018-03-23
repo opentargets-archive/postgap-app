@@ -237,6 +237,11 @@ class EvidenceTable extends React.Component {
           size="small"
           bordered
           scroll={{ x: 1700 }}
+          rowKey={d =>
+            `${d.geneId}-${d.ldSnpId}-${d.gwasSnpId}-${d.efoId}-${
+              d.gwasPubmedUrl
+            }`
+          }
         />
       </Col>
     );
