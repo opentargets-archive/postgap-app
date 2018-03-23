@@ -1,5 +1,5 @@
 import { delay } from 'redux-saga';
-import { call, put, take, fork, cancel } from 'redux-saga/effects';
+import { call, put, take, fork, cancel, all } from 'redux-saga/effects';
 import axios from 'axios';
 import * as d3 from 'd3';
 
@@ -220,5 +220,5 @@ export const ensemblApi = {
 };
 
 export default function* root() {
-  yield [fork(updateLocationSaga), fork(updateDiseaseTableSaga)];
+  yield all([fork(updateLocationSaga), fork(updateDiseaseTableSaga)]);
 }
