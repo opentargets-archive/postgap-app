@@ -1,6 +1,7 @@
 import { delay } from 'redux-saga';
 import { call, put, take, fork, cancel, all } from 'redux-saga/effects';
 import axios from 'axios';
+import queryString from 'query-string';
 import * as d3 from 'd3';
 
 import {
@@ -112,41 +113,93 @@ function* updateDiseaseTable(action) {
 const OT_API_BASE =
   'https://mk-loci-dot-open-targets-eu-dev.appspot.com/v3/platform/';
 const OT_API_FILTER = 'public/evidence/filter';
-const OT_API_INTERVAL = ({ chromosome, start, end }) =>
-  `?chromosome=${chromosome}&begin=${start}&end=${end}&size=10000&datasource=gwas_catalog&fields=unique_association_fields&fields=disease&fields=evidence&fields=variant&fields=target&fields=sourceID`;
-const OT_API_DISEASE = ({ efoId }) =>
-  `?disease=${efoId}&size=10000&datasource=gwas_catalog&fields=unique_association_fields&fields=disease&fields=evidence&fields=variant&fields=target&fields=sourceID`;
+const OT_API_FIELDS = [
+  'unique_association_fields',
+  'disease',
+  'evidence',
+  'variant',
+  'target',
+];
+const OT_API_INTERVAL = ({ chromosome, start, end, next = false }) => {
+  // `?chromosome=${chromosome}&begin=${start}&end=${end}&size=10000&datasource=gwas_catalog&fields=unique_association_fields&fields=disease&fields=evidence&fields=variant&fields=target&fields=sourceID`;
+  let params = {
+    chromosome,
+    begin: start,
+    end,
+    size: 10000,
+    datasource: 'gwas_catalog',
+    fields: OT_API_FIELDS,
+  };
+  if (next) {
+    params.next = next;
+  }
+  return `?${queryString.stringify(params)}`;
+};
+
+const OT_API_DISEASE = ({ efoId, next = false }) => {
+  // `?disease=${efoId}&size=10000&datasource=gwas_catalog&fields=unique_association_fields&fields=disease&fields=evidence&fields=variant&fields=target&fields=sourceID`;
+  let params = {
+    efoId,
+    size: 10000,
+    datasource: 'gwas_catalog',
+    fields: OT_API_FIELDS,
+  };
+  if (next) {
+    params.next = next;
+  }
+  return `?${queryString.stringify(params)}`;
+};
 const OT_API_SEARCH = ({ query }) => `private/quicksearch?q=${query}&size=3`;
 
 const ENSEMBL_API_BASE = 'https://rest.ensembl.org/';
 const ENSEMBL_API_VARIATION = 'variation/homo_sapiens';
 const ENSEMBL_API_LOOKUP = 'lookup/id';
 
-const checkPaginator = response => {
-  if (response.data.next && response.data.query.size === 10000)
-    console.warn(`Over 10,000 records (total: ${response.data.total}`);
-  return response;
+const iterateRowPagination = (urlParams, next = null, acc = []) => {
+  let urlParamsWithNext = { ...urlParams };
+  if (next) {
+    urlParamsWithNext.next = next;
+  }
+  const endpoint = OT_API_INTERVAL(urlParamsWithNext);
+  const url = `${OT_API_BASE}${OT_API_FILTER}${endpoint}`;
+  return axios.get(url).then(response => {
+    const newAcc = [...acc, ...response.data.data];
+    if (response.data.next && response.data.query.size === 10000) {
+      if (acc.length)
+        console.warn(`Over 10,000 records (total: ${response.data.total})`);
+      return iterateRowPagination(urlParams, response.data.next, newAcc);
+    } else {
+      return newAcc;
+    }
+  });
+};
+
+const iterateRowPaginationByEfoId = (urlParams, next = null, acc = []) => {
+  let urlParamsWithNext = { ...urlParams };
+  if (next) {
+    urlParamsWithNext.next = next;
+  }
+  const endpoint = OT_API_DISEASE(urlParamsWithNext);
+  const url = `${OT_API_BASE}${OT_API_FILTER}${endpoint}`;
+  return axios.get(url).then(response => {
+    const newAcc = [...acc, ...response.data.data];
+    if (response.data.next && response.data.query.size === 10000) {
+      if (acc.length)
+        console.warn(`Over 10,000 records (total: ${response.data.total})`);
+      return iterateRowPagination(urlParams, response.data.next, newAcc);
+    } else {
+      return newAcc;
+    }
+  });
 };
 
 export const otApi = {
   fetchRows(location) {
     const { start, end, chromosome } = location;
-    const endpoint = OT_API_INTERVAL({ chromosome, start, end });
-    const url = `${OT_API_BASE}${OT_API_FILTER}${endpoint}`;
-    return axios
-      .get(url)
-      .then(checkPaginator)
-      .then(response => response.data.data);
-    // TODO: Handle calls over paginator and check error handling!
+    return iterateRowPagination({ start, end, chromosome });
   },
   fetchRowsByEfoId(efoId) {
-    const endpoint = OT_API_DISEASE({ efoId });
-    const url = `${OT_API_BASE}${OT_API_FILTER}${endpoint}`;
-    return axios
-      .get(url)
-      .then(checkPaginator)
-      .then(response => response.data.data);
-    // TODO: Handle calls over paginator and check error handling!
+    return iterateRowPaginationByEfoId({ efoId });
   },
   fetchSearch(query) {
     const url = `${OT_API_BASE}${OT_API_SEARCH({ query })}`;
