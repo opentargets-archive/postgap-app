@@ -53,8 +53,8 @@ const initialState = {
   ensemblVariants: [],
   filters: {
     ld: [0.7, 1],
-    gwasPValue: [0, 100],
-    gwasMaxPValue: 100,
+    gwasPValue: [0, Number.MAX_SAFE_INTEGER],
+    gwasMaxPValue: Number.MAX_SAFE_INTEGER,
     g2VMustHaves: [],
     g2VScore: [0, 1],
   },

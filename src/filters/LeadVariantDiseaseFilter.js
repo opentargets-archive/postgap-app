@@ -22,7 +22,7 @@ let LeadVariantDiseaseFilter = ({ interval, setFilterGwasPValue, max }) => {
         <Slider
           range
           min={0}
-          max={max ? max : 100}
+          max={max ? max : Number.MAX_SAFE_INTEGER}
           marks={{
             0: '0',
             [max]: max.toPrecision(3),

@@ -65,7 +65,7 @@ function* updateLocation(action) {
     );
 
     // compute max -log(pval) for filters
-    let gwasMaxPValue = 100;
+    let gwasMaxPValue = Number.MAX_SAFE_INTEGER;
     if (rows.length) {
       gwasMaxPValue = -Math.log10(d3.min(rows, d => d.gwasPValue)).toFixed(1);
     }
