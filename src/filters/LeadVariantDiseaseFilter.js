@@ -25,7 +25,6 @@ let LeadVariantDiseaseFilter = ({ interval, setFilterGwasPValue, max }) => {
           max={max ? max : 100}
           marks={{
             0: '0',
-            8: 'Genome-wide significance',
             [max]: max.toPrecision(3),
           }}
           step={0.1}
