@@ -140,6 +140,7 @@ const OT_API_DISEASE = ({ efoId, next = false }) => {
   // `?disease=${efoId}&size=10000&datasource=gwas_catalog&fields=unique_association_fields&fields=disease&fields=evidence&fields=variant&fields=target&fields=sourceID`;
   let params = {
     efoId,
+    direct: false,
     size: 10000,
     datasource: 'gwas_catalog',
     fields: OT_API_FIELDS,
