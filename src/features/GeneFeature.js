@@ -9,6 +9,12 @@ class GeneFeature extends React.Component {
     const box = this.text.getBBox();
     this.setState({ textWidth: box.width, textBottom: box.y + box.height });
   }
+  componentDidUpdate() {
+    const box = this.text.getBBox();
+    if (box.width !== this.state.textWidth) {
+      this.setState({ textWidth: box.width, textBottom: box.y + box.height });
+    }
+  }
   render() {
     const {
       scale,
