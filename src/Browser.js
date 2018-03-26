@@ -5,7 +5,6 @@ import { withRouter } from 'react-router-dom';
 import queryString from 'query-string';
 import { scalePoint } from 'd3-scale';
 
-import ScaleTrack from './tracks/ScaleTrack';
 import GeneTrack, {
   GENE_SLOT_HEIGHT,
   GENE_TRACK_PADDING,
@@ -69,13 +68,6 @@ class Browser extends React.Component {
               <span>{`Human ${chromosome}:${commaSeparate(
                 start
               )}-${commaSeparate(end)}`}</span>
-            </Card>
-          </Col>
-        </Row>
-        <Row>
-          <Col offset={labelColSize} span={24 - labelColSize}>
-            <Card bodyStyle={{ padding: 0, height: '10px' }}>
-              <ScaleTrack {...commonProps} />
             </Card>
           </Col>
         </Row>
