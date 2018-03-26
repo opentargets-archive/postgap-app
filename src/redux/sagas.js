@@ -186,7 +186,7 @@ const iterateRowPaginationByEfoId = (urlParams, next = null, acc = []) => {
     if (response.data.next && response.data.query.size === 10000) {
       if (acc.length)
         console.warn(`Over 10,000 records (total: ${response.data.total})`);
-      return iterateRowPagination(urlParams, response.data.next, newAcc);
+      return iterateRowPaginationByEfoId(urlParams, response.data.next, newAcc);
     } else {
       return newAcc;
     }
