@@ -5,12 +5,6 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import sagas from './sagas';
 
 import {
-  transformEnsemblGene,
-  transformEnsemblVariant,
-} from './utils/transformEnsembl';
-import { transformEvidenceString } from './utils/transformOpenTargets';
-
-import {
   SET_LOCATION,
   SET_FILTER_LD,
   SET_FILTER_GWAS_PVALUE,
@@ -28,9 +22,6 @@ import {
   SET_DISEASE_TABLE_ROWS,
 } from './actions';
 
-import rawData from '../raw.json';
-import rawEnsemblData from '../rawEnsembl.json';
-import rawEnsemblVariantsData from '../rawEnsemblVariants.json';
 import { chromosomeLengths } from './chromosomeLengths';
 
 export {
@@ -57,11 +48,9 @@ const initialState = {
     end: 109612066,
   },
   chromosomeLengths,
-  rows: rawData.data.map(transformEvidenceString),
-  ensemblGenes: Object.values(rawEnsemblData).map(transformEnsemblGene),
-  ensemblVariants: Object.values(rawEnsemblVariantsData).map(
-    transformEnsemblVariant
-  ),
+  rows: [],
+  ensemblGenes: [],
+  ensemblVariants: [],
   filters: {
     ld: [0.7, 1],
     gwasPValue: [0, 100],
