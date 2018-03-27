@@ -18,7 +18,7 @@ let VariantLeadVariantFilter = ({ interval, setFilterLD }) => {
       <h4>
         Linkage Disequilibrium (r<sup>2</sup>)
       </h4>
-      <div style={{ paddingLeft: 20, paddingRight: 20, paddingBottom: 20 }}>
+      <div style={{ paddingLeft: 20, paddingRight: 30, paddingBottom: 0 }}>
         <Slider
           range
           min={0.7}

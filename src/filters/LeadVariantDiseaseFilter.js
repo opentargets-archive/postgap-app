@@ -18,7 +18,7 @@ let LeadVariantDiseaseFilter = ({ interval, setFilterGwasPValue, max }) => {
       <h4>
         -log<sub>10</sub>(GWAS p-value)
       </h4>
-      <div style={{ paddingLeft: 20, paddingRight: 20, paddingBottom: 20 }}>
+      <div style={{ paddingLeft: 20, paddingRight: 30, paddingBottom: 0 }}>
         <Slider
           range
           min={0}

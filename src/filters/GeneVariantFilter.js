@@ -35,38 +35,44 @@ let GeneVariantFilter = ({
         </Col>
       </Row>
       <hr />
-      <h4>Aggregated Open Targets Score</h4>
-      <div style={{ paddingLeft: 20, paddingRight: 20, paddingBottom: 20 }}>
-        <Slider
-          range
-          min={0}
-          max={1}
-          marks={{
-            0: '0',
-            0.5: 0.5,
-            1: 1,
-          }}
-          step={0.01}
-          defaultValue={interval}
-          onChange={value => {
-            setFilterG2VScore(value);
-          }}
-        />
-      </div>
-      <h4>Must have</h4>
-      <Checkbox.Group
-        style={{ width: '100%' }}
-        value={g2VMustHaves}
-        onChange={changeHandler}
-      >
-        <Row>
-          {checkboxOptions.map(option => (
-            <Col key={option.value} span={8}>
-              <Checkbox value={option.value}>{option.label}</Checkbox>
-            </Col>
-          ))}
-        </Row>
-      </Checkbox.Group>
+      <Row>
+        <Col span={12}>
+          <h4>Aggregated Open Targets Score</h4>
+          <div style={{ paddingLeft: 20, paddingRight: 30, paddingBottom: 0 }}>
+            <Slider
+              range
+              min={0}
+              max={1}
+              marks={{
+                0: '0',
+                0.5: 0.5,
+                1: 1,
+              }}
+              step={0.01}
+              defaultValue={interval}
+              onChange={value => {
+                setFilterG2VScore(value);
+              }}
+            />
+          </div>
+        </Col>
+        <Col span={12}>
+          <h4>Must have</h4>
+          <Checkbox.Group
+            style={{ width: '100%' }}
+            value={g2VMustHaves}
+            onChange={changeHandler}
+          >
+            <Row>
+              {checkboxOptions.map(option => (
+                <Col key={option.value} span={8}>
+                  <Checkbox value={option.value}>{option.label}</Checkbox>
+                </Col>
+              ))}
+            </Row>
+          </Checkbox.Group>
+        </Col>
+      </Row>
     </Card>
   );
 };

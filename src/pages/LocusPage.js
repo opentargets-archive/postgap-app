@@ -58,7 +58,7 @@ class LocusPage extends React.Component {
                 </Col>
               </Row>
               <Row gutter={2}>
-                <Col span={6}>
+                <Col span={12}>
                   <GeneVariantFilter />
                 </Col>
                 <Col span={6}>
@@ -67,9 +67,9 @@ class LocusPage extends React.Component {
                 <Col span={6}>
                   <LeadVariantDiseaseFilter />
                 </Col>
-                <Col span={6}>
+                {/* <Col span={6}>
                   <SummaryCounts />
-                </Col>
+                </Col> */}
               </Row>
             </Card>
           ) : (
