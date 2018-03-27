@@ -114,11 +114,30 @@ const OT_API_BASE =
   'https://mk-loci-dot-open-targets-eu-dev.appspot.com/v3/platform/';
 const OT_API_FILTER = 'public/evidence/filter';
 const OT_API_FIELDS = [
-  'unique_association_fields',
-  'disease',
-  'evidence',
-  'variant',
-  'target',
+  // unique_association_fields
+  'unique_association_fields.pubmed_refs',
+  'unique_association_fields.r2',
+  // disease
+  'disease.id',
+  'disease.name',
+  // evidence
+  'evidence.variant2disease.resource_score.value',
+  'evidence.variant2disease.gwas_sample_size',
+  'evidence.variant2disease.lead_snp_rsid',
+  'evidence.gene2variant.metadata.funcgen.vep_score',
+  'evidence.gene2variant.metadata.funcgen.gtex_score',
+  'evidence.gene2variant.metadata.funcgen.pchic_score',
+  'evidence.gene2variant.metadata.funcgen.dhs_score',
+  'evidence.gene2variant.metadata.funcgen.fantom5_score',
+  'evidence.gene2variant.metadata.funcgen.ot_g2v_score',
+  // variant
+  'variant.id',
+  'variant.pos',
+  'variant.chrom',
+  // target
+  'target.id',
+  'target.target_name',
+  'target.gene_info.name',
 ];
 const OT_API_INTERVAL = ({ chromosome, start, end, next = false }) => {
   // `?chromosome=${chromosome}&begin=${start}&end=${end}&size=10000&datasource=gwas_catalog&fields=unique_association_fields&fields=disease&fields=evidence&fields=variant&fields=target&fields=sourceID`;
