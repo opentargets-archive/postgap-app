@@ -37,16 +37,19 @@
   "scripts": {
     "precommit": "lint-staged",
     "commit": "git-cz",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test --env=jsdom",
     "eject": "react-scripts eject",
     "styleguide": "styleguidist server",
     "styleguide:build": "styleguidist build"
   },
   "devDependencies": {
+    "babel-plugin-import": "^1.6.7",
     "cz-conventional-changelog": "^2.1.0",
     "enzyme-adapter-react-16": "^1.1.1",
+    "react-app-rewire-less": "^2.1.1",
+    "react-app-rewired": "^1.5.0",
     "redux-devtools-extension": "^2.13.2"
   },
   "config": {
