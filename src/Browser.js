@@ -208,7 +208,9 @@ class Browser extends React.Component {
             <Card
               bodyStyle={{
                 padding: 0,
-                height: `${60 * diseaseSlotsCount}px`,
+                height: `${
+                  diseaseSlotsCount > 0 ? 60 * diseaseSlotsCount : 15
+                }px`,
                 position: 'relative',
               }}
             >
