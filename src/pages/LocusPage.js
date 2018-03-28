@@ -41,6 +41,9 @@ class LocusPage extends React.Component {
   }
 
   render() {
+    const query = queryString.parse(this.props.location.search);
+    const { start, end, chromosome } = query;
+    const filename = `POSTGAP-locus.${chromosome}.${start}-${end}`;
     return (
       <div style={{ padding: '30px' }}>
         <Col gutter={6}>
@@ -96,7 +99,10 @@ class LocusPage extends React.Component {
           <Row gutter={16}>
             <Col span={24}>
               <Card bodyStyle={{ padding: 10 }}>
-                <BrowserTable filterString={this.props.filterString} />
+                <BrowserTable
+                  filename={filename}
+                  filterString={this.props.filterString}
+                />
               </Card>
             </Col>
           </Row>

@@ -12,12 +12,13 @@ class DiseasePage extends React.Component {
     setDiseasePage(efoId);
   }
   render() {
+    const { efoId } = this.props.match.params;
     return (
       <div style={{ padding: '30px' }}>
         <Row gutter={16}>
           <Col span={24}>
             <Card bodyStyle={{ padding: 10 }}>
-              <DiseaseTable />
+              <DiseaseTable filename={`POSTGAP-disease.${efoId}`} />
             </Card>
           </Col>
         </Row>

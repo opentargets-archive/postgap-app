@@ -211,7 +211,7 @@ const COLUMNS = [
 
 class EvidenceTable extends React.Component {
   render() {
-    const { rows, loading, filterString } = this.props;
+    const { rows, loading, filterString, filename } = this.props;
     const loadingConfig = {
       size: 'large',
       indicator: (
@@ -232,7 +232,11 @@ class EvidenceTable extends React.Component {
       <Col>
         <Row align="right" style={{ paddingBottom: '5px' }}>
           <Col align="right">
-            <CSVLink data={downloadData} filename="postgap.csv" target="_blank">
+            <CSVLink
+              data={downloadData}
+              filename={`${filename}.csv`}
+              target="_blank"
+            >
               <Button
                 size="small"
                 type="primary"
@@ -244,7 +248,7 @@ class EvidenceTable extends React.Component {
             </CSVLink>
             <CSVLink
               data={downloadData}
-              filename="postgap.tsv"
+              filename={`${filename}.tsv`}
               target="_blank"
               separator={'\t'}
             >
