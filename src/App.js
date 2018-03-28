@@ -24,7 +24,7 @@ class App extends React.Component {
           <Layout.Content
             style={{
               background: '#ECECEC',
-              minHeight: 'calc(100vh - 106px - 40px)',
+              minHeight: 'calc(100vh - 90px - 200px)', // Banner=90; Footer=200
             }}
           >
             <Route exact path="/" component={HomePage} />

@@ -71,7 +71,7 @@ const FooterIcon = ({ href, type }) => (
 );
 
 const Footer = () => (
-  <Layout.Footer style={{ backgroundColor: '#cecfcf' }}>
+  <Layout.Footer style={{ backgroundColor: '#cecfcf', height: 200 }}>
     <Row>
       <Col span={6}>
         <FooterHeader>About</FooterHeader>
