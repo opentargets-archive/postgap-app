@@ -95,7 +95,7 @@ const Footer = () => (
           <FooterItemLink href="https://www.opentargets.org/">
             Open Targets Consortium
           </FooterItemLink>
-          <FooterItemLink href="http://www.targetvalidation.org/">
+          <FooterItemLink href="https://www.targetvalidation.org/">
             Open Targets Platform
           </FooterItemLink>
           <FooterItemLink href="https://link.opentargets.io/">
