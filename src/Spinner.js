@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Spin, Icon } from 'antd';
 
 import { selectors } from './redux/store';
+import { colors } from './theme';
 
 let Spinner = ({ loading, showIcon }) => {
   const loadingIcon = (
@@ -10,7 +11,7 @@ let Spinner = ({ loading, showIcon }) => {
       type="loading"
       style={{
         fontSize: 20,
-        color: 'blue',
+        color: colors.primary,
         padding: 10,
         opacity: showIcon ? 1 : 0,
       }}

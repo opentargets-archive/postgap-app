@@ -24,7 +24,7 @@ let DiseaseTrack = ({
 }) => {
   const handlers = { setHoverId, setClickedId };
   const quotient = Math.ceil(diseases.length / 5);
-  const height = DISEASE_SLOT_HEIGHT * quotient;
+  const height = quotient > 0 ? DISEASE_SLOT_HEIGHT * quotient : 15;
   const verticalRange = _.range(0, diseases.length).map(
     i => DISEASE_SLOT_HEIGHT * (i % quotient)
   );

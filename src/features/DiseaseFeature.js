@@ -2,6 +2,8 @@ import React from 'react';
 import Text from 'react-svg-text';
 import * as d3 from 'd3';
 
+import { colors } from '../theme';
+
 const PADDING = 0.1; // 10%
 const calculateDiseaseScaleRange = width => [
   width * PADDING,
@@ -48,8 +50,8 @@ class DiseaseFeature extends React.Component {
 
     diseaseScale.range(calculateDiseaseScaleRange(width)); // TODO: refactor to set range in better location
     const diseaseColor = highlight
-      ? 'red'
-      : dimNonHighlighted ? 'lightgrey' : 'blue';
+      ? colors.secondary
+      : dimNonHighlighted ? 'lightgrey' : colors.primary;
     const backgroundColor = highlight
       ? '#eee'
       : dimNonHighlighted ? 'white' : '#eee';

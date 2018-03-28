@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { colors } from '../theme';
+
 const GeneVerticalFeature = ({
   scale,
   data,
@@ -11,7 +13,7 @@ const GeneVerticalFeature = ({
 }) => {
   const { x } = scale;
   const geneColor = highlight
-    ? 'red'
+    ? colors.secondary
     : dimNonHighlighted ? 'lightgrey' : 'grey';
   return (
     <line

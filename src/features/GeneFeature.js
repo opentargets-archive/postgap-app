@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { colors } from '../theme';
+
 class GeneFeature extends React.Component {
   constructor(props) {
     super(props);
@@ -35,8 +37,8 @@ class GeneFeature extends React.Component {
     const ySpit = exonHeight / 2;
     const yText = slotHeight * 0.65;
     const geneColor = highlight
-      ? 'red'
-      : dimNonHighlighted ? 'lightgrey' : 'blue';
+      ? colors.secondary
+      : dimNonHighlighted ? 'lightgrey' : colors.primary;
     const backgroundColor = highlight
       ? '#eee'
       : dimNonHighlighted ? 'white' : '#eee';

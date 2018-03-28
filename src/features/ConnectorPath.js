@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { colors } from '../theme';
+
 const ConnectorPath = ({
   topX,
   topY,
@@ -18,7 +20,9 @@ const ConnectorPath = ({
     <path
       d={d}
       style={{
-        stroke: highlight ? 'red' : dimNonHighlighted ? 'lightgrey' : 'grey',
+        stroke: highlight
+          ? colors.secondary
+          : dimNonHighlighted ? 'lightgrey' : 'grey',
         strokeWidth: 1,
         fill: 'none',
       }}

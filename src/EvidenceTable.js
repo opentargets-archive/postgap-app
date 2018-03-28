@@ -3,6 +3,7 @@ import { Table, Button, Col, Row, Icon } from 'antd';
 import { CSVLink } from 'react-csv';
 
 import { commaSeparate, renderNonZeroField } from './stringFormatters';
+import { colors } from './theme';
 import {
   LinksGene,
   LinksVariant,
@@ -210,7 +211,7 @@ class EvidenceTable extends React.Component {
       indicator: (
         <Icon
           type="loading"
-          style={{ fontSize: 20, color: 'blue', padding: 10 }}
+          style={{ fontSize: 20, color: colors.primary, padding: 10 }}
         />
       ),
       spinning: true,

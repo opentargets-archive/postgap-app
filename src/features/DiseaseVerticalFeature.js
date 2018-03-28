@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { colors } from '../theme';
+
 const DiseaseVerticalFeature = ({
   scale,
   data,
@@ -11,7 +13,7 @@ const DiseaseVerticalFeature = ({
   dimNonHighlighted,
 }) => {
   const diseaseColor = highlight
-    ? 'red'
+    ? colors.secondary
     : dimNonHighlighted ? 'lightgrey' : 'grey';
   return (
     <line

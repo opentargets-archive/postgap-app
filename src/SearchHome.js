@@ -4,6 +4,7 @@ import { Select, Spin } from 'antd';
 import { debounce } from 'lodash';
 
 import { otApi, ensemblApi } from './redux/sagas';
+import { colors } from './theme';
 
 const Option = Select.Option;
 
@@ -92,9 +93,7 @@ class SearchHome extends React.Component {
             >
               {d.type}{' '}
             </span>
-            <span style={{ color: d.type === 'target' ? 'blue' : 'green' }}>
-              {d.name}
-            </span>
+            <span style={{ color: colors.secondary }}>{d.name}</span>
           </Option>
         ))}
       </Select>

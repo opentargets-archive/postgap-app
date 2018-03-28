@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { colors } from '../theme';
+
 const VariantFeature = ({
   scale,
   data,
@@ -10,8 +12,8 @@ const VariantFeature = ({
 }) => {
   const { x, y } = scale;
   const variantColor = highlight
-    ? 'red'
-    : dimNonHighlighted ? 'lightgrey' : 'blue';
+    ? colors.secondary
+    : dimNonHighlighted ? 'lightgrey' : colors.primary;
   return (
     <g>
       <line
