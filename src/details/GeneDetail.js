@@ -45,7 +45,11 @@ const GeneDetail = ({ gene, closeHandler }) => {
     return (
       <BaseDetail
         type={'Gene'}
-        title={<LinksGene geneId={gene.id}>{gene.name}</LinksGene>}
+        title={
+          <LinksGene geneName={gene.name} geneId={gene.id}>
+            {gene.name}
+          </LinksGene>
+        }
         closeHandler={closeHandler}
       >
         <Table

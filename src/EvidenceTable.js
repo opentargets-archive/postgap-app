@@ -21,7 +21,9 @@ const renderLeadVariantField = value => (
   <LinksLeadVariant leadVariantId={value}>{value}</LinksLeadVariant>
 );
 const renderGeneField = (value, row) => (
-  <LinksGene geneId={row.geneId}>{value}</LinksGene>
+  <LinksGene geneName={value} geneId={row.geneId}>
+    {value}
+  </LinksGene>
 );
 const renderDiseaseField = (value, row) => (
   <LinksDisease efoId={row.efoId}>{value}</LinksDisease>

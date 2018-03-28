@@ -52,14 +52,24 @@ export const LinkGwasCatalogDisease = ({ efoId, text = 'GWAS Catalog' }) => (
     {text}
   </a>
 );
+export const LinkGtexGene = ({ geneName, text = 'GTEx' }) => (
+  <a
+    href={`https://www.gtexportal.org/home/eqtls/byGene?geneId=${geneName}&tissueName=All`}
+    target={'_blank'}
+  >
+    {text}
+  </a>
+);
 
-export const LinksGene = ({ geneId, children }) => (
+export const LinksGene = ({ geneName, geneId, children }) => (
   <Popover
     content={
       <React.Fragment>
         <LinkOpenTargetsGene geneId={geneId} />
         <br />
         <LinkEnsemblGene geneId={geneId} />
+        <br />
+        <LinkGtexGene geneName={geneName} />
       </React.Fragment>
     }
   >

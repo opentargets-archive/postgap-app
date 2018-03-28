@@ -60,7 +60,10 @@ const GeneVariantDetail = ({ geneVariant, closeHandler }) => {
       type={'Gene - Variant'}
       title={
         <React.Fragment>
-          <LinksGene geneId={geneVariant.geneId}>
+          <LinksGene
+            geneName={geneVariant.geneName}
+            geneId={geneVariant.geneId}
+          >
             {geneVariant.geneName}
           </LinksGene>
           {' - '}
