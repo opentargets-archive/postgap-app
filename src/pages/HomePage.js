@@ -21,7 +21,7 @@ const SiteName = () => (
 );
 
 const SearchSuggestions = () => (
-  <p style={{ color: 'white', fontSize: 16, marginTop: 20 }}>
+  <div style={{ color: 'white', fontSize: 16, marginTop: 20 }}>
     <span>Try searching: </span>
     <Link to="/gene/ENSG00000105810">
       <Tag color={colors.primaryLight}>CDK6</Tag>
@@ -32,7 +32,7 @@ const SearchSuggestions = () => (
     <Link to="/variant/rs4272">
       <Tag color={colors.primaryLight}>rs4272</Tag>
     </Link>
-  </p>
+  </div>
 );
 
 const HomePage = () => {
