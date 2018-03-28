@@ -589,6 +589,29 @@ const getClickedEntities = createSelector(
   })
 );
 
+const getFilterString = createSelector(
+  [getFilterG2VScore, getFilterG2VMustHaves, getFilterLD, getFilterGwasPValue],
+  (g2vScore, g2vMustHaves, ld, gwasPValue) => {
+    const g2vScoreFilter =
+      g2vScore[0] !== 0 || g2vScore[1] !== 1
+        ? `G2V score within [${g2vScore[0]}, ${g2vScore[1]}]; `
+        : '';
+    const g2vMustHaveFilter =
+      g2vMustHaves.length > 0
+        ? `G2V must have evidence from all of [${g2vMustHaves}]; `
+        : '';
+    const ldFilter =
+      ld[0] !== 0.7 || ld[1] !== 1
+        ? `LD (r2) within [${ld[0]}, ${ld[1]}]; `
+        : '';
+    const gwasPValueFilter =
+      gwasPValue[0] !== 0 || gwasPValue[1] !== Number.MAX_SAFE_INTEGER
+        ? `-log(GWAS p-value) within [${gwasPValue[0]}, ${gwasPValue[1]}]; `
+        : '';
+    return `# Filters applied: ${g2vScoreFilter}${g2vMustHaveFilter}${ldFilter}${gwasPValueFilter}`;
+  }
+);
+
 export const selectors = {
   getLocation,
   getChromosome,
@@ -615,6 +638,7 @@ export const selectors = {
   // filter-related
   getMaxMinusLogGwasPValue,
   getFilterG2VScore,
+  getFilterString,
   // loading
   getIsLoading,
   // connectors (interactive)

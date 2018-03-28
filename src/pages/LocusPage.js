@@ -5,7 +5,12 @@ import queryString from 'query-string';
 
 import Browser from '../Browser';
 import BrowserTable from '../BrowserTable';
-import { setLocation, setClickedEntityId, ENTITY_TYPE } from '../redux/store';
+import {
+  selectors,
+  setLocation,
+  setClickedEntityId,
+  ENTITY_TYPE,
+} from '../redux/store';
 import VariantLeadVariantFilter from '../filters/VariantLeadVariantFilter';
 import DetailPanel from '../DetailPanel';
 import LeadVariantDiseaseFilter from '../filters/LeadVariantDiseaseFilter';
@@ -91,7 +96,7 @@ class LocusPage extends React.Component {
           <Row gutter={16}>
             <Col span={24}>
               <Card bodyStyle={{ padding: 10 }}>
-                <BrowserTable />
+                <BrowserTable filterString={this.props.filterString} />
               </Card>
             </Col>
           </Row>
@@ -101,6 +106,12 @@ class LocusPage extends React.Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    filterString: selectors.getFilterString(state),
+  };
+};
+
 const mapDispatchToProps = dispatch => {
   return {
     setLocation: location => dispatch(setLocation(location)),
@@ -109,6 +120,6 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-LocusPage = connect(null, mapDispatchToProps)(LocusPage);
+LocusPage = connect(mapStateToProps, mapDispatchToProps)(LocusPage);
 
 export default LocusPage;
