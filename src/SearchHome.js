@@ -89,11 +89,12 @@ class SearchHome extends React.Component {
                 fontStyle: 'italic',
                 fontWeight: 100,
                 fontSize: '0.7em',
+                color: colors.primary,
               }}
             >
               {d.type}{' '}
             </span>
-            <span style={{ color: colors.secondary }}>{d.name}</span>
+            <span style={{ color: colors.grey }}>{d.name}</span>
           </Option>
         ))}
       </Select>
