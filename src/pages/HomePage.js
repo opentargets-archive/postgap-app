@@ -23,8 +23,8 @@ const SiteName = () => (
 const SearchSuggestions = () => (
   <p style={{ color: 'white', fontSize: 16, marginTop: 20 }}>
     <span>Try searching: </span>
-    <Link to="/gene/ENSG00000135446">
-      <Tag color={colors.primaryLight}>CDK4</Tag>
+    <Link to="/gene/ENSG00000105810">
+      <Tag color={colors.primaryLight}>CDK6</Tag>
     </Link>
     <Link to="/disease/EFO_0000685">
       <Tag color={colors.primaryLight}>rheumatoid arthritis</Tag>
