@@ -35,11 +35,13 @@ const GeneDetail = ({ gene, closeHandler }) => {
         key: 'label',
         title: 'Label',
         dataIndex: 'label',
+        width: 100,
       },
       {
         key: 'value',
         title: 'Value',
         dataIndex: 'value',
+        width: 100,
       },
     ];
     return (

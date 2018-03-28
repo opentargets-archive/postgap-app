@@ -23,6 +23,7 @@ const VariantLeadVariantDetail = ({ variantLeadVariant, closeHandler }) => {
       key: 'label',
       title: 'Label',
       dataIndex: 'label',
+      width: 100,
       render: (text, row) => (
         <DictionaryHelpTerm term={row.key} label={row.label} />
       ),
@@ -31,6 +32,7 @@ const VariantLeadVariantDetail = ({ variantLeadVariant, closeHandler }) => {
       key: 'value',
       title: 'Value',
       dataIndex: 'value',
+      width: 100,
       render: renderNonZeroField,
     },
   ];
