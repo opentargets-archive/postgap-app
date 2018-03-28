@@ -26,7 +26,11 @@ const renderGeneField = (value, row) => (
   </LinksGene>
 );
 const renderDiseaseField = (value, row) => (
-  <LinksDisease efoId={row.efoId}>{value}</LinksDisease>
+  <LinksDisease efoId={row.efoId}>
+    <span style={{ overflowWrap: 'break-word', wordBreak: 'break-word' }}>
+      {value}
+    </span>
+  </LinksDisease>
 );
 const renderPubmedUrlField = (value, row) => (
   <a href={value} target={'_blank'}>
