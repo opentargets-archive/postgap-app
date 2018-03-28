@@ -15,8 +15,9 @@ const BaseDetail = ({ type, title, children, closeHandler }) => {
           <span>{title}</span>
         </Col>
         {closeHandler ? (
-          <Col span={8} align="end">
+          <Col span={8}>
             <Button
+              style={{ float: 'right' }}
               icon="close"
               type="primary"
               shape="circle"

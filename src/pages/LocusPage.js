@@ -8,7 +8,6 @@ import BrowserTable from '../BrowserTable';
 import { setLocation, setClickedEntityId, ENTITY_TYPE } from '../redux/store';
 import VariantLeadVariantFilter from '../filters/VariantLeadVariantFilter';
 import DetailPanel from '../DetailPanel';
-import SummaryCounts from '../SummaryCounts';
 import LeadVariantDiseaseFilter from '../filters/LeadVariantDiseaseFilter';
 import GeneVariantFilter from '../filters/GeneVariantFilter';
 
@@ -46,8 +45,9 @@ class LocusPage extends React.Component {
                 <Col span={16}>
                   <h4>Filters </h4>
                 </Col>
-                <Col span={8} align="end">
+                <Col span={8}>
                   <Button
+                    style={{ float: 'right' }}
                     icon="close"
                     type="primary"
                     shape="circle"
@@ -67,9 +67,6 @@ class LocusPage extends React.Component {
                 <Col span={6}>
                   <LeadVariantDiseaseFilter />
                 </Col>
-                {/* <Col span={6}>
-                  <SummaryCounts />
-                </Col> */}
               </Row>
             </Card>
           ) : (

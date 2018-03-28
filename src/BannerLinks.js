@@ -4,6 +4,7 @@ const BannerLink = ({ href, children, last = false }) => (
   <li
     style={{
       display: 'inline-block',
+      height: 30,
       paddingRight: last ? 0 : 15,
     }}
   >

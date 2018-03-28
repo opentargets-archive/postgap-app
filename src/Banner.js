@@ -5,7 +5,6 @@ import { Row, Col, Layout, Affix } from 'antd';
 import SearchHome from './SearchHome';
 import BannerLinks from './BannerLinks';
 import OpenTargetsLogo from './OpenTargetsLogo';
-import { colors } from './theme';
 
 const SiteName = () => (
   <Link to={{ pathname: '/' }}>
@@ -48,18 +47,13 @@ const Banner = () => {
               <SiteName />
             </Row>
           </Col>
-          <Col span={8} style={{ height: '100%' }}>
-            <Row
-              style={{ height: 30, marginTop: 5 }}
-              type="flex"
-              align="middle"
-              justify="end"
-            >
+          <Col span={8}>
+            <div style={{ textAlign: 'right', height: 30 }}>
               <BannerLinks />
-            </Row>
-            <Row style={{ height: 50 }} type="flex" align="end">
+            </div>
+            <div style={{ textAlign: 'right' }}>
               <SearchHome />
-            </Row>
+            </div>
           </Col>
         </Row>
       </Layout.Header>
