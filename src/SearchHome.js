@@ -80,7 +80,7 @@ class SearchHome extends React.Component {
         filterOption={false}
         onSearch={this.fetchSearchResults}
         onChange={this.handleChange}
-        style={{ width: '100%' }}
+        style={{ width: '100%', maxWidth: 400 }}
       >
         {data.map(d => (
           <Option key={d.id}>

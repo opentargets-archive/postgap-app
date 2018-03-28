@@ -31,11 +31,11 @@ const Banner = () => {
     <Affix>
       <Layout.Header
         style={{
-          background: colors.primary,
           height: 90,
           paddingLeft: 30,
           paddingRight: 30,
         }}
+        className="Banner-backdrop"
       >
         <Row
           type="flex"
@@ -57,7 +57,7 @@ const Banner = () => {
             >
               <BannerLinks />
             </Row>
-            <Row style={{ height: 50 }} type="flex" align="middle">
+            <Row style={{ height: 50 }} type="flex" align="end">
               <SearchHome />
             </Row>
           </Col>
