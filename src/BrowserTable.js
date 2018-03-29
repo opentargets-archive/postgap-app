@@ -5,7 +5,7 @@ import { selectors } from './redux/store';
 
 const mapStateToProps = state => {
   return {
-    rows: selectors.getRowsFiltered(state),
+    rows: selectors.getRowsForBrowserTable(state),
     loading: selectors.getIsLoading(state),
   };
 };

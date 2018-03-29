@@ -344,6 +344,29 @@ const getIsInteractive = createSelector(
   }
 );
 
+const getIsClicked = createSelector([getClicked], clicked => {
+  return (
+    clicked.geneId ||
+    clicked.variantId ||
+    clicked.leadVariantId ||
+    clicked.diseaseId ||
+    clicked.geneVariantId ||
+    clicked.variantLeadVariantId ||
+    clicked.leadVariantDiseaseId
+  );
+});
+
+const getRowsForBrowserTable = createSelector(
+  [getRowsFiltered, getRowsInteractiveUnfiltered, getIsClicked],
+  (rowsFiltered, rowsInteractive, isClicked) => {
+    if (isClicked) {
+      return rowsInteractive.filter(d => d.clicked);
+    } else {
+      return rowsFiltered;
+    }
+  }
+);
+
 const getGeneVariantsInteractive = createSelector(
   [getEnsemblGenesLookup, getRowsInteractive],
   (genesLookup, rows) => {
@@ -649,4 +672,5 @@ export const selectors = {
   // hover/clicked
   getHoverEntities,
   getClickedEntities,
+  getRowsForBrowserTable,
 };
