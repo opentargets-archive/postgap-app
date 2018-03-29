@@ -5,7 +5,10 @@ import { colors } from '../theme';
 
 const HelpTerm = ({ label, content }) => {
   return (
-    <Popover content={content} trigger="hover">
+    <Popover
+      content={<div style={{ maxWidth: 500 }}>{content}</div>}
+      trigger="hover"
+    >
       <span>
         {label}{' '}
         <sup>
