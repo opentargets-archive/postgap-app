@@ -33,7 +33,15 @@ class BaseTrack extends React.Component {
             />
           }
         >
-          <VictoryAxis style={{ stroke: null, fill: null }} />
+          <VictoryAxis
+            style={{
+              axis: { opacity: 0 },
+              axisLabel: { opacity: 0 },
+              grid: { opacity: 0 },
+              ticks: { opacity: 0 },
+              tickLabels: { opacity: 0 },
+            }}
+          />
           {this.props.children}
         </VictoryChart>
       </div>

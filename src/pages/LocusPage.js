@@ -94,7 +94,10 @@ class LocusPage extends React.Component {
 
           <Row gutter={16}>
             <Col span={18}>
-              <Browser />
+              <Browser
+                filename={filename}
+                filterString={this.props.filterString}
+              />
             </Col>
             <Col span={6}>
               <DetailPanel />

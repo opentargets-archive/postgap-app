@@ -1,9 +1,11 @@
 import React from 'react';
-import { Card, Row, Col } from 'antd';
+import { Card, Row, Col, Button } from 'antd';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import queryString from 'query-string';
 import { scalePoint } from 'd3-scale';
+import * as d3 from 'd3';
+import FileSaver from 'file-saver';
 
 import GeneTrack, {
   GENE_SLOT_HEIGHT,
@@ -24,6 +26,7 @@ class Browser extends React.Component {
   constructor(props) {
     super(props);
     this.zoomHandler = this.zoomHandler.bind(this);
+    this.onDownloadClick = this.onDownloadClick.bind(this);
   }
 
   zoomHandler(domain) {
@@ -43,6 +46,56 @@ class Browser extends React.Component {
     if (end > chromosomeLength) end = chromosomeLength;
     this.props.setLocation({ start, end, chromosome });
     setLocationInUrl({ start, end, chromosome }, this.props.history);
+  }
+
+  onDownloadClick() {
+    const { filename, filterString, location } = this.props;
+    const { start, end, chromosome } = location;
+
+    // grab all the tracks
+    const tracks = d3.selectAll('.VictoryContainer > svg');
+
+    // get their common width and heights
+    const width = tracks.attr('width');
+    const heights = tracks.nodes().map(d => d.clientHeight);
+
+    // get cumulative heights
+    const cumulativeHeights = [];
+    heights.reduce(function(a, b, i) {
+      return (cumulativeHeights[i] = a + b);
+    }, 0);
+    const titleOffset = 100;
+    const fullHeight =
+      cumulativeHeights[cumulativeHeights.length - 1] + titleOffset;
+
+    // construct a group element from each and offset
+    const tracksAsGs = tracks.nodes().map((d, i) => {
+      const d2 = d.cloneNode(true);
+      d2.setAttribute(
+        'transform',
+        `translate(0,${
+          i > 0 ? cumulativeHeights[i - 1] + titleOffset : titleOffset
+        })`
+      );
+      return d2.outerHTML.replace(/svg/g, 'g');
+    });
+
+    // add title track
+    const titleG = `<g><text x="${width /
+      2}" y="20" text-anchor="middle" style="fill: black; font-size: 20px;">POSTGAP locus ${chromosome}:${start}-${end}</text><text x="${width /
+      2}" text-anchor="middle" y="50" style="fill: black; font-size: 16px;">${filterString}</text></g>`;
+    tracksAsGs.push(titleG);
+
+    // download
+    var blob = new Blob(
+      [
+        `<svg width="${width}" height="${fullHeight}" xmlns="http://www.w3.org/2000/svg"><defs><clipPath id="locusClip"><rect x="0" y="0" width="${width}" height="${fullHeight}"/></clipPath></defs><g clip-path="url(#locusClip)">${tracksAsGs.join(
+          ''
+        )}</g></svg>`,
+      ],
+      { type: 'application/svg+xml' }
+    );
+    FileSaver.saveAs(blob, `${filename}.svg`);
   }
 
   render() {
@@ -68,6 +121,15 @@ class Browser extends React.Component {
               <span>{`Human ${chromosome}:${commaSeparate(
                 start
               )}-${commaSeparate(end)}`}</span>
+              <Button
+                size="small"
+                type="primary"
+                ghost
+                style={{ marginRight: '5px', float: 'right' }}
+                onClick={this.onDownloadClick}
+              >
+                SVG
+              </Button>
             </Card>
           </Col>
         </Row>
