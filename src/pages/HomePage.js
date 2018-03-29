@@ -14,8 +14,8 @@ const SiteName = () => (
       <span style={{ fontWeight: 100 }}>POSTGAP</span>
     </h1>
     <p style={{ color: 'white', fontSize: 16, marginBottom: 30 }}>
-      Mapping the relationship between targets and diseases using GWAS, LD
-      expansion and functional genomics
+      Mapping the relationship between targets and diseases using GWAS, linkage
+      disequilibrium expansion and functional genomics data
     </p>
   </React.Fragment>
 );
