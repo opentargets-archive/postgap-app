@@ -53,7 +53,11 @@ class VariantPage extends React.Component {
         />
       );
     } else {
-      return <div style={{ padding: '30px' }}>'Loading...'</div>;
+      return (
+        <div style={{ textAlign: 'center', paddingTop: 100, fontSize: 18 }}>
+          Fetching variant location and redirecting...
+        </div>
+      );
     }
   }
 }

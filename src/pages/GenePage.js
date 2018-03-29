@@ -53,7 +53,11 @@ class GenePage extends React.Component {
         />
       );
     } else {
-      return <div style={{ padding: '30px' }}>'Loading...'</div>;
+      return (
+        <div style={{ textAlign: 'center', paddingTop: 100, fontSize: 18 }}>
+          Fetching gene location and redirecting...
+        </div>
+      );
     }
   }
 }
