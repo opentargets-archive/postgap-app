@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Popover } from 'antd';
 
 export const LinkOpenTargetsGene = ({ geneId, text = 'Open Targets' }) => (
@@ -73,13 +74,13 @@ export const LinksGene = ({ geneName, geneId, children }) => (
       </React.Fragment>
     }
   >
-    <a>{children}</a>
+    <Link to={`/gene/${geneId}`}>{children}</Link>
   </Popover>
 );
 
 export const LinksVariant = ({ variantId, children }) => (
   <Popover content={<LinkEnsemblVariant variantId={variantId} />}>
-    <a>{children}</a>
+    <Link to={`/variant/${variantId}`}>{children}</Link>
   </Popover>
 );
 
@@ -93,7 +94,7 @@ export const LinksLeadVariant = ({ leadVariantId, children }) => (
       </React.Fragment>
     }
   >
-    <a>{children}</a>
+    <Link to={`/variant/${leadVariantId}`}>{children}</Link>
   </Popover>
 );
 
@@ -107,6 +108,6 @@ export const LinksDisease = ({ efoId, children }) => (
       </React.Fragment>
     }
   >
-    <a>{children}</a>
+    <Link to={`/disease/${efoId}`}>{children}</Link>
   </Popover>
 );
