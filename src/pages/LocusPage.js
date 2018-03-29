@@ -9,6 +9,7 @@ import {
   selectors,
   setLocation,
   setClickedEntityId,
+  setCleanLocusPageState,
   ENTITY_TYPE,
 } from '../redux/store';
 import VariantLeadVariantFilter from '../filters/VariantLeadVariantFilter';
@@ -24,9 +25,15 @@ class LocusPage extends React.Component {
   }
 
   componentDidMount() {
-    const { location, setLocation, setClickedEntityId } = this.props;
+    const {
+      location,
+      setLocation,
+      setClickedEntityId,
+      setCleanLocusPageState,
+    } = this.props;
     const query = queryString.parse(location.search);
     const { start, end, chromosome, geneId, variantId } = query;
+    setCleanLocusPageState();
     setLocation({ start, end, chromosome });
     if (geneId) {
       setClickedEntityId(ENTITY_TYPE.GENE, geneId);
@@ -123,6 +130,7 @@ const mapDispatchToProps = dispatch => {
     setLocation: location => dispatch(setLocation(location)),
     setClickedEntityId: (entityType, entityId) =>
       dispatch(setClickedEntityId({ entityType, entityId })),
+    setCleanLocusPageState: () => dispatch(setCleanLocusPageState()),
   };
 };
 

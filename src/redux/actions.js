@@ -72,3 +72,8 @@ export const SET_DISEASE_TABLE_ROWS = 'SET_DISEASE_TABLE_ROWS';
 export function setDiseaseTableRows(rows) {
   return { type: SET_DISEASE_TABLE_ROWS, rows };
 }
+
+export const SET_CLEAN_LOCUS_PAGE_STATE = 'SET_CLEAN_LOCUS_PAGE_STATE';
+export function setCleanLocusPageState() {
+  return { type: SET_CLEAN_LOCUS_PAGE_STATE };
+}

@@ -20,6 +20,7 @@ import {
   SET_DISEASE_PAGE,
   SET_LOADING_DISEASE_TABLE_ROWS,
   SET_DISEASE_TABLE_ROWS,
+  SET_CLEAN_LOCUS_PAGE_STATE,
 } from './actions';
 
 import { chromosomeLengths } from './chromosomeLengths';
@@ -34,6 +35,7 @@ export {
   setClickedEntityId,
   setSelectedEntityId,
   setDiseasePage,
+  setCleanLocusPageState,
 } from './actions';
 
 export { selectors } from './selectors';
@@ -202,6 +204,10 @@ function reducer(state = initialState, action) {
       return {
         ...state,
         diseasePage: { ...state.diseasePage, rows: action.rows },
+      };
+    case SET_CLEAN_LOCUS_PAGE_STATE:
+      return {
+        ...initialState,
       };
     default:
       return state;
