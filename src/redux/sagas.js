@@ -6,13 +6,10 @@ import * as d3 from 'd3';
 
 import {
   SET_LOCATION,
-  SET_DISEASE_PAGE,
   setLoadingRows,
   setApiData,
   setLoadingEnsemblGenes,
   setLoadingEnsemblVariants,
-  setLoadingDiseaseTableRows,
-  setDiseaseTableRows,
 } from './actions';
 import { rowsToUniqueGenes, rowsToUniqueLeadVariants } from './selectors';
 import {
@@ -82,34 +79,6 @@ function* updateLocation(action) {
   }
 }
 
-export function* updateDiseaseTableSaga() {
-  let task;
-  while (true) {
-    const action = yield take(SET_DISEASE_PAGE);
-    if (task) yield cancel(task);
-    task = yield fork(updateDiseaseTable, action);
-  }
-}
-
-function* updateDiseaseTable(action) {
-  yield call(delay, 500); // debounce
-  try {
-    // fetch rows for location from Open Targets API
-    yield put(setLoadingDiseaseTableRows(true));
-    const rowsRaw = yield call(otApi.fetchRowsByEfoId, action.efoId);
-    yield put(setLoadingDiseaseTableRows(false));
-    const rows = rowsRaw.map(transformEvidenceString);
-
-    // update store
-    // important: this happens as one transaction for all data
-    //            so UI change is consistent (and selectors work)
-    yield put(setDiseaseTableRows(rows));
-  } catch (e) {
-    // yield put({type: API_ERROR, message: e.message})
-    console.log(e);
-  }
-}
-
 const OT_API_BASE =
   'https://mk-loci-dot-open-targets-eu-dev.appspot.com/v3/platform/';
 const OT_API_FILTER = 'public/evidence/filter';
@@ -155,20 +124,6 @@ const OT_API_INTERVAL = ({ chromosome, start, end, next = false }) => {
   return `?${queryString.stringify(params)}`;
 };
 
-const OT_API_DISEASE = ({ efoId, next = false }) => {
-  // `?disease=${efoId}&size=10000&datasource=gwas_catalog&fields=unique_association_fields&fields=disease&fields=evidence&fields=variant&fields=target&fields=sourceID`;
-  let params = {
-    disease: efoId,
-    direct: false,
-    size: 10000,
-    datasource: 'gwas_catalog',
-    fields: OT_API_FIELDS,
-  };
-  if (next) {
-    params.next = next;
-  }
-  return `?${queryString.stringify(params)}`;
-};
 const OT_API_SEARCH = ({ query }) => `private/quicksearch?q=${query}&size=3`;
 
 const ENSEMBL_API_BASE = 'https://rest.ensembl.org/';
@@ -194,32 +149,10 @@ const iterateRowPagination = (urlParams, next = null, acc = []) => {
   });
 };
 
-const iterateRowPaginationByEfoId = (urlParams, next = null, acc = []) => {
-  let urlParamsWithNext = { ...urlParams };
-  if (next) {
-    urlParamsWithNext.next = next;
-  }
-  const endpoint = OT_API_DISEASE(urlParamsWithNext);
-  const url = `${OT_API_BASE}${OT_API_FILTER}${endpoint}`;
-  return axios.get(url).then(response => {
-    const newAcc = [...acc, ...response.data.data];
-    if (response.data.next && response.data.query.size === 10000) {
-      if (acc.length)
-        console.warn(`Over 10,000 records (total: ${response.data.total})`);
-      return iterateRowPaginationByEfoId(urlParams, response.data.next, newAcc);
-    } else {
-      return newAcc;
-    }
-  });
-};
-
 export const otApi = {
   fetchRows(location) {
     const { start, end, chromosome } = location;
     return iterateRowPagination({ start, end, chromosome });
-  },
-  fetchRowsByEfoId(efoId) {
-    return iterateRowPaginationByEfoId({ efoId });
   },
   fetchSearch(query) {
     const url = `${OT_API_BASE}${OT_API_SEARCH({ query })}`;
@@ -293,5 +226,5 @@ export const ensemblApi = {
 };
 
 export default function* root() {
-  yield all([fork(updateLocationSaga), fork(updateDiseaseTableSaga)]);
+  yield all([fork(updateLocationSaga)]);
 }

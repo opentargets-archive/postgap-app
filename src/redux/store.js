@@ -17,9 +17,6 @@ import {
   SET_API_DATA,
   SET_LOADING_ENSEMBL_GENES,
   SET_LOADING_ENSEMBL_VARIANTS,
-  SET_DISEASE_PAGE,
-  SET_LOADING_DISEASE_TABLE_ROWS,
-  SET_DISEASE_TABLE_ROWS,
   SET_CLEAN_LOCUS_PAGE_STATE,
 } from './actions';
 
@@ -82,12 +79,6 @@ const initialState = {
     rows: false,
     ensemblGenes: false,
     ensemblVariants: false,
-  },
-  // disease page
-  diseasePage: {
-    loading: false,
-    efoId: null,
-    rows: [],
   },
 };
 
@@ -188,22 +179,6 @@ function reducer(state = initialState, action) {
         rows,
         ensemblGenes,
         ensemblVariants,
-      };
-    // disease page
-    case SET_DISEASE_PAGE:
-      return {
-        ...state,
-        diseasePage: { ...state.diseasePage, efoId: action.efoId },
-      };
-    case SET_LOADING_DISEASE_TABLE_ROWS:
-      return {
-        ...state,
-        diseasePage: { ...state.diseasePage, loading: action.loading },
-      };
-    case SET_DISEASE_TABLE_ROWS:
-      return {
-        ...state,
-        diseasePage: { ...state.diseasePage, rows: action.rows },
       };
     case SET_CLEAN_LOCUS_PAGE_STATE:
       return {
