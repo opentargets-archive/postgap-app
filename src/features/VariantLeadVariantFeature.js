@@ -31,25 +31,33 @@ export const DebouncedVariantLeadVariantFeatureSet = ({
   );
 };
 
-const VariantLeadVariantFeature = ({
-  // scale,
-  data,
-  xTop,
-  xBottom,
-  height,
-  // setHoverId,
-  // setClickedId,
-  // highlight,
-  // dimNonHighlighted,
-}) => {
-  // const { x, y } = scale;
-  return (
-    <ConnectorPath topX={xTop} topY={0} bottomX={xBottom} bottomY={height} />
-  );
-};
+class VariantLeadVariantFeature extends React.Component {
+  shouldComponentUpdate(nextProps) {
+    return (
+      this.props.xTop !== nextProps.xTop ||
+      this.props.xBottom !== nextProps.xBottom
+    );
+  }
+  render() {
+    const {
+      // scale,
+      data,
+      xTop,
+      xBottom,
+      height,
+      // setHoverId,
+      // setClickedId,
+      // highlight,
+      // dimNonHighlighted,
+    } = this.props;
+    // const { x, y } = scale;
+    return (
+      <ConnectorPath topX={xTop} topY={0} bottomX={xBottom} bottomY={height} />
+    );
+  }
+}
 
-{
-  /* onMouseEnter={() => {
+/* onMouseEnter={() => {
         setHoverId(data.id);
       }}
       onMouseLeave={() => {
@@ -60,6 +68,5 @@ const VariantLeadVariantFeature = ({
       }}
       highlight={highlight}
       dimNonHighlighted={dimNonHighlighted} */
-}
 
 export default VariantLeadVariantFeature;
