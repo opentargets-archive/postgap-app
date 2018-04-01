@@ -1,26 +1,42 @@
 import React from 'react';
+import { compose } from 'recompose';
+import withDebouncedProps from './withDebouncedProps';
+import { Query } from 'react-apollo';
+import gql from 'graphql-tag';
 import { Card, Row, Col, Button } from 'antd';
-import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import queryString from 'query-string';
 import { scalePoint } from 'd3-scale';
 import * as d3 from 'd3';
 import FileSaver from 'file-saver';
+import _ from 'lodash';
 
-import GeneTrack, {
-  GENE_SLOT_HEIGHT,
-  GENE_TRACK_PADDING,
-} from './tracks/GeneTrack';
-import GeneVariantTrack from './tracks/GeneVariantTrack';
+// import GeneTrack, {
+//   GENE_SLOT_HEIGHT,
+//   GENE_TRACK_PADDING,
+// } from './tracks/GeneTrack';
+// import GeneVariantTrack from './tracks/GeneVariantTrack';
 import VariantTrack from './tracks/VariantTrack';
-import LeadVariantTrack from './tracks/LeadVariantTrack';
-import { setLocation, selectors } from './redux/store';
-import VariantLeadVariantTrack from './tracks/VariantLeadVariantTrack';
-import DiseaseTrack from './tracks/DiseaseTrack';
-import LeadVariantDiseaseTrack from './tracks/LeadVariantDiseaseTrack';
+// import LeadVariantTrack from './tracks/LeadVariantTrack';
+// import VariantLeadVariantTrack from './tracks/VariantLeadVariantTrack';
+// import DiseaseTrack from './tracks/DiseaseTrack';
+// import LeadVariantDiseaseTrack from './tracks/LeadVariantDiseaseTrack';
 import { commaSeparate } from './stringFormatters';
 import DictionaryHelpTerm from './terms/DictionaryHelpTerm';
 import Spinner from './Spinner';
+import { chromosomeLengths } from './redux/chromosomeLengths';
+
+const LOCUS_BROWSER_QUERY = gql`
+  query LocusBrowserQuery($chromosome: String, $start: Int, $end: Int) {
+    locus(chromosome: $chromosome, start: $start, end: $end) {
+      variants {
+        id
+        chromosome
+        position
+      }
+    }
+  }
+`;
 
 class Browser extends React.Component {
   constructor(props) {
@@ -30,8 +46,9 @@ class Browser extends React.Component {
   }
 
   zoomHandler(domain) {
-    const { chromosome } = this.props.location;
-    const { chromosomeLength } = this.props;
+    const query = queryString.parse(this.props.location.search);
+    const { chromosome } = query;
+    const chromosomeLength = chromosomeLengths[chromosome];
     const MAX_WINDOW_WIDTH = 2500000;
     let start = Math.round(domain.x[0]);
     let end = Math.round(domain.x[1]);
@@ -44,13 +61,15 @@ class Browser extends React.Component {
     }
     if (start < 0) start = 0;
     if (end > chromosomeLength) end = chromosomeLength;
-    this.props.setLocation({ start, end, chromosome });
     setLocationInUrl({ start, end, chromosome }, this.props.history);
   }
 
   onDownloadClick() {
-    const { filename, filterString, location } = this.props;
-    const { start, end, chromosome } = location;
+    const { filename, filterString } = this.props;
+    const query = queryString.parse(this.props.location.search);
+    const { chromosome } = query;
+    const start = parseInt(query.start);
+    const end = parseInt(query.end);
 
     // grab all the tracks
     const tracks = d3.selectAll('.VictoryContainer > svg');
@@ -99,41 +118,68 @@ class Browser extends React.Component {
   }
 
   render() {
-    const { location, slots, diseases } = this.props;
-    const { start, end, chromosome } = location;
-    const diseaseScale = scalePoint().domain(
-      diseases.map(d => d.efoName).sort()
+    const query = queryString.parse(this.props.location.search);
+    const { chromosome } = query;
+    const start = parseInt(query.start);
+    const end = parseInt(query.end);
+
+    const queryDebounced = queryString.parse(
+      this.props.locationDebounced.search
     );
-    const diseaseSlotsCount = Math.ceil(diseases.length / 5);
+    const { chromosome: chromosomeDebounced } = queryDebounced;
+    const startDebounced = parseInt(queryDebounced.start);
+    const endDebounced = parseInt(queryDebounced.end);
+    // const diseaseScale = scalePoint().domain(
+    //   diseases.map(d => d.efoName).sort()
+    // );
+    // const diseaseSlotsCount = Math.ceil(diseases.length / 5);
     const labelColSize = 4;
     const commonProps = {
-      start,
-      end,
-      chromosome,
+      location: {
+        start,
+        end,
+        chromosome,
+      },
+      chromosomeLength: chromosomeLengths[chromosome],
       zoomHandler: this.zoomHandler,
       windowResizeDebounceTime: 50,
     };
     return (
-      <div>
-        <Row>
-          <Col offset={labelColSize} span={24 - labelColSize}>
-            <Card bodyStyle={{ padding: 10 }}>
-              <span>{`Human ${chromosome}:${commaSeparate(
-                start
-              )}-${commaSeparate(end)}`}</span>
-              <Button
-                size="small"
-                type="primary"
-                ghost
-                style={{ marginRight: '5px', float: 'right' }}
-                onClick={this.onDownloadClick}
-              >
-                SVG
-              </Button>
-            </Card>
-          </Col>
-        </Row>
-        <Row>
+      <Query
+        query={LOCUS_BROWSER_QUERY}
+        variables={{
+          start: startDebounced,
+          end: endDebounced,
+          chromosome: chromosomeDebounced,
+        }}
+      >
+        {({ loading, error, data }) => {
+          {
+            /* if (loading) return <p>Loading...</p>;
+        if (error) return <p>Error :(</p>; */
+          }
+          if (!data.locus) return null;
+          return (
+            <div>
+              <Row>
+                <Col offset={labelColSize} span={24 - labelColSize}>
+                  <Card bodyStyle={{ padding: 10 }}>
+                    <span>{`Human ${chromosome}:${commaSeparate(
+                      start
+                    )}-${commaSeparate(end)}`}</span>
+                    <Button
+                      size="small"
+                      type="primary"
+                      ghost
+                      style={{ marginRight: '5px', float: 'right' }}
+                      onClick={this.onDownloadClick}
+                    >
+                      SVG
+                    </Button>
+                  </Card>
+                </Col>
+              </Row>
+              {/* <Row>
           <Col span={labelColSize}>
             <DictionaryHelpTerm
               term={'genes'}
@@ -173,34 +219,41 @@ class Browser extends React.Component {
               <Spinner />
             </Card>
           </Col>
-        </Row>
-        <Row>
-          <Col span={labelColSize}>
-            <DictionaryHelpTerm
-              term={'variants'}
-              label={
-                <span
-                  style={{
-                    fontWeight: 100,
-                    fontStyle: 'italic',
-                    textAlign: 'right',
-                  }}
-                >
-                  Variants
-                </span>
-              }
-            />
-          </Col>
-          <Col span={24 - labelColSize}>
-            <Card
-              bodyStyle={{ padding: 0, height: '20px', position: 'relative' }}
-            >
-              <VariantTrack {...commonProps} />
-              <Spinner />
-            </Card>
-          </Col>
-        </Row>
-        <Row>
+        </Row> */}
+              <Row>
+                <Col span={labelColSize}>
+                  <DictionaryHelpTerm
+                    term={'variants'}
+                    label={
+                      <span
+                        style={{
+                          fontWeight: 100,
+                          fontStyle: 'italic',
+                          textAlign: 'right',
+                        }}
+                      >
+                        Variants
+                      </span>
+                    }
+                  />
+                </Col>
+                <Col span={24 - labelColSize}>
+                  <Card
+                    bodyStyle={{
+                      padding: 0,
+                      height: '20px',
+                      position: 'relative',
+                    }}
+                  >
+                    <VariantTrack
+                      variants={data.locus.variants}
+                      {...commonProps}
+                    />
+                    <Spinner />
+                  </Card>
+                </Col>
+              </Row>
+              {/* <Row>
           <Col offset={labelColSize} span={24 - labelColSize}>
             <Card
               bodyStyle={{ padding: 0, height: '80px', position: 'relative' }}
@@ -280,8 +333,11 @@ class Browser extends React.Component {
               <Spinner />
             </Card>
           </Col>
-        </Row>
-      </div>
+        </Row> */}
+            </div>
+          );
+        }}
+      </Query>
     );
   }
 }
@@ -298,22 +354,19 @@ const setLocationInUrl = (location, history) => {
   });
 };
 
-const mapStateToProps = state => {
-  return {
-    chromosome: selectors.getChromosome(state),
-    location: selectors.getLocation(state),
-    slots: selectors.getSlotsInteractive(state),
-    diseases: selectors.getDiseasesInteractive(state),
-    chromosomeLength: selectors.getChromosomeLength(state),
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    setLocation: location => dispatch(setLocation(location)),
-  };
-};
-
-Browser = withRouter(connect(mapStateToProps, mapDispatchToProps)(Browser));
+// const withData = graphql(DATA_QUERY, {
+//   options: props => ({
+//     variables: { name: props.valueDebounced },
+//   }),
+// });
+Browser = withDebouncedProps({ debounce: 2000, propNames: ['location'] })(
+  Browser
+);
+Browser = withRouter(Browser);
+// Browser = compose(
+//   // withState,
+//   withDebouncedProps({ debounce: 2000, propNames: [ 'location' ] })
+//   // withData,
+// )(Browser);
 
 export default Browser;

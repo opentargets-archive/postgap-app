@@ -17,9 +17,9 @@ const VariantFeature = ({
   return (
     <g>
       <line
-        x1={x(data.pos)}
+        x1={x(data.position)}
         y1={y(0)}
-        x2={x(data.pos)}
+        x2={x(data.position)}
         y2={y(1)}
         style={{ stroke: variantColor, strokeWidth: 2 }}
         onMouseEnter={() => {
