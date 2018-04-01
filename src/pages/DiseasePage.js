@@ -18,7 +18,10 @@ class DiseasePage extends React.Component {
         <Row gutter={16}>
           <Col span={24}>
             <Card bodyStyle={{ padding: 10 }}>
-              <DiseaseTable filename={`POSTGAP-disease.${efoId}`} />
+              <DiseaseTable
+                efoId={efoId}
+                filename={`POSTGAP-disease.${efoId}`}
+              />
             </Card>
           </Col>
         </Row>

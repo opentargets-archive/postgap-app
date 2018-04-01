@@ -55,33 +55,33 @@ const COLUMNS = [
   {
     title: 'Entities',
     children: [
-      {
-        title: 'Gene',
-        dataIndex: 'geneName',
-        key: 'geneName',
-        fixed: 'left',
-        render: renderGeneField,
-        width: 100,
-        sorter: comparatorStringField('geneName'),
-      },
-      {
-        title: 'Variant',
-        dataIndex: 'ldSnpId',
-        key: 'ldSnpId',
-        fixed: 'left',
-        render: renderVariantField,
-        width: 100,
-        sorter: comparatorStringField('ldSnpId'),
-      },
-      {
-        title: 'Lead Variant',
-        dataIndex: 'gwasSnpId',
-        key: 'gwasSnpId',
-        fixed: 'left',
-        render: renderLeadVariantField,
-        width: 120,
-        sorter: comparatorStringField('gwasSnpId'),
-      },
+      // {
+      //   title: 'Gene',
+      //   dataIndex: 'geneSymbol',
+      //   key: 'geneSymbol',
+      //   fixed: 'left',
+      //   render: renderGeneField,
+      //   width: 100,
+      //   sorter: comparatorStringField('geneSym'),
+      // },
+      // {
+      //   title: 'Variant',
+      //   dataIndex: 'ldSnpId',
+      //   key: 'ldSnpId',
+      //   fixed: 'left',
+      //   render: renderVariantField,
+      //   width: 100,
+      //   sorter: comparatorStringField('ldSnpId'),
+      // },
+      // {
+      //   title: 'Lead Variant',
+      //   dataIndex: 'gwasSnpId',
+      //   key: 'gwasSnpId',
+      //   fixed: 'left',
+      //   render: renderLeadVariantField,
+      //   width: 120,
+      //   sorter: comparatorStringField('gwasSnpId'),
+      // },
       {
         title: 'Disease',
         dataIndex: 'efoName',
@@ -96,14 +96,14 @@ const COLUMNS = [
   {
     title: 'Gene - Variant',
     children: [
-      {
-        title: <DictionaryHelpTerm term={'otscore'} label={'G2V Score'} />,
-        dataIndex: 'otScore',
-        key: 'otScore',
-        render: renderNonZeroField,
-        width: 120,
-        sorter: compareNumericField('otScore'),
-      },
+      // {
+      //   title: <DictionaryHelpTerm term={'otscore'} label={'G2V Score'} />,
+      //   dataIndex: 'otScore',
+      //   key: 'otScore',
+      //   render: renderNonZeroField,
+      //   width: 120,
+      //   sorter: compareNumericField('otScore'),
+      // },
       {
         title: <DictionaryHelpTerm term={'vep'} label={'VEP'} />,
         dataIndex: 'vep',
@@ -179,39 +179,46 @@ const COLUMNS = [
         width: 100,
         sorter: compareNumericField('gwasPValue'),
       },
-      {
-        title: (
-          <DictionaryHelpTerm
-            term={'gwassamplesize'}
-            label={
-              <React.Fragment>
-                <span>Sample</span>
-                <br />
-                <span>Size</span>
-              </React.Fragment>
-            }
-          />
-        ),
-        dataIndex: 'gwasSampleSize',
-        key: 'gwasSampleSize',
-        render: renderIntField,
-        width: 100,
-        sorter: compareNumericField('gwasSampleSize'),
-      },
-      {
-        title: 'Literature',
-        dataIndex: 'gwasPubmedUrl',
-        key: 'gwasPubmedUrl',
-        render: renderPubmedUrlField,
-        width: 100,
-      },
+      // {
+      //   title: (
+      //     <DictionaryHelpTerm
+      //       term={'gwassamplesize'}
+      //       label={
+      //         <React.Fragment>
+      //           <span>Sample</span>
+      //           <br />
+      //           <span>Size</span>
+      //         </React.Fragment>
+      //       }
+      //     />
+      //   ),
+      //   dataIndex: 'gwasSampleSize',
+      //   key: 'gwasSampleSize',
+      //   render: renderIntField,
+      //   width: 100,
+      //   sorter: compareNumericField('gwasSampleSize'),
+      // },
+      // {
+      //   title: 'Literature',
+      //   dataIndex: 'gwasPubmedUrl',
+      //   key: 'gwasPubmedUrl',
+      //   render: renderPubmedUrlField,
+      //   width: 100,
+      // },
     ],
   },
 ];
 
 class EvidenceTable extends React.Component {
   render() {
-    const { rows, loading, filterString, filename } = this.props;
+    const {
+      rows,
+      loading,
+      filterString,
+      filename,
+      pagination,
+      onChange,
+    } = this.props;
     const loadingConfig = {
       size: 'large',
       indicator: (
@@ -264,11 +271,9 @@ class EvidenceTable extends React.Component {
           size="small"
           bordered
           scroll={{ x: 1700 }}
-          rowKey={d =>
-            `${d.geneId}-${d.ldSnpId}-${d.gwasSnpId}-${d.efoId}-${
-              d.gwasPubmedUrl
-            }`
-          }
+          rowKey={d => d.index}
+          pagination={pagination}
+          onChange={onChange}
           {...loadingProp}
         />
       </Col>
