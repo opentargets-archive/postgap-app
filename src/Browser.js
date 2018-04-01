@@ -177,7 +177,7 @@ class Browser extends React.Component {
             /* if (loading) return <p>Loading...</p>;
         if (error) return <p>Error :(</p>; */
           }
-          if (!data.locus) return null;
+          if (!data || !data.locus) return null;
           return (
             <div>
               <Row>
@@ -272,7 +272,7 @@ class Browser extends React.Component {
                   </Card>
                 </Col>
               </Row>
-              {/* <Row>
+              <Row>
                 <Col offset={labelColSize} span={24 - labelColSize}>
                   <Card
                     bodyStyle={{
@@ -288,7 +288,7 @@ class Browser extends React.Component {
                     <Spinner />
                   </Card>
                 </Col>
-              </Row> */}
+              </Row>
               <Row>
                 <Col span={labelColSize}>
                   <DictionaryHelpTerm

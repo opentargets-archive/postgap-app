@@ -23,8 +23,9 @@ const ConnectorPath = ({
         stroke: highlight
           ? colors.secondary
           : dimNonHighlighted ? 'lightgrey' : 'grey',
-        strokeWidth: 1,
         fill: 'none',
+        strokeWidth: 1,
+        vectorEffect: 'non-scaling-stroke',
       }}
       {...handlers}
     />

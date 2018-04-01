@@ -1,7 +1,7 @@
 import React from 'react';
 
 import BaseTrack from './BaseTrack';
-import VariantLeadVariantFeature from '../features/VariantLeadVariantFeature';
+import { DebouncedVariantLeadVariantFeatureSet } from '../features/VariantLeadVariantFeature';
 
 let VariantLeadVariantTrack = ({
   variantLeadVariants,
@@ -14,17 +14,13 @@ let VariantLeadVariantTrack = ({
   return (
     <div style={{ position: 'absolute', width: '100%', height: '100%' }}>
       <BaseTrack {...rest}>
-        {variantLeadVariants.map(d => {
-          return (
-            <VariantLeadVariantFeature
-              key={d.id}
-              data={d}
-              {...handlers}
-              highlight={d.interactive}
-              dimNonHighlighted={isInteractive}
-            />
-          );
-        })}
+        <DebouncedVariantLeadVariantFeatureSet
+          variantLeadVariants={variantLeadVariants}
+          start={rest.location.start}
+          end={rest.location.end}
+          startDebounced={rest.locationDebounced.startDebounced}
+          endDebounced={rest.locationDebounced.endDebounced}
+        />
       </BaseTrack>
     </div>
   );
