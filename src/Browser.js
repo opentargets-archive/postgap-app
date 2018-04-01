@@ -155,6 +155,10 @@ class Browser extends React.Component {
         end,
         chromosome,
       },
+      locationDebounced: {
+        startDebounced,
+        endDebounced,
+      },
       chromosomeLength: chromosomeLengths[chromosome],
       zoomHandler: this.zoomHandler,
       windowResizeDebounceTime: 50,
@@ -268,7 +272,7 @@ class Browser extends React.Component {
                   </Card>
                 </Col>
               </Row>
-              <Row>
+              {/* <Row>
                 <Col offset={labelColSize} span={24 - labelColSize}>
                   <Card
                     bodyStyle={{
@@ -284,7 +288,7 @@ class Browser extends React.Component {
                     <Spinner />
                   </Card>
                 </Col>
-              </Row>
+              </Row> */}
               <Row>
                 <Col span={labelColSize}>
                   <DictionaryHelpTerm

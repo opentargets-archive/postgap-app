@@ -2,26 +2,59 @@ import React from 'react';
 
 import { colors } from '../theme';
 
-const VariantFeature = ({
+export const DebouncedVariantFeatureSet = ({
+  start,
+  end,
+  startDebounced,
+  endDebounced,
+  children,
   scale,
-  data,
-  setHoverId,
-  setClickedId,
-  highlight,
-  dimNonHighlighted,
+  range,
+  variants,
 }) => {
-  const { x, y } = scale;
-  const variantColor = highlight
-    ? colors.secondary
-    : dimNonHighlighted ? 'lightgrey' : colors.primary;
+  const { x } = scale;
+  const width = x.range()[1] - x.range()[0];
+  const translateX = -(start - startDebounced);
+  const scaleFactorX = width / (end - start);
   return (
-    <line
-      x1={x(data.position)}
-      y1={y(0)}
-      x2={x(data.position)}
-      y2={y(1)}
-      style={{ stroke: variantColor, strokeWidth: 2 }}
-      onMouseEnter={() => {
+    <g
+      transform={`scale(${scaleFactorX},1) translate(${translateX},0)`}
+      strokeWidth={2.0 / scaleFactorX}
+    >
+      {variants.map(d => (
+        <VariantFeature
+          key={d.id}
+          data={d}
+          x={d.position - startDebounced}
+          height={20}
+        />
+      ))}
+    </g>
+  );
+};
+
+const VariantFeature = props => {
+  const {
+    data,
+    x,
+    height,
+    // setHoverId,
+    // setClickedId,
+    // highlight,
+    // dimNonHighlighted,
+  } = props;
+  const variantColor = colors.primary;
+  // highlight
+  //   ? colors.secondary
+  //   : dimNonHighlighted ? 'lightgrey' : colors.primary;
+
+  return (
+    <line x1={x} y1={0} x2={x} y2={height} style={{ stroke: variantColor }} />
+  );
+};
+
+{
+  /* onMouseEnter={() => {
         setHoverId(data.id);
       }}
       onMouseLeave={() => {
@@ -29,9 +62,7 @@ const VariantFeature = ({
       }}
       onClick={() => {
         setClickedId(data.id);
-      }}
-    />
-  );
-};
+      }} */
+}
 
 export default VariantFeature;
