@@ -17,7 +17,7 @@ import _ from 'lodash';
 // } from './tracks/GeneTrack';
 // import GeneVariantTrack from './tracks/GeneVariantTrack';
 import VariantTrack from './tracks/VariantTrack';
-// import LeadVariantTrack from './tracks/LeadVariantTrack';
+import LeadVariantTrack from './tracks/LeadVariantTrack';
 // import VariantLeadVariantTrack from './tracks/VariantLeadVariantTrack';
 // import DiseaseTrack from './tracks/DiseaseTrack';
 // import LeadVariantDiseaseTrack from './tracks/LeadVariantDiseaseTrack';
@@ -30,6 +30,11 @@ const LOCUS_BROWSER_QUERY = gql`
   query LocusBrowserQuery($chromosome: String, $start: Int, $end: Int) {
     locus(chromosome: $chromosome, start: $start, end: $end) {
       variants {
+        id
+        chromosome
+        position
+      }
+      leadVariants {
         id
         chromosome
         position
@@ -262,34 +267,41 @@ class Browser extends React.Component {
               <Spinner />
             </Card>
           </Col>
-        </Row>
-        <Row>
-          <Col span={labelColSize}>
-            <DictionaryHelpTerm
-              term={'leadvariants'}
-              label={
-                <span
-                  style={{
-                    fontWeight: 100,
-                    fontStyle: 'italic',
-                    textAlign: 'right',
-                  }}
-                >
-                  Lead Variants
-                </span>
-              }
-            />
-          </Col>
-          <Col span={24 - labelColSize}>
-            <Card
-              bodyStyle={{ padding: 0, height: '20px', position: 'relative' }}
-            >
-              <LeadVariantTrack {...commonProps} />
-              <Spinner />
-            </Card>
-          </Col>
-        </Row>
-        <Row>
+        </Row> */}
+              <Row>
+                <Col span={labelColSize}>
+                  <DictionaryHelpTerm
+                    term={'leadvariants'}
+                    label={
+                      <span
+                        style={{
+                          fontWeight: 100,
+                          fontStyle: 'italic',
+                          textAlign: 'right',
+                        }}
+                      >
+                        Lead Variants
+                      </span>
+                    }
+                  />
+                </Col>
+                <Col span={24 - labelColSize}>
+                  <Card
+                    bodyStyle={{
+                      padding: 0,
+                      height: '20px',
+                      position: 'relative',
+                    }}
+                  >
+                    <LeadVariantTrack
+                      leadVariants={data.locus.leadVariants}
+                      {...commonProps}
+                    />
+                    <Spinner />
+                  </Card>
+                </Col>
+              </Row>
+              {/* <Row>
           <Col offset={labelColSize} span={24 - labelColSize}>
             <Card
               bodyStyle={{ padding: 0, height: '80px', position: 'relative' }}
