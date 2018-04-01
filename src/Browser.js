@@ -18,7 +18,7 @@ import _ from 'lodash';
 // import GeneVariantTrack from './tracks/GeneVariantTrack';
 import VariantTrack from './tracks/VariantTrack';
 import LeadVariantTrack from './tracks/LeadVariantTrack';
-// import VariantLeadVariantTrack from './tracks/VariantLeadVariantTrack';
+import VariantLeadVariantTrack from './tracks/VariantLeadVariantTrack';
 // import DiseaseTrack from './tracks/DiseaseTrack';
 // import LeadVariantDiseaseTrack from './tracks/LeadVariantDiseaseTrack';
 import { commaSeparate } from './stringFormatters';
@@ -38,6 +38,16 @@ const LOCUS_BROWSER_QUERY = gql`
         id
         chromosome
         position
+      }
+      variantLeadVariants {
+        id
+        variantId
+        variantChromosome
+        variantPosition
+        leadVariantId
+        leadVariantChromosome
+        leadVariantPosition
+        r2
       }
     }
   }
@@ -258,16 +268,23 @@ class Browser extends React.Component {
                   </Card>
                 </Col>
               </Row>
-              {/* <Row>
-          <Col offset={labelColSize} span={24 - labelColSize}>
-            <Card
-              bodyStyle={{ padding: 0, height: '80px', position: 'relative' }}
-            >
-              <VariantLeadVariantTrack {...commonProps} />
-              <Spinner />
-            </Card>
-          </Col>
-        </Row> */}
+              <Row>
+                <Col offset={labelColSize} span={24 - labelColSize}>
+                  <Card
+                    bodyStyle={{
+                      padding: 0,
+                      height: '80px',
+                      position: 'relative',
+                    }}
+                  >
+                    <VariantLeadVariantTrack
+                      variantLeadVariants={data.locus.variantLeadVariants}
+                      {...commonProps}
+                    />
+                    <Spinner />
+                  </Card>
+                </Col>
+              </Row>
               <Row>
                 <Col span={labelColSize}>
                   <DictionaryHelpTerm

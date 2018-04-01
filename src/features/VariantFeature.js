@@ -15,24 +15,22 @@ const VariantFeature = ({
     ? colors.secondary
     : dimNonHighlighted ? 'lightgrey' : colors.primary;
   return (
-    <g>
-      <line
-        x1={x(data.position)}
-        y1={y(0)}
-        x2={x(data.position)}
-        y2={y(1)}
-        style={{ stroke: variantColor, strokeWidth: 2 }}
-        onMouseEnter={() => {
-          setHoverId(data.id);
-        }}
-        onMouseLeave={() => {
-          setHoverId(null);
-        }}
-        onClick={() => {
-          setClickedId(data.id);
-        }}
-      />
-    </g>
+    <line
+      x1={x(data.position)}
+      y1={y(0)}
+      x2={x(data.position)}
+      y2={y(1)}
+      style={{ stroke: variantColor, strokeWidth: 2 }}
+      onMouseEnter={() => {
+        setHoverId(data.id);
+      }}
+      onMouseLeave={() => {
+        setHoverId(null);
+      }}
+      onClick={() => {
+        setClickedId(data.id);
+      }}
+    />
   );
 };
 
