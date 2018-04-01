@@ -31,6 +31,7 @@
     "react-styleguidist": "^6.2.4",
     "react-svg-morph": "^0.2.1",
     "react-svg-text": "^0.1.2",
+    "recompose": "^0.26.0",
     "redux": "^3.7.2",
     "redux-saga": "^0.16.0",
     "reselect": "^3.0.1",
