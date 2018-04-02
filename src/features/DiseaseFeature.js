@@ -17,18 +17,18 @@ class DiseaseFeature extends React.Component {
   }
   componentDidMount() {
     const textHeight =
-      12 * (this[this.props.data.efoId].state.wordsByLines.length + 1);
+      12 * (this[this.props.data.id].state.wordsByLines.length + 1);
     const textWidth = d3.max(
-      this[this.props.data.efoId].state.wordsByLines,
+      this[this.props.data.id].state.wordsByLines,
       d => d.width
     );
     this.setState({ textWidth, textHeight });
   }
   componentDidUpdate() {
     const textHeight =
-      12 * (this[this.props.data.efoId].state.wordsByLines.length + 1);
+      12 * (this[this.props.data.id].state.wordsByLines.length + 1);
     const textWidth = d3.max(
-      this[this.props.data.efoId].state.wordsByLines,
+      this[this.props.data.id].state.wordsByLines,
       d => d.width
     );
     if (textWidth !== this.state.textWidth)
@@ -75,7 +75,7 @@ class DiseaseFeature extends React.Component {
     const label = (
       <Text
         ref={t => {
-          this[this.props.data.efoId] = t;
+          this[this.props.data.id] = t;
         }}
         x={0}
         y={20}
@@ -84,17 +84,9 @@ class DiseaseFeature extends React.Component {
         verticalAnchor="start"
         style={{ fill: textColor, fontSize: '12px', pointerEvents: 'none' }}
       >
-        {data.efoName}
+        {data.name}
       </Text>
     );
-    if (data.efoName === 'gout')
-      console.log(
-        data.efoName,
-        textWidth,
-        textHeight,
-        diseaseScale(data.efoName),
-        slotOffset
-      );
     const background = textWidth ? (
       <rect
         style={{ fill: backgroundColor, stroke: diseaseColor }}
@@ -104,19 +96,10 @@ class DiseaseFeature extends React.Component {
         height={textHeight}
         rx={2}
         ry={2}
-        onMouseEnter={() => {
-          setHoverId(data.efoId);
-        }}
-        onMouseLeave={() => {
-          setHoverId(null);
-        }}
-        onClick={() => {
-          setClickedId(data.efoId);
-        }}
       />
     ) : null;
     return (
-      <g transform={`translate(${diseaseScale(data.efoName)},${slotOffset})`}>
+      <g transform={`translate(${diseaseScale(data.name)},${slotOffset})`}>
         {background}
         {point}
         {label}
@@ -124,5 +107,15 @@ class DiseaseFeature extends React.Component {
     );
   }
 }
+
+// onMouseEnter={() => {
+//   setHoverId(data.efoId);
+// }}
+// onMouseLeave={() => {
+//   setHoverId(null);
+// }}
+// onClick={() => {
+//   setClickedId(data.efoId);
+// }}
 
 export default DiseaseFeature;

@@ -15,11 +15,15 @@ import _ from 'lodash';
 //   GENE_SLOT_HEIGHT,
 //   GENE_TRACK_PADDING,
 // } from './tracks/GeneTrack';
-// import GeneVariantTrack from './tracks/GeneVariantTrack';
+import GeneVariantTrack from './tracks/GeneVariantTrack';
 import VariantTrack from './tracks/VariantTrack';
 import LeadVariantTrack from './tracks/LeadVariantTrack';
 import VariantLeadVariantTrack from './tracks/VariantLeadVariantTrack';
-// import DiseaseTrack from './tracks/DiseaseTrack';
+import DiseaseTrack, {
+  DISEASE_SLOT_HEIGHT,
+  DISEASE_TRACK_MIN_HEIGHT,
+  DISEASE_SLOT_COLS,
+} from './tracks/DiseaseTrack';
 // import LeadVariantDiseaseTrack from './tracks/LeadVariantDiseaseTrack';
 import { commaSeparate } from './stringFormatters';
 import DictionaryHelpTerm from './terms/DictionaryHelpTerm';
@@ -39,6 +43,27 @@ const LOCUS_BROWSER_QUERY = gql`
         chromosome
         position
       }
+      diseases {
+        id
+        name
+      }
+      geneVariants {
+        id
+        geneId
+        geneSymbol
+        geneChromosome
+        geneTss
+        variantId
+        variantChromosome
+        variantPosition
+        # TODO: otG2VScore: Float
+        vep
+        gtex
+        pchic
+        fantom5
+        dhs
+        nearest
+      }
       variantLeadVariants {
         id
         variantId
@@ -49,6 +74,12 @@ const LOCUS_BROWSER_QUERY = gql`
         leadVariantPosition
         r2
       }
+      # leadVariantDiseases {
+      #   id: String
+      #   leadVariant: LeadVariant
+      #   disease: Disease
+      #   gwasPValue: Float
+      # }
     }
   }
 `;
@@ -144,10 +175,7 @@ class Browser extends React.Component {
     const { chromosome: chromosomeDebounced } = queryDebounced;
     const startDebounced = parseInt(queryDebounced.start);
     const endDebounced = parseInt(queryDebounced.end);
-    // const diseaseScale = scalePoint().domain(
-    //   diseases.map(d => d.efoName).sort()
-    // );
-    // const diseaseSlotsCount = Math.ceil(diseases.length / 5);
+
     const labelColSize = 4;
     const commonProps = {
       location: {
@@ -178,6 +206,14 @@ class Browser extends React.Component {
         if (error) return <p>Error :(</p>; */
           }
           if (!data || !data.locus) return null;
+
+          const diseases = data.locus.diseases;
+          const diseaseScale = scalePoint().domain(
+            diseases.map(d => d.name).sort()
+          );
+          const diseaseSlotsCount = Math.ceil(
+            diseases.length / DISEASE_SLOT_COLS
+          );
           return (
             <div>
               <Row>
@@ -228,17 +264,24 @@ class Browser extends React.Component {
               <Spinner showIcon={true} />
             </Card>
           </Col>
-        </Row>
-        <Row>
-          <Col offset={labelColSize} span={24 - labelColSize}>
-            <Card
-              bodyStyle={{ padding: 0, height: '80px', position: 'relative' }}
-            >
-              <GeneVariantTrack {...commonProps} />
-              <Spinner />
-            </Card>
-          </Col>
         </Row> */}
+              <Row>
+                <Col offset={labelColSize} span={24 - labelColSize}>
+                  <Card
+                    bodyStyle={{
+                      padding: 0,
+                      height: '80px',
+                      position: 'relative',
+                    }}
+                  >
+                    <GeneVariantTrack
+                      geneVariants={data.locus.geneVariants}
+                      {...commonProps}
+                    />
+                    <Spinner />
+                  </Card>
+                </Col>
+              </Row>
               <Row>
                 <Col span={labelColSize}>
                   <DictionaryHelpTerm
@@ -334,39 +377,45 @@ class Browser extends React.Component {
               <Spinner />
             </Card>
           </Col>
-        </Row>
-        <Row>
-          <Col span={labelColSize}>
-            <DictionaryHelpTerm
-              term={'diseases'}
-              label={
-                <span
-                  style={{
-                    fontWeight: 100,
-                    fontStyle: 'italic',
-                    textAlign: 'right',
-                  }}
-                >
-                  Diseases
-                </span>
-              }
-            />
-          </Col>
-          <Col span={24 - labelColSize}>
-            <Card
-              bodyStyle={{
-                padding: 0,
-                height: `${
-                  diseaseSlotsCount > 0 ? 60 * diseaseSlotsCount : 15
-                }px`,
-                position: 'relative',
-              }}
-            >
-              <DiseaseTrack diseaseScale={diseaseScale} {...commonProps} />
-              <Spinner />
-            </Card>
-          </Col>
-        </Row> */}
+        </Row>*/}
+              <Row>
+                <Col span={labelColSize}>
+                  <DictionaryHelpTerm
+                    term={'diseases'}
+                    label={
+                      <span
+                        style={{
+                          fontWeight: 100,
+                          fontStyle: 'italic',
+                          textAlign: 'right',
+                        }}
+                      >
+                        Diseases
+                      </span>
+                    }
+                  />
+                </Col>
+                <Col span={24 - labelColSize}>
+                  <Card
+                    bodyStyle={{
+                      padding: 0,
+                      height: `${
+                        diseaseSlotsCount > 0
+                          ? DISEASE_SLOT_HEIGHT * diseaseSlotsCount
+                          : DISEASE_TRACK_MIN_HEIGHT
+                      }px`,
+                      position: 'relative',
+                    }}
+                  >
+                    <DiseaseTrack
+                      diseases={data.locus.diseases}
+                      diseaseScale={diseaseScale}
+                      {...commonProps}
+                    />
+                    <Spinner />
+                  </Card>
+                </Col>
+              </Row>
             </div>
           );
         }}

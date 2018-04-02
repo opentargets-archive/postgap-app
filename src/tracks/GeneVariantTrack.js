@@ -1,62 +1,33 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
 import BaseTrack from './BaseTrack';
-import GeneVariantFeature from '../features/GeneVariantFeature';
-import {
-  setHoverEntityId,
-  setClickedEntityId,
-  ENTITY_TYPE,
-  selectors,
-} from '../redux/store';
+import { DebouncedGeneVariantFeatureSet } from '../features/GeneVariantFeature';
 
 let GeneVariantTrack = ({
-  geneVariantsInteractive,
+  geneVariants,
   isInteractive,
   setHoverId,
   setClickedId,
   ...rest
 }) => {
-  const handlers = { setHoverId, setClickedId };
+  // const handlers = { setHoverId, setClickedId };
   return (
     <div style={{ position: 'absolute', width: '100%', height: '100%' }}>
       <BaseTrack {...rest}>
-        {geneVariantsInteractive.map(d => (
-          <GeneVariantFeature
-            key={d.id}
-            data={d}
-            {...handlers}
-            highlight={d.interactive}
-            dimNonHighlighted={isInteractive}
-          />
-        ))}
+        <DebouncedGeneVariantFeatureSet
+          geneVariants={geneVariants}
+          start={rest.location.start}
+          end={rest.location.end}
+          startDebounced={rest.locationDebounced.startDebounced}
+          endDebounced={rest.locationDebounced.endDebounced}
+        />
       </BaseTrack>
     </div>
   );
 };
 
-const mapStateToProps = state => {
-  return {
-    geneVariantsInteractive: selectors.getGeneVariantsInteractive(state),
-    isInteractive: selectors.getIsInteractive(state),
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    setHoverId: entityId =>
-      dispatch(
-        setHoverEntityId({ entityType: ENTITY_TYPE.GENE_VARIANT, entityId })
-      ),
-    setClickedId: entityId =>
-      dispatch(
-        setClickedEntityId({ entityType: ENTITY_TYPE.GENE_VARIANT, entityId })
-      ),
-  };
-};
-
-GeneVariantTrack = connect(mapStateToProps, mapDispatchToProps)(
-  GeneVariantTrack
-);
+// {...handlers}
+//             highlight={d.interactive}
+//             dimNonHighlighted={isInteractive}
 
 export default GeneVariantTrack;
