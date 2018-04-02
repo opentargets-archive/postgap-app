@@ -11,10 +11,10 @@ import * as d3 from 'd3';
 import FileSaver from 'file-saver';
 import _ from 'lodash';
 
-// import GeneTrack, {
-//   GENE_SLOT_HEIGHT,
-//   GENE_TRACK_PADDING,
-// } from './tracks/GeneTrack';
+import GeneTrack, {
+  GENE_SLOT_HEIGHT,
+  GENE_TRACK_PADDING,
+} from './tracks/GeneTrack';
 import GeneVariantTrack from './tracks/GeneVariantTrack';
 import VariantTrack from './tracks/VariantTrack';
 import LeadVariantTrack from './tracks/LeadVariantTrack';
@@ -33,6 +33,29 @@ import { chromosomeLengths } from './redux/chromosomeLengths';
 const LOCUS_BROWSER_QUERY = gql`
   query LocusBrowserQuery($chromosome: String, $start: Int, $end: Int) {
     locus(chromosome: $chromosome, start: $start, end: $end) {
+      genes {
+        id
+        symbol
+        chromosome
+        tss
+        start
+        end
+        forwardStrand
+        canonicalTranscript {
+          id
+          start
+          end
+          forwardStrand
+          exons {
+            id
+            start
+            end
+          }
+          tss
+          translationStart
+          translationEnd
+        }
+      }
       variants {
         id
         chromosome
@@ -83,6 +106,25 @@ const LOCUS_BROWSER_QUERY = gql`
     }
   }
 `;
+
+const calculateGeneSlots = (genes, location) => {
+  const sortedGenes = _.sortBy(genes, ['start']);
+  const slots = [];
+  const minXOffset = (location.end - location.start) * 0.15; // 15% of browser window
+  sortedGenes.forEach(gene => {
+    const suitableSlots = slots.filter(
+      slot => gene.start > slot.end + minXOffset
+    );
+    if (suitableSlots.length > 0) {
+      suitableSlots[0].genes.push(gene);
+      suitableSlots[0].end = gene.end;
+    } else {
+      const newSlot = { genes: [gene], end: gene.end };
+      slots.push(newSlot);
+    }
+  });
+  return slots;
+};
 
 class Browser extends React.Component {
   constructor(props) {
@@ -206,7 +248,8 @@ class Browser extends React.Component {
         if (error) return <p>Error :(</p>; */
           }
           if (!data || !data.locus) return null;
-
+          const genes = data.locus.genes;
+          const slots = calculateGeneSlots(genes, commonProps.location);
           const diseases = data.locus.diseases;
           const diseaseScale = scalePoint().domain(
             diseases.map(d => d.name).sort()
@@ -234,37 +277,37 @@ class Browser extends React.Component {
                   </Card>
                 </Col>
               </Row>
-              {/* <Row>
-          <Col span={labelColSize}>
-            <DictionaryHelpTerm
-              term={'genes'}
-              label={
-                <span
-                  style={{
-                    fontWeight: 100,
-                    fontStyle: 'italic',
-                    textAlign: 'right',
-                  }}
-                >
-                  Genes
-                </span>
-              }
-            />
-          </Col>
-          <Col span={24 - labelColSize}>
-            <Card
-              bodyStyle={{
-                padding: 0,
-                height: `${GENE_SLOT_HEIGHT * slots.length +
-                  GENE_TRACK_PADDING * 2}px`,
-                position: 'relative',
-              }}
-            >
-              <GeneTrack {...commonProps} />
-              <Spinner showIcon={true} />
-            </Card>
-          </Col>
-        </Row> */}
+              <Row>
+                <Col span={labelColSize}>
+                  <DictionaryHelpTerm
+                    term={'genes'}
+                    label={
+                      <span
+                        style={{
+                          fontWeight: 100,
+                          fontStyle: 'italic',
+                          textAlign: 'right',
+                        }}
+                      >
+                        Genes
+                      </span>
+                    }
+                  />
+                </Col>
+                <Col span={24 - labelColSize}>
+                  <Card
+                    bodyStyle={{
+                      padding: 0,
+                      height: `${GENE_SLOT_HEIGHT * slots.length +
+                        GENE_TRACK_PADDING * 2}px`,
+                      position: 'relative',
+                    }}
+                  >
+                    <GeneTrack slots={slots} {...commonProps} />
+                    <Spinner showIcon={true} />
+                  </Card>
+                </Col>
+              </Row>
               <Row>
                 <Col offset={labelColSize} span={24 - labelColSize}>
                   <Card

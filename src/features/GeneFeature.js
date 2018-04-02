@@ -83,7 +83,7 @@ class GeneFeature extends React.Component {
         y={yText}
         style={{ fill: textColor, fontSize: '12px', pointerEvents: 'none' }}
       >
-        {data.strand === 1 ? `${data.name}>` : `<${data.name}`}
+        {data.forwardStrand ? `${data.symbol}>` : `<${data.symbol}`}
       </text>
     );
     const background = textWidth ? (
@@ -95,15 +95,6 @@ class GeneFeature extends React.Component {
         height={backgroundHeight + 2 * margin}
         rx={2}
         ry={2}
-        onMouseEnter={() => {
-          setHoverGeneId(data.id);
-        }}
-        onMouseLeave={() => {
-          setHoverGeneId(null);
-        }}
-        onClick={() => {
-          setClickedGeneId(data.id);
-        }}
       />
     ) : null;
     return (
@@ -116,5 +107,15 @@ class GeneFeature extends React.Component {
     );
   }
 }
+
+// onMouseEnter={() => {
+//   setHoverGeneId(data.id);
+// }}
+// onMouseLeave={() => {
+//   setHoverGeneId(null);
+// }}
+// onClick={() => {
+//   setClickedGeneId(data.id);
+// }}
 
 export default GeneFeature;
