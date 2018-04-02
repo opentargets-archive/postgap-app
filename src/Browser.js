@@ -24,7 +24,7 @@ import DiseaseTrack, {
   DISEASE_TRACK_MIN_HEIGHT,
   DISEASE_SLOT_COLS,
 } from './tracks/DiseaseTrack';
-// import LeadVariantDiseaseTrack from './tracks/LeadVariantDiseaseTrack';
+import LeadVariantDiseaseTrack from './tracks/LeadVariantDiseaseTrack';
 import { commaSeparate } from './stringFormatters';
 import DictionaryHelpTerm from './terms/DictionaryHelpTerm';
 import Spinner from './Spinner';
@@ -76,6 +76,11 @@ const LOCUS_BROWSER_QUERY = gql`
         geneSymbol
         geneChromosome
         geneTss
+        canonicalTranscript {
+          start
+          end
+          forwardStrand
+        }
         variantId
         variantChromosome
         variantPosition
@@ -97,12 +102,20 @@ const LOCUS_BROWSER_QUERY = gql`
         leadVariantPosition
         r2
       }
-      # leadVariantDiseases {
-      #   id: String
-      #   leadVariant: LeadVariant
-      #   disease: Disease
-      #   gwasPValue: Float
-      # }
+      leadVariantDiseases {
+        id
+        leadVariantId
+        leadVariantPosition
+        leadVariantChromosome
+        efoId
+        efoName
+        gwasBeta
+        gwasPMId
+        gwasSize
+        gwasStudy
+        gwasPValue
+        gwasOddsRatio
+      }
     }
   }
 `;
@@ -408,19 +421,24 @@ class Browser extends React.Component {
                   </Card>
                 </Col>
               </Row>
-              {/* <Row>
-          <Col offset={labelColSize} span={24 - labelColSize}>
-            <Card
-              bodyStyle={{ padding: 0, height: '80px', position: 'relative' }}
-            >
-              <LeadVariantDiseaseTrack
-                diseaseScale={diseaseScale}
-                {...commonProps}
-              />
-              <Spinner />
-            </Card>
-          </Col>
-        </Row>*/}
+              <Row>
+                <Col offset={labelColSize} span={24 - labelColSize}>
+                  <Card
+                    bodyStyle={{
+                      padding: 0,
+                      height: '80px',
+                      position: 'relative',
+                    }}
+                  >
+                    <LeadVariantDiseaseTrack
+                      leadVariantDiseases={data.locus.leadVariantDiseases}
+                      diseaseScale={diseaseScale}
+                      {...commonProps}
+                    />
+                    <Spinner />
+                  </Card>
+                </Col>
+              </Row>
               <Row>
                 <Col span={labelColSize}>
                   <DictionaryHelpTerm
@@ -484,9 +502,13 @@ const setLocationInUrl = (location, history) => {
 //     variables: { name: props.valueDebounced },
 //   }),
 // });
-Browser = withDebouncedProps({ debounce: 2000, propNames: ['location'] })(
-  Browser
-);
+
+const BROWSER_API_DEBOUNCE = 500;
+
+Browser = withDebouncedProps({
+  debounce: BROWSER_API_DEBOUNCE,
+  propNames: ['location'],
+})(Browser);
 Browser = withRouter(Browser);
 // Browser = compose(
 //   // withState,

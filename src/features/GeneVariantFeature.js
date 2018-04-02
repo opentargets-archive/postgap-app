@@ -46,7 +46,11 @@ class GeneVariantFeatureSet extends React.Component {
           <GeneVariantFeature
             key={d.id}
             data={d}
-            xTop={d.geneTss - startDebounced}
+            xTop={
+              (d.canonicalTranscript.forwardStrand
+                ? d.canonicalTranscript.start
+                : d.canonicalTranscript.end) - startDebounced
+            }
             xBottom={d.variantPosition - startDebounced}
             height={80}
           />

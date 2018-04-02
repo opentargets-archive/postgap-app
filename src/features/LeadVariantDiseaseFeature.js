@@ -21,26 +21,25 @@ const LeadVariantDiseaseFeature = ({
   diseaseScale.range(calculateDiseaseScaleRange(width)); // TODO: refactor to set range in better location
 
   return (
-    <g>
-      <ConnectorPath
-        topX={x(data.leadSnpPos)}
-        topY={y(1)}
-        bottomX={diseaseScale(data.efoName)}
-        bottomY={y(0)}
-        onMouseEnter={() => {
-          setHoverId(data.id);
-        }}
-        onMouseLeave={() => {
-          setHoverId(null);
-        }}
-        onClick={() => {
-          setClickedId(data.id);
-        }}
-        highlight={highlight}
-        dimNonHighlighted={dimNonHighlighted}
-      />
-    </g>
+    <ConnectorPath
+      topX={x(data.leadVariantPosition)}
+      topY={y(1)}
+      bottomX={diseaseScale(data.efoName)}
+      bottomY={y(0)}
+      highlight={highlight}
+      dimNonHighlighted={dimNonHighlighted}
+    />
   );
 };
+
+// onMouseEnter={() => {
+//   setHoverId(data.id);
+// }}
+// onMouseLeave={() => {
+//   setHoverId(null);
+// }}
+// onClick={() => {
+//   setClickedId(data.id);
+// }}
 
 export default LeadVariantDiseaseFeature;
