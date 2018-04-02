@@ -1,4 +1,6 @@
 import React from 'react';
+import _ from 'lodash';
+
 import ConnectorPath from './ConnectorPath';
 
 export const DebouncedGeneVariantFeatureSet = ({
@@ -18,18 +20,41 @@ export const DebouncedGeneVariantFeatureSet = ({
   return (
     // strokeWidth={1.0 / scaleFactorX}
     <g transform={`scale(${scaleFactorX},1) translate(${translateX},0)`}>
-      {geneVariants.map(d => (
-        <GeneVariantFeature
-          key={d.id}
-          data={d}
-          xTop={d.geneTss - startDebounced}
-          xBottom={d.variantPosition - startDebounced}
-          height={80}
-        />
-      ))}
+      <GeneVariantFeatureSet
+        geneVariants={geneVariants}
+        startDebounced={startDebounced}
+      />
     </g>
   );
 };
+
+class GeneVariantFeatureSet extends React.Component {
+  shouldComponentUpdate(nextProps) {
+    const { geneVariants, startDebounced } = this.props;
+    return (
+      !_.isEqual(
+        geneVariants.map(d => d.id),
+        nextProps.geneVariants.map(d => d.id)
+      ) || startDebounced !== nextProps.startDebounced
+    );
+  }
+  render() {
+    const { geneVariants, startDebounced } = this.props;
+    return (
+      <React.Fragment>
+        {geneVariants.map(d => (
+          <GeneVariantFeature
+            key={d.id}
+            data={d}
+            xTop={d.geneTss - startDebounced}
+            xBottom={d.variantPosition - startDebounced}
+            height={80}
+          />
+        ))}
+      </React.Fragment>
+    );
+  }
+}
 
 class GeneVariantFeature extends React.Component {
   shouldComponentUpdate(nextProps) {

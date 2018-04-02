@@ -1,4 +1,6 @@
 import React from 'react';
+import _ from 'lodash';
+
 import ConnectorPath from './ConnectorPath';
 
 export const DebouncedVariantLeadVariantFeatureSet = ({
@@ -18,18 +20,41 @@ export const DebouncedVariantLeadVariantFeatureSet = ({
   return (
     // strokeWidth={1.0 / scaleFactorX}
     <g transform={`scale(${scaleFactorX},1) translate(${translateX},0)`}>
-      {variantLeadVariants.map(d => (
-        <VariantLeadVariantFeature
-          key={d.id}
-          data={d}
-          xTop={d.variantPosition - startDebounced}
-          xBottom={d.leadVariantPosition - startDebounced}
-          height={80}
-        />
-      ))}
+      <VariantLeadVariantFeatureSet
+        variantLeadVariants={variantLeadVariants}
+        startDebounced={startDebounced}
+      />
     </g>
   );
 };
+
+class VariantLeadVariantFeatureSet extends React.Component {
+  shouldComponentUpdate(nextProps) {
+    const { variantLeadVariants, startDebounced } = this.props;
+    return (
+      !_.isEqual(
+        variantLeadVariants.map(d => d.id),
+        nextProps.variantLeadVariants.map(d => d.id)
+      ) || startDebounced !== nextProps.startDebounced
+    );
+  }
+  render() {
+    const { variantLeadVariants, startDebounced } = this.props;
+    return (
+      <React.Fragment>
+        {variantLeadVariants.map(d => (
+          <VariantLeadVariantFeature
+            key={d.id}
+            data={d}
+            xTop={d.variantPosition - startDebounced}
+            xBottom={d.leadVariantPosition - startDebounced}
+            height={80}
+          />
+        ))}
+      </React.Fragment>
+    );
+  }
+}
 
 class VariantLeadVariantFeature extends React.Component {
   shouldComponentUpdate(nextProps) {

@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 
 import { colors } from '../theme';
 
@@ -21,37 +22,53 @@ export const DebouncedVariantFeatureSet = ({
       transform={`scale(${scaleFactorX},1) translate(${translateX},0)`}
       strokeWidth={2.0 / scaleFactorX}
     >
-      {variants.map(d => (
-        <VariantFeature
-          key={d.id}
-          data={d}
-          x={d.position - startDebounced}
-          height={20}
-        />
-      ))}
+      <VariantFeatureSet variants={variants} startDebounced={startDebounced} />
     </g>
   );
 };
 
-const VariantFeature = props => {
-  const {
-    data,
-    x,
-    height,
-    // setHoverId,
-    // setClickedId,
-    // highlight,
-    // dimNonHighlighted,
-  } = props;
-  const variantColor = colors.primary;
-  // highlight
-  //   ? colors.secondary
-  //   : dimNonHighlighted ? 'lightgrey' : colors.primary;
+class VariantFeatureSet extends React.Component {
+  shouldComponentUpdate(nextProps) {
+    const { variants, startDebounced } = this.props;
+    return (
+      !_.isEqual(variants.map(d => d.id), nextProps.variants.map(d => d.id)) ||
+      startDebounced !== nextProps.startDebounced
+    );
+  }
+  render() {
+    const { variants, startDebounced } = this.props;
+    return (
+      <React.Fragment>
+        {variants.map(d => (
+          <VariantFeature
+            key={d.id}
+            data={d}
+            x={d.position - startDebounced}
+            height={20}
+          />
+        ))}
+      </React.Fragment>
+    );
+  }
+}
 
-  return (
-    <line x1={x} y1={0} x2={x} y2={height} style={{ stroke: variantColor }} />
-  );
-};
+class VariantFeature extends React.Component {
+  shouldComponentUpdate(nextProps) {
+    const { x, height } = this.props;
+    return x !== nextProps.x || height !== nextProps.height;
+  }
+  render() {
+    const { x, height, data } = this.props;
+    const variantColor = colors.primary;
+    // highlight
+    //   ? colors.secondary
+    //   : dimNonHighlighted ? 'lightgrey' : colors.primary;
+
+    return (
+      <line x1={x} y1={0} x2={x} y2={height} style={{ stroke: variantColor }} />
+    );
+  }
+}
 
 {
   /* onMouseEnter={() => {
