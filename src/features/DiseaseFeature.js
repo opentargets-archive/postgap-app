@@ -1,14 +1,56 @@
 import React from 'react';
 import Text from 'react-svg-text';
 import * as d3 from 'd3';
+import _ from 'lodash';
 
 import { colors } from '../theme';
+import DiseaseVerticalFeature from './DiseaseVerticalFeature';
 
 const PADDING = 0.1; // 10%
 const calculateDiseaseScaleRange = width => [
   width * PADDING,
   width * (1 - PADDING),
 ];
+
+export class DebouncedDiseaseFeatureSet extends React.Component {
+  shouldComponentUpdate(nextProps) {
+    const {
+      diseases,
+      diseaseScale,
+      verticalScale,
+      slotHeight,
+      width,
+    } = this.props;
+    return (
+      !_.isEqual(diseases.map(d => d.id), nextProps.diseases.map(d => d.id)) ||
+      width !== nextProps.width
+    );
+  }
+  render() {
+    const {
+      diseases,
+      diseaseScale,
+      verticalScale,
+      slotHeight,
+      width,
+    } = this.props;
+    diseaseScale.range(calculateDiseaseScaleRange(width));
+    return (
+      <React.Fragment>
+        {diseases.map(d => {
+          const x = diseaseScale(d.name);
+          const y = verticalScale(d.name) + 10;
+          return <DiseaseVerticalFeature key={d.id} data={d} x={x} y={y} />;
+        })}
+        {diseases.map(d => {
+          const x = diseaseScale(d.name);
+          const y = verticalScale(d.name);
+          return <DiseaseFeature key={d.id} data={d} x={x} y={y} />;
+        })}
+      </React.Fragment>
+    );
+  }
+}
 
 class DiseaseFeature extends React.Component {
   constructor(props) {
@@ -35,20 +77,10 @@ class DiseaseFeature extends React.Component {
       this.setState({ textWidth, textHeight });
   }
   render() {
-    const {
-      data,
-      diseaseScale,
-      slotOffset,
-      width,
-      setHoverId,
-      setClickedId,
-      highlight,
-      dimNonHighlighted,
-    } = this.props;
+    const { x, y, data, highlight, dimNonHighlighted } = this.props;
     const { textWidth, textHeight } = this.state;
     const margin = 3;
 
-    diseaseScale.range(calculateDiseaseScaleRange(width)); // TODO: refactor to set range in better location
     const diseaseColor = highlight
       ? colors.secondary
       : dimNonHighlighted ? 'lightgrey' : colors.primary;
@@ -99,7 +131,7 @@ class DiseaseFeature extends React.Component {
       />
     ) : null;
     return (
-      <g transform={`translate(${diseaseScale(data.name)},${slotOffset})`}>
+      <g transform={`translate(${x},${y})`}>
         {background}
         {point}
         {label}
