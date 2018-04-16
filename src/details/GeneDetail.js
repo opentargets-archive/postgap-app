@@ -24,11 +24,11 @@ const GeneDetail = ({ gene, closeHandler }) => {
       //   label: 'Strand',
       //   value: `${d.strand === 1 ? 'forward' : 'reverse'}`,
       // },
-      {
-        key: 'biotype',
-        label: 'Biotype',
-        value: underscoresToSpaces(d.biotype),
-      },
+      // {
+      //   key: 'biotype',
+      //   label: 'Biotype',
+      //   value: underscoresToSpaces(d.biotype),
+      // },
     ];
     const tableColumns = [
       {
@@ -48,8 +48,8 @@ const GeneDetail = ({ gene, closeHandler }) => {
       <BaseDetail
         type={'Gene'}
         title={
-          <LinksGene geneName={gene.name} geneId={gene.id}>
-            {gene.name}
+          <LinksGene geneName={gene.symbol} geneId={gene.id}>
+            {gene.symbol}
           </LinksGene>
         }
         closeHandler={closeHandler}

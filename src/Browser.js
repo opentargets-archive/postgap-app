@@ -1,6 +1,4 @@
 import React from 'react';
-import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
 import { Card, Row, Col, Button } from 'antd';
 import { scalePoint } from 'd3-scale';
 import * as d3 from 'd3';
@@ -25,96 +23,6 @@ import { commaSeparate } from './stringFormatters';
 import DictionaryHelpTerm from './terms/DictionaryHelpTerm';
 import Spinner from './Spinner';
 import { chromosomeLengths } from './redux/chromosomeLengths';
-
-const LOCUS_BROWSER_QUERY = gql`
-  query LocusBrowserQuery($chromosome: String, $start: Int, $end: Int) {
-    locus(chromosome: $chromosome, start: $start, end: $end) {
-      genes {
-        id
-        symbol
-        chromosome
-        tss
-        start
-        end
-        forwardStrand
-        canonicalTranscript {
-          id
-          start
-          end
-          forwardStrand
-          exons {
-            id
-            start
-            end
-          }
-          tss
-          translationStart
-          translationEnd
-        }
-      }
-      variants {
-        id
-        chromosome
-        position
-      }
-      leadVariants {
-        id
-        chromosome
-        position
-      }
-      diseases {
-        id
-        name
-      }
-      geneVariants {
-        id
-        geneId
-        geneSymbol
-        geneChromosome
-        geneTss
-        canonicalTranscript {
-          start
-          end
-          forwardStrand
-        }
-        variantId
-        variantChromosome
-        variantPosition
-        # TODO: otG2VScore: Float
-        vep
-        gtex
-        pchic
-        fantom5
-        dhs
-        nearest
-      }
-      variantLeadVariants {
-        id
-        variantId
-        variantChromosome
-        variantPosition
-        leadVariantId
-        leadVariantChromosome
-        leadVariantPosition
-        r2
-      }
-      leadVariantDiseases {
-        id
-        leadVariantId
-        leadVariantPosition
-        leadVariantChromosome
-        efoId
-        efoName
-        gwasBeta
-        gwasPMId
-        gwasSize
-        gwasStudy
-        gwasPValue
-        gwasOddsRatio
-      }
-    }
-  }
-`;
 
 const calculateGeneSlots = (genes, location) => {
   const sortedGenes = _.sortBy(genes, ['start']);
@@ -218,6 +126,7 @@ class Browser extends React.Component {
       startDebounced,
       endDebounced,
       setClicked,
+      data,
     } = this.props;
 
     const labelColSize = 4;
@@ -236,241 +145,218 @@ class Browser extends React.Component {
       windowResizeDebounceTime: 50,
       setClicked,
     };
+
+    if (!data || !data.locus) return null;
+    const genes = data.locus.genes;
+    const slots = calculateGeneSlots(genes, commonProps.location);
+    const diseases = data.locus.diseases;
+    const diseaseScale = scalePoint().domain(diseases.map(d => d.name).sort());
+    const diseaseSlotsCount = Math.ceil(diseases.length / DISEASE_SLOT_COLS);
     return (
-      <Query
-        query={LOCUS_BROWSER_QUERY}
-        variables={{
-          start: startDebounced,
-          end: endDebounced,
-          chromosome: chromosomeDebounced,
-        }}
-      >
-        {({ loading, error, data }) => {
-          {
-            /* if (loading) return <p>Loading...</p>;
-        if (error) return <p>Error :(</p>; */
-          }
-          if (!data || !data.locus) return null;
-          const genes = data.locus.genes;
-          const slots = calculateGeneSlots(genes, commonProps.location);
-          const diseases = data.locus.diseases;
-          const diseaseScale = scalePoint().domain(
-            diseases.map(d => d.name).sort()
-          );
-          const diseaseSlotsCount = Math.ceil(
-            diseases.length / DISEASE_SLOT_COLS
-          );
-          return (
-            <div>
-              <Row>
-                <Col offset={labelColSize} span={24 - labelColSize}>
-                  <Card bodyStyle={{ padding: 10 }}>
-                    <span>{`Human ${chromosome}:${commaSeparate(
-                      start
-                    )}-${commaSeparate(end)}`}</span>
-                    <Button
-                      size="small"
-                      type="primary"
-                      ghost
-                      style={{ marginRight: '5px', float: 'right' }}
-                      onClick={this.onDownloadClick}
-                    >
-                      SVG
-                    </Button>
-                  </Card>
-                </Col>
-              </Row>
-              <Row>
-                <Col span={labelColSize}>
-                  <DictionaryHelpTerm
-                    term={'genes'}
-                    label={
-                      <span
-                        style={{
-                          fontWeight: 100,
-                          fontStyle: 'italic',
-                          textAlign: 'right',
-                        }}
-                      >
-                        Genes
-                      </span>
-                    }
-                  />
-                </Col>
-                <Col span={24 - labelColSize}>
-                  <Card
-                    bodyStyle={{
-                      padding: 0,
-                      height: `${GENE_SLOT_HEIGHT * slots.length +
-                        GENE_TRACK_PADDING * 2}px`,
-                      position: 'relative',
-                    }}
-                  >
-                    <GeneTrack slots={slots} {...commonProps} />
-                    <Spinner showIcon={true} />
-                  </Card>
-                </Col>
-              </Row>
-              <Row>
-                <Col offset={labelColSize} span={24 - labelColSize}>
-                  <Card
-                    bodyStyle={{
-                      padding: 0,
-                      height: '80px',
-                      position: 'relative',
-                    }}
-                  >
-                    <GeneVariantTrack
-                      geneVariants={data.locus.geneVariants}
-                      {...commonProps}
-                    />
-                    <Spinner />
-                  </Card>
-                </Col>
-              </Row>
-              <Row>
-                <Col span={labelColSize}>
-                  <DictionaryHelpTerm
-                    term={'variants'}
-                    label={
-                      <span
-                        style={{
-                          fontWeight: 100,
-                          fontStyle: 'italic',
-                          textAlign: 'right',
-                        }}
-                      >
-                        Variants
-                      </span>
-                    }
-                  />
-                </Col>
-                <Col span={24 - labelColSize}>
-                  <Card
-                    bodyStyle={{
-                      padding: 0,
-                      height: '20px',
-                      position: 'relative',
-                    }}
-                  >
-                    <VariantTrack
-                      variants={data.locus.variants}
-                      {...commonProps}
-                    />
-                    <Spinner />
-                  </Card>
-                </Col>
-              </Row>
-              <Row>
-                <Col offset={labelColSize} span={24 - labelColSize}>
-                  <Card
-                    bodyStyle={{
-                      padding: 0,
-                      height: '80px',
-                      position: 'relative',
-                    }}
-                  >
-                    <VariantLeadVariantTrack
-                      variantLeadVariants={data.locus.variantLeadVariants}
-                      {...commonProps}
-                    />
-                    <Spinner />
-                  </Card>
-                </Col>
-              </Row>
-              <Row>
-                <Col span={labelColSize}>
-                  <DictionaryHelpTerm
-                    term={'leadvariants'}
-                    label={
-                      <span
-                        style={{
-                          fontWeight: 100,
-                          fontStyle: 'italic',
-                          textAlign: 'right',
-                        }}
-                      >
-                        Lead Variants
-                      </span>
-                    }
-                  />
-                </Col>
-                <Col span={24 - labelColSize}>
-                  <Card
-                    bodyStyle={{
-                      padding: 0,
-                      height: '20px',
-                      position: 'relative',
-                    }}
-                  >
-                    <LeadVariantTrack
-                      leadVariants={data.locus.leadVariants}
-                      {...commonProps}
-                    />
-                    <Spinner />
-                  </Card>
-                </Col>
-              </Row>
-              <Row>
-                <Col offset={labelColSize} span={24 - labelColSize}>
-                  <Card
-                    bodyStyle={{
-                      padding: 0,
-                      height: '80px',
-                      position: 'relative',
-                    }}
-                  >
-                    <LeadVariantDiseaseTrack
-                      leadVariantDiseases={data.locus.leadVariantDiseases}
-                      diseaseScale={diseaseScale}
-                      {...commonProps}
-                    />
-                    <Spinner />
-                  </Card>
-                </Col>
-              </Row>
-              <Row>
-                <Col span={labelColSize}>
-                  <DictionaryHelpTerm
-                    term={'diseases'}
-                    label={
-                      <span
-                        style={{
-                          fontWeight: 100,
-                          fontStyle: 'italic',
-                          textAlign: 'right',
-                        }}
-                      >
-                        Diseases
-                      </span>
-                    }
-                  />
-                </Col>
-                <Col span={24 - labelColSize}>
-                  <Card
-                    bodyStyle={{
-                      padding: 0,
-                      height: `${
-                        diseaseSlotsCount > 0
-                          ? DISEASE_SLOT_HEIGHT * diseaseSlotsCount
-                          : DISEASE_TRACK_MIN_HEIGHT
-                      }px`,
-                      position: 'relative',
-                    }}
-                  >
-                    <DiseaseTrack
-                      diseases={data.locus.diseases}
-                      diseaseScale={diseaseScale}
-                      {...commonProps}
-                    />
-                    <Spinner />
-                  </Card>
-                </Col>
-              </Row>
-            </div>
-          );
-        }}
-      </Query>
+      <div>
+        <Row>
+          <Col offset={labelColSize} span={24 - labelColSize}>
+            <Card bodyStyle={{ padding: 10 }}>
+              <span>{`Human ${chromosome}:${commaSeparate(
+                start
+              )}-${commaSeparate(end)}`}</span>
+              <Button
+                size="small"
+                type="primary"
+                ghost
+                style={{ marginRight: '5px', float: 'right' }}
+                onClick={this.onDownloadClick}
+              >
+                SVG
+              </Button>
+            </Card>
+          </Col>
+        </Row>
+        <Row>
+          <Col span={labelColSize}>
+            <DictionaryHelpTerm
+              term={'genes'}
+              label={
+                <span
+                  style={{
+                    fontWeight: 100,
+                    fontStyle: 'italic',
+                    textAlign: 'right',
+                  }}
+                >
+                  Genes
+                </span>
+              }
+            />
+          </Col>
+          <Col span={24 - labelColSize}>
+            <Card
+              bodyStyle={{
+                padding: 0,
+                height: `${GENE_SLOT_HEIGHT * slots.length +
+                  GENE_TRACK_PADDING * 2}px`,
+                position: 'relative',
+              }}
+            >
+              <GeneTrack slots={slots} {...commonProps} />
+              <Spinner showIcon={true} />
+            </Card>
+          </Col>
+        </Row>
+        <Row>
+          <Col offset={labelColSize} span={24 - labelColSize}>
+            <Card
+              bodyStyle={{
+                padding: 0,
+                height: '80px',
+                position: 'relative',
+              }}
+            >
+              <GeneVariantTrack
+                geneVariants={data.locus.geneVariants}
+                {...commonProps}
+              />
+              <Spinner />
+            </Card>
+          </Col>
+        </Row>
+        <Row>
+          <Col span={labelColSize}>
+            <DictionaryHelpTerm
+              term={'variants'}
+              label={
+                <span
+                  style={{
+                    fontWeight: 100,
+                    fontStyle: 'italic',
+                    textAlign: 'right',
+                  }}
+                >
+                  Variants
+                </span>
+              }
+            />
+          </Col>
+          <Col span={24 - labelColSize}>
+            <Card
+              bodyStyle={{
+                padding: 0,
+                height: '20px',
+                position: 'relative',
+              }}
+            >
+              <VariantTrack variants={data.locus.variants} {...commonProps} />
+              <Spinner />
+            </Card>
+          </Col>
+        </Row>
+        <Row>
+          <Col offset={labelColSize} span={24 - labelColSize}>
+            <Card
+              bodyStyle={{
+                padding: 0,
+                height: '80px',
+                position: 'relative',
+              }}
+            >
+              <VariantLeadVariantTrack
+                variantLeadVariants={data.locus.variantLeadVariants}
+                {...commonProps}
+              />
+              <Spinner />
+            </Card>
+          </Col>
+        </Row>
+        <Row>
+          <Col span={labelColSize}>
+            <DictionaryHelpTerm
+              term={'leadvariants'}
+              label={
+                <span
+                  style={{
+                    fontWeight: 100,
+                    fontStyle: 'italic',
+                    textAlign: 'right',
+                  }}
+                >
+                  Lead Variants
+                </span>
+              }
+            />
+          </Col>
+          <Col span={24 - labelColSize}>
+            <Card
+              bodyStyle={{
+                padding: 0,
+                height: '20px',
+                position: 'relative',
+              }}
+            >
+              <LeadVariantTrack
+                leadVariants={data.locus.leadVariants}
+                {...commonProps}
+              />
+              <Spinner />
+            </Card>
+          </Col>
+        </Row>
+        <Row>
+          <Col offset={labelColSize} span={24 - labelColSize}>
+            <Card
+              bodyStyle={{
+                padding: 0,
+                height: '80px',
+                position: 'relative',
+              }}
+            >
+              <LeadVariantDiseaseTrack
+                leadVariantDiseases={data.locus.leadVariantDiseases}
+                diseaseScale={diseaseScale}
+                {...commonProps}
+              />
+              <Spinner />
+            </Card>
+          </Col>
+        </Row>
+        <Row>
+          <Col span={labelColSize}>
+            <DictionaryHelpTerm
+              term={'diseases'}
+              label={
+                <span
+                  style={{
+                    fontWeight: 100,
+                    fontStyle: 'italic',
+                    textAlign: 'right',
+                  }}
+                >
+                  Diseases
+                </span>
+              }
+            />
+          </Col>
+          <Col span={24 - labelColSize}>
+            <Card
+              bodyStyle={{
+                padding: 0,
+                height: `${
+                  diseaseSlotsCount > 0
+                    ? DISEASE_SLOT_HEIGHT * diseaseSlotsCount
+                    : DISEASE_TRACK_MIN_HEIGHT
+                }px`,
+                position: 'relative',
+              }}
+            >
+              <DiseaseTrack
+                diseases={data.locus.diseases}
+                diseaseScale={diseaseScale}
+                {...commonProps}
+              />
+              <Spinner />
+            </Card>
+          </Col>
+        </Row>
+      </div>
     );
   }
 }

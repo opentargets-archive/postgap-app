@@ -7,9 +7,7 @@ const DiseaseDetail = ({ disease, closeHandler }) => {
   return (
     <BaseDetail
       type={'Disease'}
-      title={
-        <LinksDisease efoId={disease.efoId}>{disease.efoName}</LinksDisease>
-      }
+      title={<LinksDisease efoId={disease.id}>{disease.name}</LinksDisease>}
       closeHandler={closeHandler}
     >
       {/* What should go here? */}

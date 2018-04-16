@@ -1,6 +1,8 @@
 import React from 'react';
 import { Card, Row, Col, Button } from 'antd';
 import queryString from 'query-string';
+import { Query } from 'react-apollo';
+import gql from 'graphql-tag';
 
 import withDebouncedProps from '../withDebouncedProps';
 import Browser from '../Browser';
@@ -9,6 +11,96 @@ import VariantLeadVariantFilter from '../filters/VariantLeadVariantFilter';
 import DetailPanel from '../DetailPanel';
 // import LeadVariantDiseaseFilter from '../filters/LeadVariantDiseaseFilter';
 import GeneVariantFilter from '../filters/GeneVariantFilter';
+
+const LOCUS_QUERY = gql`
+  query LocusBrowserQuery($chromosome: String, $start: Int, $end: Int) {
+    locus(chromosome: $chromosome, start: $start, end: $end) {
+      genes {
+        id
+        symbol
+        chromosome
+        tss
+        start
+        end
+        forwardStrand
+        canonicalTranscript {
+          id
+          start
+          end
+          forwardStrand
+          exons {
+            id
+            start
+            end
+          }
+          tss
+          translationStart
+          translationEnd
+        }
+      }
+      variants {
+        id
+        chromosome
+        position
+      }
+      leadVariants {
+        id
+        chromosome
+        position
+      }
+      diseases {
+        id
+        name
+      }
+      geneVariants {
+        id
+        geneId
+        geneSymbol
+        geneChromosome
+        geneTss
+        canonicalTranscript {
+          start
+          end
+          forwardStrand
+        }
+        variantId
+        variantChromosome
+        variantPosition
+        # TODO: otG2VScore: Float
+        vep
+        gtex
+        pchic
+        fantom5
+        dhs
+        nearest
+      }
+      variantLeadVariants {
+        id
+        variantId
+        variantChromosome
+        variantPosition
+        leadVariantId
+        leadVariantChromosome
+        leadVariantPosition
+        r2
+      }
+      leadVariantDiseases {
+        id
+        leadVariantId
+        leadVariantPosition
+        leadVariantChromosome
+        efoId
+        efoName
+        gwasBeta
+        gwasPMId
+        gwasSize
+        gwasStudy
+        gwasPValue
+        gwasOddsRatio
+      }
+    }
+  }
+`;
 
 class LocusPage extends React.Component {
   constructor(props) {
@@ -109,7 +201,7 @@ class LocusPage extends React.Component {
     const startDebounced = parseInt(queryDebounced.start, 10);
     const endDebounced = parseInt(queryDebounced.end, 10);
 
-    // const { clickedId, clickedType } = query;
+    const { clickedId, clickedType } = query;
 
     const filename = `POSTGAP-locus.${chromosome}.${start}-${end}`;
     const filterOtG2VScore = [
@@ -126,79 +218,110 @@ class LocusPage extends React.Component {
       query.ldEnd ? parseFloat(query.ldEnd) : 1,
     ];
     return (
-      <div style={{ padding: '30px' }}>
-        <Col gutter={6}>
-          {this.state.filtersVisible ? (
-            <Card bodyStyle={{ background: 'white', padding: '2px' }}>
-              <Row style={{ padding: '10px 10px 0px 10px' }}>
-                <Col span={16}>
-                  <h4>Filters </h4>
-                </Col>
-                <Col span={8}>
-                  <Button
-                    style={{ float: 'right' }}
-                    icon="close"
-                    type="primary"
-                    shape="circle"
-                    size="small"
-                    ghost
-                    onClick={this.toggleFilters}
-                  />
-                </Col>
-              </Row>
-              <Row gutter={2}>
-                <Col span={12}>
-                  <GeneVariantFilter
-                    interval={filterOtG2VScore}
-                    setFilterG2VScore={this.setFilterOtG2VScoreInUrl}
-                    g2VMustHaves={filterOtG2VMustHaves}
-                    setFilterG2VMustHaves={this.setFilterOtG2VMustHavesInUrl}
-                  />
-                </Col>
-                <Col span={6}>
-                  <VariantLeadVariantFilter
-                    interval={filterLD}
-                    setFilterLD={this.setFilterLDInUrl}
-                  />
-                </Col>
-                {/* <Col span={6}>
+      <Query
+        query={LOCUS_QUERY}
+        variables={{
+          start: startDebounced,
+          end: endDebounced,
+          chromosome: chromosomeDebounced,
+        }}
+      >
+        {({ loading, error, data }) => {
+          let clickedEntity = null;
+          const field = `${clickedType}s`;
+          if (data && data.locus && data.locus[field]) {
+            const clickedWithinData = data.locus[field].filter(
+              d => d.id === clickedId
+            );
+            if (clickedWithinData.length > 0) {
+              clickedEntity = clickedWithinData[0];
+            }
+          }
+
+          return (
+            <div style={{ padding: '30px' }}>
+              <Col gutter={6}>
+                {this.state.filtersVisible ? (
+                  <Card bodyStyle={{ background: 'white', padding: '2px' }}>
+                    <Row style={{ padding: '10px 10px 0px 10px' }}>
+                      <Col span={16}>
+                        <h4>Filters </h4>
+                      </Col>
+                      <Col span={8}>
+                        <Button
+                          style={{ float: 'right' }}
+                          icon="close"
+                          type="primary"
+                          shape="circle"
+                          size="small"
+                          ghost
+                          onClick={this.toggleFilters}
+                        />
+                      </Col>
+                    </Row>
+                    <Row gutter={2}>
+                      <Col span={12}>
+                        <GeneVariantFilter
+                          interval={filterOtG2VScore}
+                          setFilterG2VScore={this.setFilterOtG2VScoreInUrl}
+                          g2VMustHaves={filterOtG2VMustHaves}
+                          setFilterG2VMustHaves={
+                            this.setFilterOtG2VMustHavesInUrl
+                          }
+                        />
+                      </Col>
+                      <Col span={6}>
+                        <VariantLeadVariantFilter
+                          interval={filterLD}
+                          setFilterLD={this.setFilterLDInUrl}
+                        />
+                      </Col>
+                      {/* <Col span={6}>
                   <LeadVariantDiseaseFilter />
                 </Col> */}
-              </Row>
-            </Card>
-          ) : (
-            <Button type="primary" ghost onClick={this.toggleFilters}>
-              Filters
-            </Button>
-          )}
+                    </Row>
+                  </Card>
+                ) : (
+                  <Button type="primary" ghost onClick={this.toggleFilters}>
+                    Filters
+                  </Button>
+                )}
 
-          <Row gutter={16} style={{ height: '16px' }} />
+                <Row gutter={16} style={{ height: '16px' }} />
 
-          <Row gutter={16}>
-            <Col span={18}>
-              <Browser
-                filename={filename}
-                filterString={'todo'}
-                filterOtG2VScore={filterOtG2VScore}
-                filterLD={filterLD}
-                chromosome={chromosome}
-                start={start}
-                end={end}
-                chromosomeDebounced={chromosomeDebounced}
-                startDebounced={startDebounced}
-                endDebounced={endDebounced}
-                setLocation={this.setLocationInUrl}
-                setClicked={this.setClickedInUrl}
-              />
-            </Col>
-            <Col span={6}>
-              <DetailPanel />
-            </Col>
-          </Row>
+                <Row gutter={16}>
+                  <Col span={18}>
+                    <Browser
+                      filename={filename}
+                      filterString={'todo'}
+                      filterOtG2VScore={filterOtG2VScore}
+                      filterLD={filterLD}
+                      chromosome={chromosome}
+                      start={start}
+                      end={end}
+                      chromosomeDebounced={chromosomeDebounced}
+                      startDebounced={startDebounced}
+                      endDebounced={endDebounced}
+                      setLocation={this.setLocationInUrl}
+                      setClicked={this.setClickedInUrl}
+                      data={data}
+                    />
+                  </Col>
+                  <Col span={6}>
+                    <DetailPanel
+                      {...{
+                        clickedId,
+                        clickedType,
+                        clickedEntity,
+                        setClicked: this.setClickedInUrl,
+                      }}
+                    />
+                  </Col>
+                </Row>
 
-          <Row gutter={16} style={{ height: '16px' }} />
+                <Row gutter={16} style={{ height: '16px' }} />
 
-          {/* <Row gutter={16}>
+                {/* <Row gutter={16}>
             <Col span={24}>
               <Card bodyStyle={{ padding: 10 }}>
                 <BrowserTable
@@ -208,8 +331,11 @@ class LocusPage extends React.Component {
               </Card>
             </Col>
           </Row> */}
-        </Col>
-      </div>
+              </Col>
+            </div>
+          );
+        }}
+      </Query>
     );
   }
 }
