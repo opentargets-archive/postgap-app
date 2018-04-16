@@ -1,8 +1,5 @@
 import React from 'react';
-// import { connect } from 'react-redux';
 import { Card, Row, Col, Slider } from 'antd';
-
-// import { setFilterLD } from '../redux/store';
 
 let VariantLeadVariantFilter = ({ interval, setFilterLD }) => {
   return (
@@ -34,21 +31,5 @@ let VariantLeadVariantFilter = ({ interval, setFilterLD }) => {
     </Card>
   );
 };
-
-// const mapStateToProps = state => {
-//   return {
-//     interval: state.filters.ld,
-//   };
-// };
-
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     setFilterLD: interval => dispatch(setFilterLD(interval)),
-//   };
-// };
-
-// VariantLeadVariantFilter = connect(mapStateToProps, mapDispatchToProps)(
-//   VariantLeadVariantFilter
-// );
 
 export default VariantLeadVariantFilter;
