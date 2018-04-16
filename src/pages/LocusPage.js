@@ -2,6 +2,7 @@ import React from 'react';
 import { Card, Row, Col, Button } from 'antd';
 import queryString from 'query-string';
 
+import withDebouncedProps from '../withDebouncedProps';
 import Browser from '../Browser';
 // import BrowserTable from '../BrowserTable';
 import VariantLeadVariantFilter from '../filters/VariantLeadVariantFilter';
@@ -14,6 +15,7 @@ class LocusPage extends React.Component {
     super(props);
     this.state = { filtersVisible: true };
     this.toggleFilters = this.toggleFilters.bind(this);
+    this.setLocationInUrl = this.setLocationInUrl.bind(this);
     this.setFilterOtG2VScoreInUrl = this.setFilterOtG2VScoreInUrl.bind(this);
     this.setFilterOtG2VMustHavesInUrl = this.setFilterOtG2VMustHavesInUrl.bind(
       this
@@ -23,6 +25,19 @@ class LocusPage extends React.Component {
 
   toggleFilters() {
     this.setState({ filtersVisible: !this.state.filtersVisible });
+  }
+
+  setLocationInUrl(location) {
+    const history = this.props.history;
+    const oldQueryParams = queryString.parse(history.location.search);
+    const newQueryParams = queryString.stringify({
+      ...oldQueryParams,
+      ...location,
+    });
+    history.replace({
+      ...history.location,
+      search: newQueryParams,
+    });
   }
 
   setFilterOtG2VScoreInUrl(interval) {
@@ -71,6 +86,14 @@ class LocusPage extends React.Component {
     const { chromosome } = query;
     const start = parseInt(query.start);
     const end = parseInt(query.end);
+
+    const queryDebounced = queryString.parse(
+      this.props.locationDebounced.search
+    );
+    const { chromosome: chromosomeDebounced } = queryDebounced;
+    const startDebounced = parseInt(queryDebounced.start);
+    const endDebounced = parseInt(queryDebounced.end);
+
     const filename = `POSTGAP-locus.${chromosome}.${start}-${end}`;
     const filterOtG2VScore = [
       query.otG2VScoreStart ? parseFloat(query.otG2VScoreStart) : 0,
@@ -136,7 +159,19 @@ class LocusPage extends React.Component {
 
           <Row gutter={16}>
             <Col span={18}>
-              <Browser filename={filename} filterString={'todo'} />
+              <Browser
+                filename={filename}
+                filterString={'todo'}
+                filterOtG2VScore={filterOtG2VScore}
+                filterLD={filterLD}
+                chromosome={chromosome}
+                start={start}
+                end={end}
+                chromosomeDebounced={chromosomeDebounced}
+                startDebounced={startDebounced}
+                endDebounced={endDebounced}
+                setLocation={this.setLocationInUrl}
+              />
             </Col>
             <Col span={6}>
               <DetailPanel />
@@ -160,5 +195,12 @@ class LocusPage extends React.Component {
     );
   }
 }
+
+const API_DEBOUNCE = 500;
+
+LocusPage = withDebouncedProps({
+  debounce: API_DEBOUNCE,
+  propNames: ['location'],
+})(LocusPage);
 
 export default LocusPage;

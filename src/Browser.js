@@ -1,11 +1,7 @@
 import React from 'react';
-import { compose } from 'recompose';
-import withDebouncedProps from './withDebouncedProps';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Card, Row, Col, Button } from 'antd';
-import { withRouter } from 'react-router-dom';
-import queryString from 'query-string';
 import { scalePoint } from 'd3-scale';
 import * as d3 from 'd3';
 import FileSaver from 'file-saver';
@@ -147,8 +143,7 @@ class Browser extends React.Component {
   }
 
   zoomHandler(domain) {
-    const query = queryString.parse(this.props.location.search);
-    const { chromosome } = query;
+    const { chromosome, setLocation } = this.props;
     const chromosomeLength = chromosomeLengths[chromosome];
     const MAX_WINDOW_WIDTH = 2500000;
     let start = Math.round(domain.x[0]);
@@ -162,15 +157,11 @@ class Browser extends React.Component {
     }
     if (start < 0) start = 0;
     if (end > chromosomeLength) end = chromosomeLength;
-    setLocationInUrl({ start, end, chromosome }, this.props.history);
+    setLocation({ start, end, chromosome }, this.props.history);
   }
 
   onDownloadClick() {
-    const { filename, filterString } = this.props;
-    const query = queryString.parse(this.props.location.search);
-    const { chromosome } = query;
-    const start = parseInt(query.start);
-    const end = parseInt(query.end);
+    const { chromosome, start, end, filename, filterString } = this.props;
 
     // grab all the tracks
     const tracks = d3.selectAll('.VictoryContainer > svg');
@@ -219,17 +210,14 @@ class Browser extends React.Component {
   }
 
   render() {
-    const query = queryString.parse(this.props.location.search);
-    const { chromosome } = query;
-    const start = parseInt(query.start);
-    const end = parseInt(query.end);
-
-    const queryDebounced = queryString.parse(
-      this.props.locationDebounced.search
-    );
-    const { chromosome: chromosomeDebounced } = queryDebounced;
-    const startDebounced = parseInt(queryDebounced.start);
-    const endDebounced = parseInt(queryDebounced.end);
+    const {
+      chromosome,
+      start,
+      end,
+      chromosomeDebounced,
+      startDebounced,
+      endDebounced,
+    } = this.props;
 
     const labelColSize = 4;
     const commonProps = {
@@ -484,36 +472,5 @@ class Browser extends React.Component {
     );
   }
 }
-
-const setLocationInUrl = (location, history) => {
-  const oldQueryParams = queryString.parse(history.location.search);
-  const newQueryParams = queryString.stringify({
-    ...oldQueryParams,
-    ...location,
-  });
-  history.replace({
-    ...history.location,
-    search: newQueryParams,
-  });
-};
-
-// const withData = graphql(DATA_QUERY, {
-//   options: props => ({
-//     variables: { name: props.valueDebounced },
-//   }),
-// });
-
-const BROWSER_API_DEBOUNCE = 500;
-
-Browser = withDebouncedProps({
-  debounce: BROWSER_API_DEBOUNCE,
-  propNames: ['location'],
-})(Browser);
-Browser = withRouter(Browser);
-// Browser = compose(
-//   // withState,
-//   withDebouncedProps({ debounce: 2000, propNames: [ 'location' ] })
-//   // withData,
-// )(Browser);
 
 export default Browser;
