@@ -1,12 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Card, Row, Col, Checkbox, Slider } from 'antd';
-
-import {
-  setFilterG2VScore,
-  setFilterG2VMustHaves,
-  selectors,
-} from '../redux/store';
 
 const checkboxOptions = [
   { label: 'VEP', value: 'vep' },
@@ -76,24 +69,5 @@ let GeneVariantFilter = ({
     </Card>
   );
 };
-
-const mapStateToProps = state => {
-  return {
-    g2VMustHaves: state.filters.g2VMustHaves,
-    interval: selectors.getFilterG2VScore(state),
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    setFilterG2VMustHaves: g2VMustHaves =>
-      dispatch(setFilterG2VMustHaves(g2VMustHaves)),
-    setFilterG2VScore: interval => dispatch(setFilterG2VScore(interval)),
-  };
-};
-
-GeneVariantFilter = connect(mapStateToProps, mapDispatchToProps)(
-  GeneVariantFilter
-);
 
 export default GeneVariantFilter;

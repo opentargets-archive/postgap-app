@@ -7,17 +7,61 @@ import Browser from '../Browser';
 // import VariantLeadVariantFilter from '../filters/VariantLeadVariantFilter';
 import DetailPanel from '../DetailPanel';
 // import LeadVariantDiseaseFilter from '../filters/LeadVariantDiseaseFilter';
-// import GeneVariantFilter from '../filters/GeneVariantFilter';
+import GeneVariantFilter from '../filters/GeneVariantFilter';
+
+// const setFilterOtG2VScoreInUrl = (interval, history) => {
+//   const oldQueryParams = queryString.parse(history.location.search);
+//   const newQueryParams = queryString.stringify({
+//     ...oldQueryParams,
+//     otG2VScoreStart: interval[0],
+//     otG2VScoreEnd: interval[1]
+//   });
+//   history.replace({
+//     ...history.location,
+//     search: newQueryParams,
+//   });
+// };
 
 class LocusPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = { filtersVisible: true };
     this.toggleFilters = this.toggleFilters.bind(this);
+    this.setFilterOtG2VScoreInUrl = this.setFilterOtG2VScoreInUrl.bind(this);
+    this.setFilterOtG2VMustHavesInUrl = this.setFilterOtG2VMustHavesInUrl.bind(
+      this
+    );
   }
 
   toggleFilters() {
     this.setState({ filtersVisible: !this.state.filtersVisible });
+  }
+
+  setFilterOtG2VScoreInUrl(interval) {
+    const history = this.props.history;
+    const oldQueryParams = queryString.parse(history.location.search);
+    const newQueryParams = queryString.stringify({
+      ...oldQueryParams,
+      otG2VScoreStart: interval[0],
+      otG2VScoreEnd: interval[1],
+    });
+    history.replace({
+      ...history.location,
+      search: newQueryParams,
+    });
+  }
+
+  setFilterOtG2VMustHavesInUrl(mustHaves) {
+    const history = this.props.history;
+    const oldQueryParams = queryString.parse(history.location.search);
+    const newQueryParams = queryString.stringify({
+      ...oldQueryParams,
+      otG2VMustHaves: mustHaves,
+    });
+    history.replace({
+      ...history.location,
+      search: newQueryParams,
+    });
   }
 
   render() {
@@ -26,6 +70,15 @@ class LocusPage extends React.Component {
     const start = parseInt(query.start);
     const end = parseInt(query.end);
     const filename = `POSTGAP-locus.${chromosome}.${start}-${end}`;
+    const filterOtG2VScore = [
+      query.otG2VScoreStart ? parseFloat(query.otG2VScoreStart) : 0,
+      query.otG2VScoreEnd ? parseFloat(query.otG2VScoreEnd) : 1,
+    ];
+    const filterOtG2VMustHaves = query.otG2VMustHaves
+      ? typeof query.otG2VMustHaves === 'string'
+        ? [query.otG2VMustHaves]
+        : query.otG2VMustHaves
+      : [];
     return (
       <div style={{ padding: '30px' }}>
         <Col gutter={6}>
@@ -47,17 +100,22 @@ class LocusPage extends React.Component {
                   />
                 </Col>
               </Row>
-              {/* <Row gutter={2}>
+              <Row gutter={2}>
                 <Col span={12}>
-                  <GeneVariantFilter />
+                  <GeneVariantFilter
+                    interval={filterOtG2VScore}
+                    setFilterG2VScore={this.setFilterOtG2VScoreInUrl}
+                    g2VMustHaves={filterOtG2VMustHaves}
+                    setFilterG2VMustHaves={this.setFilterOtG2VMustHavesInUrl}
+                  />
                 </Col>
-                <Col span={6}>
+                {/* <Col span={6}>
                   <VariantLeadVariantFilter />
                 </Col>
                 <Col span={6}>
                   <LeadVariantDiseaseFilter />
-                </Col>
-              </Row> */}
+                </Col> */}
+              </Row>
             </Card>
           ) : (
             <Button type="primary" ghost onClick={this.toggleFilters}>
