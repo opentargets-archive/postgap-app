@@ -33,6 +33,7 @@ export class DebouncedDiseaseFeatureSet extends React.Component {
       verticalScale,
       slotHeight,
       width,
+      setClicked,
     } = this.props;
     diseaseScale.range(calculateDiseaseScaleRange(width));
     return (
@@ -45,7 +46,15 @@ export class DebouncedDiseaseFeatureSet extends React.Component {
         {diseases.map(d => {
           const x = diseaseScale(d.name);
           const y = verticalScale(d.name);
-          return <DiseaseFeature key={d.id} data={d} x={x} y={y} />;
+          return (
+            <DiseaseFeature
+              key={d.id}
+              data={d}
+              x={x}
+              y={y}
+              setClicked={setClicked}
+            />
+          );
         })}
       </React.Fragment>
     );
@@ -77,7 +86,7 @@ class DiseaseFeature extends React.Component {
       this.setState({ textWidth, textHeight });
   }
   render() {
-    const { x, y, data, highlight, dimNonHighlighted } = this.props;
+    const { x, y, data, highlight, dimNonHighlighted, setClicked } = this.props;
     const { textWidth, textHeight } = this.state;
     const margin = 3;
 
@@ -128,6 +137,9 @@ class DiseaseFeature extends React.Component {
         height={textHeight}
         rx={2}
         ry={2}
+        onClick={() => {
+          setClicked(data.id, 'disease');
+        }}
       />
     ) : null;
     return (

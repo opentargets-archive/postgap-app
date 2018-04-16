@@ -12,6 +12,7 @@ export const DebouncedVariantFeatureSet = ({
   scale,
   range,
   variants,
+  setClicked,
 }) => {
   const { x } = scale;
   const width = x.range()[1] - x.range()[0];
@@ -22,7 +23,11 @@ export const DebouncedVariantFeatureSet = ({
       transform={`scale(${scaleFactorX},1) translate(${translateX},0)`}
       strokeWidth={2.0 / scaleFactorX}
     >
-      <VariantFeatureSet variants={variants} startDebounced={startDebounced} />
+      <VariantFeatureSet
+        variants={variants}
+        startDebounced={startDebounced}
+        setClicked={setClicked}
+      />
     </g>
   );
 };
@@ -36,7 +41,7 @@ class VariantFeatureSet extends React.Component {
     );
   }
   render() {
-    const { variants, startDebounced } = this.props;
+    const { variants, startDebounced, setClicked } = this.props;
     return (
       <React.Fragment>
         {variants.map(d => (
@@ -45,6 +50,7 @@ class VariantFeatureSet extends React.Component {
             data={d}
             x={d.position - startDebounced}
             height={20}
+            setClicked={setClicked}
           />
         ))}
       </React.Fragment>
@@ -58,14 +64,21 @@ class VariantFeature extends React.Component {
     return x !== nextProps.x || height !== nextProps.height;
   }
   render() {
-    const { x, height, data } = this.props;
+    const { x, height, data, setClicked } = this.props;
     const variantColor = colors.primary;
     // highlight
     //   ? colors.secondary
     //   : dimNonHighlighted ? 'lightgrey' : colors.primary;
 
     return (
-      <line x1={x} y1={0} x2={x} y2={height} style={{ stroke: variantColor }} />
+      <line
+        x1={x}
+        y1={0}
+        x2={x}
+        y2={height}
+        style={{ stroke: variantColor }}
+        onClick={() => setClicked(data.id)}
+      />
     );
   }
 }

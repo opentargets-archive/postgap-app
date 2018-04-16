@@ -6,11 +6,12 @@ import { DebouncedVariantLeadVariantFeatureSet } from '../features/VariantLeadVa
 let VariantLeadVariantTrack = ({
   variantLeadVariants,
   isInteractive,
-  setHoverId,
-  setClickedId,
+  setClicked,
+  // setHoverId,
+  // setClickedId,
   ...rest
 }) => {
-  const handlers = { setHoverId, setClickedId };
+  // const handlers = { setHoverId, setClickedId };
   return (
     <div style={{ position: 'absolute', width: '100%', height: '100%' }}>
       <BaseTrack {...rest}>
@@ -20,6 +21,7 @@ let VariantLeadVariantTrack = ({
           end={rest.location.end}
           startDebounced={rest.locationDebounced.startDebounced}
           endDebounced={rest.locationDebounced.endDebounced}
+          setClicked={setClicked}
         />
       </BaseTrack>
     </div>

@@ -16,6 +16,7 @@ class LocusPage extends React.Component {
     this.state = { filtersVisible: true };
     this.toggleFilters = this.toggleFilters.bind(this);
     this.setLocationInUrl = this.setLocationInUrl.bind(this);
+    this.setClickedInUrl = this.setClickedInUrl.bind(this);
     this.setFilterOtG2VScoreInUrl = this.setFilterOtG2VScoreInUrl.bind(this);
     this.setFilterOtG2VMustHavesInUrl = this.setFilterOtG2VMustHavesInUrl.bind(
       this
@@ -33,6 +34,20 @@ class LocusPage extends React.Component {
     const newQueryParams = queryString.stringify({
       ...oldQueryParams,
       ...location,
+    });
+    history.replace({
+      ...history.location,
+      search: newQueryParams,
+    });
+  }
+
+  setClickedInUrl(clickedId, clickedType) {
+    const history = this.props.history;
+    const oldQueryParams = queryString.parse(history.location.search);
+    const newQueryParams = queryString.stringify({
+      ...oldQueryParams,
+      clickedId,
+      clickedType,
     });
     history.replace({
       ...history.location,
@@ -93,6 +108,8 @@ class LocusPage extends React.Component {
     const { chromosome: chromosomeDebounced } = queryDebounced;
     const startDebounced = parseInt(queryDebounced.start, 10);
     const endDebounced = parseInt(queryDebounced.end, 10);
+
+    // const { clickedId, clickedType } = query;
 
     const filename = `POSTGAP-locus.${chromosome}.${start}-${end}`;
     const filterOtG2VScore = [
@@ -171,6 +188,7 @@ class LocusPage extends React.Component {
                 startDebounced={startDebounced}
                 endDebounced={endDebounced}
                 setLocation={this.setLocationInUrl}
+                setClicked={this.setClickedInUrl}
               />
             </Col>
             <Col span={6}>

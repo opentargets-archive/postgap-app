@@ -12,6 +12,7 @@ export const DebouncedVariantLeadVariantFeatureSet = ({
   scale,
   range,
   variantLeadVariants,
+  setClicked,
 }) => {
   const { x } = scale;
   const width = x.range()[1] - x.range()[0];
@@ -23,6 +24,7 @@ export const DebouncedVariantLeadVariantFeatureSet = ({
       <VariantLeadVariantFeatureSet
         variantLeadVariants={variantLeadVariants}
         startDebounced={startDebounced}
+        setClicked={setClicked}
       />
     </g>
   );
@@ -39,7 +41,7 @@ class VariantLeadVariantFeatureSet extends React.Component {
     );
   }
   render() {
-    const { variantLeadVariants, startDebounced } = this.props;
+    const { variantLeadVariants, startDebounced, setClicked } = this.props;
     return (
       <React.Fragment>
         {variantLeadVariants.map(d => (
@@ -49,6 +51,7 @@ class VariantLeadVariantFeatureSet extends React.Component {
             xTop={d.variantPosition - startDebounced}
             xBottom={d.leadVariantPosition - startDebounced}
             height={80}
+            setClicked={setClicked}
           />
         ))}
       </React.Fragment>
@@ -70,6 +73,7 @@ class VariantLeadVariantFeature extends React.Component {
       xTop,
       xBottom,
       height,
+      setClicked,
       // setHoverId,
       // setClickedId,
       // highlight,
@@ -77,7 +81,13 @@ class VariantLeadVariantFeature extends React.Component {
     } = this.props;
     // const { x, y } = scale;
     return (
-      <ConnectorPath topX={xTop} topY={0} bottomX={xBottom} bottomY={height} />
+      <ConnectorPath
+        topX={xTop}
+        topY={0}
+        bottomX={xBottom}
+        bottomY={height}
+        onClick={() => setClicked(data.id, 'variantLeadVariant')}
+      />
     );
   }
 }

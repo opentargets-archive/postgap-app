@@ -12,10 +12,11 @@ const LeadVariantDiseaseFeature = ({
   data,
   width,
   diseaseScale,
-  setHoverId,
-  setClickedId,
-  highlight,
-  dimNonHighlighted,
+  setClicked,
+  // setHoverId,
+  // setClickedId,
+  // highlight,
+  // dimNonHighlighted,
 }) => {
   const { x, y } = scale;
   diseaseScale.range(calculateDiseaseScaleRange(width)); // TODO: refactor to set range in better location
@@ -26,8 +27,7 @@ const LeadVariantDiseaseFeature = ({
       topY={y(1)}
       bottomX={diseaseScale(data.efoName)}
       bottomY={y(0)}
-      highlight={highlight}
-      dimNonHighlighted={dimNonHighlighted}
+      onClick={() => setClicked(data.id, 'leadVariantDisease')}
     />
   );
 };

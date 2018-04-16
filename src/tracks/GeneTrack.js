@@ -9,7 +9,7 @@ export const GENE_TRACK_PADDING = 15;
 
 let GeneTrack = props => {
   const height = GENE_SLOT_HEIGHT * props.slots.length + 2 * GENE_TRACK_PADDING;
-  const { isInteractive } = props;
+  const { isInteractive, setClicked } = props;
   return (
     <div style={{ position: 'absolute', width: '100%', height: '100%' }}>
       <BaseTrack {...props} parentHeight={height}>
@@ -44,8 +44,7 @@ let GeneTrack = props => {
                 data={gene}
                 slotOffset={GENE_SLOT_HEIGHT * i + GENE_TRACK_PADDING}
                 slotHeight={GENE_SLOT_HEIGHT}
-                setHoverGeneId={props.setHoverGeneId}
-                setClickedGeneId={props.setClickedGeneId}
+                setClicked={setClicked}
                 highlight={gene.interactive}
                 dimNonHighlighted={isInteractive}
               />

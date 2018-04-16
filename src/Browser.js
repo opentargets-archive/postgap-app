@@ -217,6 +217,7 @@ class Browser extends React.Component {
       chromosomeDebounced,
       startDebounced,
       endDebounced,
+      setClicked,
     } = this.props;
 
     const labelColSize = 4;
@@ -233,6 +234,7 @@ class Browser extends React.Component {
       chromosomeLength: chromosomeLengths[chromosome],
       zoomHandler: this.zoomHandler,
       windowResizeDebounceTime: 50,
+      setClicked,
     };
     return (
       <Query

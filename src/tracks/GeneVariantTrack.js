@@ -6,8 +6,9 @@ import { DebouncedGeneVariantFeatureSet } from '../features/GeneVariantFeature';
 let GeneVariantTrack = ({
   geneVariants,
   isInteractive,
-  setHoverId,
-  setClickedId,
+  // setHoverId,
+  // setClickedId,
+  setClicked,
   ...rest
 }) => {
   // const handlers = { setHoverId, setClickedId };
@@ -20,6 +21,7 @@ let GeneVariantTrack = ({
           end={rest.location.end}
           startDebounced={rest.locationDebounced.startDebounced}
           endDebounced={rest.locationDebounced.endDebounced}
+          setClicked={setClicked}
         />
       </BaseTrack>
     </div>

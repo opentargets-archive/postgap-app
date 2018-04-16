@@ -11,7 +11,7 @@ export const DISEASE_SLOT_HEIGHT = 60;
 export const DISEASE_TRACK_MIN_HEIGHT = 20;
 export const DISEASE_SLOT_COLS = 5;
 
-let DiseaseTrack = ({ diseases, ...rest }) => {
+let DiseaseTrack = ({ diseases, setClicked, ...rest }) => {
   const quotient = Math.ceil(diseases.length / DISEASE_SLOT_COLS);
   const height =
     quotient > 0 ? DISEASE_SLOT_HEIGHT * quotient : DISEASE_TRACK_MIN_HEIGHT;
@@ -30,6 +30,7 @@ let DiseaseTrack = ({ diseases, ...rest }) => {
           diseaseScale={rest.diseaseScale}
           verticalScale={verticalScale}
           slotHeight={DISEASE_SLOT_HEIGHT}
+          setClicked={setClicked}
         />
       </BaseTrack>
     </div>

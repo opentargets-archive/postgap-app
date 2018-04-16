@@ -23,8 +23,7 @@ class GeneFeature extends React.Component {
       data,
       slotOffset,
       slotHeight,
-      setHoverGeneId,
-      setClickedGeneId,
+      setClicked,
       highlight,
       dimNonHighlighted,
     } = this.props;
@@ -95,6 +94,9 @@ class GeneFeature extends React.Component {
         height={backgroundHeight + 2 * margin}
         rx={2}
         ry={2}
+        onClick={() => {
+          setClicked(data.id, 'gene');
+        }}
       />
     ) : null;
     return (

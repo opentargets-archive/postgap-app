@@ -12,6 +12,7 @@ export const DebouncedGeneVariantFeatureSet = ({
   scale,
   range,
   geneVariants,
+  setClicked,
 }) => {
   const { x } = scale;
   const width = x.range()[1] - x.range()[0];
@@ -23,6 +24,7 @@ export const DebouncedGeneVariantFeatureSet = ({
       <GeneVariantFeatureSet
         geneVariants={geneVariants}
         startDebounced={startDebounced}
+        setClicked={setClicked}
       />
     </g>
   );
@@ -39,7 +41,7 @@ class GeneVariantFeatureSet extends React.Component {
     );
   }
   render() {
-    const { geneVariants, startDebounced } = this.props;
+    const { geneVariants, startDebounced, setClicked } = this.props;
     return (
       <React.Fragment>
         {geneVariants.map(d => (
@@ -53,6 +55,7 @@ class GeneVariantFeatureSet extends React.Component {
             }
             xBottom={d.variantPosition - startDebounced}
             height={80}
+            setClicked={setClicked}
           />
         ))}
       </React.Fragment>
@@ -74,6 +77,7 @@ class GeneVariantFeature extends React.Component {
       xTop,
       xBottom,
       height,
+      setClicked,
       // setHoverId,
       // setClickedId,
       // highlight,
@@ -81,7 +85,13 @@ class GeneVariantFeature extends React.Component {
     } = this.props;
     // const { x, y } = scale;
     return (
-      <ConnectorPath topX={xTop} topY={0} bottomX={xBottom} bottomY={height} />
+      <ConnectorPath
+        topX={xTop}
+        topY={0}
+        bottomX={xBottom}
+        bottomY={height}
+        onClick={() => setClicked(data.id, 'geneVariant')}
+      />
     );
   }
 }
