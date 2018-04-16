@@ -41,12 +41,12 @@ const VariantLeadVariantDetail = ({ variantLeadVariant, closeHandler }) => {
       type={'Variant - Lead Variant'}
       title={
         <React.Fragment>
-          <LinksVariant variantId={variantLeadVariant.ldSnpId}>
-            {variantLeadVariant.ldSnpId}
+          <LinksVariant variantId={variantLeadVariant.variantId}>
+            {variantLeadVariant.variantId}
           </LinksVariant>
           {' - '}
-          <LinksLeadVariant leadVariantId={variantLeadVariant.gwasSnpId}>
-            {variantLeadVariant.gwasSnpId}
+          <LinksLeadVariant leadVariantId={variantLeadVariant.leadVariantId}>
+            {variantLeadVariant.leadVariantId}
           </LinksLeadVariant>
         </React.Fragment>
       }

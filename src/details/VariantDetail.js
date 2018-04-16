@@ -11,7 +11,7 @@ const VariantDetail = ({ variant, closeHandler }) => {
     {
       key: 'location',
       label: 'Location',
-      value: `${d.chromosome}:${commaSeparate(d.pos)}`,
+      value: `${d.chromosome}:${commaSeparate(d.position)}`,
     },
   ];
   const tableColumns = [

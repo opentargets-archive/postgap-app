@@ -66,7 +66,7 @@ const LOCUS_QUERY = gql`
         variantId
         variantChromosome
         variantPosition
-        # TODO: otG2VScore: Float
+        otG2VScore
         vep
         gtex
         pchic

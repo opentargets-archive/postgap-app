@@ -14,9 +14,14 @@ const LeadVariantDiseaseDetail = ({ leadVariantDisease, closeHandler }) => {
       value: d.gwasPValue,
     },
     {
+      key: 'gwasOddsRatio',
+      label: 'Odds Ratio',
+      value: d.gwasOddsRatio,
+    },
+    {
       key: 'gwasSampleSize',
       label: 'Sample Size',
-      value: commaSeparate(d.gwasSampleSize),
+      value: commaSeparate(d.gwasSize),
     },
   ];
   const tableColumns = [
@@ -41,8 +46,8 @@ const LeadVariantDiseaseDetail = ({ leadVariantDisease, closeHandler }) => {
       type={'Lead Variant - Disease'}
       title={
         <React.Fragment>
-          <LinksLeadVariant leadVariantId={leadVariantDisease.gwasSnpId}>
-            {leadVariantDisease.gwasSnpId}
+          <LinksLeadVariant leadVariantId={leadVariantDisease.leadVariantId}>
+            {leadVariantDisease.leadVariantId}
           </LinksLeadVariant>
           {' - '}
           <LinksDisease efoId={leadVariantDisease.efoId}>

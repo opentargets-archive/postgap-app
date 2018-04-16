@@ -9,9 +9,9 @@ const GeneVariantDetail = ({ geneVariant, closeHandler }) => {
   const d = geneVariant;
   const tableData = [
     {
-      key: 'otScore',
+      key: 'otG2VScore',
       label: 'G2V Score',
-      value: d.otScore,
+      value: d.otG2VScore,
     },
     {
       key: 'vep',
@@ -63,14 +63,14 @@ const GeneVariantDetail = ({ geneVariant, closeHandler }) => {
       title={
         <React.Fragment>
           <LinksGene
-            geneName={geneVariant.geneName}
+            geneName={geneVariant.geneSymbol}
             geneId={geneVariant.geneId}
           >
-            {geneVariant.geneName}
+            {geneVariant.geneSymbol}
           </LinksGene>
           {' - '}
-          <LinksVariant variantId={geneVariant.ldSnpId}>
-            {geneVariant.ldSnpId}
+          <LinksVariant variantId={geneVariant.variantId}>
+            {geneVariant.variantId}
           </LinksVariant>
         </React.Fragment>
       }
