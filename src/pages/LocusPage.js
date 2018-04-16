@@ -4,23 +4,10 @@ import queryString from 'query-string';
 
 import Browser from '../Browser';
 // import BrowserTable from '../BrowserTable';
-// import VariantLeadVariantFilter from '../filters/VariantLeadVariantFilter';
+import VariantLeadVariantFilter from '../filters/VariantLeadVariantFilter';
 import DetailPanel from '../DetailPanel';
 // import LeadVariantDiseaseFilter from '../filters/LeadVariantDiseaseFilter';
 import GeneVariantFilter from '../filters/GeneVariantFilter';
-
-// const setFilterOtG2VScoreInUrl = (interval, history) => {
-//   const oldQueryParams = queryString.parse(history.location.search);
-//   const newQueryParams = queryString.stringify({
-//     ...oldQueryParams,
-//     otG2VScoreStart: interval[0],
-//     otG2VScoreEnd: interval[1]
-//   });
-//   history.replace({
-//     ...history.location,
-//     search: newQueryParams,
-//   });
-// };
 
 class LocusPage extends React.Component {
   constructor(props) {
@@ -31,6 +18,7 @@ class LocusPage extends React.Component {
     this.setFilterOtG2VMustHavesInUrl = this.setFilterOtG2VMustHavesInUrl.bind(
       this
     );
+    this.setFilterLDInUrl = this.setFilterLDInUrl.bind(this);
   }
 
   toggleFilters() {
@@ -64,6 +52,20 @@ class LocusPage extends React.Component {
     });
   }
 
+  setFilterLDInUrl(interval) {
+    const history = this.props.history;
+    const oldQueryParams = queryString.parse(history.location.search);
+    const newQueryParams = queryString.stringify({
+      ...oldQueryParams,
+      ldStart: interval[0],
+      ldEnd: interval[1],
+    });
+    history.replace({
+      ...history.location,
+      search: newQueryParams,
+    });
+  }
+
   render() {
     const query = queryString.parse(this.props.location.search);
     const { chromosome } = query;
@@ -79,6 +81,10 @@ class LocusPage extends React.Component {
         ? [query.otG2VMustHaves]
         : query.otG2VMustHaves
       : [];
+    const filterLD = [
+      query.ldStart ? parseFloat(query.ldStart) : 0.7,
+      query.ldEnd ? parseFloat(query.ldEnd) : 1,
+    ];
     return (
       <div style={{ padding: '30px' }}>
         <Col gutter={6}>
@@ -109,10 +115,13 @@ class LocusPage extends React.Component {
                     setFilterG2VMustHaves={this.setFilterOtG2VMustHavesInUrl}
                   />
                 </Col>
-                {/* <Col span={6}>
-                  <VariantLeadVariantFilter />
-                </Col>
                 <Col span={6}>
+                  <VariantLeadVariantFilter
+                    interval={filterLD}
+                    setFilterLD={this.setFilterLDInUrl}
+                  />
+                </Col>
+                {/* <Col span={6}>
                   <LeadVariantDiseaseFilter />
                 </Col> */}
               </Row>
