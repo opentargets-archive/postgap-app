@@ -84,15 +84,15 @@ class LocusPage extends React.Component {
   render() {
     const query = queryString.parse(this.props.location.search);
     const { chromosome } = query;
-    const start = parseInt(query.start);
-    const end = parseInt(query.end);
+    const start = parseInt(query.start, 10);
+    const end = parseInt(query.end, 10);
 
     const queryDebounced = queryString.parse(
       this.props.locationDebounced.search
     );
     const { chromosome: chromosomeDebounced } = queryDebounced;
-    const startDebounced = parseInt(queryDebounced.start);
-    const endDebounced = parseInt(queryDebounced.end);
+    const startDebounced = parseInt(queryDebounced.start, 10);
+    const endDebounced = parseInt(queryDebounced.end, 10);
 
     const filename = `POSTGAP-locus.${chromosome}.${start}-${end}`;
     const filterOtG2VScore = [
