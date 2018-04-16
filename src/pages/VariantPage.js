@@ -39,7 +39,8 @@ class VariantPage extends React.Component {
           ? position + HALF_INTERVAL
           : chromosomeLength;
       const params = {
-        variantId,
+        clickedId: variantId,
+        clickedType: 'variant',
         chromosome,
         start: windowStart,
         end: windowEnd,
