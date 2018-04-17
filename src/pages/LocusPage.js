@@ -19,6 +19,7 @@ const LOCUS_QUERY = gql`
         $end: Int
         $g2VMustHaves: [String]
         $g2VScore: [Float]
+        $r2: [Float]
     ) {
         locus(
             chromosome: $chromosome
@@ -26,6 +27,7 @@ const LOCUS_QUERY = gql`
             end: $end
             g2VMustHaves: $g2VMustHaves
             g2VScore: $g2VScore
+            r2: $r2
         ) {
             genes {
                 id
@@ -239,6 +241,10 @@ class LocusPage extends React.Component {
             query.ldStart ? parseFloat(query.ldStart) : 0.7,
             query.ldEnd ? parseFloat(query.ldEnd) : 1,
         ];
+        const filterLDDebounced = [
+            queryDebounced.ldStart ? parseFloat(queryDebounced.ldStart) : 0.7,
+            queryDebounced.ldEnd ? parseFloat(queryDebounced.ldEnd) : 1,
+        ];
         return (
             <Query
                 query={LOCUS_QUERY}
@@ -248,6 +254,7 @@ class LocusPage extends React.Component {
                     chromosome: chromosomeDebounced,
                     g2VMustHaves: filterOtG2VMustHaves,
                     g2VScore: filterOtG2VScoreDebounced,
+                    r2: filterLDDebounced,
                 }}
             >
                 {({ loading, error, data }) => {
