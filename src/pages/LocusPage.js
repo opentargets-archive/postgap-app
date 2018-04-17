@@ -9,7 +9,7 @@ import Browser from '../Browser';
 // import BrowserTable from '../BrowserTable';
 import VariantLeadVariantFilter from '../filters/VariantLeadVariantFilter';
 import DetailPanel from '../DetailPanel';
-// import LeadVariantDiseaseFilter from '../filters/LeadVariantDiseaseFilter';
+import LeadVariantDiseaseFilter from '../filters/LeadVariantDiseaseFilter';
 import GeneVariantFilter from '../filters/GeneVariantFilter';
 
 const LOCUS_QUERY = gql`
@@ -20,6 +20,7 @@ const LOCUS_QUERY = gql`
         $g2VMustHaves: [String]
         $g2VScore: [Float]
         $r2: [Float]
+        $gwasPValue: [Float]
     ) {
         locus(
             chromosome: $chromosome
@@ -28,6 +29,7 @@ const LOCUS_QUERY = gql`
             g2VMustHaves: $g2VMustHaves
             g2VScore: $g2VScore
             r2: $r2
+            gwasPValue: $gwasPValue
         ) {
             genes {
                 id
@@ -112,6 +114,7 @@ const LOCUS_QUERY = gql`
                 gwasPValue
                 gwasOddsRatio
             }
+            maxGwasPValue
         }
     }
 `;
@@ -130,6 +133,9 @@ class LocusPage extends React.Component {
             this
         );
         this.setFilterLDInUrl = this.setFilterLDInUrl.bind(this);
+        this.setFilterGwasPValueInUrl = this.setFilterGwasPValueInUrl.bind(
+            this
+        );
     }
 
     toggleFilters() {
@@ -204,6 +210,20 @@ class LocusPage extends React.Component {
         });
     }
 
+    setFilterGwasPValueInUrl(interval) {
+        const history = this.props.history;
+        const oldQueryParams = queryString.parse(history.location.search);
+        const newQueryParams = queryString.stringify({
+            ...oldQueryParams,
+            gwasPValueStart: interval[0],
+            gwasPValueEnd: interval[1],
+        });
+        history.replace({
+            ...history.location,
+            search: newQueryParams,
+        });
+    }
+
     render() {
         const query = queryString.parse(this.props.location.search);
         const { chromosome } = query;
@@ -245,6 +265,21 @@ class LocusPage extends React.Component {
             queryDebounced.ldStart ? parseFloat(queryDebounced.ldStart) : 0.7,
             queryDebounced.ldEnd ? parseFloat(queryDebounced.ldEnd) : 1,
         ];
+
+        const filterGwasPValue = [
+            query.gwasPValueStart ? parseFloat(query.gwasPValueStart) : 0,
+            query.gwasPValueEnd
+                ? parseFloat(query.gwasPValueEnd)
+                : Number.MAX_SAFE_INTEGER,
+        ];
+        const filterGwasPValueDebounced = [
+            queryDebounced.gwasPValueStart
+                ? parseFloat(queryDebounced.gwasPValueStart)
+                : 0,
+            queryDebounced.gwasPValueEnd
+                ? parseFloat(queryDebounced.gwasPValueEnd)
+                : Number.MAX_SAFE_INTEGER,
+        ];
         return (
             <Query
                 query={LOCUS_QUERY}
@@ -255,6 +290,7 @@ class LocusPage extends React.Component {
                     g2VMustHaves: filterOtG2VMustHaves,
                     g2VScore: filterOtG2VScoreDebounced,
                     r2: filterLDDebounced,
+                    gwasPValue: filterGwasPValueDebounced,
                 }}
             >
                 {({ loading, error, data }) => {
@@ -267,6 +303,14 @@ class LocusPage extends React.Component {
                         if (clickedWithinData.length > 0) {
                             clickedEntity = clickedWithinData[0];
                         }
+                    }
+
+                    let maxGwasPValue = Number.MAX_SAFE_INTEGER;
+                    if (data && data.locus && data.locus.maxGwasPValue) {
+                        // grab from response
+                        maxGwasPValue = data.locus.maxGwasPValue;
+                        // ensure rounded up to 1dp (since slider has 0.1 precision)
+                        maxGwasPValue = Math.ceil(maxGwasPValue * 10) / 10.0;
                     }
 
                     return (
@@ -324,9 +368,16 @@ class LocusPage extends React.Component {
                                                     }
                                                 />
                                             </Col>
-                                            {/* <Col span={6}>
-                  <LeadVariantDiseaseFilter />
-                </Col> */}
+                                            <Col span={6}>
+                                                <LeadVariantDiseaseFilter
+                                                    interval={filterGwasPValue}
+                                                    setFilterGwasPValue={
+                                                        this
+                                                            .setFilterGwasPValueInUrl
+                                                    }
+                                                    max={maxGwasPValue}
+                                                />
+                                            </Col>
                                         </Row>
                                     </Card>
                                 ) : (
