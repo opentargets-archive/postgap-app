@@ -10,6 +10,7 @@ const ConnectorPath = ({
     onClick,
     onMouseEnter,
     onMouseLeave,
+    highlight,
     dimNonHighlighted,
 }) => {
     const controlY = (bottomY + topY) / 2;
@@ -19,7 +20,7 @@ const ConnectorPath = ({
         <path
             d={d}
             style={{
-                stroke: d.selected
+                stroke: highlight
                     ? colors.secondary
                     : dimNonHighlighted ? 'lightgrey' : 'grey',
                 fill: 'none',

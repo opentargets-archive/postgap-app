@@ -44,6 +44,10 @@ class VariantLeadVariantFeatureSet extends React.Component {
                 variantLeadVariants.map(d => d.id),
                 nextProps.variantLeadVariants.map(d => d.id)
             ) ||
+            !_.isEqual(
+                variantLeadVariants.map(d => d.selected),
+                nextProps.variantLeadVariants.map(d => d.selected)
+            ) ||
             startDebounced !== nextProps.startDebounced ||
             dimNonHighlighted !== nextProps.dimNonHighlighted
         );
@@ -99,6 +103,7 @@ class VariantLeadVariantFeature extends React.Component {
                 bottomY={height}
                 onClick={() => setClicked(data.id, 'variantLeadVariant')}
                 dimNonHighlighted={dimNonHighlighted}
+                highlight={data.selected}
             />
         );
     }

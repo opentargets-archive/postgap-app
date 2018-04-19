@@ -103,6 +103,7 @@ class GeneVariantFeature extends React.Component {
                 bottomY={height}
                 onClick={() => setClicked(data.id, 'geneVariant')}
                 dimNonHighlighted={dimNonHighlighted}
+                highlight={data.selected}
             />
         );
     }

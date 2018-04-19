@@ -26,6 +26,7 @@ const LeadVariantDiseaseFeature = ({
             bottomY={y(0)}
             onClick={() => setClicked(data.id, 'leadVariantDisease')}
             dimNonHighlighted={dimNonHighlighted}
+            highlight={data.selected}
         />
     );
 };
