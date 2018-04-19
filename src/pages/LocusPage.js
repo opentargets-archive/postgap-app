@@ -21,6 +21,8 @@ const LOCUS_QUERY = gql`
         $g2VScore: [Float]
         $r2: [Float]
         $gwasPValue: [Float]
+        $selectedId: String
+        $selectedType: String
     ) {
         locus(
             chromosome: $chromosome
@@ -30,6 +32,8 @@ const LOCUS_QUERY = gql`
             g2VScore: $g2VScore
             r2: $r2
             gwasPValue: $gwasPValue
+            selectedId: $selectedId
+            selectedType: $selectedType
         ) {
             genes {
                 id
@@ -53,20 +57,24 @@ const LOCUS_QUERY = gql`
                     translationStart
                     translationEnd
                 }
+                selected
             }
             variants {
                 id
                 chromosome
                 position
+                selected
             }
             leadVariants {
                 id
                 chromosome
                 position
+                selected
             }
             diseases {
                 id
                 name
+                selected
             }
             geneVariants {
                 id
@@ -89,6 +97,7 @@ const LOCUS_QUERY = gql`
                 fantom5
                 dhs
                 nearest
+                selected
             }
             variantLeadVariants {
                 id
@@ -99,6 +108,7 @@ const LOCUS_QUERY = gql`
                 leadVariantChromosome
                 leadVariantPosition
                 r2
+                selected
             }
             leadVariantDiseases {
                 id
@@ -113,6 +123,7 @@ const LOCUS_QUERY = gql`
                 gwasStudy
                 gwasPValue
                 gwasOddsRatio
+                selected
             }
             maxGwasPValue
         }
@@ -280,6 +291,8 @@ class LocusPage extends React.Component {
                 ? parseFloat(queryDebounced.gwasPValueEnd)
                 : Number.MAX_SAFE_INTEGER,
         ];
+
+        const isInSelectedState = clickedId;
         return (
             <Query
                 query={LOCUS_QUERY}
@@ -291,7 +304,10 @@ class LocusPage extends React.Component {
                     g2VScore: filterOtG2VScoreDebounced,
                     r2: filterLDDebounced,
                     gwasPValue: filterGwasPValueDebounced,
+                    selectedId: clickedId,
+                    selectedType: clickedType,
                 }}
+                fetchPolicy="network-only"
             >
                 {({ loading, error, data }) => {
                     let clickedEntity = null;
@@ -410,6 +426,9 @@ class LocusPage extends React.Component {
                                             setLocation={this.setLocationInUrl}
                                             setClicked={this.setClickedInUrl}
                                             data={data}
+                                            isInSelectedState={
+                                                isInSelectedState
+                                            }
                                         />
                                     </Col>
                                     <Col span={6}>
