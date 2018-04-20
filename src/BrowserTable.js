@@ -46,6 +46,7 @@ const LOCUS_TABLE_QUERY = gql`
                 leadVariantId
                 efoId
                 efoName
+                otG2VScore
                 vep
                 gtex
                 pchic
