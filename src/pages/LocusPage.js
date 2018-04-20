@@ -6,7 +6,7 @@ import gql from 'graphql-tag';
 
 import withDebouncedProps from '../withDebouncedProps';
 import Browser from '../Browser';
-// import BrowserTable from '../BrowserTable';
+import BrowserTable from '../BrowserTable';
 import VariantLeadVariantFilter from '../filters/VariantLeadVariantFilter';
 import DetailPanel from '../DetailPanel';
 import LeadVariantDiseaseFilter from '../filters/LeadVariantDiseaseFilter';
@@ -446,16 +446,29 @@ class LocusPage extends React.Component {
 
                                 <Row gutter={16} style={{ height: '16px' }} />
 
-                                {/* <Row gutter={16}>
-            <Col span={24}>
-              <Card bodyStyle={{ padding: 10 }}>
-                <BrowserTable
-                  filename={filename}
-                  filterString={this.props.filterString}
-                />
-              </Card>
-            </Col>
-          </Row> */}
+                                <Row gutter={16}>
+                                    <Col span={24}>
+                                        <Card bodyStyle={{ padding: 10 }}>
+                                            <BrowserTable
+                                                filename={filename}
+                                                filterString={
+                                                    this.props.filterString
+                                                }
+                                                {...{
+                                                    chromosome: chromosomeDebounced,
+                                                    start: startDebounced,
+                                                    end: endDebounced,
+                                                    g2VMustHaves: filterOtG2VMustHaves,
+                                                    g2VScore: filterOtG2VScoreDebounced,
+                                                    r2: filterLDDebounced,
+                                                    gwasPValue: filterGwasPValueDebounced,
+                                                    selectedId: clickedId,
+                                                    selectedType: clickedType,
+                                                }}
+                                            />
+                                        </Card>
+                                    </Col>
+                                </Row>
                             </Col>
                         </div>
                     );
