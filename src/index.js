@@ -8,7 +8,7 @@ import { ApolloProvider } from 'react-apollo';
 
 const client = new ApolloClient({
     // uri: 'http://localhost:4000/graphql',
-    uri: 'http://35.187.178.19/graphql',
+    uri: 'https://postgap-api.opentargets.io/graphql',
 });
 
 render(
