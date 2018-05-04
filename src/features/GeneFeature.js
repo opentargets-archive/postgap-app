@@ -65,12 +65,12 @@ class GeneFeature extends React.Component {
                 }}
             />
         );
-        const exons = data.canonicalTranscript.exons.map(d => (
+        const exons = data.canonicalTranscript.exons.map(([start, end], i) => (
             <rect
-                key={d.id}
-                x={x(d.start)}
+                key={i}
+                x={x(start)}
                 y={yExonTop}
-                width={x(d.end) - x(d.start)}
+                width={x(end) - x(start)}
                 height={exonHeight}
                 style={{
                     stroke: geneColor,

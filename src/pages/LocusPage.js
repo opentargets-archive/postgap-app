@@ -48,14 +48,10 @@ const LOCUS_QUERY = gql`
                     start
                     end
                     forwardStrand
-                    exons {
-                        id
-                        start
-                        end
-                    }
+                    exons
                     tss
-                    translationStart
-                    translationEnd
+                    # translationStart
+                    # translationEnd
                 }
                 selected
             }
@@ -80,15 +76,15 @@ const LOCUS_QUERY = gql`
                 id
                 geneId
                 geneSymbol
-                geneChromosome
-                geneTss
+                # geneChromosome
+                # geneTss
                 canonicalTranscript {
                     start
                     end
                     forwardStrand
                 }
                 variantId
-                variantChromosome
+                # variantChromosome
                 variantPosition
                 otG2VScore
                 vep
@@ -102,10 +98,10 @@ const LOCUS_QUERY = gql`
             variantLeadVariants {
                 id
                 variantId
-                variantChromosome
+                # variantChromosome
                 variantPosition
                 leadVariantId
-                leadVariantChromosome
+                # leadVariantChromosome
                 leadVariantPosition
                 r2
                 selected
@@ -114,7 +110,7 @@ const LOCUS_QUERY = gql`
                 id
                 leadVariantId
                 leadVariantPosition
-                leadVariantChromosome
+                # leadVariantChromosome
                 efoId
                 efoName
                 gwasBeta
