@@ -57,13 +57,13 @@ const LOCUS_QUERY = gql`
             }
             variants {
                 id
-                chromosome
+                # chromosome
                 position
                 selected
             }
             leadVariants {
                 id
-                chromosome
+                # chromosome
                 position
                 selected
             }
@@ -433,6 +433,7 @@ class LocusPage extends React.Component {
                                                 clickedId,
                                                 clickedType,
                                                 clickedEntity,
+                                                chromosome,
                                                 setClicked: this
                                                     .setClickedInUrl,
                                             }}
