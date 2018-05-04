@@ -17,9 +17,9 @@ const GeneVerticalFeature = ({
         : dimNonHighlighted ? 'lightgrey' : 'grey';
     return (
         <line
-            x1={x(data.canonicalTranscript.tss)}
+            x1={x(data.tss)}
             y1={slotOffset}
-            x2={x(data.canonicalTranscript.tss)}
+            x2={x(data.tss)}
             y2={trackHeight}
             style={{ stroke: geneColor, strokeWidth: 1 }}
         />

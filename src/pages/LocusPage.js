@@ -43,16 +43,18 @@ const LOCUS_QUERY = gql`
                 start
                 end
                 forwardStrand
-                canonicalTranscript {
-                    id
-                    start
-                    end
-                    forwardStrand
-                    exons
-                    tss
-                    # translationStart
-                    # translationEnd
-                }
+                exons
+                tss
+                # canonicalTranscript {
+                #     id
+                #     start
+                #     end
+                #     forwardStrand
+                #     exons
+                #     tss
+                #     # translationStart
+                #     # translationEnd
+                # }
                 selected
             }
             variants {
@@ -77,12 +79,12 @@ const LOCUS_QUERY = gql`
                 geneId
                 geneSymbol
                 # geneChromosome
-                # geneTss
-                canonicalTranscript {
-                    start
-                    end
-                    forwardStrand
-                }
+                geneTss
+                # canonicalTranscript {
+                #     start
+                #     end
+                #     forwardStrand
+                # }
                 variantId
                 # variantChromosome
                 variantPosition
