@@ -32,7 +32,7 @@ const LeadVariantDetail = ({ leadVariant, closeHandler, chromosome }) => {
         <BaseDetail
             type={'Lead Variant'}
             title={
-                <LinksLeadVariant leadVariantId={leadVariant.id}>
+                <LinksLeadVariant lvId={leadVariant.id}>
                     {leadVariant.id}
                 </LinksLeadVariant>
             }

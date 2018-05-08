@@ -102,16 +102,16 @@ const LOCUS_QUERY = gql`
                 variantId
                 # variantChromosome
                 variantPosition
-                leadVariantId
+                lvId
                 # leadVariantChromosome
-                leadVariantPosition
+                lvPos
                 r2
                 selected
             }
             leadVariantDiseases {
                 id
-                leadVariantId
-                leadVariantPosition
+                lvId
+                lvPos
                 # leadVariantChromosome
                 efoId
                 efoName

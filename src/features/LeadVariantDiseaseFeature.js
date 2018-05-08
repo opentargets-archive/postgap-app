@@ -20,7 +20,7 @@ const LeadVariantDiseaseFeature = ({
 
     return (
         <ConnectorPath
-            topX={x(data.leadVariantPosition)}
+            topX={x(data.lvPos)}
             topY={y(1)}
             bottomX={diseaseScale(data.efoName)}
             bottomY={y(0)}

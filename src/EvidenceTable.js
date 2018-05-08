@@ -18,7 +18,7 @@ const renderVariantField = value => (
 );
 
 const renderLeadVariantField = value => (
-    <LinksLeadVariant leadVariantId={value}>{value}</LinksLeadVariant>
+    <LinksLeadVariant lvId={value}>{value}</LinksLeadVariant>
 );
 const renderGeneField = (value, row) => (
     <LinksGene geneName={value} geneId={row.geneId}>
@@ -75,8 +75,8 @@ const COLUMNS = [
             },
             {
                 title: 'Lead Variant',
-                dataIndex: 'leadVariantId',
-                key: 'leadVariantId',
+                dataIndex: 'lvId',
+                key: 'lvId',
                 fixed: 'left',
                 render: renderLeadVariantField,
                 width: 120,

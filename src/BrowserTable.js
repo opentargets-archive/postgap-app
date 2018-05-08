@@ -43,7 +43,7 @@ const LOCUS_TABLE_QUERY = gql`
                 variantId
                 variantChromosome
                 variantPosition
-                leadVariantId
+                lvId
                 efoId
                 efoName
                 otG2VScore
