@@ -62,7 +62,7 @@ class GeneVariantFeatureSet extends React.Component {
                         key={d.id}
                         data={d}
                         xTop={d.geneTss - startDebounced}
-                        xBottom={d.variantPosition - startDebounced}
+                        xBottom={d.vPos - startDebounced}
                         height={80}
                         setClicked={setClicked}
                         dimNonHighlighted={dimNonHighlighted}

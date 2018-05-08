@@ -26,20 +26,17 @@ export const LinkEnsemblGene = ({ geneId, text = 'Ensembl' }) => (
         {text}
     </a>
 );
-export const LinkEnsemblVariant = ({ variantId, text = 'Ensembl' }) => (
+export const LinkEnsemblVariant = ({ vId, text = 'Ensembl' }) => (
     <a
-        href={`http://www.ensembl.org/Homo_sapiens/Variation/Explore?v=${variantId}`}
+        href={`http://www.ensembl.org/Homo_sapiens/Variation/Explore?v=${vId}`}
         target={'_blank'}
     >
         {text}
     </a>
 );
-export const LinkGwasCatalogVariant = ({
-    variantId,
-    text = 'GWAS Catalog',
-}) => (
+export const LinkGwasCatalogVariant = ({ vId, text = 'GWAS Catalog' }) => (
     <a
-        href={`https://www.ebi.ac.uk/gwas/search?query=${variantId}`}
+        href={`https://www.ebi.ac.uk/gwas/search?query=${vId}`}
         target={'_blank'}
     >
         {text}
@@ -78,9 +75,9 @@ export const LinksGene = ({ geneName, geneId, children }) => (
     </Popover>
 );
 
-export const LinksVariant = ({ variantId, children }) => (
-    <Popover content={<LinkEnsemblVariant variantId={variantId} />}>
-        <Link to={`/variant/${variantId}`}>{children}</Link>
+export const LinksVariant = ({ vId, children }) => (
+    <Popover content={<LinkEnsemblVariant vId={vId} />}>
+        <Link to={`/variant/${vId}`}>{children}</Link>
     </Popover>
 );
 
@@ -88,9 +85,9 @@ export const LinksLeadVariant = ({ lvId, children }) => (
     <Popover
         content={
             <React.Fragment>
-                <LinkEnsemblVariant variantId={lvId} />
+                <LinkEnsemblVariant vId={lvId} />
                 <br />
-                <LinkGwasCatalogVariant variantId={lvId} />
+                <LinkGwasCatalogVariant vId={lvId} />
             </React.Fragment>
         }
     >

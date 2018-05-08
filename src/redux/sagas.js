@@ -122,10 +122,10 @@ export const otApi = {
 };
 
 export const ensemblApi = {
-    fetchVariants(variantIds) {
+    fetchVariants(vIds) {
         const url = `${ENSEMBL_API_BASE}${ENSEMBL_API_VARIATION}`;
         const body = {
-            ids: variantIds,
+            ids: vIds,
         };
         return axios.post(url, body).then(response => response.data);
     },

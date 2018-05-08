@@ -31,9 +31,7 @@ const VariantDetail = ({ variant, closeHandler, chromosome }) => {
     return (
         <BaseDetail
             type={'Variant'}
-            title={
-                <LinksVariant variantId={variant.id}>{variant.id}</LinksVariant>
-            }
+            title={<LinksVariant vId={variant.id}>{variant.id}</LinksVariant>}
             closeHandler={closeHandler}
         >
             <Table

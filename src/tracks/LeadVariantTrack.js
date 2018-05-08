@@ -20,8 +20,8 @@ let LeadVariantTrack = ({
                     end={rest.location.end}
                     startDebounced={rest.locationDebounced.startDebounced}
                     endDebounced={rest.locationDebounced.endDebounced}
-                    setClicked={variantId => {
-                        setClicked(variantId, 'leadVariant');
+                    setClicked={vId => {
+                        setClicked(vId, 'leadVariant');
                     }}
                     dimNonHighlighted={isInSelectedState}
                 />

@@ -14,7 +14,7 @@ import DictionaryHelpTerm from './terms/DictionaryHelpTerm';
 
 const renderIntField = value => commaSeparate(value);
 const renderVariantField = value => (
-    <LinksVariant variantId={value}>{value}</LinksVariant>
+    <LinksVariant vId={value}>{value}</LinksVariant>
 );
 
 const renderLeadVariantField = value => (
@@ -66,8 +66,8 @@ const COLUMNS = [
             },
             {
                 title: 'Variant',
-                dataIndex: 'variantId',
-                key: 'variantId',
+                dataIndex: 'vId',
+                key: 'vId',
                 fixed: 'left',
                 render: renderVariantField,
                 width: 100,

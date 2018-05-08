@@ -84,9 +84,9 @@ const LOCUS_QUERY = gql`
                 #     end
                 #     forwardStrand
                 # }
-                variantId
+                vId
                 # variantChromosome
-                variantPosition
+                vPos
                 otG2VScore
                 vep
                 gtex
@@ -98,9 +98,9 @@ const LOCUS_QUERY = gql`
             }
             variantLeadVariants {
                 id
-                variantId
+                vId
                 # variantChromosome
-                variantPosition
+                vPos
                 lvId
                 # leadVariantChromosome
                 lvPos

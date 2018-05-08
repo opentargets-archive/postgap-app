@@ -69,8 +69,8 @@ const GeneVariantDetail = ({ geneVariant, closeHandler }) => {
                         {geneVariant.geneSymbol}
                     </LinksGene>
                     {' - '}
-                    <LinksVariant variantId={geneVariant.variantId}>
-                        {geneVariant.variantId}
+                    <LinksVariant vId={geneVariant.vId}>
+                        {geneVariant.vId}
                     </LinksVariant>
                 </React.Fragment>
             }

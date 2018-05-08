@@ -16,9 +16,9 @@ const DISEASE_TABLE_QUERY = gql`
                 geneSymbol
                 geneChromosome
                 geneTss
-                variantId
+                vId
                 variantChromosome
-                variantPosition
+                vPos
                 lvId
                 efoId
                 efoName
