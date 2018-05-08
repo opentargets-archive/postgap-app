@@ -2,7 +2,12 @@ import React from 'react';
 import { Table, Button, Col, Row, Icon } from 'antd';
 import { CSVLink } from 'react-csv';
 
-import { commaSeparate, renderNonZeroField } from './stringFormatters';
+import {
+    commaSeparate,
+    renderNonZeroField,
+    renderNullableField,
+    renderGtexField,
+} from './stringFormatters';
 import { colors } from './theme';
 import {
     LinksGene,
@@ -110,7 +115,7 @@ const COLUMNS = [
                 title: <DictionaryHelpTerm term={'vep'} label={'VEP'} />,
                 dataIndex: 'vep',
                 key: 'vep',
-                render: renderNonZeroField,
+                render: renderNullableField,
                 width: 100,
                 // sorter: compareNumericField('vep'),
             },
@@ -118,7 +123,7 @@ const COLUMNS = [
                 title: <DictionaryHelpTerm term={'gtex'} label={'GTEx'} />,
                 dataIndex: 'gtex',
                 key: 'gtex',
-                render: renderNonZeroField,
+                render: renderGtexField,
                 width: 100,
                 // sorter: compareNumericField('gtex'),
             },
@@ -166,7 +171,7 @@ const COLUMNS = [
                 ),
                 dataIndex: 'r2',
                 key: 'r2',
-                render: renderNonZeroField,
+                render: renderNullableField,
                 width: 100,
                 // sorter: compareNumericField('r2'),
             },
@@ -181,7 +186,7 @@ const COLUMNS = [
                 ),
                 dataIndex: 'gwasPValue',
                 key: 'gwasPValue',
-                render: renderNonZeroField,
+                render: renderNullableField,
                 width: 100,
                 // sorter: compareNumericField('gwasPValue'),
             },
@@ -194,7 +199,7 @@ const COLUMNS = [
                 ),
                 dataIndex: 'gwasOddsRatio',
                 key: 'gwasOddsRatio',
-                render: renderNonZeroField,
+                render: renderNullableField,
                 width: 100,
                 // sorter: compareNumericField('gwasPValue'),
             },
@@ -289,7 +294,7 @@ class EvidenceTable extends React.Component {
                     columns={COLUMNS}
                     size="small"
                     bordered
-                    scroll={{ x: 1700 }}
+                    scroll={{ x: 2000 }}
                     rowKey={d => d.index}
                     pagination={pagination}
                     onChange={onChange}
