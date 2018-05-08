@@ -44,7 +44,6 @@ const LOCUS_QUERY = gql`
                 end
                 forwardStrand
                 exons
-                tss
                 # canonicalTranscript {
                 #     id
                 #     start
