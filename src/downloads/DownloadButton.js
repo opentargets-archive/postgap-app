@@ -19,6 +19,7 @@ class DownloadButton extends React.Component {
             variables,
             transformer,
             client,
+            filterString,
         } = this.props;
         client
             .query({
@@ -51,7 +52,9 @@ class DownloadButton extends React.Component {
                         .map(d => (typeof d === 'string' ? `"${d}"` : d))
                         .join(separator)
                 );
-                const content = [headersStr].concat(rowsStr).join('\n');
+                const content = [`"${filterString}"`, headersStr]
+                    .concat(rowsStr)
+                    .join('\n');
                 const blob = new Blob([content], {
                     type: 'text/csv;charset=utf-8',
                 });

@@ -289,6 +289,18 @@ class LocusPage extends React.Component {
                 : Number.MAX_SAFE_INTEGER,
         ];
 
+        const filtersArr = [
+            `G2V score within [${filterOtG2VScore}]`,
+            `r2 within [${filterLD}]`,
+            `-log10(GWAS p-value) within [${filterGwasPValue}]`,
+        ];
+        if (filterOtG2VMustHaves.length > 0) {
+            filtersArr.push(
+                `G2V must have evidence from [${filterOtG2VMustHaves}]`
+            );
+        }
+        const filterString = `Filters: ${filtersArr.join(', ')}`;
+
         const isInSelectedState = clickedId;
         return (
             <Query
@@ -409,7 +421,7 @@ class LocusPage extends React.Component {
                                     <Col span={18}>
                                         <Browser
                                             filename={filename}
-                                            filterString={'todo'}
+                                            filterString={filterString}
                                             filterOtG2VScore={filterOtG2VScore}
                                             filterLD={filterLD}
                                             chromosome={chromosome}
@@ -449,9 +461,7 @@ class LocusPage extends React.Component {
                                         <Card bodyStyle={{ padding: 10 }}>
                                             <BrowserTable
                                                 filename={filename}
-                                                filterString={
-                                                    this.props.filterString
-                                                }
+                                                filterString={filterString}
                                                 {...{
                                                     chromosome: chromosomeDebounced,
                                                     start: startDebounced,
