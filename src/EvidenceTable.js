@@ -242,6 +242,8 @@ class EvidenceTable extends React.Component {
             filename,
             pagination,
             onChange,
+            csvDownload,
+            tsvDownload,
         } = this.props;
         const loadingConfig = {
             size: 'large',
@@ -256,37 +258,12 @@ class EvidenceTable extends React.Component {
         let loadingProp = {};
         if (loading) loadingProp = { loading: loadingConfig };
 
-        let downloadData = [...rows];
-        if (filterString) downloadData = [{ efoId: filterString }, ...rows];
-
         return (
             <Col>
                 <Row align="right" style={{ paddingBottom: '5px' }}>
                     <Col align="right">
-                        <CSVLink
-                            data={downloadData}
-                            filename={`${filename}.csv`}
-                            target="_blank"
-                        >
-                            <Button
-                                size="small"
-                                type="primary"
-                                ghost
-                                style={{ marginRight: '5px' }}
-                            >
-                                CSV
-                            </Button>
-                        </CSVLink>
-                        <CSVLink
-                            data={downloadData}
-                            filename={`${filename}.tsv`}
-                            target="_blank"
-                            separator={'\t'}
-                        >
-                            <Button size="small" type="primary" ghost>
-                                TSV
-                            </Button>
-                        </CSVLink>
+                        {csvDownload}
+                        {tsvDownload}
                     </Col>
                 </Row>
                 <Table

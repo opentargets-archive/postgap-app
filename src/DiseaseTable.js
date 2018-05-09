@@ -3,6 +3,7 @@ import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
 import EvidenceTable from './EvidenceTable';
+import DownloadButton from './downloads/DownloadButton';
 
 const DISEASE_TABLE_QUERY = gql`
     query DiseaseTableQuery($efoId: String, $offset: Int, $limit: Int) {
@@ -52,6 +53,7 @@ const DiseaseTable = props => (
         fetchPolicy="cache-and-network"
     >
         {({ loading, error, data, fetchMore }) => {
+            const { filename } = props;
             if (loading) return <p>Loading...</p>;
             if (error) return <p>Error :(</p>;
 
@@ -66,11 +68,41 @@ const DiseaseTable = props => (
                     data.diseaseTable.offset / pagination.pageSize + 1;
             }
 
+            const csvDownload = (
+                <DownloadButton
+                    filename={filename}
+                    fileType={'csv'}
+                    query={DISEASE_TABLE_QUERY}
+                    transformer={response => response.data.diseaseTable.rows}
+                    variables={{
+                        efoId: props.efoId,
+                        offset: 0,
+                        limit: 1000000,
+                    }}
+                />
+            );
+
+            const tsvDownload = (
+                <DownloadButton
+                    filename={filename}
+                    fileType={'tsv'}
+                    query={DISEASE_TABLE_QUERY}
+                    transformer={response => response.data.diseaseTable.rows}
+                    variables={{
+                        efoId: props.efoId,
+                        offset: 0,
+                        limit: 1000000,
+                    }}
+                />
+            );
+
             return (
                 <EvidenceTable
                     {...props}
                     rows={data.diseaseTable.rows}
                     pagination={pagination}
+                    csvDownload={csvDownload}
+                    tsvDownload={tsvDownload}
                     onChange={(pagination, filters, sorter) => {
                         // TODO: support sorting and possibly filtering
                         fetchMore({
