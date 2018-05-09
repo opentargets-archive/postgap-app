@@ -88,7 +88,9 @@ const LOCUS_QUERY = gql`
                 # variantChromosome
                 vPos
                 otG2VScore
+                otG2VReason
                 vep
+                vepTerms
                 gtex
                 pchic
                 fantom5

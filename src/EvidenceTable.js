@@ -7,6 +7,8 @@ import {
     renderNonZeroField,
     renderNullableField,
     renderGtexField,
+    renderVEPField,
+    renderVEPTermsField,
 } from './stringFormatters';
 import { colors } from './theme';
 import {
@@ -103,7 +105,10 @@ const COLUMNS = [
         children: [
             {
                 title: (
-                    <DictionaryHelpTerm term={'otscore'} label={'G2V Score'} />
+                    <DictionaryHelpTerm
+                        term={'otg2vscore'}
+                        label={'G2V Score'}
+                    />
                 ),
                 dataIndex: 'otG2VScore',
                 key: 'otG2VScore',
@@ -112,11 +117,36 @@ const COLUMNS = [
                 // sorter: compareNumericField('otScore'),
             },
             {
+                title: (
+                    <DictionaryHelpTerm
+                        term={'otg2vreason'}
+                        label={'G2V Reason'}
+                    />
+                ),
+                dataIndex: 'otG2VReason',
+                key: 'otG2VReason',
+                width: 120,
+                // sorter: compareNumericField('otScore'),
+            },
+            {
                 title: <DictionaryHelpTerm term={'vep'} label={'VEP'} />,
                 dataIndex: 'vep',
                 key: 'vep',
-                render: renderNullableField,
+                render: renderVEPField,
                 width: 100,
+                // sorter: compareNumericField('vep'),
+            },
+            {
+                title: (
+                    <DictionaryHelpTerm
+                        term={'vepterms'}
+                        label={'VEP Consequences'}
+                    />
+                ),
+                dataIndex: 'vepTerms',
+                key: 'vepTerms',
+                render: renderVEPTermsField,
+                width: 180,
                 // sorter: compareNumericField('vep'),
             },
             {
@@ -271,7 +301,7 @@ class EvidenceTable extends React.Component {
                     columns={COLUMNS}
                     size="small"
                     bordered
-                    scroll={{ x: 2000 }}
+                    scroll={{ x: 2300 }}
                     rowKey={d => d.index}
                     pagination={pagination}
                     onChange={onChange}

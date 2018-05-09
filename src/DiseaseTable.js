@@ -24,7 +24,9 @@ const DISEASE_TABLE_QUERY = gql`
                 efoId
                 efoName
                 otG2VScore
+                otG2VReason
                 vep
+                vepTerms
                 gtex
                 pchic
                 fantom5
