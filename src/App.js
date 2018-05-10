@@ -30,7 +30,10 @@ class App extends React.Component {
                         <Route exact path="/" component={HomePage} />
                         <Route path="/disease/:efoId" component={DiseasePage} />
                         <Route path="/gene/:geneId" component={GenePage} />
-                        <Route path="/variant/:vId" component={VariantPage} />
+                        <Route
+                            path="/variant/:variantId"
+                            component={VariantPage}
+                        />
                         <Route path="/locus" component={LocusPage} />
                     </Layout.Content>
 
