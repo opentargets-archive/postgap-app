@@ -38,6 +38,7 @@ const LOCUS_QUERY = gql`
             genes {
                 id
                 symbol
+                description
                 chromosome
                 tss
                 start
