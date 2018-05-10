@@ -27,7 +27,7 @@ export const renderNullableField = value =>
 const GTEX_SIGNIFICANCE_THRESHOLD = 0.999975;
 export const renderGtexField = value =>
     value > GTEX_SIGNIFICANCE_THRESHOLD ? (
-        value.toPrecision(3)
+        value.toPrecision(6)
     ) : (
         <NotSignificant />
     );
