@@ -5,6 +5,8 @@ const DICTIONARY = {
         'The Open Targets G2V (gene-to-variant) score is an aggregation of the VEP, GTEx, PCHiC, DHS, Fantom5 and Nearest gene-to-variant subscores. It varies from 0 to 1.',
     otg2vreason:
         'The Open Targets G2V (gene-to-variant) score is an aggregation of the VEP, GTEx, PCHiC, DHS, Fantom5 and Nearest gene-to-variant subscores. This field explains which subscore contributed to the G2V score, with the relative importance (1 for VEP, 2 for functional genomics, 3 for nearest gene).',
+    otg2vmusthave:
+        'You can filter for the presence of significant VEP, GTEx, PCHiC, DHS, Fantom5 and Nearest gene-to-variant subscores. When multiple filters are applied, ALL must be true for an association to be returned.',
     vep:
         'The Variant Effect Predictor (VEP) score is the functional consequence of the variant, e.g. missense, transcript ablation, mapped to a numeric value. It varies from 0 to 1.',
     vepterms:

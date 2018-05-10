@@ -1,6 +1,8 @@
 import React from 'react';
 import { Card, Row, Col, Slider } from 'antd';
 
+import DictionaryHelpTerm from '../terms/DictionaryHelpTerm';
+
 class LeadVariantDiseaseFilter extends React.Component {
     componentDidUpdate(prevProps) {
         const { interval, setFilterGwasPValue, max } = this.props;
@@ -45,7 +47,14 @@ class LeadVariantDiseaseFilter extends React.Component {
                 </Row>
                 <hr />
                 <h4>
-                    -log<sub>10</sub>(GWAS p-value)
+                    <DictionaryHelpTerm
+                        term="gwaspvalue"
+                        label={
+                            <React.Fragment>
+                                -log<sub>10</sub>(GWAS p-value)
+                            </React.Fragment>
+                        }
+                    />
                 </h4>
                 <div
                     style={{
