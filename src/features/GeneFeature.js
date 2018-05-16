@@ -47,16 +47,15 @@ class GeneFeature extends React.Component {
         const textColor = highlight
             ? 'black'
             : dimNonHighlighted ? 'lightgrey' : 'black';
-        const spitWidth =
-            x(data.canonicalTranscript.end) - x(data.canonicalTranscript.start);
+        const spitWidth = x(data.end) - x(data.start);
         const backgroundWidth = Math.max(textWidth, spitWidth);
         const backgroundHeight = textBottom - yExonTop;
 
         const spit = (
             <line
-                x1={x(data.canonicalTranscript.start)}
+                x1={x(data.start)}
                 y1={ySpit}
-                x2={x(data.canonicalTranscript.end)}
+                x2={x(data.end)}
                 y2={ySpit}
                 style={{
                     stroke: geneColor,
@@ -65,12 +64,12 @@ class GeneFeature extends React.Component {
                 }}
             />
         );
-        const exons = data.canonicalTranscript.exons.map(d => (
+        const exons = data.exons.map(([start, end], i) => (
             <rect
-                key={d.id}
-                x={x(d.start)}
+                key={i}
+                x={x(start)}
                 y={yExonTop}
-                width={x(d.end) - x(d.start)}
+                width={x(end) - x(start)}
                 height={exonHeight}
                 style={{
                     stroke: geneColor,
@@ -85,7 +84,7 @@ class GeneFeature extends React.Component {
                 ref={t => {
                     this.text = t;
                 }}
-                x={x(data.canonicalTranscript.start)}
+                x={x(data.start)}
                 y={yText}
                 style={{
                     fill: textColor,
@@ -99,7 +98,7 @@ class GeneFeature extends React.Component {
         const background = textWidth ? (
             <rect
                 style={{ fill: backgroundColor, stroke: geneColor }}
-                x={x(data.canonicalTranscript.start) - margin}
+                x={x(data.start) - margin}
                 y={yExonTop - margin}
                 width={backgroundWidth + 2 * margin}
                 height={backgroundHeight + 2 * margin}

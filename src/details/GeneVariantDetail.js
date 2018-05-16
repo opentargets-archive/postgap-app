@@ -3,7 +3,12 @@ import { Table } from 'antd';
 import BaseDetail from './BaseDetail';
 import DictionaryHelpTerm from '../terms/DictionaryHelpTerm';
 import { LinksGene, LinksVariant } from '../links';
-import { renderNonZeroField } from '../stringFormatters';
+import {
+    renderNonZeroField,
+    renderVEPField,
+    renderVEPTermsField,
+    renderGtexField,
+} from '../stringFormatters';
 
 const GeneVariantDetail = ({ geneVariant, closeHandler }) => {
     const d = geneVariant;
@@ -11,32 +16,42 @@ const GeneVariantDetail = ({ geneVariant, closeHandler }) => {
         {
             key: 'otG2VScore',
             label: 'G2V Score',
-            value: d.otG2VScore,
+            value: renderNonZeroField(d.otG2VScore),
+        },
+        {
+            key: 'otG2VReason',
+            label: 'G2V Reason',
+            value: d.otG2VReason,
         },
         {
             key: 'vep',
             label: 'VEP',
-            value: d.vep,
+            value: renderVEPField(d.vep),
+        },
+        {
+            key: 'vepTerms',
+            label: 'VEP Consequences',
+            value: renderVEPTermsField(d.vepTerms),
         },
         {
             key: 'gtex',
             label: 'GTEx',
-            value: d.gtex,
+            value: renderGtexField(d.gtex),
         },
         {
             key: 'pchic',
             label: 'PCHiC',
-            value: d.pchic,
+            value: renderNonZeroField(d.pchic),
         },
         {
             key: 'dhs',
             label: 'DHS',
-            value: d.dhs,
+            value: renderNonZeroField(d.dhs),
         },
         {
             key: 'fantom5',
             label: 'Fantom5',
-            value: d.fantom5,
+            value: renderNonZeroField(d.fantom5),
         },
     ];
     const tableColumns = [
@@ -54,7 +69,7 @@ const GeneVariantDetail = ({ geneVariant, closeHandler }) => {
             title: 'Value',
             dataIndex: 'value',
             width: 100,
-            render: renderNonZeroField,
+            // render: renderNonZeroField,
         },
     ];
     return (
@@ -69,8 +84,8 @@ const GeneVariantDetail = ({ geneVariant, closeHandler }) => {
                         {geneVariant.geneSymbol}
                     </LinksGene>
                     {' - '}
-                    <LinksVariant variantId={geneVariant.variantId}>
-                        {geneVariant.variantId}
+                    <LinksVariant vId={geneVariant.vId}>
+                        {geneVariant.vId}
                     </LinksVariant>
                 </React.Fragment>
             }

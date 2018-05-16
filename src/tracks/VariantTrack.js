@@ -13,8 +13,8 @@ const VariantTrack = ({ variants, isInSelectedState, setClicked, ...rest }) => {
                     end={rest.location.end}
                     startDebounced={rest.locationDebounced.startDebounced}
                     endDebounced={rest.locationDebounced.endDebounced}
-                    setClicked={variantId => {
-                        setClicked(variantId, 'variant');
+                    setClicked={vId => {
+                        setClicked(vId, 'variant');
                     }}
                     dimNonHighlighted={isInSelectedState}
                 />

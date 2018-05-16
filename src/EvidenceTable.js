@@ -2,7 +2,14 @@ import React from 'react';
 import { Table, Button, Col, Row, Icon } from 'antd';
 import { CSVLink } from 'react-csv';
 
-import { commaSeparate, renderNonZeroField } from './stringFormatters';
+import {
+    commaSeparate,
+    renderNonZeroField,
+    renderNullableField,
+    renderGtexField,
+    renderVEPField,
+    renderVEPTermsField,
+} from './stringFormatters';
 import { colors } from './theme';
 import {
     LinksGene,
@@ -14,11 +21,11 @@ import DictionaryHelpTerm from './terms/DictionaryHelpTerm';
 
 const renderIntField = value => commaSeparate(value);
 const renderVariantField = value => (
-    <LinksVariant variantId={value}>{value}</LinksVariant>
+    <LinksVariant vId={value}>{value}</LinksVariant>
 );
 
 const renderLeadVariantField = value => (
-    <LinksLeadVariant leadVariantId={value}>{value}</LinksLeadVariant>
+    <LinksLeadVariant lvId={value}>{value}</LinksLeadVariant>
 );
 const renderGeneField = (value, row) => (
     <LinksGene geneName={value} geneId={row.geneId}>
@@ -66,8 +73,8 @@ const COLUMNS = [
             },
             {
                 title: 'Variant',
-                dataIndex: 'variantId',
-                key: 'variantId',
+                dataIndex: 'vId',
+                key: 'vId',
                 fixed: 'left',
                 render: renderVariantField,
                 width: 100,
@@ -75,8 +82,8 @@ const COLUMNS = [
             },
             {
                 title: 'Lead Variant',
-                dataIndex: 'leadVariantId',
-                key: 'leadVariantId',
+                dataIndex: 'lvId',
+                key: 'lvId',
                 fixed: 'left',
                 render: renderLeadVariantField,
                 width: 120,
@@ -98,7 +105,10 @@ const COLUMNS = [
         children: [
             {
                 title: (
-                    <DictionaryHelpTerm term={'otscore'} label={'G2V Score'} />
+                    <DictionaryHelpTerm
+                        term={'otg2vscore'}
+                        label={'G2V Score'}
+                    />
                 ),
                 dataIndex: 'otG2VScore',
                 key: 'otG2VScore',
@@ -107,18 +117,43 @@ const COLUMNS = [
                 // sorter: compareNumericField('otScore'),
             },
             {
+                title: (
+                    <DictionaryHelpTerm
+                        term={'otg2vreason'}
+                        label={'G2V Reason'}
+                    />
+                ),
+                dataIndex: 'otG2VReason',
+                key: 'otG2VReason',
+                width: 120,
+                // sorter: compareNumericField('otScore'),
+            },
+            {
                 title: <DictionaryHelpTerm term={'vep'} label={'VEP'} />,
                 dataIndex: 'vep',
                 key: 'vep',
-                render: renderNonZeroField,
+                render: renderVEPField,
                 width: 100,
+                // sorter: compareNumericField('vep'),
+            },
+            {
+                title: (
+                    <DictionaryHelpTerm
+                        term={'vepterms'}
+                        label={'VEP Consequences'}
+                    />
+                ),
+                dataIndex: 'vepTerms',
+                key: 'vepTerms',
+                render: renderVEPTermsField,
+                width: 180,
                 // sorter: compareNumericField('vep'),
             },
             {
                 title: <DictionaryHelpTerm term={'gtex'} label={'GTEx'} />,
                 dataIndex: 'gtex',
                 key: 'gtex',
-                render: renderNonZeroField,
+                render: renderGtexField,
                 width: 100,
                 // sorter: compareNumericField('gtex'),
             },
@@ -166,7 +201,7 @@ const COLUMNS = [
                 ),
                 dataIndex: 'r2',
                 key: 'r2',
-                render: renderNonZeroField,
+                render: renderNullableField,
                 width: 100,
                 // sorter: compareNumericField('r2'),
             },
@@ -181,7 +216,7 @@ const COLUMNS = [
                 ),
                 dataIndex: 'gwasPValue',
                 key: 'gwasPValue',
-                render: renderNonZeroField,
+                render: renderNullableField,
                 width: 100,
                 // sorter: compareNumericField('gwasPValue'),
             },
@@ -194,7 +229,7 @@ const COLUMNS = [
                 ),
                 dataIndex: 'gwasOddsRatio',
                 key: 'gwasOddsRatio',
-                render: renderNonZeroField,
+                render: renderNullableField,
                 width: 100,
                 // sorter: compareNumericField('gwasPValue'),
             },
@@ -237,6 +272,8 @@ class EvidenceTable extends React.Component {
             filename,
             pagination,
             onChange,
+            csvDownload,
+            tsvDownload,
         } = this.props;
         const loadingConfig = {
             size: 'large',
@@ -251,37 +288,12 @@ class EvidenceTable extends React.Component {
         let loadingProp = {};
         if (loading) loadingProp = { loading: loadingConfig };
 
-        let downloadData = [...rows];
-        if (filterString) downloadData = [{ efoId: filterString }, ...rows];
-
         return (
             <Col>
                 <Row align="right" style={{ paddingBottom: '5px' }}>
                     <Col align="right">
-                        <CSVLink
-                            data={downloadData}
-                            filename={`${filename}.csv`}
-                            target="_blank"
-                        >
-                            <Button
-                                size="small"
-                                type="primary"
-                                ghost
-                                style={{ marginRight: '5px' }}
-                            >
-                                CSV
-                            </Button>
-                        </CSVLink>
-                        <CSVLink
-                            data={downloadData}
-                            filename={`${filename}.tsv`}
-                            target="_blank"
-                            separator={'\t'}
-                        >
-                            <Button size="small" type="primary" ghost>
-                                TSV
-                            </Button>
-                        </CSVLink>
+                        {csvDownload}
+                        {tsvDownload}
                     </Col>
                 </Row>
                 <Table
@@ -289,7 +301,7 @@ class EvidenceTable extends React.Component {
                     columns={COLUMNS}
                     size="small"
                     bordered
-                    scroll={{ x: 1700 }}
+                    scroll={{ x: 2300 }}
                     rowKey={d => d.index}
                     pagination={pagination}
                     onChange={onChange}
