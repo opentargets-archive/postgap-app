@@ -6,6 +6,11 @@ GoogleAnalytics.initialize('UA-101860681-4');
 // see https://github.com/react-ga/react-ga/issues/122
 
 const withTracker = (WrappedComponent, options = {}) => {
+    // only track on production
+    if (window.location.hostname !== 'postgap.opentargets.io') {
+        return WrappedComponent;
+    }
+
     const trackPage = page => {
         GoogleAnalytics.set({
             page,
