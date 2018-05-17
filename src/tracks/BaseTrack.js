@@ -1,9 +1,6 @@
 import React from 'react';
 import { VictoryZoomContainer, VictoryAxis, VictoryChart } from 'victory';
 import { withParentSize } from '@vx/responsive';
-import { connect } from 'react-redux';
-
-import { selectors } from '../redux/store';
 
 class BaseTrack extends React.Component {
   render() {
@@ -49,14 +46,6 @@ class BaseTrack extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    chromosome: selectors.getChromosome(state),
-    chromosomeLength: selectors.getChromosomeLength(state),
-    location: selectors.getLocation(state),
-  };
-};
-
-BaseTrack = connect(mapStateToProps)(withParentSize(BaseTrack));
+BaseTrack = withParentSize(BaseTrack);
 
 export default BaseTrack;

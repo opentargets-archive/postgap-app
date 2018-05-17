@@ -2,28 +2,19 @@ import React from 'react';
 
 import { colors } from '../theme';
 
-const DiseaseVerticalFeature = ({
-  scale,
-  data,
-  diseaseScale,
-  slotOffset,
-  slotHeight,
-  trackHeight,
-  highlight,
-  dimNonHighlighted,
-}) => {
-  const diseaseColor = highlight
-    ? colors.secondary
-    : dimNonHighlighted ? 'lightgrey' : 'grey';
-  return (
-    <line
-      x1={diseaseScale(data.efoName)}
-      y1={slotOffset + 10}
-      x2={diseaseScale(data.efoName)}
-      y2={0}
-      style={{ stroke: diseaseColor, strokeWidth: 1 }}
-    />
-  );
+const DiseaseVerticalFeature = ({ x, y, data, dimNonHighlighted }) => {
+    const diseaseColor = data.selected
+        ? colors.secondary
+        : dimNonHighlighted ? 'lightgrey' : 'grey';
+    return (
+        <line
+            x1={x}
+            y1={y}
+            x2={x}
+            y2={0}
+            style={{ stroke: diseaseColor, strokeWidth: 1 }}
+        />
+    );
 };
 
 export default DiseaseVerticalFeature;

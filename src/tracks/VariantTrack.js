@@ -1,58 +1,26 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
 import BaseTrack from './BaseTrack';
-import VariantFeature from '../features/VariantFeature';
-import {
-  setHoverEntityId,
-  setClickedEntityId,
-  ENTITY_TYPE,
-  selectors,
-} from '../redux/store';
+import { DebouncedVariantFeatureSet } from '../features/VariantFeature';
 
-let VariantTrack = ({
-  variants,
-  isInteractive,
-  setHoverId,
-  setClickedId,
-  ...rest
-}) => {
-  const handlers = { setHoverId, setClickedId };
-  return (
-    <div style={{ position: 'absolute', width: '100%', height: '100%' }}>
-      <BaseTrack {...rest}>
-        {variants.map(d => (
-          <VariantFeature
-            key={d.id}
-            data={d}
-            {...handlers}
-            highlight={d.interactive}
-            dimNonHighlighted={isInteractive}
-          />
-        ))}
-      </BaseTrack>
-    </div>
-  );
+const VariantTrack = ({ variants, isInSelectedState, setClicked, ...rest }) => {
+    return (
+        <div style={{ position: 'absolute', width: '100%', height: '100%' }}>
+            <BaseTrack {...rest}>
+                <DebouncedVariantFeatureSet
+                    variants={variants}
+                    start={rest.location.start}
+                    end={rest.location.end}
+                    startDebounced={rest.locationDebounced.startDebounced}
+                    endDebounced={rest.locationDebounced.endDebounced}
+                    setClicked={vId => {
+                        setClicked(vId, 'variant');
+                    }}
+                    dimNonHighlighted={isInSelectedState}
+                />
+            </BaseTrack>
+        </div>
+    );
 };
-
-const mapStateToProps = state => {
-  return {
-    variants: selectors.getVariantsInteractive(state),
-    isInteractive: selectors.getIsInteractive(state),
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    setHoverId: entityId =>
-      dispatch(setHoverEntityId({ entityType: ENTITY_TYPE.VARIANT, entityId })),
-    setClickedId: entityId =>
-      dispatch(
-        setClickedEntityId({ entityType: ENTITY_TYPE.VARIANT, entityId })
-      ),
-  };
-};
-
-VariantTrack = connect(mapStateToProps, mapDispatchToProps)(VariantTrack);
 
 export default VariantTrack;

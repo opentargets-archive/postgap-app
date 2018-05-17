@@ -6,66 +6,66 @@ import { LinksGene } from '../links';
 import { underscoresToSpaces } from '../stringFormatters';
 
 const GeneDetail = ({ gene, closeHandler }) => {
-  if (gene) {
-    const d = gene;
-    const tableData = [
-      {
-        key: 'geneDescription',
-        label: 'Description',
-        value: d.geneDescription,
-      },
-      // {
-      //   key: 'location',
-      //   label: 'Location',
-      //   value: `${d.chromosome}:${commaSeparate(d.start)}-${commaSeparate(d.end)}`,
-      // },
-      // {
-      //   key: 'strand',
-      //   label: 'Strand',
-      //   value: `${d.strand === 1 ? 'forward' : 'reverse'}`,
-      // },
-      {
-        key: 'biotype',
-        label: 'Biotype',
-        value: underscoresToSpaces(d.biotype),
-      },
-    ];
-    const tableColumns = [
-      {
-        key: 'label',
-        title: 'Label',
-        dataIndex: 'label',
-        width: 100,
-      },
-      {
-        key: 'value',
-        title: 'Value',
-        dataIndex: 'value',
-        width: 100,
-      },
-    ];
-    return (
-      <BaseDetail
-        type={'Gene'}
-        title={
-          <LinksGene geneName={gene.name} geneId={gene.id}>
-            {gene.name}
-          </LinksGene>
-        }
-        closeHandler={closeHandler}
-      >
-        <Table
-          dataSource={tableData}
-          columns={tableColumns}
-          size="small"
-          pagination={false}
-          showHeader={false}
-        />
-      </BaseDetail>
-    );
-  } else {
-    return null;
-  }
+    if (gene) {
+        const d = gene;
+        const tableData = [
+            {
+                key: 'description',
+                label: 'Description',
+                value: d.description,
+            },
+            // {
+            //   key: 'location',
+            //   label: 'Location',
+            //   value: `${d.chromosome}:${commaSeparate(d.start)}-${commaSeparate(d.end)}`,
+            // },
+            // {
+            //   key: 'strand',
+            //   label: 'Strand',
+            //   value: `${d.strand === 1 ? 'forward' : 'reverse'}`,
+            // },
+            // {
+            //   key: 'biotype',
+            //   label: 'Biotype',
+            //   value: underscoresToSpaces(d.biotype),
+            // },
+        ];
+        const tableColumns = [
+            {
+                key: 'label',
+                title: 'Label',
+                dataIndex: 'label',
+                width: 100,
+            },
+            {
+                key: 'value',
+                title: 'Value',
+                dataIndex: 'value',
+                width: 100,
+            },
+        ];
+        return (
+            <BaseDetail
+                type={'Gene'}
+                title={
+                    <LinksGene geneName={gene.symbol} geneId={gene.id}>
+                        {gene.symbol}
+                    </LinksGene>
+                }
+                closeHandler={closeHandler}
+            >
+                <Table
+                    dataSource={tableData}
+                    columns={tableColumns}
+                    size="small"
+                    pagination={false}
+                    showHeader={false}
+                />
+            </BaseDetail>
+        );
+    } else {
+        return null;
+    }
 };
 
 export default GeneDetail;
