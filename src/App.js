@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Layout } from 'antd';
 import './App.css';
 
+import withPageAnalytics from './withPageAnalytics';
 import HomePage from './pages/HomePage';
 import DiseasePage from './pages/DiseasePage';
 import GenePage from './pages/GenePage';
@@ -27,14 +28,27 @@ class App extends React.Component {
                             minHeight: 'calc(100vh - 90px - 200px)', // Banner=90; Footer=200
                         }}
                     >
-                        <Route exact path="/" component={HomePage} />
-                        <Route path="/disease/:efoId" component={DiseasePage} />
-                        <Route path="/gene/:geneId" component={GenePage} />
+                        <Route
+                            exact
+                            path="/"
+                            component={withPageAnalytics(HomePage)}
+                        />
+                        <Route
+                            path="/disease/:efoId"
+                            component={withPageAnalytics(DiseasePage)}
+                        />
+                        <Route
+                            path="/gene/:geneId"
+                            component={withPageAnalytics(GenePage)}
+                        />
                         <Route
                             path="/variant/:variantId"
                             component={VariantPage}
                         />
-                        <Route path="/locus" component={LocusPage} />
+                        <Route
+                            path="/locus"
+                            component={withPageAnalytics(LocusPage)}
+                        />
                     </Layout.Content>
 
                     <Switch>
