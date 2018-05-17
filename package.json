@@ -32,10 +32,6 @@
     "react-styleguidist": "^6.2.4",
     "react-svg-morph": "^0.2.1",
     "react-svg-text": "^0.1.2",
-    "recompose": "^0.26.0",
-    "redux": "^3.7.2",
-    "redux-saga": "^0.16.0",
-    "reselect": "^3.0.1",
     "victory": "^0.25.4",
     "victory-chart": "^25.0.5",
     "victory-core": "^21.0.3",
@@ -56,8 +52,7 @@
     "cz-conventional-changelog": "^2.1.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "react-app-rewire-less": "^2.1.1",
-    "react-app-rewired": "^1.5.0",
-    "redux-devtools-extension": "^2.13.2"
+    "react-app-rewired": "^1.5.0"
   },
   "config": {
     "commitizen": {
