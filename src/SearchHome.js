@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { Select, Spin } from 'antd';
 import { debounce } from 'lodash';
 
+import reportAnalyticsEvent from './reportAnalyticsEvent';
 import { otApi } from './redux/sagas';
 import { colors } from './theme';
 
@@ -35,6 +36,12 @@ class SearchHome extends React.Component {
         const { client } = this.props;
         // only query if at least three characters have been typed
         if (value.length > 2) {
+            reportAnalyticsEvent({
+                category: 'Search',
+                action: 'Entered query string',
+                value,
+            });
+
             // reset options
             this.setState({ data: [], options: [], fetching: true });
 
@@ -75,6 +82,14 @@ class SearchHome extends React.Component {
         if (keys.length === 1) {
             const key = keys[0];
             const item = this.state.options.find(item => item.id === key);
+
+            reportAnalyticsEvent({
+                category: 'Search',
+                action: 'Selected option',
+                label: item.type,
+                value: item.id,
+            });
+
             switch (item.type) {
                 case 'target':
                     this.props.history.push({

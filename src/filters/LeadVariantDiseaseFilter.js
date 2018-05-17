@@ -1,7 +1,14 @@
 import React from 'react';
 import { Card, Row, Col, Slider } from 'antd';
+import _ from 'lodash';
 
 import DictionaryHelpTerm from '../terms/DictionaryHelpTerm';
+import reportAnalyticsEvent from '../reportAnalyticsEvent';
+
+const reportAnalyticsGwasPValue = _.debounce(
+    options => reportAnalyticsEvent(options),
+    500
+);
 
 class LeadVariantDiseaseFilter extends React.Component {
     componentDidUpdate(prevProps) {
@@ -75,6 +82,11 @@ class LeadVariantDiseaseFilter extends React.Component {
                         value={interval}
                         onChange={value => {
                             setFilterGwasPValue(value);
+                            reportAnalyticsGwasPValue({
+                                category: 'Locus',
+                                action: 'Filtered by GWAS p-value',
+                                label: `[${value}]`,
+                            });
                         }}
                     />
                 </div>

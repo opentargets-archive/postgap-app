@@ -1,7 +1,9 @@
 import React from 'react';
 import { Card, Row, Col, Checkbox, Slider } from 'antd';
+import _ from 'lodash';
 
 import DictionaryHelpTerm from '../terms/DictionaryHelpTerm';
+import reportAnalyticsEvent from '../reportAnalyticsEvent';
 
 const checkboxOptions = [
     { label: 'VEP', value: 'vep' },
@@ -11,6 +13,11 @@ const checkboxOptions = [
     { label: 'Fantom5', value: 'fantom5' },
 ];
 
+const reportAnalyticsG2VScore = _.debounce(
+    options => reportAnalyticsEvent(options),
+    500
+);
+
 let GeneVariantFilter = ({
     interval,
     g2VMustHaves,
@@ -19,6 +26,13 @@ let GeneVariantFilter = ({
 }) => {
     const changeHandler = value => {
         setFilterG2VMustHaves(value);
+        if (value && value.length > 0) {
+            reportAnalyticsEvent({
+                category: 'Locus',
+                action: 'Filtered by G2V must haves',
+                label: `[${value}]`,
+            });
+        }
     };
     return (
         <Card bodyStyle={{ padding: 10 }} bordered={false}>
@@ -58,6 +72,11 @@ let GeneVariantFilter = ({
                             defaultValue={interval}
                             onChange={value => {
                                 setFilterG2VScore(value);
+                                reportAnalyticsG2VScore({
+                                    category: 'Locus',
+                                    action: 'Filtered by G2V score',
+                                    label: `[${value}]`,
+                                });
                             }}
                         />
                     </div>

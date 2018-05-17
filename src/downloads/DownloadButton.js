@@ -3,6 +3,8 @@ import { Button } from 'antd';
 import { withApollo } from 'react-apollo';
 import FileSaver from 'file-saver';
 
+import reportAnalyticsEvent from '../reportAnalyticsEvent';
+
 class DownloadButton extends React.Component {
     constructor() {
         super();
@@ -21,6 +23,11 @@ class DownloadButton extends React.Component {
             client,
             filterString,
         } = this.props;
+        reportAnalyticsEvent({
+            category: 'efoId' in variables ? 'Disease' : 'Locus',
+            action: 'Downloaded table',
+            label: fileType,
+        });
         client
             .query({
                 query,

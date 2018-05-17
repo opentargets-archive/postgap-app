@@ -5,6 +5,7 @@ import * as d3 from 'd3';
 import FileSaver from 'file-saver';
 import _ from 'lodash';
 
+import reportAnalyticsEvent from './reportAnalyticsEvent';
 import GeneTrack, {
     GENE_SLOT_HEIGHT,
     GENE_TRACK_PADDING,
@@ -70,6 +71,12 @@ class Browser extends React.Component {
 
     onDownloadClick() {
         const { chromosome, start, end, filename, filterString } = this.props;
+
+        reportAnalyticsEvent({
+            category: 'Locus',
+            action: 'Downloaded visualisation',
+            label: `${chromosome}:${start}-${end}`,
+        });
 
         // grab all the tracks
         const tracks = d3.selectAll('.VictoryContainer > svg');

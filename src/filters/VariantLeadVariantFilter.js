@@ -1,7 +1,14 @@
 import React from 'react';
 import { Card, Row, Col, Slider } from 'antd';
+import _ from 'lodash';
 
 import DictionaryHelpTerm from '../terms/DictionaryHelpTerm';
+import reportAnalyticsEvent from '../reportAnalyticsEvent';
+
+const reportAnalyticsLD = _.debounce(
+    options => reportAnalyticsEvent(options),
+    500
+);
 
 let VariantLeadVariantFilter = ({ interval, setFilterLD }) => {
     return (
@@ -36,6 +43,11 @@ let VariantLeadVariantFilter = ({ interval, setFilterLD }) => {
                     defaultValue={interval}
                     onChange={value => {
                         setFilterLD(value);
+                        reportAnalyticsLD({
+                            category: 'Locus',
+                            action: 'Filtered by LD',
+                            label: `[${value}]`,
+                        });
                     }}
                 />
             </div>
