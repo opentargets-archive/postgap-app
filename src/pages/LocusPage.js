@@ -11,124 +11,7 @@ import VariantLeadVariantFilter from '../filters/VariantLeadVariantFilter';
 import DetailPanel from '../DetailPanel';
 import LeadVariantDiseaseFilter from '../filters/LeadVariantDiseaseFilter';
 import GeneVariantFilter from '../filters/GeneVariantFilter';
-
-const LOCUS_QUERY = gql`
-    query LocusBrowserQuery(
-        $chromosome: String
-        $start: Int
-        $end: Int
-        $g2VMustHaves: [String]
-        $g2VScore: [Float]
-        $r2: [Float]
-        $gwasPValue: [Float]
-        $selectedId: String
-        $selectedType: String
-    ) {
-        locus(
-            chromosome: $chromosome
-            start: $start
-            end: $end
-            g2VMustHaves: $g2VMustHaves
-            g2VScore: $g2VScore
-            r2: $r2
-            gwasPValue: $gwasPValue
-            selectedId: $selectedId
-            selectedType: $selectedType
-        ) {
-            genes {
-                id
-                symbol
-                description
-                chromosome
-                tss
-                start
-                end
-                forwardStrand
-                exons
-                # canonicalTranscript {
-                #     id
-                #     start
-                #     end
-                #     forwardStrand
-                #     exons
-                #     tss
-                #     # translationStart
-                #     # translationEnd
-                # }
-                selected
-            }
-            variants {
-                id
-                # chromosome
-                position
-                selected
-            }
-            leadVariants {
-                id
-                # chromosome
-                position
-                selected
-            }
-            diseases {
-                id
-                name
-                selected
-            }
-            geneVariants {
-                id
-                geneId
-                geneSymbol
-                # geneChromosome
-                geneTss
-                # canonicalTranscript {
-                #     start
-                #     end
-                #     forwardStrand
-                # }
-                vId
-                # variantChromosome
-                vPos
-                otG2VScore
-                otG2VReason
-                vep
-                vepTerms
-                gtex
-                pchic
-                fantom5
-                dhs
-                nearest
-                selected
-            }
-            variantLeadVariants {
-                id
-                vId
-                # variantChromosome
-                vPos
-                lvId
-                # leadVariantChromosome
-                lvPos
-                r2
-                selected
-            }
-            leadVariantDiseases {
-                id
-                lvId
-                lvPos
-                # leadVariantChromosome
-                efoId
-                efoName
-                gwasBeta
-                gwasPMId
-                gwasSize
-                gwasStudy
-                gwasPValue
-                gwasOddsRatio
-                selected
-            }
-            maxGwasPValue
-        }
-    }
-`;
+import LOCUS_QUERY from './LocusBrowserQuery.gql';
 
 class LocusPage extends React.Component {
     constructor(props) {
@@ -307,7 +190,9 @@ class LocusPage extends React.Component {
         const isInSelectedState = clickedId;
         return (
             <Query
-                query={LOCUS_QUERY}
+                query={gql`
+                    ${LOCUS_QUERY}
+                `}
                 variables={{
                     start: startDebounced,
                     end: endDebounced,
