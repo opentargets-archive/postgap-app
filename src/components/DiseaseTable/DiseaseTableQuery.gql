@@ -1,0 +1,36 @@
+query DiseaseTableQuery($efoId: String, $offset: Int, $limit: Int) {
+    diseaseTable(efoId: $efoId, limit: $limit, offset: $offset) {
+        total
+        offset
+        limit
+        rows {
+            index
+            geneId
+            geneSymbol
+            geneChromosome
+            geneTss
+            vId
+            variantChromosome
+            vPos
+            lvId
+            efoId
+            efoName
+            otG2VScore
+            otG2VReason
+            vep
+            vepTerms
+            gtex
+            pchic
+            fantom5
+            dhs
+            nearest
+            r2
+            gwasPValue
+            gwasOddsRatio
+            gwasBeta
+            gwasSize
+            gwasPMId
+            gwasStudy
+        }
+    }
+}

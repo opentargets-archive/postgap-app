@@ -4,44 +4,10 @@ import gql from 'graphql-tag';
 
 import EvidenceTable from '../EvidenceTable/EvidenceTable';
 import DownloadButton from '../../downloads/DownloadButton';
+import DiseaseTableQuery from './DiseaseTableQuery.gql';
 
 const DISEASE_TABLE_QUERY = gql`
-    query DiseaseTableQuery($efoId: String, $offset: Int, $limit: Int) {
-        diseaseTable(efoId: $efoId, limit: $limit, offset: $offset) {
-            total
-            offset
-            limit
-            rows {
-                index
-                geneId
-                geneSymbol
-                geneChromosome
-                geneTss
-                vId
-                variantChromosome
-                vPos
-                lvId
-                efoId
-                efoName
-                otG2VScore
-                otG2VReason
-                vep
-                vepTerms
-                gtex
-                pchic
-                fantom5
-                dhs
-                nearest
-                r2
-                gwasPValue
-                gwasOddsRatio
-                gwasBeta
-                gwasSize
-                gwasPMId
-                gwasStudy
-            }
-        }
-    }
+    ${DiseaseTableQuery}
 `;
 
 const DiseaseTable = props => (
