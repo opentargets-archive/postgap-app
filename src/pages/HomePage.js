@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Col, Row, Tag } from 'antd';
 
 import Search from '../components/Search/Search';
-import OpenTargetsLogo from '../OpenTargetsLogo';
+import OpenTargetsLogo from '../components/OpenTargetsLogo/OpenTargetsLogo';
 import BannerLinks from '../components/BannerLinks/BannerLinks';
 import { colors } from '../theme';
 

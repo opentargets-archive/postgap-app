@@ -4,7 +4,7 @@ import { Row, Col, Layout, Affix } from 'antd';
 
 import Search from '../Search/Search';
 import BannerLinks from '../BannerLinks/BannerLinks';
-import OpenTargetsLogo from '../../OpenTargetsLogo';
+import OpenTargetsLogo from '../OpenTargetsLogo/OpenTargetsLogo';
 
 const SiteName = () => (
     <Link to={{ pathname: '/' }}>
