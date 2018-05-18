@@ -1,7 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 
-import { colors } from '../theme';
+import { colors } from '../../../theme';
 
 export const DebouncedVariantFeatureSet = ({
     start,

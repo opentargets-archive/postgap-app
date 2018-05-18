@@ -3,7 +3,7 @@ import Text from 'react-svg-text';
 import * as d3 from 'd3';
 import _ from 'lodash';
 
-import { colors } from '../theme';
+import { colors } from '../../../theme';
 import DiseaseVerticalFeature from './DiseaseVerticalFeature';
 
 const PADDING = 0.1; // 10%

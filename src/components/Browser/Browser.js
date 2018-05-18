@@ -5,7 +5,7 @@ import * as d3 from 'd3';
 import FileSaver from 'file-saver';
 import _ from 'lodash';
 
-import reportAnalyticsEvent from './reportAnalyticsEvent';
+import reportAnalyticsEvent from '../../reportAnalyticsEvent';
 import GeneTrack, {
     GENE_SLOT_HEIGHT,
     GENE_TRACK_PADDING,
@@ -20,10 +20,10 @@ import DiseaseTrack, {
     DISEASE_SLOT_COLS,
 } from './tracks/DiseaseTrack';
 import LeadVariantDiseaseTrack from './tracks/LeadVariantDiseaseTrack';
-import { commaSeparate } from './stringFormatters';
-import DictionaryHelpTerm from './terms/DictionaryHelpTerm';
-import Spinner from './Spinner';
-import { chromosomeLengths } from './redux/chromosomeLengths';
+import { commaSeparate } from '../../stringFormatters';
+import DictionaryHelpTerm from '../../terms/DictionaryHelpTerm';
+import Spinner from '../Spinner/Spinner';
+import { chromosomeLengths } from '../../redux/chromosomeLengths';
 
 const calculateGeneSlots = (genes, location) => {
     const sortedGenes = _.sortBy(genes, ['start']);

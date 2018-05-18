@@ -1,7 +1,7 @@
 import React from 'react';
 import { Spin, Icon } from 'antd';
 
-import { colors } from './theme';
+import { colors } from '../../theme';
 
 let Spinner = ({ loading, showIcon }) => {
     const loadingIcon = (

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { colors } from '../theme';
+import { colors } from '../../../theme';
 
 const DiseaseVerticalFeature = ({ x, y, data, dimNonHighlighted }) => {
     const diseaseColor = data.selected

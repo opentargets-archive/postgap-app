@@ -5,7 +5,7 @@ import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
 import withDebouncedProps from '../withDebouncedProps';
-import Browser from '../Browser';
+import Browser from '../components/Browser/Browser';
 import BrowserTable from '../components/BrowserTable/BrowserTable';
 import VariantLeadVariantFilter from '../filters/VariantLeadVariantFilter';
 import DetailPanel from '../DetailPanel';
