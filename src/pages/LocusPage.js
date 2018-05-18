@@ -4,7 +4,7 @@ import queryString from 'query-string';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
-import withDebouncedProps from '../withDebouncedProps';
+import withDebouncedProps from '../HOCs/withDebouncedProps';
 import Browser from '../components/Browser/Browser';
 import BrowserTable from '../components/BrowserTable/BrowserTable';
 import BrowserDetailPanel from '../components/BrowserDetailPanel/BrowserDetailPanel';
