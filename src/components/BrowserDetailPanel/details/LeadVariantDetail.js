@@ -2,8 +2,8 @@ import React from 'react';
 import { Table } from 'antd';
 
 import BaseDetail from './BaseDetail';
-import { LinksLeadVariant } from '../links';
-import { commaSeparate } from '../stringFormatters';
+import { LinksLeadVariant } from '../../../links';
+import { commaSeparate } from '../../../stringFormatters';
 
 const LeadVariantDetail = ({ leadVariant, closeHandler, chromosome }) => {
     const d = leadVariant;

@@ -8,7 +8,7 @@ import withDebouncedProps from '../withDebouncedProps';
 import Browser from '../components/Browser/Browser';
 import BrowserTable from '../components/BrowserTable/BrowserTable';
 import VariantLeadVariantFilter from '../filters/VariantLeadVariantFilter';
-import DetailPanel from '../DetailPanel';
+import BrowserDetailPanel from '../components/BrowserDetailPanel/BrowserDetailPanel';
 import LeadVariantDiseaseFilter from '../filters/LeadVariantDiseaseFilter';
 import GeneVariantFilter from '../filters/GeneVariantFilter';
 import LOCUS_QUERY from './LocusBrowserQuery.gql';
@@ -329,7 +329,7 @@ class LocusPage extends React.Component {
                                         />
                                     </Col>
                                     <Col span={6}>
-                                        <DetailPanel
+                                        <BrowserDetailPanel
                                             {...{
                                                 clickedId,
                                                 clickedType,

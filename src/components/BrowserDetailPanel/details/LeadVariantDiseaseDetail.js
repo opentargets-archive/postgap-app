@@ -1,9 +1,10 @@
 import React from 'react';
 import { Table } from 'antd';
+
 import BaseDetail from './BaseDetail';
-import DictionaryHelpTerm from '../terms/DictionaryHelpTerm';
-import { LinksLeadVariant, LinksDisease } from '../links';
-import { commaSeparate } from '../stringFormatters';
+import DictionaryHelpTerm from '../../../terms/DictionaryHelpTerm';
+import { LinksLeadVariant, LinksDisease } from '../../../links';
+import { commaSeparate } from '../../../stringFormatters';
 
 const LeadVariantDiseaseDetail = ({ leadVariantDisease, closeHandler }) => {
     const d = leadVariantDisease;

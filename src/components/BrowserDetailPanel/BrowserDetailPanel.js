@@ -40,7 +40,7 @@ class Detail extends React.Component {
     }
 }
 
-let DetailPanel = ({
+let BrowserDetailPanel = ({
     clickedId,
     clickedType,
     clickedEntity,
@@ -84,4 +84,4 @@ let DetailPanel = ({
     );
 };
 
-export default DetailPanel;
+export default BrowserDetailPanel;

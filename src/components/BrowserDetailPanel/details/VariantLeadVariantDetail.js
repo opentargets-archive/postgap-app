@@ -1,9 +1,10 @@
 import React from 'react';
 import { Table } from 'antd';
+
 import BaseDetail from './BaseDetail';
-import DictionaryHelpTerm from '../terms/DictionaryHelpTerm';
-import { LinksVariant, LinksLeadVariant } from '../links';
-import { renderNonZeroField } from '../stringFormatters';
+import DictionaryHelpTerm from '../../../terms/DictionaryHelpTerm';
+import { LinksVariant, LinksLeadVariant } from '../../../links';
+import { renderNonZeroField } from '../../../stringFormatters';
 
 const VariantLeadVariantDetail = ({ variantLeadVariant, closeHandler }) => {
     const d = variantLeadVariant;

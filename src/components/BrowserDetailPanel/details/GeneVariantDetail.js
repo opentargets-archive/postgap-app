@@ -1,14 +1,15 @@
 import React from 'react';
 import { Table } from 'antd';
+
 import BaseDetail from './BaseDetail';
-import DictionaryHelpTerm from '../terms/DictionaryHelpTerm';
-import { LinksGene, LinksVariant } from '../links';
+import DictionaryHelpTerm from '../../../terms/DictionaryHelpTerm';
+import { LinksGene, LinksVariant } from '../../../links';
 import {
     renderNonZeroField,
     renderVEPField,
     renderVEPTermsField,
     renderGtexField,
-} from '../stringFormatters';
+} from '../../../stringFormatters';
 
 const GeneVariantDetail = ({ geneVariant, closeHandler }) => {
     const d = geneVariant;
