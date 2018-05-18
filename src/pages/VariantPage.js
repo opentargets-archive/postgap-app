@@ -48,7 +48,6 @@ class VariantPage extends React.Component {
                         const {
                             chromosome,
                             position,
-                            isVariant,
                             isLeadVariant,
                         } = data.variantLocation;
                         const chromosomeLength = chromosomeLengths[chromosome];

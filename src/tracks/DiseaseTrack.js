@@ -3,10 +3,7 @@ import _ from 'lodash';
 import * as d3 from 'd3';
 
 import BaseTrack from './BaseTrack';
-import DiseaseFeature, {
-    DebouncedDiseaseFeatureSet,
-} from '../features/DiseaseFeature';
-import DiseaseVerticalFeature from '../features/DiseaseVerticalFeature';
+import { DebouncedDiseaseFeatureSet } from '../features/DiseaseFeature';
 export const DISEASE_SLOT_HEIGHT = 60;
 export const DISEASE_TRACK_MIN_HEIGHT = 20;
 export const DISEASE_SLOT_COLS = 5;

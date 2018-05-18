@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import './index.css';
 import App from './App';
-import registerServiceWorker, { unregister } from './registerServiceWorker';
+import { unregister } from './registerServiceWorker';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 

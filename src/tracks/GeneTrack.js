@@ -15,29 +15,19 @@ let GeneTrack = props => {
         <div style={{ position: 'absolute', width: '100%', height: '100%' }}>
             <BaseTrack {...props} parentHeight={height}>
                 {props.slots.map((slot, i) => {
-                    return slot.genes.map(gene => {
-                        {
-                            /* if (props.geneIdsFiltered.indexOf(gene.id) >= 0) { */
-                        }
-                        return (
-                            <GeneVerticalFeature
-                                key={gene.id}
-                                data={gene}
-                                slotOffset={
-                                    GENE_SLOT_HEIGHT * i + GENE_TRACK_PADDING
-                                }
-                                slotHeight={GENE_SLOT_HEIGHT}
-                                trackHeight={height}
-                                highlight={gene.selected}
-                                dimNonHighlighted={isInSelectedState}
-                            />
-                        );
-                        {
-                            /* } else {
-              return null;
-            } */
-                        }
-                    });
+                    return slot.genes.map(gene => (
+                        <GeneVerticalFeature
+                            key={gene.id}
+                            data={gene}
+                            slotOffset={
+                                GENE_SLOT_HEIGHT * i + GENE_TRACK_PADDING
+                            }
+                            slotHeight={GENE_SLOT_HEIGHT}
+                            trackHeight={height}
+                            highlight={gene.selected}
+                            dimNonHighlighted={isInSelectedState}
+                        />
+                    ));
                 })}
                 {props.slots.map((slot, i) => {
                     return slot.genes.map(gene => {

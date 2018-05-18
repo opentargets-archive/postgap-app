@@ -14,13 +14,7 @@ const calculateDiseaseScaleRange = width => [
 
 export class DebouncedDiseaseFeatureSet extends React.Component {
     shouldComponentUpdate(nextProps) {
-        const {
-            diseases,
-            diseaseScale,
-            verticalScale,
-            slotHeight,
-            width,
-        } = this.props;
+        const { diseases, width } = this.props;
         return (
             !_.isEqual(
                 diseases.map(d => d.id),
@@ -38,7 +32,6 @@ export class DebouncedDiseaseFeatureSet extends React.Component {
             diseases,
             diseaseScale,
             verticalScale,
-            slotHeight,
             width,
             setClicked,
             dimNonHighlighted,

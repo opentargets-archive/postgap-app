@@ -3,7 +3,6 @@ import { Table } from 'antd';
 
 import BaseDetail from './BaseDetail';
 import { LinksGene } from '../links';
-import { underscoresToSpaces } from '../stringFormatters';
 
 const GeneDetail = ({ gene, closeHandler }) => {
     if (gene) {
@@ -14,21 +13,6 @@ const GeneDetail = ({ gene, closeHandler }) => {
                 label: 'Description',
                 value: d.description,
             },
-            // {
-            //   key: 'location',
-            //   label: 'Location',
-            //   value: `${d.chromosome}:${commaSeparate(d.start)}-${commaSeparate(d.end)}`,
-            // },
-            // {
-            //   key: 'strand',
-            //   label: 'Strand',
-            //   value: `${d.strand === 1 ? 'forward' : 'reverse'}`,
-            // },
-            // {
-            //   key: 'biotype',
-            //   label: 'Biotype',
-            //   value: underscoresToSpaces(d.biotype),
-            // },
         ];
         const tableColumns = [
             {

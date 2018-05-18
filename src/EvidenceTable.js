@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Button, Col, Row, Icon } from 'antd';
+import { Table, Col, Row, Icon } from 'antd';
 
 import {
     commaSeparate,
@@ -44,19 +44,6 @@ const renderPubmedUrlField = (value, row) => (
     </a>
 );
 
-const comparatorStringField = field => (a, b) => {
-    if (a[field] < b[field]) {
-        return -1;
-    }
-    if (a[field] > b[field]) {
-        return 1;
-    }
-    return 0;
-};
-const compareNumericField = field => (a, b) => {
-    return a[field] - b[field];
-};
-
 const COLUMNS = [
     {
         title: 'Entities',
@@ -68,7 +55,6 @@ const COLUMNS = [
                 fixed: 'left',
                 render: renderGeneField,
                 width: 100,
-                // sorter: comparatorStringField('geneSym'),
             },
             {
                 title: 'Variant',
@@ -77,7 +63,6 @@ const COLUMNS = [
                 fixed: 'left',
                 render: renderVariantField,
                 width: 100,
-                // sorter: comparatorStringField('ldSnpId'),
             },
             {
                 title: 'Lead Variant',
@@ -86,7 +71,6 @@ const COLUMNS = [
                 fixed: 'left',
                 render: renderLeadVariantField,
                 width: 120,
-                // sorter: comparatorStringField('gwasSnpId'),
             },
             {
                 title: 'Disease',
@@ -95,7 +79,6 @@ const COLUMNS = [
                 fixed: 'left',
                 render: renderDiseaseField,
                 width: 220,
-                // sorter: comparatorStringField('efoName'),
             },
         ],
     },
@@ -113,7 +96,6 @@ const COLUMNS = [
                 key: 'otG2VScore',
                 render: renderNonZeroField,
                 width: 120,
-                // sorter: compareNumericField('otScore'),
             },
             {
                 title: (
@@ -125,7 +107,6 @@ const COLUMNS = [
                 dataIndex: 'otG2VReason',
                 key: 'otG2VReason',
                 width: 120,
-                // sorter: compareNumericField('otScore'),
             },
             {
                 title: <DictionaryHelpTerm term={'vep'} label={'VEP'} />,
@@ -133,7 +114,6 @@ const COLUMNS = [
                 key: 'vep',
                 render: renderVEPField,
                 width: 100,
-                // sorter: compareNumericField('vep'),
             },
             {
                 title: (
@@ -146,7 +126,6 @@ const COLUMNS = [
                 key: 'vepTerms',
                 render: renderVEPTermsField,
                 width: 180,
-                // sorter: compareNumericField('vep'),
             },
             {
                 title: <DictionaryHelpTerm term={'gtex'} label={'GTEx'} />,
@@ -154,7 +133,6 @@ const COLUMNS = [
                 key: 'gtex',
                 render: renderGtexField,
                 width: 100,
-                // sorter: compareNumericField('gtex'),
             },
             {
                 title: <DictionaryHelpTerm term={'pchic'} label={'PCHiC'} />,
@@ -162,7 +140,6 @@ const COLUMNS = [
                 key: 'pchic',
                 render: renderNonZeroField,
                 width: 100,
-                // sorter: compareNumericField('pchic'),
             },
             {
                 title: <DictionaryHelpTerm term={'dhs'} label={'DHS'} />,
@@ -170,7 +147,6 @@ const COLUMNS = [
                 key: 'dhs',
                 render: renderNonZeroField,
                 width: 100,
-                // sorter: compareNumericField('dhs'),
             },
             {
                 title: (
@@ -180,7 +156,6 @@ const COLUMNS = [
                 key: 'fantom5',
                 render: renderNonZeroField,
                 width: 100,
-                // sorter: compareNumericField('fantom5'),
             },
         ],
     },
@@ -202,7 +177,6 @@ const COLUMNS = [
                 key: 'r2',
                 render: renderNullableField,
                 width: 100,
-                // sorter: compareNumericField('r2'),
             },
         ],
     },
@@ -217,7 +191,6 @@ const COLUMNS = [
                 key: 'gwasPValue',
                 render: renderNullableField,
                 width: 100,
-                // sorter: compareNumericField('gwasPValue'),
             },
             {
                 title: (
@@ -230,7 +203,6 @@ const COLUMNS = [
                 key: 'gwasOddsRatio',
                 render: renderNullableField,
                 width: 100,
-                // sorter: compareNumericField('gwasPValue'),
             },
             {
                 title: (
@@ -249,7 +221,6 @@ const COLUMNS = [
                 key: 'gwasSize',
                 render: renderIntField,
                 width: 100,
-                // sorter: compareNumericField('gwasSampleSize'),
             },
             {
                 title: 'Literature',
@@ -267,8 +238,6 @@ class EvidenceTable extends React.Component {
         const {
             rows,
             loading,
-            filterString,
-            filename,
             pagination,
             onChange,
             csvDownload,
@@ -285,7 +254,9 @@ class EvidenceTable extends React.Component {
             spinning: true,
         };
         let loadingProp = {};
-        if (loading) loadingProp = { loading: loadingConfig };
+        if (loading) {
+            loadingProp = { loading: loadingConfig };
+        }
 
         return (
             <Col>

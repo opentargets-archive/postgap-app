@@ -1,5 +1,4 @@
 import React from 'react';
-import _ from 'lodash';
 
 import GeneDetail from './details/GeneDetail';
 import VariantDetail from './details/VariantDetail';
@@ -21,7 +20,6 @@ class Detail extends React.Component {
     };
     render() {
         const {
-            clickedId,
             clickedType,
             clickedEntity,
             setClicked,

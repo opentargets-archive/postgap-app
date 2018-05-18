@@ -129,7 +129,6 @@ class Browser extends React.Component {
             chromosome,
             start,
             end,
-            chromosomeDebounced,
             startDebounced,
             endDebounced,
             setClicked,
