@@ -1,6 +1,5 @@
 import React from 'react';
 import { Table, Button, Col, Row, Icon } from 'antd';
-import { CSVLink } from 'react-csv';
 
 import {
     commaSeparate,
