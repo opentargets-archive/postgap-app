@@ -1,7 +1,9 @@
 const { injectBabelPlugin } = require('react-app-rewired');
 const rewireLess = require('react-app-rewire-less');
+const rewireInlineImportGraphqlAst = require('react-app-rewire-inline-import-graphql-ast');
 
 module.exports = function override(config, env) {
+    config = rewireInlineImportGraphqlAst(config, env);
     config = injectBabelPlugin(['import', { libraryName: 'antd', style: true }], config);  // change importing css to less
     config = rewireLess.withLoaderOptions({
         modifyVars: {
@@ -11,4 +13,4 @@ module.exports = function override(config, env) {
         },
     })(config, env);
     return config;
-}
+};

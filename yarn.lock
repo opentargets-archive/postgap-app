@@ -892,6 +892,12 @@ babel-plugin-inline-environment-variables@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/babel-plugin-inline-environment-variables/-/babel-plugin-inline-environment-variables-1.0.1.tgz#1f58ce91207ad6a826a8bf645fafe68ff5fe3ffe"
 
+babel-plugin-inline-import-graphql-ast@^2.1.1:
+  version "2.3.8"
+  resolved "https://registry.yarnpkg.com/babel-plugin-inline-import-graphql-ast/-/babel-plugin-inline-import-graphql-ast-2.3.8.tgz#43c063cd50110bd1b0f13815a16a2e1a01e41bb6"
+  dependencies:
+    graphql-tag "^2.9.2"
+
 babel-plugin-istanbul@^4.0.0:
   version "4.1.5"
   resolved "https://registry.yarnpkg.com/babel-plugin-istanbul/-/babel-plugin-istanbul-4.1.5.tgz#6760cdd977f411d3e175bb064f2bc327d99b2b6e"
@@ -4328,6 +4334,10 @@ graphql-anywhere@^4.1.0-alpha.0, graphql-anywhere@^4.1.8:
 graphql-tag@^2.4.2, graphql-tag@^2.8.0:
   version "2.8.0"
   resolved "https://registry.yarnpkg.com/graphql-tag/-/graphql-tag-2.8.0.tgz#52cdea07a842154ec11a2e840c11b977f9b835ce"
+
+graphql-tag@^2.9.2:
+  version "2.9.2"
+  resolved "https://registry.yarnpkg.com/graphql-tag/-/graphql-tag-2.9.2.tgz#2f60a5a981375f430bf1e6e95992427dc18af686"
 
 graphql@^0.13.2:
   version "0.13.2"
@@ -7982,6 +7992,12 @@ react-apollo@^2.1.1:
     invariant "^2.2.2"
     lodash "4.17.5"
     prop-types "^15.6.0"
+
+react-app-rewire-inline-import-graphql-ast@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/react-app-rewire-inline-import-graphql-ast/-/react-app-rewire-inline-import-graphql-ast-1.0.3.tgz#4ba99913cf6fe5cf180dcede309a8ac68a756389"
+  dependencies:
+    babel-plugin-inline-import-graphql-ast "^2.1.1"
 
 react-app-rewire-less@^2.1.1:
   version "2.1.1"
