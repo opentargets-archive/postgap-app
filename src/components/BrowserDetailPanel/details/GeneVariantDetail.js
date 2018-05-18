@@ -9,7 +9,7 @@ import {
     renderVEPField,
     renderVEPTermsField,
     renderGtexField,
-} from '../../../stringFormatters';
+} from '../../../utils/stringFormatters';
 
 const GeneVariantDetail = ({ geneVariant, closeHandler }) => {
     const d = geneVariant;

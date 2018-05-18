@@ -8,7 +8,7 @@ import {
     renderGtexField,
     renderVEPField,
     renderVEPTermsField,
-} from '../../stringFormatters';
+} from '../../utils/stringFormatters';
 import { colors } from '../../theme';
 import {
     LinksGene,

@@ -4,7 +4,7 @@ import { Table } from 'antd';
 import BaseDetail from './BaseDetail';
 import DictionaryTerm from '../../DictionaryTerm/DictionaryTerm';
 import { LinksLeadVariant, LinksDisease } from '../../../links';
-import { commaSeparate } from '../../../stringFormatters';
+import { commaSeparate } from '../../../utils/stringFormatters';
 
 const LeadVariantDiseaseDetail = ({ leadVariantDisease, closeHandler }) => {
     const d = leadVariantDisease;

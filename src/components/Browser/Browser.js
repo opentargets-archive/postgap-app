@@ -20,7 +20,7 @@ import DiseaseTrack, {
     DISEASE_SLOT_COLS,
 } from './tracks/DiseaseTrack';
 import LeadVariantDiseaseTrack from './tracks/LeadVariantDiseaseTrack';
-import { commaSeparate } from '../../stringFormatters';
+import { commaSeparate } from '../../utils/stringFormatters';
 import DictionaryTerm from '../DictionaryTerm/DictionaryTerm';
 import Spinner from '../Spinner/Spinner';
 import chromosomeLengths from '../../constants/chromosomeLengths';

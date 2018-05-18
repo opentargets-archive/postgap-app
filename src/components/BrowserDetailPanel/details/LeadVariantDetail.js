@@ -3,7 +3,7 @@ import { Table } from 'antd';
 
 import BaseDetail from './BaseDetail';
 import { LinksLeadVariant } from '../../../links';
-import { commaSeparate } from '../../../stringFormatters';
+import { commaSeparate } from '../../../utils/stringFormatters';
 
 const LeadVariantDetail = ({ leadVariant, closeHandler, chromosome }) => {
     const d = leadVariant;
