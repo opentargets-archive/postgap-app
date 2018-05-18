@@ -3,7 +3,7 @@ import { Table } from 'antd';
 
 import BaseDetail from './BaseDetail';
 import DictionaryTerm from '../../DictionaryTerm/DictionaryTerm';
-import { LinksGene, LinksVariant } from '../../../utils/links';
+import { LinksGene, LinksVariant } from '../../../utils/linkFormatters';
 import {
     renderNonZeroField,
     renderVEPField,

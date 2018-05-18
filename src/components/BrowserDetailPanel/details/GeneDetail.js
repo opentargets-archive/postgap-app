@@ -2,7 +2,7 @@ import React from 'react';
 import { Table } from 'antd';
 
 import BaseDetail from './BaseDetail';
-import { LinksGene } from '../../../utils/links';
+import { LinksGene } from '../../../utils/linkFormatters';
 
 const GeneDetail = ({ gene, closeHandler }) => {
     if (gene) {

@@ -2,7 +2,7 @@ import React from 'react';
 import { Table } from 'antd';
 
 import BaseDetail from './BaseDetail';
-import { LinksVariant } from '../../../utils/links';
+import { LinksVariant } from '../../../utils/linkFormatters';
 import { commaSeparate } from '../../../utils/stringFormatters';
 
 const VariantDetail = ({ variant, closeHandler, chromosome }) => {

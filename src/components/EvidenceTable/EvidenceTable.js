@@ -15,7 +15,7 @@ import {
     LinksVariant,
     LinksLeadVariant,
     LinksDisease,
-} from '../../utils/links';
+} from '../../utils/linkFormatters';
 import DictionaryTerm from '../DictionaryTerm/DictionaryTerm';
 
 const renderIntField = value => commaSeparate(value);
