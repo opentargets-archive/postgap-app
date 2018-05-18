@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, Row, Col, Slider } from 'antd';
 import _ from 'lodash';
 
-import DictionaryHelpTerm from '../../DictionaryTerm/DictionaryTerm';
+import DictionaryTerm from '../../DictionaryTerm/DictionaryTerm';
 import reportAnalyticsEvent from '../../../utils/reportAnalyticsEvent';
 
 const reportAnalyticsGwasPValue = _.debounce(
@@ -54,7 +54,7 @@ class LeadVariantDiseaseFilter extends React.Component {
                 </Row>
                 <hr />
                 <h4>
-                    <DictionaryHelpTerm
+                    <DictionaryTerm
                         term="gwaspvalue"
                         label={
                             <React.Fragment>

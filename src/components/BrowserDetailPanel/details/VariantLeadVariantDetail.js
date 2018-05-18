@@ -2,7 +2,7 @@ import React from 'react';
 import { Table } from 'antd';
 
 import BaseDetail from './BaseDetail';
-import DictionaryHelpTerm from '../../DictionaryTerm/DictionaryTerm';
+import DictionaryTerm from '../../DictionaryTerm/DictionaryTerm';
 import { LinksVariant, LinksLeadVariant } from '../../../links';
 import { renderNonZeroField } from '../../../stringFormatters';
 
@@ -26,7 +26,7 @@ const VariantLeadVariantDetail = ({ variantLeadVariant, closeHandler }) => {
             dataIndex: 'label',
             width: 100,
             render: (text, row) => (
-                <DictionaryHelpTerm term={row.key} label={row.label} />
+                <DictionaryTerm term={row.key} label={row.label} />
             ),
         },
         {

@@ -21,7 +21,7 @@ import DiseaseTrack, {
 } from './tracks/DiseaseTrack';
 import LeadVariantDiseaseTrack from './tracks/LeadVariantDiseaseTrack';
 import { commaSeparate } from '../../stringFormatters';
-import DictionaryHelpTerm from '../DictionaryTerm/DictionaryTerm';
+import DictionaryTerm from '../DictionaryTerm/DictionaryTerm';
 import Spinner from '../Spinner/Spinner';
 import chromosomeLengths from '../../constants/chromosomeLengths';
 
@@ -192,7 +192,7 @@ class Browser extends React.Component {
                 </Row>
                 <Row>
                     <Col span={labelColSize}>
-                        <DictionaryHelpTerm
+                        <DictionaryTerm
                             term={'genes'}
                             label={
                                 <span
@@ -240,7 +240,7 @@ class Browser extends React.Component {
                 </Row>
                 <Row>
                     <Col span={labelColSize}>
-                        <DictionaryHelpTerm
+                        <DictionaryTerm
                             term={'variants'}
                             label={
                                 <span
@@ -292,7 +292,7 @@ class Browser extends React.Component {
                 </Row>
                 <Row>
                     <Col span={labelColSize}>
-                        <DictionaryHelpTerm
+                        <DictionaryTerm
                             term={'leadvariants'}
                             label={
                                 <span
@@ -345,7 +345,7 @@ class Browser extends React.Component {
                 </Row>
                 <Row>
                     <Col span={labelColSize}>
-                        <DictionaryHelpTerm
+                        <DictionaryTerm
                             term={'diseases'}
                             label={
                                 <span

@@ -16,7 +16,7 @@ import {
     LinksLeadVariant,
     LinksDisease,
 } from '../../links';
-import DictionaryHelpTerm from '../DictionaryTerm/DictionaryTerm';
+import DictionaryTerm from '../DictionaryTerm/DictionaryTerm';
 
 const renderIntField = value => commaSeparate(value);
 const renderVariantField = value => (
@@ -87,10 +87,7 @@ const COLUMNS = [
         children: [
             {
                 title: (
-                    <DictionaryHelpTerm
-                        term={'otg2vscore'}
-                        label={'G2V Score'}
-                    />
+                    <DictionaryTerm term={'otg2vscore'} label={'G2V Score'} />
                 ),
                 dataIndex: 'otG2VScore',
                 key: 'otG2VScore',
@@ -99,17 +96,14 @@ const COLUMNS = [
             },
             {
                 title: (
-                    <DictionaryHelpTerm
-                        term={'otg2vreason'}
-                        label={'G2V Reason'}
-                    />
+                    <DictionaryTerm term={'otg2vreason'} label={'G2V Reason'} />
                 ),
                 dataIndex: 'otG2VReason',
                 key: 'otG2VReason',
                 width: 120,
             },
             {
-                title: <DictionaryHelpTerm term={'vep'} label={'VEP'} />,
+                title: <DictionaryTerm term={'vep'} label={'VEP'} />,
                 dataIndex: 'vep',
                 key: 'vep',
                 render: renderVEPField,
@@ -117,7 +111,7 @@ const COLUMNS = [
             },
             {
                 title: (
-                    <DictionaryHelpTerm
+                    <DictionaryTerm
                         term={'vepterms'}
                         label={'VEP Consequences'}
                     />
@@ -128,30 +122,28 @@ const COLUMNS = [
                 width: 180,
             },
             {
-                title: <DictionaryHelpTerm term={'gtex'} label={'GTEx'} />,
+                title: <DictionaryTerm term={'gtex'} label={'GTEx'} />,
                 dataIndex: 'gtex',
                 key: 'gtex',
                 render: renderGtexField,
                 width: 100,
             },
             {
-                title: <DictionaryHelpTerm term={'pchic'} label={'PCHiC'} />,
+                title: <DictionaryTerm term={'pchic'} label={'PCHiC'} />,
                 dataIndex: 'pchic',
                 key: 'pchic',
                 render: renderNonZeroField,
                 width: 100,
             },
             {
-                title: <DictionaryHelpTerm term={'dhs'} label={'DHS'} />,
+                title: <DictionaryTerm term={'dhs'} label={'DHS'} />,
                 dataIndex: 'dhs',
                 key: 'dhs',
                 render: renderNonZeroField,
                 width: 100,
             },
             {
-                title: (
-                    <DictionaryHelpTerm term={'fantom5'} label={'Fantom5'} />
-                ),
+                title: <DictionaryTerm term={'fantom5'} label={'Fantom5'} />,
                 dataIndex: 'fantom5',
                 key: 'fantom5',
                 render: renderNonZeroField,
@@ -164,7 +156,7 @@ const COLUMNS = [
         children: [
             {
                 title: (
-                    <DictionaryHelpTerm
+                    <DictionaryTerm
                         term={'r2'}
                         label={
                             <span>
@@ -184,9 +176,7 @@ const COLUMNS = [
         title: 'Lead Variant - Disease',
         children: [
             {
-                title: (
-                    <DictionaryHelpTerm term={'gwaspvalue'} label={'p-value'} />
-                ),
+                title: <DictionaryTerm term={'gwaspvalue'} label={'p-value'} />,
                 dataIndex: 'gwasPValue',
                 key: 'gwasPValue',
                 render: renderNullableField,
@@ -194,7 +184,7 @@ const COLUMNS = [
             },
             {
                 title: (
-                    <DictionaryHelpTerm
+                    <DictionaryTerm
                         term={'gwasoddsratio'}
                         label={'Odds Ratio'}
                     />
@@ -206,7 +196,7 @@ const COLUMNS = [
             },
             {
                 title: (
-                    <DictionaryHelpTerm
+                    <DictionaryTerm
                         term={'gwassamplesize'}
                         label={
                             <React.Fragment>

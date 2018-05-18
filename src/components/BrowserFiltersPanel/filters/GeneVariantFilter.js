@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, Row, Col, Checkbox, Slider } from 'antd';
 import _ from 'lodash';
 
-import DictionaryHelpTerm from '../../DictionaryTerm/DictionaryTerm';
+import DictionaryTerm from '../../DictionaryTerm/DictionaryTerm';
 import reportAnalyticsEvent from '../../../utils/reportAnalyticsEvent';
 
 const checkboxOptions = [
@@ -47,10 +47,7 @@ let GeneVariantFilter = ({
             <Row>
                 <Col span={12}>
                     <h4>
-                        <DictionaryHelpTerm
-                            term="otg2vscore"
-                            label="G2V Score"
-                        />
+                        <DictionaryTerm term="otg2vscore" label="G2V Score" />
                     </h4>
                     <div
                         style={{
@@ -83,7 +80,7 @@ let GeneVariantFilter = ({
                 </Col>
                 <Col span={12}>
                     <h4>
-                        <DictionaryHelpTerm
+                        <DictionaryTerm
                             term="otg2vmusthave"
                             label="Must have"
                         />
