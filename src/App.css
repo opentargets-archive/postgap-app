@@ -1,84 +1,84 @@
 @import '~antd/dist/antd.css';
 
 .App {
-  text-align: center;
+    text-align: center;
 }
 
 .App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+    animation: App-logo-spin infinite 20s linear;
+    height: 80px;
 }
 
 .App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+    background-color: #222;
+    height: 150px;
+    padding: 20px;
+    color: white;
 }
 
 .App-title {
-  font-size: 1.5em;
+    font-size: 1.5em;
 }
 
 .App-intro {
-  font-size: large;
+    font-size: large;
 }
 
 @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 g[role='presentation'] {
-  display: none;
+    display: none;
 }
 
 body > svg {
-  position: fixed; /* this is to hide svg used by react-svg-text */
+    position: fixed; /* this is to hide svg used by react-svg-text */
 }
 
 .ant-spin-nested-loading > div > .ant-spin {
-  max-height: 100%;
+    max-height: 100%;
 }
 .ant-spin-nested-loading > div > .ant-spin .ant-spin-dot {
-  top: 10px;
+    top: 10px;
 }
 
 .ant-spin {
-  width: 100%;
-  height: 100%;
-  z-index: 100;
-  position: absolute;
-  display: block;
-  background-color: rgba(245, 245, 245, 0.8);
-  pointer-events: all;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    position: absolute;
+    display: block;
+    background-color: rgba(245, 245, 245, 0.8);
+    pointer-events: all;
 }
 
 .ant-affix {
-  z-index: 1001;
+    z-index: 1001;
 }
 
 .Home-backdrop {
-  background-image: radial-gradient(
-      rgba(0, 145, 251, 1) 0%,
-      rgba(0, 145, 251, 1) 20%,
-      rgba(0, 145, 251, 0) 100%
-    ),
-    url('./POSTGAP_portal_background.svg');
+    background-image: radial-gradient(
+            rgba(0, 145, 251, 1) 0%,
+            rgba(0, 145, 251, 1) 20%,
+            rgba(0, 145, 251, 0) 100%
+        ),
+        url('./assets/POSTGAP_portal_background.svg');
 }
 
 .Banner-backdrop {
-  background-image: linear-gradient(
-      90deg,
-      rgba(0, 145, 251, 1) 0%,
-      rgba(0, 145, 251, 1) 20%,
-      rgba(0, 145, 251, 0) 100%
-    ),
-    url('./POSTGAP_portal_background.svg');
-  background-repeat: no-repeat;
-  background-size: 100%;
+    background-image: linear-gradient(
+            90deg,
+            rgba(0, 145, 251, 1) 0%,
+            rgba(0, 145, 251, 1) 20%,
+            rgba(0, 145, 251, 0) 100%
+        ),
+        url('./assets/POSTGAP_portal_background.svg');
+    background-repeat: no-repeat;
+    background-size: 100%;
 }
