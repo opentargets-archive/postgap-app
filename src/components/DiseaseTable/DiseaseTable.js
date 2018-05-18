@@ -3,7 +3,7 @@ import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
 import EvidenceTable from '../EvidenceTable/EvidenceTable';
-import DownloadButton from '../../downloads/DownloadButton';
+import TableDownloadButton from '../TableDownloadButton/TableDownloadButton';
 import DiseaseTableQuery from './DiseaseTableQuery.gql';
 
 const DISEASE_TABLE_QUERY = gql`
@@ -37,7 +37,7 @@ const DiseaseTable = props => (
             }
 
             const csvDownload = (
-                <DownloadButton
+                <TableDownloadButton
                     filename={filename}
                     fileType={'csv'}
                     query={DISEASE_TABLE_QUERY}
@@ -51,7 +51,7 @@ const DiseaseTable = props => (
             );
 
             const tsvDownload = (
-                <DownloadButton
+                <TableDownloadButton
                     filename={filename}
                     fileType={'tsv'}
                     query={DISEASE_TABLE_QUERY}

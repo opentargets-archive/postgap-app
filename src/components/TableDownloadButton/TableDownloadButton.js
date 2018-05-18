@@ -3,9 +3,9 @@ import { Button } from 'antd';
 import { withApollo } from 'react-apollo';
 import FileSaver from 'file-saver';
 
-import reportAnalyticsEvent from '../reportAnalyticsEvent';
+import reportAnalyticsEvent from '../../reportAnalyticsEvent';
 
-class DownloadButton extends React.Component {
+class TableDownloadButton extends React.Component {
     constructor() {
         super();
         this.runQuery = this.runQuery.bind(this);
@@ -86,6 +86,6 @@ class DownloadButton extends React.Component {
     }
 }
 
-DownloadButton = withApollo(DownloadButton);
+TableDownloadButton = withApollo(TableDownloadButton);
 
-export default DownloadButton;
+export default TableDownloadButton;
