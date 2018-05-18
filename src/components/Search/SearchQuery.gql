@@ -1,0 +1,7 @@
+query SearchQuery($queryString: String) {
+    search(queryString: $queryString) {
+        id
+        name
+        type
+    }
+}

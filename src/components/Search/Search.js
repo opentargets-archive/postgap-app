@@ -8,17 +8,12 @@ import { debounce } from 'lodash';
 import reportAnalyticsEvent from '../../reportAnalyticsEvent';
 import { otApi } from '../../redux/sagas';
 import { colors } from '../../theme';
+import SearchQuery from './SearchQuery.gql';
 
 const Option = Select.Option;
 
 const SEARCH_QUERY = gql`
-    query SearchQuery($queryString: String) {
-        search(queryString: $queryString) {
-            id
-            name
-            type
-        }
-    }
+    ${SearchQuery}
 `;
 
 class Search extends React.Component {
