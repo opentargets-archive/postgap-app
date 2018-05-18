@@ -10,7 +10,7 @@ import GenePage from './pages/GenePage';
 import VariantPage from './pages/VariantPage';
 import LocusPage from './pages/LocusPage';
 import Footer from './components/Footer/Footer';
-import Banner from './Banner';
+import Banner from './components/Banner/Banner';
 
 class App extends React.Component {
     render() {
