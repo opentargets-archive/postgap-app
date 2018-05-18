@@ -6,7 +6,7 @@ import gql from 'graphql-tag';
 
 import withDebouncedProps from '../withDebouncedProps';
 import Browser from '../Browser';
-import BrowserTable from '../BrowserTable';
+import BrowserTable from '../components/BrowserTable/BrowserTable';
 import VariantLeadVariantFilter from '../filters/VariantLeadVariantFilter';
 import DetailPanel from '../DetailPanel';
 import LeadVariantDiseaseFilter from '../filters/LeadVariantDiseaseFilter';

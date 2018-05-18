@@ -2,12 +2,36 @@ import React from 'react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
-import EvidenceTable from './EvidenceTable';
-import DownloadButton from './downloads/DownloadButton';
+import EvidenceTable from '../EvidenceTable/EvidenceTable';
+import DownloadButton from '../../downloads/DownloadButton';
 
-const DISEASE_TABLE_QUERY = gql`
-    query DiseaseTableQuery($efoId: String, $offset: Int, $limit: Int) {
-        diseaseTable(efoId: $efoId, limit: $limit, offset: $offset) {
+const LOCUS_TABLE_QUERY = gql`
+    query LocusTableQuery(
+        $chromosome: String
+        $start: Int
+        $end: Int
+        $g2VMustHaves: [String]
+        $g2VScore: [Float]
+        $r2: [Float]
+        $gwasPValue: [Float]
+        $selectedId: String
+        $selectedType: String
+        $limit: Int
+        $offset: Int
+    ) {
+        locusTable(
+            chromosome: $chromosome
+            start: $start
+            end: $end
+            g2VMustHaves: $g2VMustHaves
+            g2VScore: $g2VScore
+            r2: $r2
+            gwasPValue: $gwasPValue
+            selectedId: $selectedId
+            selectedType: $selectedType
+            limit: $limit
+            offset: $offset
+        ) {
             total
             offset
             limit
@@ -44,18 +68,37 @@ const DISEASE_TABLE_QUERY = gql`
     }
 `;
 
-const DiseaseTable = props => (
+const BrowserTable = ({
+    chromosome,
+    start,
+    end,
+    g2VMustHaves,
+    g2VScore,
+    r2,
+    gwasPValue,
+    selectedId,
+    selectedType,
+    filename,
+    filterString,
+}) => (
     <Query
-        query={DISEASE_TABLE_QUERY}
+        query={LOCUS_TABLE_QUERY}
         variables={{
-            efoId: props.efoId,
+            chromosome,
+            start,
+            end,
+            g2VMustHaves,
+            g2VScore,
+            r2,
+            gwasPValue,
+            selectedId,
+            selectedType,
             offset: 0,
             limit: 10,
         }}
-        fetchPolicy="cache-and-network"
+        fetchPolicy="network-only"
     >
         {({ loading, error, data, fetchMore }) => {
-            const { filename } = props;
             if (loading) return <p>Loading...</p>;
             if (error) return <p>Error :(</p>;
 
@@ -64,44 +107,50 @@ const DiseaseTable = props => (
                 current: 1,
                 pageSize: 10,
             };
-            if (data && data.diseaseTable) {
-                pagination.total = data.diseaseTable.total;
+            if (data && data.locusTable) {
+                pagination.total = data.locusTable.total;
                 pagination.current =
-                    data.diseaseTable.offset / pagination.pageSize + 1;
+                    data.locusTable.offset / pagination.pageSize + 1;
             }
 
+            const downloadVariables = {
+                chromosome,
+                start,
+                end,
+                g2VMustHaves,
+                g2VScore,
+                r2,
+                gwasPValue,
+                selectedId,
+                selectedType,
+                offset: 0,
+                limit: 1000000,
+            };
             const csvDownload = (
                 <DownloadButton
                     filename={filename}
                     fileType={'csv'}
-                    query={DISEASE_TABLE_QUERY}
-                    transformer={response => response.data.diseaseTable.rows}
-                    variables={{
-                        efoId: props.efoId,
-                        offset: 0,
-                        limit: 1000000,
-                    }}
+                    query={LOCUS_TABLE_QUERY}
+                    transformer={response => response.data.locusTable.rows}
+                    variables={downloadVariables}
+                    filterString={filterString}
                 />
             );
-
             const tsvDownload = (
                 <DownloadButton
                     filename={filename}
                     fileType={'tsv'}
-                    query={DISEASE_TABLE_QUERY}
-                    transformer={response => response.data.diseaseTable.rows}
-                    variables={{
-                        efoId: props.efoId,
-                        offset: 0,
-                        limit: 1000000,
-                    }}
+                    query={LOCUS_TABLE_QUERY}
+                    transformer={response => response.data.locusTable.rows}
+                    variables={downloadVariables}
+                    filterString={filterString}
                 />
             );
 
             return (
                 <EvidenceTable
-                    {...props}
-                    rows={data.diseaseTable.rows}
+                    {...{ filename, filterString }}
+                    rows={data.locusTable.rows}
                     pagination={pagination}
                     csvDownload={csvDownload}
                     tsvDownload={tsvDownload}
@@ -125,4 +174,4 @@ const DiseaseTable = props => (
     </Query>
 );
 
-export default DiseaseTable;
+export default BrowserTable;

@@ -8,15 +8,15 @@ import {
     renderGtexField,
     renderVEPField,
     renderVEPTermsField,
-} from './stringFormatters';
-import { colors } from './theme';
+} from '../../stringFormatters';
+import { colors } from '../../theme';
 import {
     LinksGene,
     LinksVariant,
     LinksLeadVariant,
     LinksDisease,
-} from './links';
-import DictionaryHelpTerm from './terms/DictionaryHelpTerm';
+} from '../../links';
+import DictionaryHelpTerm from '../../terms/DictionaryHelpTerm';
 
 const renderIntField = value => commaSeparate(value);
 const renderVariantField = value => (
