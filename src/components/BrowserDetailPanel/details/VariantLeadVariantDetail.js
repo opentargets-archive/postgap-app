@@ -3,7 +3,7 @@ import { Table } from 'antd';
 
 import BaseDetail from './BaseDetail';
 import DictionaryTerm from '../../DictionaryTerm/DictionaryTerm';
-import { LinksVariant, LinksLeadVariant } from '../../../links';
+import { LinksVariant, LinksLeadVariant } from '../../../utils/links';
 import { renderNonZeroField } from '../../../utils/stringFormatters';
 
 const VariantLeadVariantDetail = ({ variantLeadVariant, closeHandler }) => {

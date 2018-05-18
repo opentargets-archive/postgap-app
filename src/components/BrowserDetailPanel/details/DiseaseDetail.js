@@ -1,7 +1,7 @@
 import React from 'react';
 
 import BaseDetail from './BaseDetail';
-import { LinksDisease } from '../../../links';
+import { LinksDisease } from '../../../utils/links';
 
 const DiseaseDetail = ({ disease, closeHandler }) => {
     return (
