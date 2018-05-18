@@ -64,8 +64,12 @@ class Browser extends React.Component {
             start += excess;
             end -= excess;
         }
-        if (start < 0) start = 0;
-        if (end > chromosomeLength) end = chromosomeLength;
+        if (start < 0) {
+            start = 0;
+        }
+        if (end > chromosomeLength) {
+            end = chromosomeLength;
+        }
         setLocation({ start, end, chromosome }, this.props.history);
     }
 
@@ -154,7 +158,9 @@ class Browser extends React.Component {
             isInSelectedState,
         };
 
-        if (!data || !data.locus) return null;
+        if (!data || !data.locus) {
+            return null;
+        }
         const genes = data.locus.genes;
         const slots = calculateGeneSlots(genes, commonProps.location);
         const diseases = data.locus.diseases;

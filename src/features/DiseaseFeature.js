@@ -92,8 +92,9 @@ class DiseaseFeature extends React.Component {
             this[this.props.data.id].state.wordsByLines,
             d => d.width
         );
-        if (textWidth !== this.state.textWidth)
+        if (textWidth !== this.state.textWidth) {
             this.setState({ textWidth, textHeight });
+        }
     }
     render() {
         const { x, y, data, dimNonHighlighted, setClicked } = this.props;
