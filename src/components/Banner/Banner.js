@@ -2,8 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Row, Col, Layout, Affix } from 'antd';
 
-import Search from '..//Search/Search';
-import BannerLinks from '../../BannerLinks';
+import Search from '../Search/Search';
+import BannerLinks from '../BannerLinks/BannerLinks';
 import OpenTargetsLogo from '../../OpenTargetsLogo';
 
 const SiteName = () => (

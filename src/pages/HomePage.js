@@ -4,7 +4,7 @@ import { Col, Row, Tag } from 'antd';
 
 import Search from '../components/Search/Search';
 import OpenTargetsLogo from '../OpenTargetsLogo';
-import BannerLinks from '../BannerLinks';
+import BannerLinks from '../components/BannerLinks/BannerLinks';
 import { colors } from '../theme';
 
 const SiteName = () => (
