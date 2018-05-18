@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Layout } from 'antd';
 import './App.css';
 
-import withPageAnalytics from './withPageAnalytics';
+import withPageAnalytics from './HOCs/withPageAnalytics';
 import HomePage from './pages/HomePage';
 import DiseasePage from './pages/DiseasePage';
 import GenePage from './pages/GenePage';
