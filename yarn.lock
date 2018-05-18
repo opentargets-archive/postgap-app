@@ -834,8 +834,8 @@ babel-plugin-inline-environment-variables@^1.0.1:
   resolved "https://registry.yarnpkg.com/babel-plugin-inline-environment-variables/-/babel-plugin-inline-environment-variables-1.0.1.tgz#1f58ce91207ad6a826a8bf645fafe68ff5fe3ffe"
 
 babel-plugin-inline-import-graphql-ast@^2.1.1:
-  version "2.3.8"
-  resolved "https://registry.yarnpkg.com/babel-plugin-inline-import-graphql-ast/-/babel-plugin-inline-import-graphql-ast-2.3.8.tgz#43c063cd50110bd1b0f13815a16a2e1a01e41bb6"
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-inline-import-graphql-ast/-/babel-plugin-inline-import-graphql-ast-2.4.0.tgz#51f3e35c1ada0fa2f14119316a88f01f9be946de"
   dependencies:
     graphql-tag "^2.9.2"
 
