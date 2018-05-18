@@ -5,9 +5,9 @@ import { withRouter } from 'react-router-dom';
 import { Select, Spin } from 'antd';
 import { debounce } from 'lodash';
 
-import reportAnalyticsEvent from './reportAnalyticsEvent';
-import { otApi } from './redux/sagas';
-import { colors } from './theme';
+import reportAnalyticsEvent from '../../reportAnalyticsEvent';
+import { otApi } from '../../redux/sagas';
+import { colors } from '../../theme';
 
 const Option = Select.Option;
 
@@ -21,7 +21,7 @@ const SEARCH_QUERY = gql`
     }
 `;
 
-class SearchHome extends React.Component {
+class Search extends React.Component {
     constructor(props) {
         super(props);
         this.lastFetchId = 0;
@@ -145,6 +145,6 @@ class SearchHome extends React.Component {
     }
 }
 
-SearchHome = withApollo(withRouter(SearchHome));
+Search = withApollo(withRouter(Search));
 
-export default SearchHome;
+export default Search;

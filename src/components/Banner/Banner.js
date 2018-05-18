@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Row, Col, Layout, Affix } from 'antd';
 
-import SearchHome from '../../SearchHome';
+import Search from '..//Search/Search';
 import BannerLinks from '../../BannerLinks';
 import OpenTargetsLogo from '../../OpenTargetsLogo';
 
@@ -52,7 +52,7 @@ const Banner = () => {
                             <BannerLinks />
                         </div>
                         <div style={{ textAlign: 'right' }}>
-                            <SearchHome />
+                            <Search />
                         </div>
                     </Col>
                 </Row>
