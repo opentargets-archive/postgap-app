@@ -29,7 +29,6 @@
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.0",
-    "react-styleguidist": "^6.2.4",
     "react-svg-morph": "^0.2.1",
     "react-svg-text": "^0.1.2",
     "victory": "^0.25.4",
@@ -43,9 +42,7 @@
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test --env=jsdom",
-    "eject": "react-scripts eject",
-    "styleguide": "styleguidist server",
-    "styleguide:build": "styleguidist build"
+    "eject": "react-scripts eject"
   },
   "devDependencies": {
     "babel-plugin-import": "^1.6.7",
