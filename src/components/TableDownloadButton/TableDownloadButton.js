@@ -3,7 +3,7 @@ import { Button } from 'antd';
 import { withApollo } from 'react-apollo';
 import FileSaver from 'file-saver';
 
-import reportAnalyticsEvent from '../../reportAnalyticsEvent';
+import reportAnalyticsEvent from '../../utils/reportAnalyticsEvent';
 
 class TableDownloadButton extends React.Component {
     constructor() {

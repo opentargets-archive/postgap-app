@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { Select, Spin } from 'antd';
 import { debounce } from 'lodash';
 
-import reportAnalyticsEvent from '../../reportAnalyticsEvent';
+import reportAnalyticsEvent from '../../utils/reportAnalyticsEvent';
 import { otApi } from '../../redux/sagas';
 import { colors } from '../../theme';
 import SearchQuery from './SearchQuery.gql';

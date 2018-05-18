@@ -3,7 +3,7 @@ import { Card, Row, Col, Slider } from 'antd';
 import _ from 'lodash';
 
 import DictionaryHelpTerm from '../../../terms/DictionaryHelpTerm';
-import reportAnalyticsEvent from '../../../reportAnalyticsEvent';
+import reportAnalyticsEvent from '../../../utils/reportAnalyticsEvent';
 
 const reportAnalyticsGwasPValue = _.debounce(
     options => reportAnalyticsEvent(options),

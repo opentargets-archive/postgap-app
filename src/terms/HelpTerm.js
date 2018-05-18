@@ -1,7 +1,7 @@
 import React from 'react';
 import { Popover, Icon } from 'antd';
 
-import reportAnalyticsEvent from '../reportAnalyticsEvent';
+import reportAnalyticsEvent from '../utils/reportAnalyticsEvent';
 import { colors } from '../theme';
 
 const HelpTerm = ({ label, content }) => {

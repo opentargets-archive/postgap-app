@@ -5,7 +5,7 @@ import * as d3 from 'd3';
 import FileSaver from 'file-saver';
 import _ from 'lodash';
 
-import reportAnalyticsEvent from '../../reportAnalyticsEvent';
+import reportAnalyticsEvent from '../../utils/reportAnalyticsEvent';
 import GeneTrack, {
     GENE_SLOT_HEIGHT,
     GENE_TRACK_PADDING,
