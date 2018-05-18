@@ -2,7 +2,7 @@ import React from 'react';
 import { Table } from 'antd';
 
 import BaseDetail from './BaseDetail';
-import DictionaryHelpTerm from '../../../terms/DictionaryHelpTerm';
+import DictionaryHelpTerm from '../../DictionaryTerm/DictionaryTerm';
 import { LinksLeadVariant, LinksDisease } from '../../../links';
 import { commaSeparate } from '../../../stringFormatters';
 

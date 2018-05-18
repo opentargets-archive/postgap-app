@@ -16,7 +16,7 @@ import {
     LinksLeadVariant,
     LinksDisease,
 } from '../../links';
-import DictionaryHelpTerm from '../../terms/DictionaryHelpTerm';
+import DictionaryHelpTerm from '../DictionaryTerm/DictionaryTerm';
 
 const renderIntField = value => commaSeparate(value);
 const renderVariantField = value => (

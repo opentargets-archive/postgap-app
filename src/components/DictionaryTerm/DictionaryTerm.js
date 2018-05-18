@@ -1,8 +1,9 @@
 import React from 'react';
 import { Popover, Icon } from 'antd';
 
-import reportAnalyticsEvent from '../utils/reportAnalyticsEvent';
-import { colors } from '../theme';
+import dictionary from '../../constants/dictionary';
+import reportAnalyticsEvent from '../../utils/reportAnalyticsEvent';
+import { colors } from '../../theme';
 
 const HelpTerm = ({ label, content }) => {
     return (
@@ -32,4 +33,8 @@ const HelpTerm = ({ label, content }) => {
     );
 };
 
-export default HelpTerm;
+const DictionaryTerm = ({ term, label }) => {
+    return <HelpTerm label={label} content={dictionary[term.toLowerCase()]} />;
+};
+
+export default DictionaryTerm;
