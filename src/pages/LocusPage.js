@@ -7,17 +7,13 @@ import gql from 'graphql-tag';
 import withDebouncedProps from '../withDebouncedProps';
 import Browser from '../components/Browser/Browser';
 import BrowserTable from '../components/BrowserTable/BrowserTable';
-import VariantLeadVariantFilter from '../filters/VariantLeadVariantFilter';
 import BrowserDetailPanel from '../components/BrowserDetailPanel/BrowserDetailPanel';
-import LeadVariantDiseaseFilter from '../filters/LeadVariantDiseaseFilter';
-import GeneVariantFilter from '../filters/GeneVariantFilter';
+import BrowserFiltersPanel from '../components/BrowserFiltersPanel/BrowserFiltersPanel';
 import LOCUS_QUERY from './LocusBrowserQuery.gql';
 
 class LocusPage extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { filtersVisible: true };
-        this.toggleFilters = this.toggleFilters.bind(this);
         this.setLocationInUrl = this.setLocationInUrl.bind(this);
         this.setClickedInUrl = this.setClickedInUrl.bind(this);
         this.setFilterOtG2VScoreInUrl = this.setFilterOtG2VScoreInUrl.bind(
@@ -30,10 +26,6 @@ class LocusPage extends React.Component {
         this.setFilterGwasPValueInUrl = this.setFilterGwasPValueInUrl.bind(
             this
         );
-    }
-
-    toggleFilters() {
-        this.setState({ filtersVisible: !this.state.filtersVisible });
     }
 
     setLocationInUrl(location) {
@@ -229,79 +221,23 @@ class LocusPage extends React.Component {
                     return (
                         <div style={{ padding: '30px' }}>
                             <Col gutter={6}>
-                                {this.state.filtersVisible ? (
-                                    <Card
-                                        bodyStyle={{
-                                            background: 'white',
-                                            padding: '2px',
-                                        }}
-                                    >
-                                        <Row
-                                            style={{
-                                                padding: '10px 10px 0px 10px',
-                                            }}
-                                        >
-                                            <Col span={16}>
-                                                <h4>Filters </h4>
-                                            </Col>
-                                            <Col span={8}>
-                                                <Button
-                                                    style={{ float: 'right' }}
-                                                    icon="close"
-                                                    type="primary"
-                                                    shape="circle"
-                                                    size="small"
-                                                    ghost
-                                                    onClick={this.toggleFilters}
-                                                />
-                                            </Col>
-                                        </Row>
-                                        <Row gutter={2}>
-                                            <Col span={12}>
-                                                <GeneVariantFilter
-                                                    interval={filterOtG2VScore}
-                                                    setFilterG2VScore={
-                                                        this
-                                                            .setFilterOtG2VScoreInUrl
-                                                    }
-                                                    g2VMustHaves={
-                                                        filterOtG2VMustHaves
-                                                    }
-                                                    setFilterG2VMustHaves={
-                                                        this
-                                                            .setFilterOtG2VMustHavesInUrl
-                                                    }
-                                                />
-                                            </Col>
-                                            <Col span={6}>
-                                                <VariantLeadVariantFilter
-                                                    interval={filterLD}
-                                                    setFilterLD={
-                                                        this.setFilterLDInUrl
-                                                    }
-                                                />
-                                            </Col>
-                                            <Col span={6}>
-                                                <LeadVariantDiseaseFilter
-                                                    interval={filterGwasPValue}
-                                                    setFilterGwasPValue={
-                                                        this
-                                                            .setFilterGwasPValueInUrl
-                                                    }
-                                                    max={maxGwasPValue}
-                                                />
-                                            </Col>
-                                        </Row>
-                                    </Card>
-                                ) : (
-                                    <Button
-                                        type="primary"
-                                        ghost
-                                        onClick={this.toggleFilters}
-                                    >
-                                        Filters
-                                    </Button>
-                                )}
+                                <BrowserFiltersPanel
+                                    filterOtG2VScore={filterOtG2VScore}
+                                    filterOtG2VMustHaves={filterOtG2VMustHaves}
+                                    filterLD={filterLD}
+                                    filterGwasPValue={filterGwasPValue}
+                                    setFilterG2VScore={
+                                        this.setFilterOtG2VScoreInUrl
+                                    }
+                                    setFilterG2VMustHaves={
+                                        this.setFilterOtG2VMustHavesInUrl
+                                    }
+                                    setFilterLD={this.setFilterLDInUrl}
+                                    setFilterGwasPValue={
+                                        this.setFilterGwasPValueInUrl
+                                    }
+                                    maxGwasPValue={maxGwasPValue}
+                                />
 
                                 <Row gutter={16} style={{ height: '16px' }} />
 

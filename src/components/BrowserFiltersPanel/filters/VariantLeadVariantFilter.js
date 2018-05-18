@@ -2,8 +2,8 @@ import React from 'react';
 import { Card, Row, Col, Slider } from 'antd';
 import _ from 'lodash';
 
-import DictionaryHelpTerm from '../terms/DictionaryHelpTerm';
-import reportAnalyticsEvent from '../reportAnalyticsEvent';
+import DictionaryHelpTerm from '../../../terms/DictionaryHelpTerm';
+import reportAnalyticsEvent from '../../../reportAnalyticsEvent';
 
 const reportAnalyticsLD = _.debounce(
     options => reportAnalyticsEvent(options),
