@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 import { Redirect } from 'react-router-dom';
 import queryString from 'query-string';
 
-import { chromosomeLengths } from '../redux/chromosomeLengths';
+import chromosomeLengths from '../constants/chromosomeLengths';
 
 const HALF_INTERVAL = 1000000;
 
