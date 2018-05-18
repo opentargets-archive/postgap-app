@@ -9,7 +9,7 @@ import DiseasePage from './pages/DiseasePage';
 import GenePage from './pages/GenePage';
 import VariantPage from './pages/VariantPage';
 import LocusPage from './pages/LocusPage';
-import Footer from './Footer';
+import Footer from './components/Footer/Footer';
 import Banner from './Banner';
 
 class App extends React.Component {
