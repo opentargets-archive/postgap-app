@@ -3,7 +3,7 @@ import axios from 'axios';
 const OT_API_BASE = 'https://api.opentargets.io/v3/platform/';
 const OT_API_SEARCH = ({ query }) => `private/quicksearch?q=${query}&size=3`;
 
-export const otApi = {
+export default {
     fetchSearch(query) {
         const url = `${OT_API_BASE}${OT_API_SEARCH({ query })}`;
         return axios.get(url).then(response => {

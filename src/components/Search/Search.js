@@ -6,7 +6,7 @@ import { Select, Spin } from 'antd';
 import { debounce } from 'lodash';
 
 import reportAnalyticsEvent from '../../utils/reportAnalyticsEvent';
-import { otApi } from '../../redux/sagas';
+import otApi from '../../utils/otApi';
 import { colors } from '../../theme';
 import SearchQuery from './SearchQuery.gql';
 
