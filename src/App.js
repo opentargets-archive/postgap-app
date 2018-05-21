@@ -11,12 +11,15 @@ import VariantPage from './pages/VariantPage';
 import LocusPage from './pages/LocusPage';
 import Footer from './components/Footer/Footer';
 import Banner from './components/Banner/Banner';
+import CornerRibbon from './components/CornerRibbon/CornerRibbon';
 
 class App extends React.Component {
     render() {
         return (
             <Router>
                 <Layout>
+                    <CornerRibbon label="beta" />
+
                     <Switch>
                         <Route exact path="/" component={null} />
                         <Route path="/*" component={Banner} />
