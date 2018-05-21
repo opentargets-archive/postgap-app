@@ -1,17 +1,20 @@
 import React from 'react';
 
+import { colors } from '../../theme';
+
 const CornerRibbon = ({ label }) => {
     return (
         <div
             style={{
-                width: '200px',
-                background: 'red',
-                top: '25px',
-                left: '-50px',
+                width: '120px',
+                background: colors.secondary,
+                top: '15px',
+                left: '-30px',
                 textAlign: 'center',
-                lineHeight: '50px',
+                lineHeight: '30px',
                 letterSpacing: '1px',
                 color: 'white',
+                fontWeight: 'bold',
                 transform: 'rotate(-45deg)',
 
                 position: 'fixed',
