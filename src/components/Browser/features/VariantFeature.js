@@ -63,7 +63,7 @@ class VariantFeatureSet extends React.Component {
                         key={d.id}
                         data={d}
                         x={d.position - startDebounced}
-                        height={20}
+                        height={15}
                         setClicked={setClicked}
                         dimNonHighlighted={dimNonHighlighted}
                     />

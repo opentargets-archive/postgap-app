@@ -192,20 +192,22 @@ class Browser extends React.Component {
                 </Row>
                 <Row>
                     <Col span={labelColSize}>
-                        <DictionaryTerm
-                            term={'genes'}
-                            label={
-                                <span
-                                    style={{
-                                        fontWeight: 100,
-                                        fontStyle: 'italic',
-                                        textAlign: 'right',
-                                    }}
-                                >
-                                    Genes
-                                </span>
-                            }
-                        />
+                        <div style={{ fontSize: '12px', position: 'absolute' }}>
+                            <DictionaryTerm
+                                term={'genes'}
+                                label={
+                                    <span
+                                        style={{
+                                            fontWeight: 100,
+                                            fontStyle: 'italic',
+                                            textAlign: 'right',
+                                        }}
+                                    >
+                                        Genes
+                                    </span>
+                                }
+                            />
+                        </div>
                     </Col>
                     <Col span={24 - labelColSize}>
                         <Card
@@ -240,26 +242,28 @@ class Browser extends React.Component {
                 </Row>
                 <Row>
                     <Col span={labelColSize}>
-                        <DictionaryTerm
-                            term={'variants'}
-                            label={
-                                <span
-                                    style={{
-                                        fontWeight: 100,
-                                        fontStyle: 'italic',
-                                        textAlign: 'right',
-                                    }}
-                                >
-                                    Variants
-                                </span>
-                            }
-                        />
+                        <div style={{ fontSize: '12px', position: 'absolute' }}>
+                            <DictionaryTerm
+                                term={'variants'}
+                                label={
+                                    <span
+                                        style={{
+                                            fontWeight: 100,
+                                            fontStyle: 'italic',
+                                            textAlign: 'right',
+                                        }}
+                                    >
+                                        Variants
+                                    </span>
+                                }
+                            />
+                        </div>
                     </Col>
                     <Col span={24 - labelColSize}>
                         <Card
                             bodyStyle={{
                                 padding: 0,
-                                height: '20px',
+                                height: '15px',
                                 position: 'relative',
                             }}
                         >
@@ -292,26 +296,28 @@ class Browser extends React.Component {
                 </Row>
                 <Row>
                     <Col span={labelColSize}>
-                        <DictionaryTerm
-                            term={'leadvariants'}
-                            label={
-                                <span
-                                    style={{
-                                        fontWeight: 100,
-                                        fontStyle: 'italic',
-                                        textAlign: 'right',
-                                    }}
-                                >
-                                    Lead Variants
-                                </span>
-                            }
-                        />
+                        <div style={{ fontSize: '12px', position: 'absolute' }}>
+                            <DictionaryTerm
+                                term={'leadvariants'}
+                                label={
+                                    <span
+                                        style={{
+                                            fontWeight: 100,
+                                            fontStyle: 'italic',
+                                            textAlign: 'right',
+                                        }}
+                                    >
+                                        Lead Variants
+                                    </span>
+                                }
+                            />
+                        </div>
                     </Col>
                     <Col span={24 - labelColSize}>
                         <Card
                             bodyStyle={{
                                 padding: 0,
-                                height: '20px',
+                                height: '15px',
                                 position: 'relative',
                             }}
                         >
@@ -345,20 +351,22 @@ class Browser extends React.Component {
                 </Row>
                 <Row>
                     <Col span={labelColSize}>
-                        <DictionaryTerm
-                            term={'diseases'}
-                            label={
-                                <span
-                                    style={{
-                                        fontWeight: 100,
-                                        fontStyle: 'italic',
-                                        textAlign: 'right',
-                                    }}
-                                >
-                                    Diseases
-                                </span>
-                            }
-                        />
+                        <div style={{ fontSize: '12px', position: 'absolute' }}>
+                            <DictionaryTerm
+                                term={'diseases'}
+                                label={
+                                    <span
+                                        style={{
+                                            fontWeight: 100,
+                                            fontStyle: 'italic',
+                                            textAlign: 'right',
+                                        }}
+                                    >
+                                        Diseases
+                                    </span>
+                                }
+                            />
+                        </div>
                     </Col>
                     <Col span={24 - labelColSize}>
                         <Card
