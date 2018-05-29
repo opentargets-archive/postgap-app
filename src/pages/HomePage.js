@@ -11,7 +11,7 @@ const SiteName = () => (
     <React.Fragment>
         <h1 style={{ color: 'white', fontSize: 50, marginBottom: 20 }}>
             <span style={{ fontWeight: 'bold' }}> Open Targets </span>
-            <span style={{ fontWeight: 100 }}>POSTGAP</span>
+            <span style={{ fontWeight: 100 }}>Genetics</span>
         </h1>
         <p style={{ color: 'white', fontSize: 16, marginBottom: 30 }}>
             Mapping the relationship between targets and diseases using GWAS,

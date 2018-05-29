@@ -19,7 +19,7 @@ const SiteName = () => (
                 }}
             >
                 <span style={{ fontWeight: 'bold' }}> Open Targets </span>
-                <span style={{ fontWeight: 100 }}>POSTGAP</span>
+                <span style={{ fontWeight: 100 }}>Genetics</span>
             </h1>
         </Row>
     </Link>

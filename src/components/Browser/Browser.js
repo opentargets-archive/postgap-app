@@ -112,7 +112,7 @@ class Browser extends React.Component {
 
         // add title track
         const titleG = `<g><text x="${width /
-            2}" y="20" text-anchor="middle" style="fill: black; font-size: 20px;">POSTGAP locus ${chromosome}:${start}-${end}</text><text x="${width /
+            2}" y="20" text-anchor="middle" style="fill: black; font-size: 20px;">Open Targets Genetics locus ${chromosome}:${start}-${end}</text><text x="${width /
             2}" text-anchor="middle" y="50" style="fill: black; font-size: 16px;">${filterString}</text></g>`;
         tracksAsGs.push(titleG);
 
