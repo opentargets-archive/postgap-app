@@ -4,7 +4,7 @@ import * as d3 from 'd3';
 
 import BaseTrack from './BaseTrack';
 import { DebouncedDiseaseFeatureSet } from '../features/DiseaseFeature';
-export const DISEASE_SLOT_HEIGHT = 60;
+export const DISEASE_SLOT_HEIGHT = 50;
 export const DISEASE_TRACK_MIN_HEIGHT = 20;
 export const DISEASE_SLOT_COLS = 5;
 

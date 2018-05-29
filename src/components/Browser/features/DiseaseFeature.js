@@ -115,10 +115,10 @@ class DiseaseFeature extends React.Component {
             <circle
                 cx={0}
                 cy={10}
-                r={4}
+                r={3}
                 style={{
                     stroke: diseaseColor,
-                    strokeWidth: 2,
+                    strokeWidth: 1.5,
                     fill: 'white',
                     pointerEvents: 'none',
                 }}
@@ -130,8 +130,8 @@ class DiseaseFeature extends React.Component {
                     this[this.props.data.id] = t;
                 }}
                 x={0}
-                y={20}
-                width={130}
+                y={14}
+                width={120}
                 textAnchor="middle"
                 verticalAnchor="start"
                 style={{
@@ -149,7 +149,7 @@ class DiseaseFeature extends React.Component {
                 x={-textWidth / 2 - margin}
                 y={14 - margin}
                 width={textWidth + 2 * margin}
-                height={textHeight}
+                height={textHeight - 8}
                 rx={2}
                 ry={2}
                 onClick={() => {
@@ -166,15 +166,5 @@ class DiseaseFeature extends React.Component {
         );
     }
 }
-
-// onMouseEnter={() => {
-//   setHoverId(data.efoId);
-// }}
-// onMouseLeave={() => {
-//   setHoverId(null);
-// }}
-// onClick={() => {
-//   setClickedId(data.efoId);
-// }}
 
 export default DiseaseFeature;
