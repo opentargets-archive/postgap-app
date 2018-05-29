@@ -67,7 +67,7 @@ class VariantLeadVariantFeatureSet extends React.Component {
                         data={d}
                         xTop={d.vPos - startDebounced}
                         xBottom={d.lvPos - startDebounced}
-                        height={80}
+                        height={60}
                         setClicked={setClicked}
                         dimNonHighlighted={dimNonHighlighted}
                     />
