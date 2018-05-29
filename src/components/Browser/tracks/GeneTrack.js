@@ -4,8 +4,8 @@ import BaseTrack from './BaseTrack';
 import GeneFeature from '../features/GeneFeature';
 import GeneVerticalFeature from '../features/GeneVerticalFeature';
 
-export const GENE_SLOT_HEIGHT = 35;
-export const GENE_TRACK_PADDING = 15;
+export const GENE_SLOT_HEIGHT = 30;
+export const GENE_TRACK_PADDING = 5;
 
 let GeneTrack = props => {
     const height =

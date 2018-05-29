@@ -34,10 +34,10 @@ class GeneFeature extends React.Component {
         const { textWidth, textBottom } = this.state;
         const margin = 3;
 
-        const exonHeight = slotHeight * 0.3;
+        const exonHeight = slotHeight * 0.25;
         const yExonTop = 0;
         const ySpit = exonHeight / 2;
-        const yText = slotHeight * 0.65;
+        const yText = slotHeight * 0.62;
         const geneColor = highlight
             ? colors.secondary
             : dimNonHighlighted ? 'lightgrey' : colors.primary;
@@ -49,7 +49,7 @@ class GeneFeature extends React.Component {
             : dimNonHighlighted ? 'lightgrey' : 'black';
         const spitWidth = x(data.end) - x(data.start);
         const backgroundWidth = Math.max(textWidth, spitWidth);
-        const backgroundHeight = textBottom - yExonTop;
+        const backgroundHeight = textBottom - 3 - yExonTop;
 
         const spit = (
             <line
