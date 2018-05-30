@@ -118,7 +118,7 @@ class Search extends React.Component {
                 filterOption={false}
                 onSearch={this.fetchSearchResults}
                 onChange={this.handleChange}
-                style={{ width: '100%', maxWidth: 400 }}
+                style={{ width: '100%', maxWidth: 300 }}
             >
                 {data.map(d => (
                     <Option key={d.id}>

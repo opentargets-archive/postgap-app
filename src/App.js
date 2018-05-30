@@ -28,7 +28,7 @@ class App extends React.Component {
                     <Layout.Content
                         style={{
                             background: '#ECECEC',
-                            minHeight: 'calc(100vh - 90px - 200px)', // Banner=90; Footer=200
+                            minHeight: 'calc(100vh - 40px - 200px)', // Banner=40; Footer=200
                         }}
                     >
                         <Route

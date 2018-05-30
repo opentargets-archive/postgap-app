@@ -1,64 +1,67 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Row, Col, Layout, Affix } from 'antd';
+import styled from 'styled-components';
 
 import Search from '../Search/Search';
 import BannerLinks from '../BannerLinks/BannerLinks';
 import OpenTargetsLogo from '../OpenTargetsLogo/OpenTargetsLogo';
 
-const SiteName = () => (
-    <Link to={{ pathname: '/' }}>
-        <Row type="flex" justify="start" align="middle">
-            <OpenTargetsLogo width={40} height={40} fill="white" />
-            <h1
-                style={{
-                    color: 'white',
-                    marginBottom: 0,
-                    display: 'inline',
-                    paddingLeft: 20,
-                }}
-            >
-                <span style={{ fontWeight: 'bold' }}> Open Targets </span>
-                <span style={{ fontWeight: 100 }}>Genetics</span>
-            </h1>
-        </Row>
-    </Link>
+const BannerContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(
+        90deg,
+        ${props => props.theme.colors.primary} 0%,
+        ${props => props.theme.colors.primaryLight} 100%
+    );
+    // background-size: 400% 400%;
+    // animation: AnimationBanner 4s ease infinite;
+    // @keyframes AnimationBanner {
+    //   0%{background-position:0% 53%}
+    //   50%{background-position:100% 48%}
+    //   100%{background-position:0% 53%}
+    // }
+    height: 40px;
+    padding: 30px;
+`;
+
+const BannerTitle = styled.h1`
+    color: white;
+    margin: 0 0.5em 0.1em 0.5em;
+`;
+const Bold = styled.span`
+    font-weight: bold;
+`;
+const Light = styled.span`
+    font-weight: 100;
+`;
+const OpenTargetsTitle = () => (
+    <BannerTitle>
+        <Bold> Open Targets </Bold>
+        <Light>Genetics</Light>
+    </BannerTitle>
 );
 
-const Banner = () => {
-    return (
-        <Affix>
-            <Layout.Header
-                style={{
-                    height: 90,
-                    paddingLeft: 30,
-                    paddingRight: 30,
-                }}
-                className="Banner-backdrop"
-            >
-                <Row
-                    type="flex"
-                    justify="start"
-                    align="middle"
-                    style={{ height: '100%' }}
-                >
-                    <Col span={16}>
-                        <Row>
-                            <SiteName />
-                        </Row>
-                    </Col>
-                    <Col span={8}>
-                        <div style={{ textAlign: 'right', height: 30 }}>
-                            <BannerLinks />
-                        </div>
-                        <div style={{ textAlign: 'right' }}>
-                            <Search />
-                        </div>
-                    </Col>
-                </Row>
-            </Layout.Header>
-        </Affix>
-    );
-};
+const HomeContainer = styled.div`
+    display: flex;
+`;
+const Home = () => (
+    <HomeContainer>
+        <OpenTargetsLogo width={40} height={40} fill="white" />
+        <OpenTargetsTitle />
+    </HomeContainer>
+);
+
+let Banner = () => (
+    <BannerContainer>
+        <Link to={{ pathname: '/' }}>
+            <Home />
+        </Link>
+        <BannerLinks />
+        <Search />
+    </BannerContainer>
+);
 
 export default Banner;

@@ -5,6 +5,9 @@ import App from './App';
 import { unregister } from './utils/registerServiceWorker';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
+import { ThemeProvider } from 'styled-components';
+
+import theme from './theme';
 
 const client = new ApolloClient({
     // uri: 'http://localhost:4000/graphql',
@@ -13,7 +16,9 @@ const client = new ApolloClient({
 
 render(
     <ApolloProvider client={client}>
-        <App />
+        <ThemeProvider theme={theme}>
+            <App />
+        </ThemeProvider>
     </ApolloProvider>,
     document.getElementById('root')
 );
