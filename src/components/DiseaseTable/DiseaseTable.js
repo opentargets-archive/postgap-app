@@ -22,7 +22,6 @@ const DiseaseTable = props => (
     >
         {({ loading, error, data, fetchMore }) => {
             const { filename } = props;
-            if (loading) return <p>Loading...</p>;
             if (error) return <p>Error :(</p>;
 
             let pagination = {
@@ -30,10 +29,13 @@ const DiseaseTable = props => (
                 current: 1,
                 pageSize: 10,
             };
+            let rows = [];
             if (data && data.diseaseTable) {
                 pagination.total = data.diseaseTable.total;
                 pagination.current =
                     data.diseaseTable.offset / pagination.pageSize + 1;
+
+                rows = data.diseaseTable.rows;
             }
 
             const csvDownload = (
@@ -67,7 +69,8 @@ const DiseaseTable = props => (
             return (
                 <EvidenceTable
                     {...props}
-                    rows={data.diseaseTable.rows}
+                    rows={rows}
+                    loading={loading}
                     pagination={pagination}
                     csvDownload={csvDownload}
                     tsvDownload={tsvDownload}

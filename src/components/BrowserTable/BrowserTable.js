@@ -41,7 +41,6 @@ const BrowserTable = ({
         fetchPolicy="network-only"
     >
         {({ loading, error, data, fetchMore }) => {
-            if (loading) return <p>Loading...</p>;
             if (error) return <p>Error :(</p>;
 
             let pagination = {
@@ -49,10 +48,13 @@ const BrowserTable = ({
                 current: 1,
                 pageSize: 10,
             };
+            let rows = [];
             if (data && data.locusTable) {
                 pagination.total = data.locusTable.total;
                 pagination.current =
                     data.locusTable.offset / pagination.pageSize + 1;
+
+                rows = data.locusTable.rows;
             }
 
             const downloadVariables = {
@@ -91,8 +93,8 @@ const BrowserTable = ({
 
             return (
                 <EvidenceTable
-                    {...{ filename, filterString }}
-                    rows={data.locusTable.rows}
+                    {...{ filename, filterString, loading }}
+                    rows={rows}
                     pagination={pagination}
                     csvDownload={csvDownload}
                     tsvDownload={tsvDownload}
