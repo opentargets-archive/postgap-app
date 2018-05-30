@@ -228,7 +228,7 @@ class Browser extends React.Component {
                         <Card
                             bodyStyle={{
                                 padding: 0,
-                                height: '80px',
+                                height: '60px',
                                 position: 'relative',
                             }}
                         >
@@ -280,7 +280,7 @@ class Browser extends React.Component {
                         <Card
                             bodyStyle={{
                                 padding: 0,
-                                height: '80px',
+                                height: '60px',
                                 position: 'relative',
                             }}
                         >
@@ -334,7 +334,7 @@ class Browser extends React.Component {
                         <Card
                             bodyStyle={{
                                 padding: 0,
-                                height: '80px',
+                                height: '60px',
                                 position: 'relative',
                             }}
                         >
