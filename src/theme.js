@@ -12,6 +12,14 @@ export const colors = {
     greyLighter: '#cecfcf',
 };
 
+const beachVacation = {
+    primary: '#90C7F1',
+    primaryLight: '#D8EDFD',
+    primaryDark: '#5582A4',
+    secondaryLight: '#FDF2D7',
+    secondary: '#F2D084',
+};
+
 export default {
     colors,
 };
