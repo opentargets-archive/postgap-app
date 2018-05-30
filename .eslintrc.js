@@ -40,6 +40,7 @@ module.exports = {
     "no-labels": ["warn", { allowLoop: false, allowSwitch: false }],
     "no-lone-blocks": "warn",
     "no-loop-func": "warn",
+    "no-magic-numbers": ["warn", { enforceConst: true, ignoreArrayIndices: true }],
     "no-mixed-operators": [
         "warn",
         {
@@ -118,6 +119,7 @@ module.exports = {
     "react/jsx-no-comment-textnodes": "warn",
     "react/jsx-no-duplicate-props": ["warn", { ignoreCase: true }],
     "react/jsx-no-undef": "warn",
+    "react/jsx-no-literals": "warn",
     "react/jsx-pascal-case": [
         "warn",
         {
