@@ -5,6 +5,7 @@ import { Redirect } from 'react-router-dom';
 import queryString from 'query-string';
 
 import chromosomeLengths from '../constants/chromosomeLengths';
+import Message from '../components/Message/Message';
 
 const HALF_INTERVAL = 1000000;
 
@@ -30,18 +31,13 @@ class GenePage extends React.Component {
                 {({ loading, error, data }) => {
                     if (loading) {
                         return (
-                            <div
-                                style={{
-                                    textAlign: 'center',
-                                    paddingTop: 100,
-                                    fontSize: 18,
-                                }}
-                            >
+                            <Message>
                                 Fetching gene location and redirecting...
-                            </div>
+                            </Message>
                         );
+                    } else if (error) {
+                        return <Message error>Error fetching data.</Message>;
                     }
-                    if (error) return <p>Error :(</p>;
 
                     if (data && data.geneLocation) {
                         const { chromosome, start, end } = data.geneLocation;

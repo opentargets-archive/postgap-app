@@ -9,6 +9,7 @@ import Browser from '../components/Browser/Browser';
 import BrowserTable from '../components/BrowserTable/BrowserTable';
 import BrowserDetailPanel from '../components/BrowserDetailPanel/BrowserDetailPanel';
 import BrowserFiltersPanel from '../components/BrowserFiltersPanel/BrowserFiltersPanel';
+import Message from '../components/Message/Message';
 import LOCUS_QUERY from './LocusBrowserQuery.gql';
 
 class LocusPage extends React.Component {
@@ -199,6 +200,10 @@ class LocusPage extends React.Component {
                 fetchPolicy="network-only"
             >
                 {({ loading, error, data }) => {
+                    if (error) {
+                        return <Message error>Error fetching data.</Message>;
+                    }
+
                     let clickedEntity = null;
                     const field = `${clickedType}s`;
                     if (data && data.locus && data.locus[field]) {

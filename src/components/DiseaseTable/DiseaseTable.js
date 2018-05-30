@@ -4,6 +4,7 @@ import gql from 'graphql-tag';
 
 import EvidenceTable from '../EvidenceTable/EvidenceTable';
 import TableDownloadButton from '../TableDownloadButton/TableDownloadButton';
+import Message from '../Message/Message';
 import DiseaseTableQuery from './DiseaseTableQuery.gql';
 
 const DISEASE_TABLE_QUERY = gql`
@@ -22,7 +23,9 @@ const DiseaseTable = props => (
     >
         {({ loading, error, data, fetchMore }) => {
             const { filename } = props;
-            if (error) return <p>Error :(</p>;
+            if (error) {
+                return <Message error>Error fetching data.</Message>;
+            }
 
             let pagination = {
                 total: 0,
