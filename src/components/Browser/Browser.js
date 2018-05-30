@@ -138,6 +138,7 @@ class Browser extends React.Component {
             setClicked,
             data,
             isInSelectedState,
+            loading,
         } = this.props;
 
         const labelColSize = 4;
@@ -158,12 +159,25 @@ class Browser extends React.Component {
             isInSelectedState,
         };
 
-        if (!data || !data.locus) {
-            return null;
+        let genes = [];
+        let variants = [];
+        let leadVariants = [];
+        let diseases = [];
+        let geneVariants = [];
+        let variantLeadVariants = [];
+        let leadVariantDiseases = [];
+        if (data && data.locus) {
+            genes = data.locus.genes;
+            variants = data.locus.variants;
+            leadVariants = data.locus.leadVariants;
+            diseases = data.locus.diseases;
+            geneVariants = data.locus.geneVariants;
+            variantLeadVariants = data.locus.variantLeadVariants;
+            leadVariantDiseases = data.locus.leadVariantDiseases;
         }
-        const genes = data.locus.genes;
+        // const genes = data.locus.genes;
         const slots = calculateGeneSlots(genes, commonProps.location);
-        const diseases = data.locus.diseases;
+        // const diseases = data.locus.diseases;
         const diseaseScale = scalePoint().domain(
             diseases.map(d => d.name).sort()
         );
@@ -219,7 +233,7 @@ class Browser extends React.Component {
                             }}
                         >
                             <GeneTrack slots={slots} {...commonProps} />
-                            <Spinner showIcon={true} />
+                            <Spinner loading={loading} showIcon={true} />
                         </Card>
                     </Col>
                 </Row>
@@ -233,10 +247,10 @@ class Browser extends React.Component {
                             }}
                         >
                             <GeneVariantTrack
-                                geneVariants={data.locus.geneVariants}
+                                geneVariants={geneVariants}
                                 {...commonProps}
                             />
-                            <Spinner />
+                            <Spinner loading={loading} />
                         </Card>
                     </Col>
                 </Row>
@@ -268,10 +282,10 @@ class Browser extends React.Component {
                             }}
                         >
                             <VariantTrack
-                                variants={data.locus.variants}
+                                variants={variants}
                                 {...commonProps}
                             />
-                            <Spinner />
+                            <Spinner loading={loading} />
                         </Card>
                     </Col>
                 </Row>
@@ -285,12 +299,10 @@ class Browser extends React.Component {
                             }}
                         >
                             <VariantLeadVariantTrack
-                                variantLeadVariants={
-                                    data.locus.variantLeadVariants
-                                }
+                                variantLeadVariants={variantLeadVariants}
                                 {...commonProps}
                             />
-                            <Spinner />
+                            <Spinner loading={loading} />
                         </Card>
                     </Col>
                 </Row>
@@ -322,10 +334,10 @@ class Browser extends React.Component {
                             }}
                         >
                             <LeadVariantTrack
-                                leadVariants={data.locus.leadVariants}
+                                leadVariants={leadVariants}
                                 {...commonProps}
                             />
-                            <Spinner />
+                            <Spinner loading={loading} />
                         </Card>
                     </Col>
                 </Row>
@@ -339,13 +351,11 @@ class Browser extends React.Component {
                             }}
                         >
                             <LeadVariantDiseaseTrack
-                                leadVariantDiseases={
-                                    data.locus.leadVariantDiseases
-                                }
+                                leadVariantDiseases={leadVariantDiseases}
                                 diseaseScale={diseaseScale}
                                 {...commonProps}
                             />
-                            <Spinner />
+                            <Spinner loading={loading} />
                         </Card>
                     </Col>
                 </Row>
@@ -382,11 +392,11 @@ class Browser extends React.Component {
                             }}
                         >
                             <DiseaseTrack
-                                diseases={data.locus.diseases}
+                                diseases={diseases}
                                 diseaseScale={diseaseScale}
                                 {...commonProps}
                             />
-                            <Spinner />
+                            <Spinner loading={loading} />
                         </Card>
                     </Col>
                 </Row>

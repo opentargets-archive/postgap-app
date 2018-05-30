@@ -267,6 +267,7 @@ class LocusPage extends React.Component {
                                             isInSelectedState={
                                                 isInSelectedState
                                             }
+                                            loading={loading}
                                         />
                                     </Col>
                                     <Col span={6}>
