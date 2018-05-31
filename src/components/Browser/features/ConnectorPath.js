@@ -1,15 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
 
 import { colors } from '../../../theme';
-
-const Path = styled.path`
-    stroke: ${({ highlight, dim }) =>
-        highlight ? colors.secondary : dim ? 'lightgrey' : 'grey'};
-    fill: none;
-    stroke-width: 1;
-    vector-effect: non-scaling-stroke;
-`;
 
 const ConnectorPath = ({
     topX,
@@ -26,11 +17,17 @@ const ConnectorPath = ({
     const d = `M${topX},${topY} C${topX},${controlY}, ${bottomX},${controlY} ${bottomX},${bottomY}`;
     const handlers = { onClick, onMouseEnter, onMouseLeave };
     return (
-        <Path
+        <path
             d={d}
-            highlight={highlight}
-            dim={dimNonHighlighted}
             {...handlers}
+            style={{
+                stroke: highlight
+                    ? colors.secondary
+                    : dimNonHighlighted ? 'lightgrey' : 'grey',
+                fill: 'none',
+                strokeWidth: 1,
+                vectorEffect: 'non-scaling-stroke',
+            }}
         />
     );
 };
