@@ -10,7 +10,7 @@ const navigation = [
     {
         label: 'Feedback',
         link:
-            'mailto:support@targetvalidation.org?Subject=Open%20Targets%20POSTGAP%20-%20help%20request',
+            'mailto:support@targetvalidation.org?Subject=Open%20Targets%20Genetics%20-%20help%20request',
     },
 ];
 
