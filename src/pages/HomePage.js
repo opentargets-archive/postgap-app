@@ -5,6 +5,7 @@ import { Col, Row, Tag } from 'antd';
 import Search from '../components/Search/Search';
 import OpenTargetsLogo from '../components/OpenTargetsLogo/OpenTargetsLogo';
 import BannerLinks from '../components/BannerLinks/BannerLinks';
+import Message from '../components/Message/Message';
 import { colors } from '../theme';
 
 const SiteName = () => (
@@ -32,6 +33,47 @@ const SearchSuggestions = () => (
         <Link to="/variant/rs4272">
             <Tag color={colors.primaryLight}>rs4272</Tag>
         </Link>
+    </div>
+);
+
+const BetaWarning = () => (
+    <div
+        style={{
+            textAlign: 'left',
+            fontSize: '1em',
+            // background: '#eee',
+            background: colors.secondary,
+            padding: '15px',
+            marginTop: '20px',
+            fontSize: '1.1em',
+            // fontWeight: 'bold',
+            // color: colors.secondary,
+            color: 'white',
+            borderRadius: '10px',
+            border: `2px solid ${colors.secondary}`,
+        }}
+    >
+        <p
+            style={{
+                textAlign: 'center',
+                fontWeight: 'bold',
+                fontSize: '1.2em',
+            }}
+        >
+            Welcome to the Open Targets Genetics Portal!
+        </p>
+        <p>
+            The Portal is currently under active development. We are updating
+            the data and visualisations so you may notice inconsistencies.
+        </p>
+        <p>
+            To be the first to know when we officially launch the Portal, please
+            subscribe to our email newsletter (http://eepurl.com/c-NsBb).
+        </p>
+        <p>
+            If you have any feedback on the Portal, please email us
+            (support@targetvalidation.org).
+        </p>
     </div>
 );
 
@@ -70,6 +112,7 @@ const HomePage = () => {
                     <SiteName />
                     <Search />
                     <SearchSuggestions />
+                    <BetaWarning />
                 </Col>
             </Row>
         </Col>
