@@ -28,8 +28,8 @@ const SearchSuggestions = () => (
         <Link to="/gene/ENSG00000105810">
             <Tag color={colors.primaryLight}>CDK6</Tag>
         </Link>
-        <Link to="/disease/EFO_0000685">
-            <Tag color={colors.primaryLight}>rheumatoid arthritis</Tag>
+        <Link to="/disease/EFO_0000305">
+            <Tag color={colors.primaryLight}>breast carcinoma</Tag>
         </Link>
         <Link to="/variant/rs4272">
             <Tag color={colors.primaryLight}>rs4272</Tag>
