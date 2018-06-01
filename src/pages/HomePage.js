@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Col, Row, Tag } from 'antd';
+import styled from 'styled-components';
 
 import Search from '../components/Search/Search';
 import OpenTargetsLogo from '../components/OpenTargetsLogo/OpenTargetsLogo';
@@ -36,24 +37,29 @@ const SearchSuggestions = () => (
     </div>
 );
 
+const P = styled.p`
+    color: white;
+    font-size: 1.1em;
+    text-align: left;
+    margin-bottom: 0.5em;
+`;
 const BetaWarning = () => (
     <div
         style={{
-            textAlign: 'left',
-            fontSize: '1em',
+            // textAlign: 'left',
             // background: '#eee',
             background: colors.secondary,
             padding: '15px',
-            marginTop: '20px',
-            fontSize: '1.1em',
+            marginTop: '30px',
+            //fontSize: '1.1em',
             // fontWeight: 'bold',
             // color: colors.secondary,
-            color: 'white',
+            //color: 'white',
             borderRadius: '10px',
             border: `2px solid ${colors.secondary}`,
         }}
     >
-        <p
+        <P
             style={{
                 textAlign: 'center',
                 fontWeight: 'bold',
@@ -61,19 +67,19 @@ const BetaWarning = () => (
             }}
         >
             Welcome to the Open Targets Genetics Portal!
-        </p>
-        <p>
+        </P>
+        <P>
             The Portal is currently under active development. We are updating
             the data and visualisations so you may notice inconsistencies.
-        </p>
-        <p>
+        </P>
+        <P>
             To be the first to know when we officially launch the Portal, please
             subscribe to our email newsletter (http://eepurl.com/c-NsBb).
-        </p>
-        <p>
+        </P>
+        <P>
             If you have any feedback on the Portal, please email us
             (support@targetvalidation.org).
-        </p>
+        </P>
     </div>
 );
 
