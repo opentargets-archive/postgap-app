@@ -99,14 +99,17 @@ const BetaWarning = () => (
         </P>
         <P>
             To be the first to know when we officially launch the Portal, please{' '}
-            <A href="http://eepurl.com/c-NsBb">
+            <A href="http://eepurl.com/c-NsBb" target="_blank">
                 subscribe to our email newsletter
             </A>.
             {/* <MailChimpSignup /> */}
         </P>
         <P>
             If you have any feedback on the Portal, please email us at{' '}
-            <A href="mailto:support@targetvalidation.org?Subject=Open%20Targets%20Genetics%20-%20help%20request">
+            <A
+                href="mailto:support@targetvalidation.org?Subject=Open%20Targets%20Genetics%20-%20help%20request"
+                target="_blank"
+            >
                 support@targetvalidation.org
             </A>.
         </P>
