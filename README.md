@@ -3,4 +3,6 @@ This [web application](https://genetics.opentargets.io/) displays and allows int
 
 ### Tools we use
 The POSTGAP app is produced using these great tools:
-* [BrowserStack](https://www.browserstack.com/) for browser testing
+* [BrowserStack](https://www.browserstack.com/) for manual cross-browser testing.
+
+[![BrowserStack](https://3fxtqy18kygf3on3bu39kh93-wpengine.netdna-ssl.com/wp-content/themes/browserstack/img/header-logo.svg)](https://www.browserstack.com/)
