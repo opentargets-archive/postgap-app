@@ -1,7 +1,7 @@
 {
   "name": "postgap-app",
   "version": "0.1.0",
-  "private": true,
+  "license": "MIT",
   "dependencies": {
     "@vx/responsive": "^0.0.158",
     "antd": "3.3.1",
