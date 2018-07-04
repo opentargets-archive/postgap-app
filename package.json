@@ -42,7 +42,7 @@
     "precommit": "lint-staged",
     "commit": "git-cz",
     "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
+    "build": "react-app-rewired build && cp _redirects build/",
     "test": "react-app-rewired test --env=jsdom",
     "eject": "react-scripts eject"
   },
