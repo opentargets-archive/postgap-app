@@ -1,6 +1,8 @@
 # Redirect domain aliases to primary domain
 https://postgap.opentargets.io/* https://genetics.opentargets.io/:splat 301!
 
+/*  /index.html  200
+
 # These extra rules are required because HTTPS is not forced
 http://postgap.opentargets.io/* https://genetics.opentargets.io/:splat 301!
 
