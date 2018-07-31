@@ -1,0 +1,11 @@
+# redirect to ensure longer urls still fetch index.html
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# redirect docs
+[[redirects]]
+  from = "/docs"
+  to = "https://opentargets.gitbook.io/open-targets-genetics-documentation/"
+  status = 200
