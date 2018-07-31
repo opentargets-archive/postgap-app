@@ -8,4 +8,4 @@
 [[redirects]]
   from = "/docs/*"
   to = "https://opentargets.gitbook.io/open-targets-genetics-documentation/:splat"
-  status = 301!
+  status = 200
