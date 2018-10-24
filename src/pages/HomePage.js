@@ -13,7 +13,7 @@ const SiteName = () => (
     <React.Fragment>
         <h1 style={{ color: 'white', fontSize: 50, marginBottom: 20 }}>
             <span style={{ fontWeight: 'bold' }}> Open Targets </span>
-            <span style={{ fontWeight: 100 }}>Genetics</span>
+            <span style={{ fontWeight: 100 }}>POSTGAP</span>
         </h1>
         <p style={{ color: 'white', fontSize: 16, marginBottom: 30 }}>
             Mapping the relationship between targets and diseases using GWAS,
@@ -91,26 +91,14 @@ const BetaWarning = () => (
                 fontSize: '1.2em',
             }}
         >
-            Welcome to the Open Targets Genetics Portal!
+            Welcome to Open Targets POSTGAP!
         </P>
+        <P>This website shows output from the Ensembl/POSTGAP pipeline.</P>
+
         <P>
-            The Portal is currently under active development. We are updating
-            the data and visualisations so you may notice inconsistencies.
-        </P>
-        <P>
-            To be the first to know when we officially launch the Portal, please{' '}
-            <A href="http://eepurl.com/c-NsBb" target="_blank">
-                subscribe to our email newsletter
-            </A>.
-            {/* <MailChimpSignup /> */}
-        </P>
-        <P>
-            If you have any feedback on the Portal, please email us at{' '}
-            <A
-                href="mailto:support@targetvalidation.org?Subject=Open%20Targets%20Genetics%20-%20help%20request"
-                target="_blank"
-            >
-                support@targetvalidation.org
+            You might also be interested in our{' '}
+            <A href="http://genetics.opentargets.org" target="_blank">
+                Genetics Portal
             </A>.
         </P>
     </div>
