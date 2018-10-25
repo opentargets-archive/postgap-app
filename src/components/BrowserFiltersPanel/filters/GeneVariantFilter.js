@@ -59,11 +59,12 @@ let GeneVariantFilter = ({
                         <Slider
                             range
                             min={0}
-                            max={1}
+                            max={6}
                             marks={{
                                 0: '0',
-                                0.5: 0.5,
-                                1: 1,
+                                2: 2,
+                                4: 4,
+                                6: 6,
                             }}
                             step={0.01}
                             defaultValue={interval}
