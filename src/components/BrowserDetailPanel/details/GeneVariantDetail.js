@@ -9,6 +9,7 @@ import {
     renderVEPField,
     renderVEPTermsField,
     renderGtexField,
+    renderGtexTissueField,
 } from '../../../utils/stringFormatters';
 
 const GeneVariantDetail = ({ geneVariant, closeHandler }) => {
@@ -18,11 +19,6 @@ const GeneVariantDetail = ({ geneVariant, closeHandler }) => {
             key: 'otG2VScore',
             label: 'G2V Score',
             value: renderNonZeroField(d.otG2VScore),
-        },
-        {
-            key: 'otG2VReason',
-            label: 'G2V Reason',
-            value: d.otG2VReason,
         },
         {
             key: 'vep',
@@ -35,9 +31,14 @@ const GeneVariantDetail = ({ geneVariant, closeHandler }) => {
             value: renderVEPTermsField(d.vepTerms),
         },
         {
+            key: 'gtextissue',
+            label: 'GTEx Tissue',
+            value: renderGtexTissueField(d.gtexMaxTissue),
+        },
+        {
             key: 'gtex',
-            label: 'GTEx',
-            value: renderGtexField(d.gtex),
+            label: 'GTEx Value',
+            value: renderGtexField(d.gtexMaxValue),
         },
         {
             key: 'pchic',

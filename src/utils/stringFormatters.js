@@ -32,6 +32,10 @@ export const renderGtexField = value =>
         <NotSignificant />
     );
 
+export const renderGtexTissueField = value => {
+    return value ? value.split('GTEx_')[1] : '';
+};
+
 export const renderVEPField = value =>
     value >= 0.65 ? value : value > 0 ? <NotSignificant /> : <NoData />;
 

@@ -16,7 +16,8 @@ query DiseaseTableQuery($efoId: String, $offset: Int, $limit: Int) {
             efoId
             efoName
             otG2VScore
-            otG2VReason
+            gtexMaxTissue
+            gtexMaxValue
             vep
             vepTerms
             gtex

@@ -40,7 +40,8 @@ query BrowserTableQuery(
             efoId
             efoName
             otG2VScore
-            otG2VReason
+            gtexMaxTissue
+            gtexMaxValue
             vep
             vepTerms
             gtex

@@ -6,6 +6,7 @@ import {
     renderNonZeroField,
     renderNullableField,
     renderGtexField,
+    renderGtexTissueField,
     renderVEPField,
     renderVEPTermsField,
 } from '../../utils/stringFormatters';
@@ -95,14 +96,6 @@ const COLUMNS = [
                 width: 120,
             },
             {
-                title: (
-                    <DictionaryTerm term={'otg2vreason'} label={'G2V Reason'} />
-                ),
-                dataIndex: 'otG2VReason',
-                key: 'otG2VReason',
-                width: 120,
-            },
-            {
                 title: <DictionaryTerm term={'vep'} label={'VEP'} />,
                 dataIndex: 'vep',
                 key: 'vep',
@@ -122,9 +115,18 @@ const COLUMNS = [
                 width: 180,
             },
             {
-                title: <DictionaryTerm term={'gtex'} label={'GTEx'} />,
-                dataIndex: 'gtex',
-                key: 'gtex',
+                title: (
+                    <DictionaryTerm term={'gtextissue'} label={'GTEx Tissue'} />
+                ),
+                dataIndex: 'gtexMaxTissue',
+                key: 'gtexMaxTissue',
+                render: renderGtexTissueField,
+                width: 100,
+            },
+            {
+                title: <DictionaryTerm term={'gtex'} label={'GTEx Value'} />,
+                dataIndex: 'gtexMaxValue',
+                key: 'gtexMaxValue',
                 render: renderGtexField,
                 width: 100,
             },

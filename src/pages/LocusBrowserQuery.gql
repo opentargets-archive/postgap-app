@@ -74,7 +74,8 @@ query LocusBrowserQuery(
             # variantChromosome
             vPos
             otG2VScore
-            otG2VReason
+            gtexMaxTissue
+            gtexMaxValue
             vep
             vepTerms
             gtex

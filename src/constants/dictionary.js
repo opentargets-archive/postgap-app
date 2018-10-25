@@ -13,8 +13,8 @@ const DICTIONARY = {
         'The Variant Effect Predictor (VEP) functional consequences of the variant.',
     gtex:
         'The GTEx score is the max(1 - p-value) across all tissues for the eQTL between gene and variant. It varies from 0 to 1. We retain gene-variant associations derived purely from GTEx only when the GTEx value is above 0.999975; GTEx values below this are marked not significant where appropriate.',
-    // gtex:
-    //     'The GTEx score equals (1 - p-value) within tissue "whole blood" for the eQTL between gene and variant. It varies from 0 to 1. We retain gene-variant associations derived purely from GTEx only when the GTEx value is above 0.999975; GTEx values below this are marked not significant where appropriate.',
+    gtextissue:
+        'The GTEx tissue which has the max(1 - p-value) across all tissues for the eQTL between gene and variant. We retain gene-variant associations derived purely from GTEx only when the GTEx value is above 0.999975.',
     pchic:
         'The PCHiC score is the max normalized promoter capture Hi-C score (from CHiCAGO output) across all tissues for linked sites containing variant and gene. It varies from 0 to 1.',
     dhs:
