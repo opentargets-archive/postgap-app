@@ -93,7 +93,7 @@ const BetaWarning = () => (
         >
             Welcome to Open Targets POSTGWAS!
         </P>
-        <P>This website shows output from the Ensembl/POSTGWAS pipeline.</P>
+        <P>This website shows output from the Ensembl/POSTGAP pipeline.</P>
 
         <P>
             You might also be interested in our{' '}
