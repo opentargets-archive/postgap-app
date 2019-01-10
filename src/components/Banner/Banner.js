@@ -40,7 +40,7 @@ const Light = styled.span`
 const OpenTargetsTitle = () => (
     <BannerTitle>
         <Bold> Open Targets </Bold>
-        <Light>POSTGAP</Light>
+        <Light>POSTGWAS</Light>
     </BannerTitle>
 );
 

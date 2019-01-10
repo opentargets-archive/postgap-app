@@ -126,7 +126,7 @@ class LocusPage extends React.Component {
 
         const { clickedId, clickedType } = query;
 
-        const filename = `OpenTargetsPOSTGAP-locus.${chromosome}.${start}-${end}`;
+        const filename = `OpenTargetsPOSTGWAS-locus.${chromosome}.${start}-${end}`;
         const filterOtG2VScore = [
             query.otG2VScoreStart ? parseFloat(query.otG2VScoreStart) : 0,
             query.otG2VScoreEnd ? parseFloat(query.otG2VScoreEnd) : 6,

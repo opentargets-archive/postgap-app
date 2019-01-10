@@ -7,7 +7,7 @@ GoogleAnalytics.initialize('UA-101860681-4');
 
 const withTracker = (WrappedComponent, options = {}) => {
     // only track on production
-    if (window.location.hostname !== 'postgap.opentargets.io') {
+    if (window.location.hostname !== 'postgwas.opentargets.io') {
         return WrappedComponent;
     }
 

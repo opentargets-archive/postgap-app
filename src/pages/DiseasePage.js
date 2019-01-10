@@ -13,7 +13,7 @@ class DiseasePage extends React.Component {
                         <Card bodyStyle={{ padding: 10 }}>
                             <DiseaseTable
                                 efoId={efoId}
-                                filename={`OpenTargetsPOSTGAP-disease.${efoId}`}
+                                filename={`OpenTargetsPOSTGWAS-disease.${efoId}`}
                             />
                         </Card>
                     </Col>
