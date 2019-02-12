@@ -139,7 +139,7 @@ const HomePage = () => {
                     <SiteName />
                     <Search />
                     <SearchSuggestions />
-                    <BetaWarning />
+                    {/* <BetaWarning /> */}
                 </Col>
             </Row>
         </Col>
