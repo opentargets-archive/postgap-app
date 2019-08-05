@@ -39,12 +39,15 @@ const renderDiseaseField = (value, row) => (
         </span>
     </LinksDisease>
 );
-const renderPubmedUrlField = (value, row) => (
-    <a href={value} target={'_blank'}>
-        <Icon type="link" />
-    </a>
-);
-
+const renderPubmedUrlField = (value, row) => {
+    const pmId = value.split('PMID')[1];
+    const url = `https://europepmc.org/abstract/med/${pmId}`;
+    return (
+        <a href={url} target={'_blank'}>
+            {pmId}
+        </a>
+    );
+};
 const COLUMNS = [
     {
         title: 'Entities',
