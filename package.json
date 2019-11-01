@@ -15,7 +15,7 @@
     "husky": "^0.14.3",
     "jsverify": "^0.8.3",
     "lint-staged": "^6.1.0",
-    "lodash": "^4.17.5",
+    "lodash": "^4.17.13",
     "prettier": "^1.10.2",
     "prop-types": "^15.6.1",
     "query-string": "^5.1.0",
