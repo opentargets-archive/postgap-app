@@ -6,7 +6,7 @@
     "@vx/responsive": "^0.0.158",
     "antd": "3.3.1",
     "apollo-boost": "^0.1.4",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "d3": "^4.13.0",
     "enzyme": "^3.3.0",
     "file-saver": "^1.3.8",
